@@ -1,6 +1,6 @@
 import "../globals.css";
 import { getDictionary } from "@/lib/dictionary";
-import { Navbar } from "@/components/shared/navbar"; 
+import Navbar from "@/components/shared/navbar"; // Default import, qavssiz!
 import { Footer } from '@/components/shared/footer';  
 
 export default async function LocaleLayout({
@@ -8,20 +8,19 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  // params ichidagi locale ni string deb o'zgartirdik
   params: Promise<{ locale: string }>; 
 }) {
   const { locale } = await params;
+  const dict = await getDictionary(locale as any);
 
   return (
     <html lang={locale}>
-      <body className="antialiased font-display bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50">
-        <Navbar />
-        
-        <main className="min-h-screen pt-20">
+      <body className="antialiased font-display bg-white dark:bg-slate-950">
+        <Navbar dict={dict} />
+        {/* pt-20 qo'shildi, Hero Navbar tagida qolmasligi uchun */}
+        <main className="min-h-screen pt-20"> 
           {children}
         </main>
-
         <Footer />
       </body>
     </html>

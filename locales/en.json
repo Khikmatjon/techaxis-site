@@ -1,20 +1,32 @@
 {
-  "nav": {
-    "home": "Home",
-    "services": "Services",
+  "navbar": {
+    "software": "Software",
+    "training": "Training",
+    "solutions": "Solutions",
+    "about": "About",
     "projects": "Projects",
-    "contact": "Contact"
+    "contact": "Contact Us",
+    "subscriptions": "Subscriptions",
+    "courses": "Courses"
   },
   "hero": {
-    "title": "AI × CAD × Education — TechAxis Group",
-    "subtitle": "We specialize in Mechanical Design, Smart Device Prototyping, and Professional CAD Education.",
-    "cta": "Get Proposal"
+    "title": "From Design to Manufacturing",
+    "subtitle": "Build the future of engineering with SOLIDWORKS and CATIA. Professional courses and enterprise solutions.",
+    "cta_software": "View Software",
+    "cta_training": "Training Center"
   },
-  "projects": {
-    "title": "Portfolio",
-    "subtitle": "Engineering excellence for global brands and innovative startups",
-    "tmed": { "title": "TMED Telemetry System", "desc": "Real-time temperature monitoring for HMC/LG Magna hybrid powertrains." },
-    "torque": { "title": "Torque Test Fixture", "desc": "Mechanical design and FEA analysis for 5000 Nm test rig." },
-    "smart": { "title": "HAYOT Smart Band", "desc": "Wearable health monitoring device: 3D modeling and body design." }
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Complex Engineering Solutions for Industry",
+    "software_sales": "Software Licensing",
+    "design": "Mechanical Design & Development",
+    "training": "Corporate Training",
+    "plm": "PLM & Data Management"
+  },
+  "about": {
+    "title": "About Company",
+    "subtitle": "Engineering & Innovation Center",
+    "exp_label": "Project Experience",
+    "partners_label": "Partner Companies"
   }
 }
