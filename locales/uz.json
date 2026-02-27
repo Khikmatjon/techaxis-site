@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "Bosh sahifa",
+    "services": "Xizmatlar",
+    "projects": "Loyihalar",
+    "about": "Haqimizda",
+    "contact": "Bog'lanish"
+  },
+  "hero": {
+    "title": "AI  CAD  Education —TechAxis Group",
+    "subtitle": "Biz muhandislik dizayni, aqlli qurilmalar va ta’limni birlashtirib, g‘oyangizni prototipdan bozorigacha olib boramiz.",
+    "cta": "Tijorat taklifi"
+  },
+  "projects": {
+    "title": "Amalga oshirilgan loyihalar",
+    "subtitle": "Global brendlar va startaplar uchun ishlab chiqilgan muhandislik yechimlari",
+    "tmed": {
+      "title": "TMED Telemetriya Tizimi",
+      "desc": "Hyundai/LG Magna gibrid transmissiyalari uchun real-vaqt rejimida harorat monitoringi tizimi."
+    },
+    "torque": {
+      "title": "Torque Test Fixture",
+      "desc": "5000 Nm kuchlanishga chidamli sinov qurilmasi dizayni va FEA tahlili."
+    },
+    "smart": {
+      "title": "HAYOT Aqilli Bilaguzugi",
+      "desc": "Wearable sog'liqni saqlash qurilmasi: 3D modeling va korpus dizayni."
+    }
+  }
+}

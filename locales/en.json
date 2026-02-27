@@ -1,0 +1,20 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "AI × CAD × Education — TechAxis Group",
+    "subtitle": "We specialize in Mechanical Design, Smart Device Prototyping, and Professional CAD Education.",
+    "cta": "Get Proposal"
+  },
+  "projects": {
+    "title": "Portfolio",
+    "subtitle": "Engineering excellence for global brands and innovative startups",
+    "tmed": { "title": "TMED Telemetry System", "desc": "Real-time temperature monitoring for HMC/LG Magna hybrid powertrains." },
+    "torque": { "title": "Torque Test Fixture", "desc": "Mechanical design and FEA analysis for 5000 Nm test rig." },
+    "smart": { "title": "HAYOT Smart Band", "desc": "Wearable health monitoring device: 3D modeling and body design." }
+  }
+}
