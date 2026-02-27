@@ -2,8 +2,12 @@
 import { motion } from 'framer-motion'
 import { Heart, Activity, Zap, ShieldCheck, ArrowLeft, Users, Clock, Brain } from 'lucide-react'
 import Link from 'next/link'
+import { use } from 'react' // params ni o'qish uchun use kerak
 
-export default function SmartBandPage() {
+export default function SmartBandPage({ params }: { params: Promise<{ locale: string }> }) {
+  // Next.js 15 client componentda params ni o'qish usuli
+  const { locale } = use(params);
+
   const features = [
     {
       icon: <Heart className="w-8 h-8 text-red-500" />,
@@ -37,24 +41,26 @@ export default function SmartBandPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 pt-10 pb-22">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Navigatsiya */}
-        <Link href="/" className="inline-flex items-center text-slate-500 hover:text-blue-600 mb-8 transition-colors">
+        <Link href={`/${locale}`} className="inline-flex items-center text-slate-500 hover:text-blue-600 mb-8 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-2" /> Bosh sahifaga qaytish
         </Link>
 
-        {/* Hero Section */}
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
           <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}>
-            <span className="px-0 py-0 text-slate-900 red:text-blue-400 text-sm font-bold uppercase tracking-[0.3em] border-b-2 border-blue-600 pb-1">
+            <span className="text-slate-900 dark:text-blue-400 text-sm font-bold uppercase tracking-[0.3em] border-b-2 border-blue-600 pb-1">
               Innovation by TechAxis
             </span>
-            <h1 className="px-0 py-0 text-slate-900 red:text-blue-400 text-sm font-bold uppercase tracking-[0.3em] border-b-2 border-blue-600 pb-1">
-              HAYOT <span className="text-blue-900 ">Band</span>
+            
+            {/* Shriftingizni sora (black) va chiroyli qildik */}
+            <h1 className="text-6xl md:text-8xl font-black mt-8 mb-6 text-slate-900 dark:text-white tracking-tighter uppercase">
+              HAYOT <span className="text-blue-600">Band</span>
             </h1>
+
             <p className="text-slate-500 dark:text-slate-400 text-xl leading-relaxed mb-8">
               Bu shunchaki bilaguzuk emas, bu sizning shaxsiy salomatlik muhandisingiz. 
               Biz zamonaviy mikrosxemalar va ergonomik 3D dizaynni birlashtirdik.
             </p>
+            
             <div className="flex gap-4">
                <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
                   <p className="text-2xl font-bold text-blue-600">98%</p>
@@ -66,6 +72,7 @@ export default function SmartBandPage() {
                </div>
             </div>
           </motion.div>
+
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }} 
             animate={{ opacity: 1, scale: 1 }}
@@ -75,7 +82,7 @@ export default function SmartBandPage() {
           </motion.div>
         </div>
 
-        {/* Funksiyalar */}
+        {/* Funksiyalar va qolgan qismlar... */}
         <div className="mb-24">
           <h2 className="text-3xl font-bold mb-12 text-center">Asosiy Funksiyalar</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -89,7 +96,6 @@ export default function SmartBandPage() {
           </div>
         </div>
 
-        {/* Kimlar uchun? */}
         <div className="p-12 bg-slate-900 rounded-[60px] text-white overflow-hidden relative">
           <h2 className="text-3xl font-bold mb-12 text-center relative z-10">Kimlar uchun mo'ljallangan?</h2>
           <div className="grid md:grid-cols-2 gap-8 relative z-10">
