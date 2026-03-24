@@ -1,13 +1,26 @@
 "use client";
 
 import React from 'react';
-import { ShieldCheck, Target, Users, Award } from 'lucide-react';
+import { ShieldCheck, Users, Award } from 'lucide-react';
 
 export const About = ({ dict }: { dict: any }) => {
+  // Statistikani lug'atga bog'laymiz
   const stats = [
-    { label: "Loyiha tajribasi", value: "10+", icon: <Award className="text-blue-500" /> },
-    { label: "Hamkor korxonalar", value: "15+", icon: <Users className="text-emerald-500" /> },
-    { label: "Sanoat standartlari", value: "100%", icon: <ShieldCheck className="text-red-500" /> },
+    { 
+      label: dict.about.exp_label || "Loyiha tajribasi", 
+      value: "10+", 
+      icon: <Award className="text-blue-500" /> 
+    },
+    { 
+      label: dict.about.partners_label || "Hamkor korxonalar", 
+      value: "15+", 
+      icon: <Users className="text-emerald-500" /> 
+    },
+    { 
+      label: "Sanoat standartlari", 
+      value: "100%", 
+      icon: <ShieldCheck className="text-red-500" /> 
+    },
   ];
 
   return (
@@ -25,33 +38,34 @@ export const About = ({ dict }: { dict: any }) => {
               />
             </div>
             
-            {/* Tajriba badji */}
+            {/* Tajriba badji - HMC/KIA o'zgarmaydi, tavsif o'zgaradi */}
             <div className="absolute -bottom-10 -right-10 z-20 bg-blue-600 text-white p-8 rounded-[32px] shadow-2xl max-w-[280px]">
               <div className="text-4xl font-bold mb-2">HMC / KIA</div>
               <p className="text-sm text-blue-100 font-medium">
-                Janubiy Koreyaning yetakchi avtomobil gigantlari bilan TMED P1/P2 loyihalarida muhandislik tajribasi.
+                {dict.projects.items.tmed.desc}
               </p>
             </div>
 
-            {/* Dekorativ element */}
             <div className="absolute -top-10 -left-10 w-40 h-40 bg-blue-600/10 rounded-full blur-3xl" />
           </div>
 
           {/* O'ng tomon: Matnli ma'lumot */}
           <div className="space-y-8">
             <div>
-              <h2 className="text-sm font-bold text-blue-600 uppercase tracking-[0.2em] mb-4">Kompaniya haqida</h2>
+              <h2 className="text-sm font-bold text-blue-600 uppercase tracking-[0.2em] mb-4">
+                {dict.navbar.about}
+              </h2>
               <h3 className="text-4xl md:text-5xl font-bold font-display text-slate-900 dark:text-white leading-tight">
-                Muhandislik va Innovatsiyalar Markazi
+                {dict.about.subtitle}
               </h3>
             </div>
 
             <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-              **TechAxis Group** — bu shunchaki dasturiy ta'minot sotuvchisi emas. Biz muhandislik jarayonlarini optimallashtirish, 3D dizayn va ishlab chiqarishni raqamlashtirish bo'yicha ekspert markazimiz. 
+              <strong>TechAxis Group</strong> — {dict.services.description}
             </p>
 
-            <p className="text-slate-600 dark:text-slate-400">
-              Bizning asosiy maqsadimiz — Markaziy Osiyo korxonalari va ta'lim muassasalariga **Dassault Systèmes** ekotizimini (SOLIDWORKS, CATIA, 3DEXPERIENCE) joriy qilish orqali global raqobatbardoshlikni oshirishdir. Biz Janubiy Koreyaning avtomobilsozlik sanoatidagi eng ilg'or texnologiyalarini mahalliy bozorga moslashtiramiz.
+            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+              {dict.hero.subtitle}
             </p>
 
             {/* Statistika */}
@@ -69,7 +83,7 @@ export const About = ({ dict }: { dict: any }) => {
 
             <div className="pt-8">
               <button className="flex items-center space-x-3 text-blue-600 font-bold group">
-                <span>Batafsil ma'lumot yuklab olish (PDF)</span>
+                <span>{dict.projects.view_all}</span>
                 <span className="group-hover:translate-x-2 transition-transform">→</span>
               </button>
             </div>

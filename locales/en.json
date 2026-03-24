@@ -3,25 +3,60 @@
     "software": "Software",
     "training": "Training",
     "solutions": "Solutions",
-    "about": "About",
+    "about": "About Us",
     "projects": "Projects",
-    "contact": "Contact Us",
+    "contact": "Contact",
     "subscriptions": "Subscriptions",
-    "courses": "Courses"
+    "courses": "Courses",
+    "certificates": "Certificates"
   },
   "hero": {
-    "title": "From Design to Manufacturing",
-    "subtitle": "Build the future of engineering with SOLIDWORKS and CATIA. Professional courses and enterprise solutions.",
-    "cta_software": "View Software",
-    "cta_training": "Training Center"
+    "badge": "#1 Engineering Center in Uzbekistan",
+    "title": "Advanced CAD & Engineering Solutions in Uzbekistan",
+    "subtitle": "World-class industrial software solutions (SOLIDWORKS, CATIA), professional training courses from scratch, and premier engineering consulting for enterprises.",
+    "cta_primary": "Explore Services",
+    "cta_secondary": "Free Consultation"
   },
   "services": {
     "title": "Our Services",
-    "subtitle": "Complex Engineering Solutions for Industry",
+    "subtitle": "Comprehensive Engineering Solutions for Industry",
+    "description": "We support all stages from initial idea to production-ready manufacturing.",
     "software_sales": "Software Licensing",
-    "design": "Mechanical Design & Development",
+    "software_sales_desc": "Official licensing for SOLIDWORKS, CATIA, and 3DEXPERIENCE platforms.",
+    "design": "Mechanical Design",
+    "design_desc": "High-precision 3D modeling following HMC/KIA global standards.",
     "training": "Corporate Training",
-    "plm": "PLM & Data Management"
+    "training_desc": "Personnel training and certification based on international standards.",
+    "plm": "PLM Systems",
+    "plm_desc": "Implementation of Product Lifecycle Management systems.",
+    "analysis": "Simulation & Analysis",
+    "analysis_desc": "Digital validation of structural strength and thermal analysis.",
+    "consulting": "Technical Consulting",
+    "consulting_desc": "Expert advice on production digitalization and engineering optimization."
+  },
+  "projects": {
+    "title": "Success Stories",
+    "subtitle": "Major Projects Executed",
+    "description": "Engineering solutions developed for leading South Korean automotive and tech companies.",
+    "view_all": "View Full Portfolio",
+    "more_projects": "And over 10 more industrial projects...",
+    "items": {
+      "tmed": {
+        "title": "TMED P1/P2 Telemetry System",
+        "client": "Hyundai Motor Company (HMC)",
+        "desc": "Real-time temperature monitoring system for hybrid powertrain units."
+      },
+      "motor": {
+        "title": "Motor Component 3D Design",
+        "client": "LG Magna e-Powertrain",
+        "desc": "High-precision modeling and production optimization for electric motors."
+      },
+      "transmission": {
+        "title": "Transmission Assembly Simulation",
+        "client": "KIA Motors",
+        "desc": "Digital Twin simulation for automotive transmission assembly processes."
+      }
+    }
   },
   "about": {
     "title": "About Company",

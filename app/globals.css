@@ -8,6 +8,7 @@ body {
   font-family: var(--font-display);
 }
 @import "tailwindcss";
+@source "../components";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
@@ -133,3 +134,5 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Force Tailwind Rebuild Trigger - March 24 */

@@ -2,14 +2,66 @@
   "navbar": {
     "software": "Dasturlar",
     "training": "Ta'lim",
+    "solutions": "Yechimlar",
     "about": "Haqimizda",
     "projects": "Loyihalar",
-    "contact": "Bog'lanish"
+    "contact": "Bog'lanish",
+    "subscriptions": "Obunalar",
+    "courses": "Kurslar",
+    "certificates": "Sertifikatlar"
   },
   "hero": {
-    "title": "Dizayndan tortib ishlab chiqarishgacha",
-    "subtitle": "SOLIDWORKS va CATIA orqali muhandislik kelajagini quring. Professional kurslar va korporativ yechimlar.",
-    "cta_software": "Dasturlarni ko'rish",
-    "cta_training": "O'quv markazi"
+    "badge": "O'zbekistondagi 1-raqamli Muhandislik Markazi",
+    "title": "O'zbekistonda ilg'or CAD va Muhandislik Yechimlari",
+    "subtitle": "Sanoat korxonalari va injenerlar uchun xalqaro darajadagi dasturiy ta'minotlar (SOLIDWORKS, CATIA), noldan boshlab professional o'quv kurslari va muhandislik konsaltingi.",
+    "cta_primary": "Xizmatlar bilan tanishish",
+    "cta_secondary": "Bepul konsultatsiya"
+  },
+  "services": {
+    "title": "Bizning xizmatlar",
+    "subtitle": "Sanoat uchun kompleks muhandislik yechimlari",
+    "description": "Biz g'oyadan tortib ishlab chiqarishgacha bo'lgan barcha bosqichlarda ko'maklashamiz.",
+    "software_sales": "Dasturiy Ta'minot Savdosi",
+    "software_sales_desc": "SOLIDWORKS, CATIA va 3DEXPERIENCE platformalari uchun rasmiy litsenziyalash.",
+    "design": "Mexanik Dizayn",
+    "design_desc": "HMC/KIA standartlari bo'yicha yuqori aniqlikdagi 3D modellashtirish.",
+    "training": "Korporativ Ta'lim",
+    "training_desc": "Xalqaro standartlar bo'yicha xodimlarni o'qitish va sertifikatlash.",
+    "plm": "PLM Tizimlari",
+    "plm_desc": "Mahsulot hayotiy siklini boshqarish tizimlarini joriy qilish.",
+    "analysis": "Simulyatsiya va Tahlil",
+    "analysis_desc": "Mustahkamlik va termal tahlillarni raqamli tekshirish.",
+    "consulting": "Texnik Konsalting",
+    "consulting_desc": "Ishlab chiqarishni raqamlashtirish bo'yicha maslahatlar."
+  },
+  "projects": {
+    "title": "Muvaffaqiyat hikoyalari",
+    "subtitle": "Amalga oshirilgan yirik loyihalar",
+    "description": "Janubiy Koreyaning yetakchi avtomobil va texnologiya kompaniyalari uchun ishlab chiqilgan muhandislik yechimlari.",
+    "view_all": "To'liq portfolioni ko'rish",
+    "more_projects": "Va yana 10 dan ortiq sanoat loyihalari...",
+    "items": {
+      "tmed": {
+        "title": "TMED P1/P2 Telemetriya Tizimi",
+        "client": "Hyundai Motor Company (HMC)",
+        "desc": "Gibrid avtomobil kuch qurilmalari uchun real vaqt rejimida haroratni monitoring qiluvchi tizim."
+      },
+      "motor": {
+        "title": "Dvigatel Qismlari 3D Dizayni",
+        "client": "LG Magna e-Powertrain",
+        "desc": "Elektr dvigatel qismlarini yuqori aniqlikda modellashtirish va ishlab chiqarishni optimallashtirish."
+      },
+      "transmission": {
+        "title": "Transmissiya Bloklarini Yig'ish",
+        "client": "KIA Motors",
+        "desc": "Raqamli egizak (Digital Twin) texnologiyasi orqali yig'ish jarayonlarini simulyatsiya qilish."
+      }
+    }
+  },
+  "about": {
+    "title": "Kompaniya haqida",
+    "subtitle": "Muhandislik va Innovatsiyalar Markazi",
+    "exp_label": "Loyiha tajribasi",
+    "partners_label": "Hamkor korxonalar"
   }
 }
