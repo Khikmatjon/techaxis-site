@@ -199,13 +199,13 @@ const Navbar = ({ dict }: { dict: any }) => {
                   href={`/${locale}/login`}
                   className="px-4 py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
                 >
-                  Kirish
+                  {dict?.navbar?.login || "Kirish"}
                 </Link>
                 <Link
                   href={`/${locale}/register`}
                   className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm hover:shadow-blue-500/25 hover:shadow-md"
                 >
-                  Ro'yxatdan o'tish
+                  {dict?.navbar?.register || "Ro'yxatdan o'tish"}
                 </Link>
               </div>
             )}
@@ -280,14 +280,14 @@ const Navbar = ({ dict }: { dict: any }) => {
                     onClick={() => setIsOpen(false)}
                     className="block px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors text-center"
                   >
-                    Kirish
+                    {dict?.navbar?.login || "Kirish"}
                   </Link>
                   <Link
                     href={`/${locale}/register`}
                     onClick={() => setIsOpen(false)}
                     className="block bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all text-center"
                   >
-                    Ro'yxatdan o'tish
+                    {dict?.navbar?.register || "Ro'yxatdan o'tish"}
                   </Link>
                 </>
               )}

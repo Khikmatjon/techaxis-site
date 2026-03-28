@@ -8,7 +8,9 @@
     "contact": "Contact",
     "subscriptions": "Subscriptions",
     "courses": "Courses",
-    "certificates": "Certificates"
+    "certificates": "Certificates",
+    "login": "Login",
+    "register": "Register"
   },
   "hero": {
     "badge": "#1 Engineering Center in Uzbekistan",
