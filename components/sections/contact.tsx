@@ -36,13 +36,15 @@ export const Contact = ({ dict }: { dict: any }) => {
       icon: <Mail className="w-6 h-6 text-emerald-600" />,
       label: "Email",
       value: "info@techaxis.uz",
-      color: "bg-emerald-50"
+      color: "bg-emerald-50",
+      href: "mailto:info@techaxis.uz"
     },
     {
       icon: <MessageSquareText className="w-6 h-6 text-cyan-600" />,
       label: "Telegram Bot",
-      value: "@techaxis_bot",
-      color: "bg-cyan-50"
+      value: "TechAxis info",
+      color: "bg-cyan-50",
+      href: "https://t.me/techaxisinfobot"
     },
     {
       icon: <MapPin className="w-6 h-6 text-indigo-600" />,
@@ -72,19 +74,28 @@ export const Contact = ({ dict }: { dict: any }) => {
             </div>
 
             <div className="grid sm:grid-cols-2 gap-6">
-              {contactOptions.map((item, index) => (
-                <div key={index} className="group p-6 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 transition-all hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl hover:-translate-y-1">
-                  <div className={`w-12 h-12 ${item.color} dark:bg-opacity-10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                    {item.icon}
-                  </div>
-                  <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">
-                    {item.label}
-                  </p>
-                  <p className="text-base font-black text-slate-900 dark:text-white">
-                    {item.value}
-                  </p>
-                </div>
-              ))}
+              {contactOptions.map((item, index) => {
+                const CardWrapper: any = item.href ? 'a' : 'div';
+                return (
+                  <CardWrapper 
+                    key={index} 
+                    href={item.href}
+                    target={item.href ? "_blank" : undefined}
+                    rel={item.href ? "noopener noreferrer" : undefined}
+                    className="group p-6 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 transition-all hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl hover:-translate-y-1 block cursor-pointer"
+                  >
+                    <div className={`w-12 h-12 ${item.color} dark:bg-opacity-10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                      {item.icon}
+                    </div>
+                    <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">
+                      {item.label}
+                    </p>
+                    <p className="text-base font-black text-slate-900 dark:text-white">
+                      {item.value}
+                    </p>
+                  </CardWrapper>
+                );
+              })}
             </div>
           </div>
 

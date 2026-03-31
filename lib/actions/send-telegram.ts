@@ -9,15 +9,16 @@ export async function sendToTelegram(formData: FormData) {
   const service = formData.get("service") as string;
   const message = formData.get("message") as string;
 
+  // HTML format ishlatamiz (Markdown xatoliklarga moyil bo'lishi mumkin)
   const text = `
-🆕 **Yangi so'rov (TechAxis.uz)**
+🆕 <b>Yangi so'rov (TechAxis.uz)</b>
 
-👤 **Ism:** ${name}
-📧 **Email:** ${email}
-🛠 **Xizmat:** ${service}
-📝 **Xabar:** ${message}
+👤 <b>Ism:</b> ${name}
+📧 <b>Email:</b> ${email}
+🛠 <b>Xizmat:</b> ${service}
+📝 <b>Xabar:</b> ${message}
 
-📅 **Vaqt:** ${new Date().toLocaleString('uz-UZ')}
+📅 <b>Vaqt:</b> ${new Date().toLocaleString('uz-UZ')}
   `;
 
   try {
@@ -29,17 +30,20 @@ export async function sendToTelegram(formData: FormData) {
       body: JSON.stringify({
         chat_id: TELEGRAM_CHAT_ID,
         text: text,
-        parse_mode: "Markdown",
+        parse_mode: "HTML",
       }),
     });
 
     if (!response.ok) {
-      throw new Error("Telegramga yuborishda xatolik yuz berdi");
+        const errorData = await response.text();
+        console.error("Telegram API Error:", errorData);
+        throw new Error("Telegram API xatosi");
     }
 
     return { success: true };
   } catch (error) {
-    console.error("Telegram error:", error);
+    console.error("Telegram error catch block:", error);
     return { success: false, error: "Xabar yuborilmadi" };
   }
 }
+
