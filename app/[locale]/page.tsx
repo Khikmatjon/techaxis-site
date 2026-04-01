@@ -4,7 +4,6 @@ import { Services } from "@/components/sections/services";
 import { Projects } from "@/components/sections/projects";
 import { Contact } from "@/components/sections/contact";
 import { About } from "@/components/sections/about";
-import { Certifications } from "@/components/sections/certifications";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -95,10 +94,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       <section id="about">
         <About dict={dict} />
-      </section>
-
-      <section id="certificates">
-        <Certifications dict={dict} />
       </section>
 
       <section id="projects">

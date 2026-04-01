@@ -1,4 +1,7 @@
 import React from 'react';
+import { getDictionary } from "@/lib/dictionary";
+import { Locale } from "@/lib/i18n";
+import { Certifications } from "@/components/sections/certifications";
 
 const courses = [
   {
@@ -27,7 +30,10 @@ const courses = [
   }
 ];
 
-export default function TrainingPage() {
+export default async function TrainingPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const dict: any = await getDictionary(locale as Locale);
+
   return (
     <div className="pt-32 pb-20 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4">
@@ -108,6 +114,12 @@ export default function TrainingPage() {
           <div className="absolute -top-20 -right-20 w-80 h-80 bg-white opacity-5 rounded-full" />
         </div>
       </div>
+
+      {/* Certifications Preparation Section */}
+      <div className="mt-20">
+        <Certifications dict={dict} />
+      </div>
+
     </div>
   );
 }
