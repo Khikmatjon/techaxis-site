@@ -1,7 +1,7 @@
 "use server";
 
-const TELEGRAM_BOT_TOKEN = "8431645365:AAH2xXl5UAFvRZrBK703LP3haR7G8KTut5Q";
-const TELEGRAM_CHAT_ID = "1011043209";
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 export async function sendToTelegram(formData: FormData) {
   const name = formData.get("name") as string;
@@ -35,9 +35,9 @@ export async function sendToTelegram(formData: FormData) {
     });
 
     if (!response.ok) {
-        const errorData = await response.text();
-        console.error("Telegram API Error:", errorData);
-        throw new Error("Telegram API xatosi");
+      const errorData = await response.text();
+      console.error("Telegram API Error:", errorData);
+      throw new Error("Telegram API xatosi");
     }
 
     return { success: true };

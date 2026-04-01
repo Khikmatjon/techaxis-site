@@ -11,10 +11,10 @@ export const Contact = ({ dict }: { dict: any }) => {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("loading");
-    
+
     const formData = new FormData(e.currentTarget);
     const result = await sendToTelegram(formData);
-    
+
     if (result.success) {
       setStatus("success");
       (e.target as HTMLFormElement).reset();
@@ -58,7 +58,7 @@ export const Contact = ({ dict }: { dict: any }) => {
     <section id="contact" className="py-24 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
-          
+
           {/* L: CONTACT INFO */}
           <div className="space-y-12">
             <div className="space-y-6">
@@ -77,8 +77,8 @@ export const Contact = ({ dict }: { dict: any }) => {
               {contactOptions.map((item, index) => {
                 const CardWrapper: any = item.href ? 'a' : 'div';
                 return (
-                  <CardWrapper 
-                    key={index} 
+                  <CardWrapper
+                    key={index}
                     href={item.href}
                     target={item.href ? "_blank" : undefined}
                     rel={item.href ? "noopener noreferrer" : undefined}
@@ -103,7 +103,7 @@ export const Contact = ({ dict }: { dict: any }) => {
           <div className="relative">
             {/* Background Blur */}
             <div className="absolute -inset-4 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-[48px] blur-3xl -z-0"></div>
-            
+
             <div className="relative z-10 bg-white dark:bg-slate-900 p-8 md:p-12 rounded-[40px] shadow-2xl border border-slate-100 dark:border-slate-800">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
@@ -114,23 +114,23 @@ export const Contact = ({ dict }: { dict: any }) => {
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
-                  <input 
+                  <input
                     name="name"
                     required
-                    type="text" 
-                    placeholder={dict?.contact?.form_name || "Ismingiz"} 
-                    className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-900 dark:text-white focus:ring-2 ring-blue-500 outline-none transition-all placeholder:text-slate-400 font-medium" 
+                    type="text"
+                    placeholder={dict?.contact?.form_name || "Ismingiz"}
+                    className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-900 dark:text-white focus:ring-2 ring-blue-500 outline-none transition-all placeholder:text-slate-400 font-medium"
                   />
-                  <input 
+                  <input
                     name="email"
                     required
-                    type="email" 
-                    placeholder={dict?.contact?.form_email || "Email"} 
-                    className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-900 dark:text-white focus:ring-2 ring-blue-500 outline-none transition-all placeholder:text-slate-400 font-medium" 
+                    type="email"
+                    placeholder={dict?.contact?.form_email || "Email"}
+                    className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-900 dark:text-white focus:ring-2 ring-blue-500 outline-none transition-all placeholder:text-slate-400 font-medium"
                   />
                 </div>
 
-                <select 
+                <select
                   name="service"
                   className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-900 dark:text-white focus:ring-2 ring-blue-500 outline-none appearance-none cursor-pointer font-medium"
                 >
@@ -140,22 +140,21 @@ export const Contact = ({ dict }: { dict: any }) => {
                   <option value="Design">{dict?.services?.design || "Muhandislik xizmati"}</option>
                 </select>
 
-                <textarea 
+                <textarea
                   name="message"
                   required
-                  rows={4} 
-                  placeholder={dict?.contact?.form_message || "Loyihangiz haqida yozing..."} 
+                  rows={4}
+                  placeholder={dict?.contact?.form_message || "Loyihangiz haqida yozing..."}
                   className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-900 dark:text-white focus:ring-2 ring-blue-500 outline-none transition-all placeholder:text-slate-400 font-medium resize-none shadow-inner"
                 ></textarea>
 
-                <button 
+                <button
                   disabled={status === "loading" || status === "success"}
                   type="submit"
-                  className={`w-full py-5 rounded-2xl font-black transition-all flex items-center justify-center space-x-3 shadow-xl active:scale-95 ${
-                    status === "success" 
-                      ? "bg-emerald-500 text-white" 
+                  className={`w-full py-5 rounded-2xl font-black transition-all flex items-center justify-center space-x-3 shadow-xl active:scale-95 ${status === "success"
+                      ? "bg-emerald-500 text-white"
                       : "bg-[#0084FF] hover:bg-blue-600 text-white shadow-blue-500/20"
-                  }`}
+                    }`}
                 >
                   {status === "loading" ? (
                     <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -171,7 +170,7 @@ export const Contact = ({ dict }: { dict: any }) => {
                     </>
                   )}
                 </button>
-                
+
                 {status === "error" && (
                   <p className="text-center text-red-500 text-sm font-bold animate-pulse">
                     Xatolik yuz berdi. Iltimos, qaytadan urining.
