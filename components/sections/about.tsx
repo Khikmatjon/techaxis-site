@@ -42,28 +42,9 @@ export const About = ({ dict }: { dict: any }) => {
             >
               <img 
                 src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=2070" 
-                alt="Engineering Team" 
+                alt="Engineering Training" 
                 className="w-full h-auto aspect-[4/5] object-cover"
               />
-            </motion.div>
-            
-            {/* Glassmorphic Floating Card */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              viewport={{ once: true }}
-              className="absolute -bottom-8 -right-8 lg:-right-12 z-20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl p-8 rounded-[32px] shadow-2xl border border-white/20 dark:border-slate-800/50 max-w-[300px]"
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-black shadow-lg shadow-blue-600/30">
-                  HMC
-                </div>
-                <div className="font-black text-2xl text-slate-900 dark:text-white">KIA MOTORS</div>
-              </div>
-              <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
-                {dict?.projects?.items?.transmission?.desc || "Raqamli egizak (Digital Twin) texnologiyasi orqali yig'ish jarayonlarini simulyatsiya qilish."}
-              </p>
             </motion.div>
 
             {/* Decorative dots/shapes */}
@@ -77,16 +58,16 @@ export const About = ({ dict }: { dict: any }) => {
                 {dict?.navbar?.about || "Kompaniya haqida"}
               </h2>
               <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight">
-                {dict?.about?.subtitle || "Muhandislik va Innovatsiyalar Markazi"}
+                {dict?.about?.subtitle || "Muhandislik va Tajriba Markazi"}
               </h3>
             </div>
 
             <div className="space-y-6">
               <p className="text-lg lg:text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                <span className="text-[#0084FF] font-black">TechAxis Group</span> — {dict?.services?.description || "Biz g'oyadan tortib ishlab chiqarishgacha bo'lgan barcha bosqichlarda ko'maklashamiz."}
+                <span className="text-[#0084FF] font-black">TechAxis Group</span> — zamonaviy texnologiyalarni o'rganish va amaliyotga joriy etishga ixtisoslashgan.
               </p>
               <p className="text-slate-500 dark:text-slate-500 leading-relaxed">
-                Bizning markazimiz O'zbekistonda sanoat va muhandislikni raqamlashtirish bo'yicha global texnologiyalarni (SOLIDWORKS, CATIA) joriy etishga ixtisoslashgan. Biz nafaqat dasturiy ta'minot sotamiz, balki to'liq muhandislik yechimlarini taklif etamiz.
+                Asosiy e'tibor ta'lim markaziga, jumladan SOLIDWORKS, CATIA va boshqa injiniring dasturlarini 0 dan professional darajagacha o'rgatishga qaratilgan.
               </p>
             </div>
 
