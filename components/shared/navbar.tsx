@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, X, ChevronDown, Sun, LogOut, LayoutDashboard, Shield, User, BookOpen } from 'lucide-react';
+import { Menu, X, ChevronDown, Sun, Moon, LogOut, LayoutDashboard, Shield, User, BookOpen } from 'lucide-react';
 import { LanguageSwitcher } from "./language-switcher";
 import { getCurrentUser, logout, User as AuthUser } from '@/lib/auth';
+import { useTheme } from "next-themes";
 
 const Navbar = ({ dict }: { dict: any }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,11 +14,15 @@ const Navbar = ({ dict }: { dict: any }) => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   // Locale ni pathdan olish
   const locale = pathname.split("/")[1] || "uz";
 
   useEffect(() => {
+    setMounted(true);
     setUser(getCurrentUser());
   }, [pathname]); // sahifa o'zgarganda qayta tekshir
 
@@ -27,6 +32,18 @@ const Navbar = ({ dict }: { dict: any }) => {
     setUserMenuOpen(false);
     router.push(`/${locale}`);
   }
+
+  const renderThemeToggle = () => {
+    if (!mounted) return <div className="w-9 h-9" />;
+    return (
+      <button 
+        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+        className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
+      >
+        {theme === 'dark' ? <Sun className="w-5 h-5 text-yellow-500" /> : <Moon className="w-5 h-5 text-slate-600" />}
+      </button>
+    );
+  };
 
   const navLinks = [
     {
@@ -119,9 +136,7 @@ const Navbar = ({ dict }: { dict: any }) => {
 
           {/* RIGHT SIDE */}
           <div className="hidden lg:flex items-center gap-3">
-            <button className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
-              <Sun className="w-5 h-5" />
-            </button>
+            {renderThemeToggle()}
             <LanguageSwitcher />
 
             {user ? (
@@ -213,6 +228,7 @@ const Navbar = ({ dict }: { dict: any }) => {
 
           {/* MOBILE TOGGLE */}
           <div className="lg:hidden flex items-center gap-3">
+            {renderThemeToggle()}
             <LanguageSwitcher />
             {user && (
               <Link href={`/${locale}/dashboard`}>
