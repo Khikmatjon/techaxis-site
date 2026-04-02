@@ -1,4 +1,5 @@
 {
+  "announcement": "🚀 Project in Test Mode. We haven't officially launched yet; sections are updated regularly.",
   "navbar": {
     "software": "Software",
     "training": "Training",
@@ -10,14 +11,32 @@
     "courses": "Courses",
     "certificates": "Certificates",
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "history": "Company History",
+    "experience": "Experience",
+    "global_certs": "Global Licenses",
+    "partners": "Our Partners",
+    "dashboard": "My Account",
+    "my_courses": "My Courses",
+    "admin_panel": "Admin Panel",
+    "logout": "Log Out",
+    "industrial_solutions": "Industrial Solutions",
+    "curriculum": "Curriculum"
+  },
+  "common": {
+    "learn_more": "Learn More",
+    "back_to_home": "Back to Home",
+    "loading": "Loading...",
+    "error": "Error"
   },
   "hero": {
     "badge": "#1 Engineering Center in Uzbekistan",
     "title": "Advanced CAD & Engineering Solutions in Uzbekistan",
     "subtitle": "World-class industrial software solutions (SOLIDWORKS, CATIA), professional training courses from scratch, and premier engineering consulting for enterprises.",
     "cta_primary": "Explore Services",
-    "cta_secondary": "Free Consultation"
+    "cta_secondary": "Free Consultation",
+    "trust_text": "industrial enterprises trust us",
+    "expert_badge": "Certified Expert"
   },
   "services": {
     "title": "Our Services",
@@ -39,9 +58,12 @@
   "projects": {
     "title": "Success Stories",
     "subtitle": "Major Projects Executed",
-    "description": "Engineering solutions developed for leading South Korean automotive and tech companies.",
+    "description": "Our engineering solutions project page will be updated soon. Currently, the main focus is on education and professional training.",
     "view_all": "View Full Portfolio",
     "more_projects": "And over 10 more industrial projects...",
+    "updating_title": "Project portfolio being updated...",
+    "updating_desc": "We are currently working on adding our best engineering practices and industrial projects to the portfolio. Until then, you can explore our Training Center courses.",
+    "cta_training": "Jump to Training",
     "items": {
       "tmed": {
         "title": "TMED P1/P2 Telemetry System",
@@ -64,6 +86,47 @@
     "title": "About Company",
     "subtitle": "Engineering & Innovation Center",
     "exp_label": "Project Experience",
-    "partners_label": "Partner Companies"
+    "partners_label": "Partner Companies",
+    "standards_label": "Industry Standards",
+    "desc_1": "TechAxis Group specializes in studying and implementing modern technologies.",
+    "desc_2": "The main focus is on the training center, including teaching SOLIDWORKS, CATIA and other engineering software from scratch to professional level."
+  },
+  "seo": {
+    "title": "TechAxis Group - Advanced CAD & Engineering Solutions in Uzbekistan",
+    "description": "World-class industrial software solutions (SOLIDWORKS, CATIA), professional training courses, and premier engineering consulting.",
+    "keywords": "SOLIDWORKS Uzbekistan, CATIA, engineering services, CAD design, HMC standards, engineering training center"
+  },
+  "footer": {
+    "nav_title": "Navigation",
+    "resources_title": "Resources",
+    "contact_title": "Contact",
+    "services": "Services",
+    "about": "About Us",
+    "projects": "Projects",
+    "software": "Software",
+    "training_center": "Training Center",
+    "support": "Technical Support",
+    "docs": "Documents",
+    "privacy": "Privacy Policy",
+    "location": "Tashkent, Uzbekistan / South Korea",
+    "rights": "All rights reserved.",
+    "slogan": "Leading in Engineering"
+  },
+  "contact": {
+    "phone_label": "Phone",
+    "email_label": "Email",
+    "telegram_label": "Telegram Bot",
+    "address_label": "Address",
+    "title": "Let's discuss your project together",
+    "description": "Contact us for a free consultation on engineering matters.",
+    "form_title": "Send Request",
+    "form_name": "First & Last Name",
+    "form_phone": "Phone Number",
+    "form_email": "Email",
+    "form_message": "Tell us about your project...",
+    "form_description": "Our specialists will contact you shortly.",
+    "send_button": "Send Message",
+    "success_msg": "Sent!",
+    "error_msg": "An error occurred. Please try again."
   }
 }

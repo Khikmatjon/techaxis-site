@@ -12,12 +12,12 @@ export const About = ({ dict }: { dict: any }) => {
       icon: <Award className="w-5 h-5 text-blue-500" /> 
     },
     { 
-      label: dict?.about?.partners_label || "Hamkor korxonalar", 
+      label: dict?.about?.partners_label || "Partners", 
       value: "15+", 
       icon: <Users className="w-5 h-5 text-emerald-500" /> 
     },
     { 
-      label: "Sanoat standartlari", 
+      label: dict?.about?.standards_label || "Industry Standards", 
       value: "100%", 
       icon: <ShieldCheck className="w-5 h-5 text-red-500" /> 
     },
@@ -55,19 +55,19 @@ export const About = ({ dict }: { dict: any }) => {
           <div className="space-y-10">
             <div className="space-y-4">
               <h2 className="text-sm font-black text-cyan-500 uppercase tracking-widest">
-                {dict?.navbar?.about || "Kompaniya haqida"}
+                {dict?.navbar?.about || "About Us"}
               </h2>
               <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight">
-                {dict?.about?.subtitle || "Muhandislik va Tajriba Markazi"}
+                {dict?.about?.subtitle}
               </h3>
             </div>
 
             <div className="space-y-6">
               <p className="text-lg lg:text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                <span className="text-[#0084FF] font-black">TechAxis Group</span> — zamonaviy texnologiyalarni o'rganish va amaliyotga joriy etishga ixtisoslashgan.
+                <span className="text-[#0084FF] font-black">TechAxis Group</span> — {dict?.about?.desc_1}
               </p>
               <p className="text-slate-500 dark:text-slate-500 leading-relaxed">
-                Asosiy e'tibor ta'lim markaziga, jumladan SOLIDWORKS, CATIA va boshqa injiniring dasturlarini 0 dan professional darajagacha o'rgatishga qaratilgan.
+                {dict?.about?.desc_2}
               </p>
             </div>
 
@@ -92,7 +92,7 @@ export const About = ({ dict }: { dict: any }) => {
 
             <div className="pt-4">
               <button className="group flex items-center gap-3 bg-[#0084FF] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl active:scale-95">
-                <span>{dict?.projects?.view_all || "Barcha loyihalar"}</span>
+                <span>{dict?.projects?.view_all || "View Portfolio"}</span>
                 <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </button>
             </div>

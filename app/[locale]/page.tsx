@@ -55,7 +55,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 <img className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900" src="https://i.pravatar.cc/100?img=12" alt="Client 3" />
               </div>
               <div className="text-sm font-medium text-slate-600 dark:text-slate-400">
-                <span className="text-slate-900 dark:text-white font-bold">50+</span> sanoat korxonalari<br/>ishonchini qozongan
+                <span className="text-slate-900 dark:text-white font-bold">50+</span> {dict?.hero?.trust_text}
               </div>
             </div>
           </div>
@@ -74,11 +74,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               {/* O'ylab topilgan interfeys elementi (Hovered badge) */}
               <div className="absolute bottom-8 right-8 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-4 rounded-2xl shadow-xl flex items-center gap-4 border border-slate-100 dark:border-slate-800">
                 <div className="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-inner">
-                  SW
+                   SW
                 </div>
                 <div>
-                  <div className="text-sm font-black text-slate-900 dark:text-white">SOLIDWORKS</div>
-                  <div className="text-xs font-semibold text-emerald-500">Certified Expert</div>
+                   <div className="text-sm font-black text-slate-900 dark:text-white">SOLIDWORKS</div>
+                   <div className="text-xs font-semibold text-emerald-500">{dict?.hero?.expert_badge}</div>
                 </div>
               </div>
             </div>

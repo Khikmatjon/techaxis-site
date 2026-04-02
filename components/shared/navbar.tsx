@@ -5,12 +5,12 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, ChevronDown, Sun, Moon, LogOut, LayoutDashboard, Shield, User, BookOpen } from 'lucide-react';
 import { LanguageSwitcher } from "./language-switcher";
-import { getCurrentUser, logout, User as AuthUser } from '@/lib/auth';
+import { logoutAction } from '@/lib/actions/auth-actions';
 import { useTheme } from "next-themes";
 
 const Navbar = ({ dict }: { dict: any }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [user, setUser] = useState<any | null>(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
@@ -23,14 +23,20 @@ const Navbar = ({ dict }: { dict: any }) => {
 
   useEffect(() => {
     setMounted(true);
-    setUser(getCurrentUser());
+    // Severdan sessiyani tekshirish
+    fetch('/api/auth/session')
+      .then(res => res.json())
+      .then(data => {
+        if (data.user) setUser(data.user);
+        else setUser(null);
+      });
   }, [pathname]); // sahifa o'zgarganda qayta tekshir
 
-  function handleLogout() {
-    logout();
+  async function handleLogout() {
+    await logoutAction(); // Server action cookieni o'chiradi
     setUser(null);
     setUserMenuOpen(false);
-    router.push(`/${locale}`);
+    router.refresh(); // Statusni yangilash uchun
   }
 
   const renderThemeToggle = () => {
@@ -60,7 +66,7 @@ const Navbar = ({ dict }: { dict: any }) => {
       href: `/${locale}/#projects`,
       items: [
         { label: dict?.navbar?.projects || "Loyihalar", href: `/${locale}/#projects` },
-        { label: "Sanoat yechimlari", href: `/${locale}/#services` }
+        { label: dict?.navbar?.industrial_solutions || "Sanoat yechimlari", href: `/${locale}/#services` }
       ]
     },
     {
@@ -68,29 +74,29 @@ const Navbar = ({ dict }: { dict: any }) => {
       href: `/${locale}/training`,
       items: [
         { label: dict?.navbar?.courses || "Kurslar", href: `/${locale}/dashboard` },
-        { label: "O'quv dasturi", href: `/${locale}/training#curriculum` }
+        { label: dict?.navbar?.curriculum || "O'quv dasturi", href: `/${locale}/training#curriculum` }
       ]
     },
     {
       title: dict?.navbar?.about || "Haqimizda",
       href: `/${locale}/#about`,
       items: [
-        { label: "Kompaniya tarixi", href: `/${locale}/#about` },
-        { label: dict?.about?.exp_label || "Tajriba", href: `/${locale}/#about` }
+        { label: dict?.navbar?.history || "Kompaniya tarixi", href: `/${locale}/#about` },
+        { label: dict?.navbar?.experience || dict?.about?.exp_label || "Tajriba", href: `/${locale}/#about` }
       ]
     },
     {
       title: dict?.navbar?.certificates || "Sertifikatlar",
       href: `/${locale}/#certificates`,
       items: [
-        { label: "Xalqaro litsenziyalar", href: `/${locale}/#about` },
-        { label: "Hamkorlarimiz", href: `/${locale}/#about` }
+        { label: dict?.navbar?.global_certs || "Xalqaro litsenziyalar", href: `/${locale}/#about` },
+        { label: dict?.navbar?.partners || "Hamkorlarimiz", href: `/${locale}/#about` }
       ]
     }
   ];
 
   return (
-    <nav className="fixed top-0 w-full z-[100] bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800 transition-all duration-300">
+    <nav className="sticky top-0 w-full z-[100] bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
 
@@ -173,7 +179,7 @@ const Navbar = ({ dict }: { dict: any }) => {
                           className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
                         >
                           <LayoutDashboard className="w-4 h-4 text-blue-500" />
-                          Mening kabinetem
+                          {dict?.navbar?.dashboard || "Mening kabinetim"}
                         </Link>
                         <Link
                           href={`/${locale}/dashboard`}
@@ -181,7 +187,7 @@ const Navbar = ({ dict }: { dict: any }) => {
                           className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
                         >
                           <BookOpen className="w-4 h-4 text-emerald-500" />
-                          Kurslarim
+                          {dict?.navbar?.my_courses || "Kurslarim"}
                         </Link>
                         {user.role === "admin" && (
                           <Link
@@ -190,7 +196,7 @@ const Navbar = ({ dict }: { dict: any }) => {
                             className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
                           >
                             <Shield className="w-4 h-4 text-purple-500" />
-                            Admin panel
+                            {dict?.navbar?.admin_panel || "Admin panel"}
                           </Link>
                         )}
                         <div className="border-t border-slate-100 dark:border-slate-800 pt-1 mt-1">
@@ -199,7 +205,7 @@ const Navbar = ({ dict }: { dict: any }) => {
                             className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors"
                           >
                             <LogOut className="w-4 h-4" />
-                            Chiqish
+                            {dict?.navbar?.logout || "Chiqish"}
                           </button>
                         </div>
                       </div>
@@ -271,7 +277,7 @@ const Navbar = ({ dict }: { dict: any }) => {
                     onClick={() => setIsOpen(false)}
                     className="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-xl transition-colors"
                   >
-                    <LayoutDashboard className="w-4 h-4" /> Kabinetem
+                    <LayoutDashboard className="w-4 h-4" /> {dict?.navbar?.dashboard || "Kabinetim"}
                   </Link>
                   {user.role === "admin" && (
                     <Link
@@ -279,14 +285,14 @@ const Navbar = ({ dict }: { dict: any }) => {
                       onClick={() => setIsOpen(false)}
                       className="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-purple-500 hover:bg-purple-50 dark:hover:bg-purple-500/10 rounded-xl transition-colors"
                     >
-                      <Shield className="w-4 h-4" /> Admin panel
+                      <Shield className="w-4 h-4" /> {dict?.navbar?.admin_panel || "Admin panel"}
                     </Link>
                   )}
                   <button
                     onClick={() => { handleLogout(); setIsOpen(false); }}
                     className="w-full flex items-center gap-2 px-4 py-3 text-sm font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-colors"
                   >
-                    <LogOut className="w-4 h-4" /> Chiqish
+                    <LogOut className="w-4 h-4" /> {dict?.navbar?.logout || "Chiqish"}
                   </button>
                 </>
               ) : (

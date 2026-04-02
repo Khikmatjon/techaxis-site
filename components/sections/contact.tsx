@@ -34,14 +34,14 @@ export const Contact = ({ dict }: { dict: any }) => {
     },
     {
       icon: <Mail className="w-6 h-6 text-emerald-600" />,
-      label: "Email",
+      label: dict?.contact?.email_label || "Email",
       value: "info@techaxis.uz",
       color: "bg-emerald-50",
       href: "mailto:info@techaxis.uz"
     },
     {
       icon: <MessageSquareText className="w-6 h-6 text-cyan-600" />,
-      label: "Telegram Bot",
+      label: dict?.contact?.telegram_label || "Telegram Bot",
       value: "TechAxis info",
       color: "bg-cyan-50",
       href: "https://t.me/techaxisinfobot"
@@ -49,7 +49,7 @@ export const Contact = ({ dict }: { dict: any }) => {
     {
       icon: <MapPin className="w-6 h-6 text-indigo-600" />,
       label: dict?.contact?.address_label || "Manzil",
-      value: "Toshkent, Uzbekistan",
+      value: dict?.footer?.location || "Toshkent, Uzbekistan",
       color: "bg-indigo-50"
     }
   ];
@@ -66,10 +66,10 @@ export const Contact = ({ dict }: { dict: any }) => {
                 {dict?.navbar?.contact || "Bog'lanish"}
               </h2>
               <h3 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight">
-                {dict?.contact?.title || "Loyihangizni birgalikda muhokama qilaylik"}
+                {dict?.contact?.title}
               </h3>
               <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed max-w-md">
-                {dict?.contact?.description || "Biz bilan bog'laning va muhandislik masalalari bo'yicha bepul konsultatsiya oling."}
+                {dict?.contact?.description}
               </p>
             </div>
 
@@ -108,27 +108,36 @@ export const Contact = ({ dict }: { dict: any }) => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <h4 className="text-2xl font-black text-slate-900 dark:text-white">
-                    {dict?.contact?.form_title || "So'rov yuborish"}
+                    {dict?.contact?.form_title}
                   </h4>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Tez orada bizning mutaxassislar siz bilan bog'lanadi.</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{dict?.contact?.form_description}</p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <input
-                    name="name"
-                    required
-                    type="text"
-                    placeholder={dict?.contact?.form_name || "Ismingiz"}
-                    className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-900 dark:text-white focus:ring-2 ring-blue-500 outline-none transition-all placeholder:text-slate-400 font-medium"
-                  />
-                  <input
-                    name="email"
-                    required
-                    type="email"
-                    placeholder={dict?.contact?.form_email || "Email"}
-                    className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-900 dark:text-white focus:ring-2 ring-blue-500 outline-none transition-all placeholder:text-slate-400 font-medium"
-                  />
-                </div>
+                  <div className="space-y-4">
+                    <input
+                      name="name"
+                      required
+                      type="text"
+                      placeholder={dict?.contact?.form_name}
+                      className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-900 dark:text-white focus:ring-2 ring-blue-500 outline-none transition-all placeholder:text-slate-400 font-medium"
+                    />
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <input
+                        name="email"
+                        required
+                        type="email"
+                        placeholder={dict?.contact?.form_email}
+                        className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-900 dark:text-white focus:ring-2 ring-blue-500 outline-none transition-all placeholder:text-slate-400 font-medium"
+                      />
+                      <input
+                        name="phone"
+                        required
+                        type="tel"
+                        placeholder={dict?.contact?.form_phone}
+                        className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-900 dark:text-white focus:ring-2 ring-blue-500 outline-none transition-all placeholder:text-slate-400 font-medium"
+                      />
+                    </div>
+                  </div>
 
                 <select
                   name="service"
@@ -136,15 +145,15 @@ export const Contact = ({ dict }: { dict: any }) => {
                 >
                   <option value="SOLIDWORKS">SOLIDWORKS</option>
                   <option value="CATIA">CATIA</option>
-                  <option value="Training">{dict?.navbar?.training || "O'quv kursi"}</option>
-                  <option value="Design">{dict?.services?.design || "Muhandislik xizmati"}</option>
+                  <option value="Training">{dict?.navbar?.training}</option>
+                  <option value="Design">{dict?.services?.design}</option>
                 </select>
 
                 <textarea
                   name="message"
                   required
                   rows={4}
-                  placeholder={dict?.contact?.form_message || "Loyihangiz haqida yozing..."}
+                  placeholder={dict?.contact?.form_message}
                   className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-900 dark:text-white focus:ring-2 ring-blue-500 outline-none transition-all placeholder:text-slate-400 font-medium resize-none shadow-inner"
                 ></textarea>
 
@@ -160,12 +169,12 @@ export const Contact = ({ dict }: { dict: any }) => {
                     <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
                   ) : status === "success" ? (
                     <>
-                      <span>Yuborildi!</span>
+                      <span>{dict?.contact?.success_msg}</span>
                       <CheckCircle2 size={22} />
                     </>
                   ) : (
                     <>
-                      <span>{dict?.contact?.send_button || "Xabar yuborish"}</span>
+                      <span>{dict?.contact?.send_button}</span>
                       <Send size={18} className="rotate-45" />
                     </>
                   )}
@@ -173,7 +182,7 @@ export const Contact = ({ dict }: { dict: any }) => {
 
                 {status === "error" && (
                   <p className="text-center text-red-500 text-sm font-bold animate-pulse">
-                    Xatolik yuz berdi. Iltimos, qaytadan urining.
+                    {dict?.contact?.error_msg}
                   </p>
                 )}
               </form>

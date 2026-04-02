@@ -1,4 +1,5 @@
 {
+  "announcement": "🚀 Sayt sinov rejimida ishlamoqda. Biz rasman hali ish boshlamadik, ayrim bo'limlar muntazam yangilanmoqda.",
   "navbar": {
     "software": "Dasturlar",
     "training": "Ta'lim",
@@ -10,14 +11,32 @@
     "courses": "Kurslar",
     "certificates": "Sertifikatlar",
     "login": "Kirish",
-    "register": "Ro'yxatdan o'tish"
+    "register": "Ro'yxatdan o'tish",
+    "history": "Kompaniya tarixi",
+    "experience": "Tajriba",
+    "global_certs": "Xalqaro litsenziyalar",
+    "partners": "Hamkorlarimiz",
+    "dashboard": "Mening kabinetim",
+    "my_courses": "Kurslarim",
+    "admin_panel": "Admin panel",
+    "logout": "Chiqish",
+    "industrial_solutions": "Sanoat yechimlari",
+    "curriculum": "O'quv dasturi"
+  },
+  "common": {
+    "learn_more": "Batafsil ma'lumot",
+    "back_to_home": "Bosh sahifaga qaytish",
+    "loading": "Yuklanmoqda...",
+    "error": "Xatolik"
   },
   "hero": {
     "badge": "O'zbekistondagi 1-raqamli Muhandislik Markazi",
     "title": "O'zbekistonda ilg'or CAD va Muhandislik Yechimlari",
     "subtitle": "Sanoat korxonalari va injenerlar uchun xalqaro darajadagi dasturiy ta'minotlar (SOLIDWORKS, CATIA), noldan boshlab professional o'quv kurslari va muhandislik konsaltingi.",
     "cta_primary": "Xizmatlar bilan tanishish",
-    "cta_secondary": "Bepul konsultatsiya"
+    "cta_secondary": "Bepul konsultatsiya",
+    "trust_text": "sanoat korxonalari ishonchini qozongan",
+    "expert_badge": "Sertifikatlangan Ekspert"
   },
   "services": {
     "title": "Bizning xizmatlar",
@@ -39,9 +58,12 @@
   "projects": {
     "title": "Muvaffaqiyat hikoyalari",
     "subtitle": "Amalga oshirilgan yirik loyihalar",
-    "description": "Janubiy Koreyaning yetakchi avtomobil va texnologiya kompaniyalari uchun ishlab chiqilgan muhandislik yechimlari.",
+    "description": "Muhandislik yechimlari bo'yicha loyihalarimiz sahifasi tez kunda yangilanadi. Hozirda asosiy e'tibor ta'lim va professional treninglarga qaratilgan.",
     "view_all": "To'liq portfolioni ko'rish",
     "more_projects": "Va yana 10 dan ortiq sanoat loyihalari...",
+    "updating_title": "Loyihalar portfeli yangilanmoqda...",
+    "updating_desc": "Biz ayni paytda eng yaxshi muhandislik amaliyotlarimiz va sanoat loyihalarimizni portfolioga kiritish ustida ishlayapmiz. Ungacha, siz O'quv markazimizning kurslari va treninglari bilan tanishishingiz mumkin.",
+    "cta_training": "Treninglarga o'tish",
     "items": {
       "tmed": {
         "title": "TMED P1/P2 Telemetriya Tizimi",
@@ -62,8 +84,49 @@
   },
   "about": {
     "title": "Kompaniya haqida",
-    "subtitle": "Muhandislik va Innovatsiyalar Markazi",
+    "subtitle": "Muhandislik va Tajriba Markazi",
     "exp_label": "Loyiha tajribasi",
-    "partners_label": "Hamkor korxonalar"
+    "partners_label": "Hamkor korxonalar",
+    "standards_label": "Sanoat standartlari",
+    "desc_1": "TechAxis Group — zamonaviy texnologiyalarni o'rganish va amaliyotga joriy etishga ixtisoslashgan.",
+    "desc_2": "Asosiy e'tibor ta'lim markaziga, jumladan SOLIDWORKS, CATIA va boshqa injiniring dasturlarini 0 dan professional darajagacha o'rgatishga qaratilgan."
+  },
+  "seo": {
+    "title": "TechAxis Group - O'zbekistonda ilg'or CAD va Muhandislik Yechimlari",
+    "description": "Sanoat korxonalari va injenerlar uchun xalqaro darajadagi dasturiy ta'minotlar (SOLIDWORKS, CATIA), professional o'quv kurslari va muhandislik konsaltingi.",
+    "keywords": "SOLIDWORKS O'zbekiston, CATIA, muhandislik xizmatlari, CAD dizayni, HMC standartlari, muhandislik o'quv markazi"
+  },
+  "footer": {
+    "nav_title": "Navigatsiya",
+    "resources_title": "Resurslar",
+    "contact_title": "Bog'lanish",
+    "services": "Xizmatlar",
+    "about": "Biz haqimizda",
+    "projects": "Loyihalar",
+    "software": "Dasturiy ta'minot",
+    "training_center": "O'quv markazi",
+    "support": "Texnik ko'llab-quvvatlash",
+    "docs": "Hujjatlar",
+    "privacy": "Maxfiylik siyosati",
+    "location": "Toshkent, O'zbekiston",
+    "rights": "Barcha huquqlar himoyalangan.",
+    "slogan": "Muhandislikda yetakchilik sari"
+  },
+  "contact": {
+    "phone_label": "Telefon",
+    "email_label": "Email",
+    "telegram_label": "Telegram Bot",
+    "address_label": "Manzil",
+    "title": "Loyihangizni birgalikda muhokama qilaylik",
+    "description": "Biz bilan bog'laning va muhandislik masalalari bo'yicha bepul konsultatsiya oling.",
+    "form_title": "So'rov yuborish",
+    "form_name": "Ism Familiya",
+    "form_phone": "Telefon raqam",
+    "form_email": "Email",
+    "form_message": "Loyihangiz haqida yozing...",
+    "form_description": "Tez orada bizning mutaxassislar siz bilan bog'lanadi.",
+    "send_button": "Xabar yuborish",
+    "success_msg": "Yuborildi!",
+    "error_msg": "Xatolik yuz berdi. Qaytadan urining."
   }
 }

@@ -4,8 +4,14 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 export async function sendToTelegram(formData: FormData) {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    console.error("TELEGRAM_BOT_TOKEN yoki TELEGRAM_CHAT_ID topilmadi!");
+    return { success: false, error: "Server sozlamalarida xatolik" };
+  }
+
   const name = formData.get("name") as string;
   const email = formData.get("email") as string;
+  const phone = formData.get("phone") as string;
   const service = formData.get("service") as string;
   const message = formData.get("message") as string;
 
@@ -14,6 +20,7 @@ export async function sendToTelegram(formData: FormData) {
 🆕 <b>Yangi so'rov (TechAxis.uz)</b>
 
 👤 <b>Ism:</b> ${name}
+📞 <b>Tel:</b> ${phone}
 📧 <b>Email:</b> ${email}
 🛠 <b>Xizmat:</b> ${service}
 📝 <b>Xabar:</b> ${message}

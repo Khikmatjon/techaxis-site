@@ -20,7 +20,7 @@ export const Projects = ({ dict }: { dict: any }) => {
             </h3>
           </div>
           <p className="text-slate-600 dark:text-slate-400 max-w-sm text-lg leading-relaxed">
-             Muhandislik yechimlari bo'yicha loyihalarimiz sahifasi tez kunda yangilanadi. Hozirda asosiy e'tibor ta'lim va professional treninglarga qaratilgan.
+             {dict?.projects?.description}
           </p>
         </div>
 
@@ -38,10 +38,10 @@ export const Projects = ({ dict }: { dict: any }) => {
                  <Lightbulb className="w-10 h-10 text-blue-600" />
               </div>
               <h4 className="text-3xl font-black text-slate-900 dark:text-white">
-                Loyihalar portfelni yangilanmoqda...
+                {dict?.projects?.updating_title}
               </h4>
               <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed font-medium">
-                Biz ayni paytda eng yaxshi muhandislik amaliyotlarimiz va sanoat loyihalarimizni portfolioga kiritish ustida ishlayapmiz. Ungacha, siz <strong>O'quv markazimizning kurslari va treninglari</strong> bilan tanishishingiz mumkin.
+                {dict?.projects?.updating_desc}
               </p>
               
               <div className="pt-4 flex justify-center">
@@ -49,7 +49,7 @@ export const Projects = ({ dict }: { dict: any }) => {
                   href="#services" 
                   className="group flex items-center gap-3 bg-[#0084FF] hover:bg-blue-600 text-white px-8 py-5 rounded-full font-black transition-all shadow-xl hover:shadow-2xl active:scale-95 cursor-pointer"
                 >
-                  Treninglarga o'tish
+                  {dict?.projects?.cta_training}
                   <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </a>
               </div>

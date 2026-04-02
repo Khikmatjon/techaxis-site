@@ -96,7 +96,7 @@ export const Services = ({ dict }: { dict: any }) => {
 
               {/* Bottom Action Bar */}
               <div className="relative z-10 mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                <span>Batafsil ma'lumot</span>
+                <span>{dict?.common?.learn_more || "Batafsil ma'lumot"}</span>
                 <div className="w-8 h-8 rounded-full bg-slate-50 dark:bg-slate-800 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/30 flex items-center justify-center transition-colors">
                   <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
