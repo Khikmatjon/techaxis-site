@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { encrypt } from "@/lib/session";
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
+import { checkRateLimit, resetRateLimit } from "@/lib/rate-limit";
 
 export async function loginAction(formData: FormData) {
   try {
@@ -18,6 +19,13 @@ export async function loginAction(formData: FormData) {
     const email = emailRaw.trim();
 
     console.log("LOGIN_ATTEMPT:", { email });
+
+    // Rate limiting: 5 urinishdan keyin 15 daqiqa blok
+    const rateCheck = checkRateLimit(`login:${email}`);
+    if (!rateCheck.allowed) {
+      const minutes = Math.ceil((rateCheck.remainingMs || 0) / 60000);
+      return { error: `Juda ko'p urinish. ${minutes} daqiqadan so'ng qayta urinib ko'ring.` };
+    }
 
     const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
 
@@ -33,6 +41,9 @@ export async function loginAction(formData: FormData) {
     }
 
     console.log("LOGIN_SUCCESS:", { id: user.id, role: user.role });
+    
+    // Muvaffaqiyatli kirishda rate limit tozalash
+    resetRateLimit(`login:${email}`);
 
     const expires = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 soat
     const session = await encrypt({
