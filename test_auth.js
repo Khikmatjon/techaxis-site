@@ -1,7 +1,7 @@
 const { Client } = require('pg');
 async function testDb() {
   const client = new Client({
-    connectionString: "postgresql://postgres.aovaqntrhpxbwmtohyiy:Techaxis_2026_Secure_Db@aws-1-ap-south-1.pooler.supabase.com:6543/postgres"
+    connectionString: "postgresql://postgres.aovaqntrhpxbwmtohyiy:Techaxis_2026_Secure_Db@aws-1-ap-south-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
   });
   try {
     await client.connect();
