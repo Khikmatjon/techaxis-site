@@ -128,17 +128,7 @@ export default function LoginPage({ params }: { params: { locale: string } }) {
             </button>
           </form>
 
-          {/* Demo hisoblar */}
-          <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
-            <p className="text-xs font-semibold text-blue-400 mb-2">🔑 Demo hisoblar:</p>
-            <div className="space-y-1 text-xs text-slate-400 font-mono">
-              <p><span className="text-slate-300">student@techaxis.uz</span> / 1234</p>
-              <p><span className="text-slate-300">student2@techaxis.uz</span> / 1234</p>
-              <p><span className="text-slate-300">admin@techaxis.uz</span> / admin123</p>
-            </div>
-          </div>
-
-          <p className="mt-6 text-center text-slate-500 text-sm">
+          <p className="mt-8 text-center text-slate-500 text-sm">
             Hisob yo'qmi?{" "}
             <Link href={`/${locale}/register`} className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
               Ro'yxatdan o'ting

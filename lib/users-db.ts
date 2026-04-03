@@ -14,41 +14,24 @@ export interface UserDB {
   pendingPayments: string[];
 }
 
-// Demo usermiz uchun hashlangan parol generatori
-const DEMO_USERS: UserDB[] = [
+// Ishlab chiqarish (Production) uchun asosiy admin hisobi
+const PRODUCTION_ADMINS: UserDB[] = [
   {
-    id: "admin-1",
-    name: "TechAxis Admin",
-    email: "admin@techaxis.uz",
-    hash: bcrypt.hashSync("admin123", 10),
+    id: "admin-production-1",
+    name: "Hikmatjon",
+    email: "Hikmatjon0903", // Login sifatida ishlatiladi
+    hash: bcrypt.hashSync("jon@0903jon", 10),
     role: "admin",
     enrolledCourses: ["solidworks-basics", "catia-v5", "3d-modeling", "plm-systems"],
     pendingPayments: []
-  },
-  {
-    id: "student-1",
-    name: "Alisher Karimov",
-    email: "student@techaxis.uz",
-    hash: bcrypt.hashSync("1234", 10),
-    role: "student",
-    enrolledCourses: ["solidworks-basics"],
-    pendingPayments: []
-  },
-  {
-    id: "student-2",
-    name: "Malika Toshmatova",
-    email: "student2@techaxis.uz",
-    hash: bcrypt.hashSync("1234", 10),
-    role: "student",
-    enrolledCourses: [],
-    pendingPayments: ["catia-v5"]
   }
 ];
 
 export function getUsers(): UserDB[] {
   if (!fs.existsSync(DB_PATH)) {
-    fs.writeFileSync(DB_PATH, JSON.stringify(DEMO_USERS, null, 2));
-    return DEMO_USERS;
+    fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
+    fs.writeFileSync(DB_PATH, JSON.stringify(PRODUCTION_ADMINS, null, 2));
+    return PRODUCTION_ADMINS;
   }
   return JSON.parse(fs.readFileSync(DB_PATH, "utf-8"));
 }
