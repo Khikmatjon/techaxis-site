@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { getCurrentUser, logout, refreshCurrentUser, requestCoursePayment, User } from "@/lib/auth";
 import { COURSES, Course, getTotalLessons } from "@/lib/courses";
 import {
   BookOpen, Lock, Play, Star, Clock, Users, ChevronRight,
   LogOut, Zap, CreditCard, CheckCircle, AlertCircle, X
 } from "lucide-react";
-import AuthGuard from "@/components/shared/auth-guard";
+import { getStudentDashboardAction, requestPaymentAction } from "@/lib/actions/student-actions";
+import { logoutAction } from "@/lib/actions/auth-actions";
+import { UserDB } from "@/lib/users-db";
 
 // ---- TO'LOV MODALI ----
 function PaymentModal({ course, onClose, onSuccess }: { course: Course; onClose: () => void; onSuccess: () => void }) {
@@ -20,8 +21,7 @@ function PaymentModal({ course, onClose, onSuccess }: { course: Course; onClose:
   async function handlePay() {
     if (!method) return;
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    requestCoursePayment(course.id);
+    await requestPaymentAction(course.id);
     setLoading(false);
     setSent(true);
     setTimeout(() => { onClose(); onSuccess(); }, 2000);
@@ -172,18 +172,25 @@ function DashboardContent() {
   const params = useParams();
   const locale = (params?.locale as string) || "uz";
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserDB | null>(null);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [toast, setToast] = useState("");
 
+  const loadData = async () => {
+    try {
+      const dbUser = await getStudentDashboardAction();
+      setUser(dbUser);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
-    const u = refreshCurrentUser();
-    setUser(u);
+    loadData();
   }, []);
 
-  function handleLogout() {
-    logout();
-    router.push(`/${locale}/login`);
+  async function handleLogout() {
+    await logoutAction();
   }
 
   function showToast(msg: string) {
@@ -193,8 +200,8 @@ function DashboardContent() {
 
   if (!user) return null;
 
-  const enrolledCount = user.enrolledCourses.length;
-  const pendingCount = user.pendingPayments.length;
+  const enrolledCount = user.enrolledCourses?.length || 0;
+  const pendingCount = user.pendingPayments?.length || 0;
 
   return (
     <div className="min-h-screen bg-slate-950">
@@ -210,9 +217,8 @@ function DashboardContent() {
         <PaymentModal
           course={selectedCourse}
           onClose={() => setSelectedCourse(null)}
-          onSuccess={() => {
-            const u = refreshCurrentUser();
-            setUser(u);
+          onSuccess={async () => {
+            await loadData();
             showToast("To'lov ma'lumoti yuborildi! Admin tekshirmoqda.");
           }}
         />
@@ -230,7 +236,7 @@ function DashboardContent() {
 
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2 bg-slate-800 rounded-full px-3 py-1.5">
-              <img src={user.avatar || `https://i.pravatar.cc/100?u=${user.email}`} alt={user.name} className="w-6 h-6 rounded-full" />
+              <img src={`https://i.pravatar.cc/100?u=${user.email}`} alt={user.name} className="w-6 h-6 rounded-full" />
               <span className="text-slate-300 text-sm font-medium">{user.name}</span>
             </div>
             <button
@@ -280,8 +286,8 @@ function DashboardContent() {
             <CourseCard
               key={course.id}
               course={course}
-              isEnrolled={user.enrolledCourses.includes(course.id)}
-              isPending={user.pendingPayments.includes(course.id)}
+              isEnrolled={user.enrolledCourses?.includes(course.id) || false}
+              isPending={user.pendingPayments?.includes(course.id) || false}
               locale={locale}
               onBuy={() => setSelectedCourse(course)}
             />
@@ -293,9 +299,5 @@ function DashboardContent() {
 }
 
 export default function DashboardPage() {
-  return (
-    <AuthGuard>
-      <DashboardContent />
-    </AuthGuard>
-  );
+  return <DashboardContent />;
 }

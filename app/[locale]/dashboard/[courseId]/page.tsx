@@ -3,25 +3,36 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { getCurrentUser, logout, User } from "@/lib/auth";
 import { getCourseById, Course, Module, getTotalLessons } from "@/lib/courses";
 import {
   Play, Lock, FileText, Image, ChevronLeft, Clock, BookOpen,
   Star, Users, CheckCircle, LogOut, Zap
 } from "lucide-react";
-import AuthGuard from "@/components/shared/auth-guard";
+import { getStudentDashboardAction } from "@/lib/actions/student-actions";
+import { logoutAction } from "@/lib/actions/auth-actions";
+import { UserDB } from "@/lib/users-db";
+
 
 function CourseContent({ courseId }: { courseId: string }) {
   const params = useParams();
   const locale = (params?.locale as string) || "uz";
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserDB | null>(null);
   const [course, setCourse] = useState<Course | null>(null);
   const [openModules, setOpenModules] = useState<Set<string>>(new Set());
 
+  const loadData = async () => {
+    try {
+      const dbUser = await getStudentDashboardAction();
+      setUser(dbUser);
+    } catch (e) {
+      console.error(e);
+      router.push(`/${locale}/login`);
+    }
+  };
+
   useEffect(() => {
-    const u = getCurrentUser();
-    setUser(u);
+    loadData();
     const c = getCourseById(courseId);
     if (!c) { router.push(`/${locale}/dashboard`); return; }
     setCourse(c);
@@ -29,9 +40,8 @@ function CourseContent({ courseId }: { courseId: string }) {
     if (c.modules.length > 0) setOpenModules(new Set([c.modules[0].id]));
   }, [courseId, locale, router]);
 
-  function handleLogout() {
-    logout();
-    router.push(`/${locale}/login`);
+  async function handleLogout() {
+    await logoutAction();
   }
 
   function toggleModule(id: string) {
@@ -44,7 +54,7 @@ function CourseContent({ courseId }: { courseId: string }) {
 
   if (!user || !course) return null;
 
-  const isEnrolled = user.enrolledCourses.includes(course.id) || user.role === "admin";
+  const isEnrolled = user.enrolledCourses?.includes(course.id) || user.role === "admin";
   const totalLessons = getTotalLessons(course);
   const totalDone = 0;
 
@@ -67,7 +77,7 @@ function CourseContent({ courseId }: { courseId: string }) {
 
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2 bg-slate-800 rounded-full px-3 py-1.5">
-              <img src={user.avatar || `https://i.pravatar.cc/100?u=${user.email}`} alt={user.name} className="w-6 h-6 rounded-full" />
+              <img src={`https://i.pravatar.cc/100?u=${user.email}`} alt={user.name} className="w-6 h-6 rounded-full" />
               <span className="text-slate-300 text-sm font-medium">{user.name}</span>
             </div>
             <button onClick={handleLogout} className="flex items-center gap-1.5 text-slate-400 hover:text-red-400 transition-colors text-sm">
@@ -137,7 +147,7 @@ function CourseContent({ courseId }: { courseId: string }) {
                     {openModules.has(mod.id) && (
                       <div className="border-t border-slate-800/50">
                         {mod.lessons.map((lesson, li) => {
-                          const canAccess = isEnrolled || lesson.isFree;
+                           const canAccess = isEnrolled || lesson.isFree;
                           return (
                             <div key={lesson.id} className={`flex items-center gap-4 px-5 py-3.5 hover:bg-slate-800/30 transition-colors ${!canAccess ? "opacity-60" : ""}`}>
                               <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-slate-800 text-xs font-bold text-slate-400">
@@ -228,9 +238,5 @@ function CourseContent({ courseId }: { courseId: string }) {
 export default function CoursePage() {
   const params = useParams();
   const courseId = params?.courseId as string;
-  return (
-    <AuthGuard>
-      <CourseContent courseId={courseId} />
-    </AuthGuard>
-  );
+  return <CourseContent courseId={courseId} />;
 }

@@ -3,24 +3,24 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { getCurrentUser, getAllUsers, assignCourse, logout, User } from "@/lib/auth";
 import { COURSES, getCourseById, getTotalLessons } from "@/lib/courses";
 import {
   Users, BookOpen, CheckCircle, Clock, LogOut, Zap,
   Shield, UserCheck, ChevronRight, Search, X, Award, AlertTriangle
 } from "lucide-react";
-import AuthGuard from "@/components/shared/auth-guard";
+import { getAdminUsersAction, assignCourseAction } from "@/lib/actions/admin-actions";
+import { logoutAction } from "@/lib/actions/auth-actions";
+import { UserDB } from "@/lib/users-db";
 
 // ---- FOYDALANUVCHI KARTOCHKASI ----
-function UserRow({ user, onAssign }: { user: User; onAssign: (userId: string, courseId: string) => void }) {
+function UserRow({ user, onAssign }: { user: UserDB; onAssign: (userId: string, courseId: string) => void }) {
   const [open, setOpen] = useState(false);
   const [assigning, setAssigning] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
   async function handleAssign(courseId: string) {
     setAssigning(courseId);
-    await new Promise((r) => setTimeout(r, 600));
-    onAssign(user.id, courseId);
+    await onAssign(user.id, courseId);
     setAssigning(null);
     setSuccess(courseId);
     setTimeout(() => setSuccess(null), 2000);
@@ -33,7 +33,7 @@ function UserRow({ user, onAssign }: { user: User; onAssign: (userId: string, co
         onClick={() => setOpen(!open)}
       >
         <img
-          src={user.avatar || `https://i.pravatar.cc/100?u=${user.email}`}
+          src={`https://i.pravatar.cc/100?u=${user.email}`}
           alt={user.name}
           className="w-10 h-10 rounded-full border-2 border-slate-700 shrink-0"
         />
@@ -41,7 +41,7 @@ function UserRow({ user, onAssign }: { user: User; onAssign: (userId: string, co
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <p className="text-white font-semibold text-sm truncate">{user.name}</p>
-            {user.pendingPayments.length > 0 && (
+            {user.pendingPayments && user.pendingPayments.length > 0 && (
               <span className="bg-amber-500/20 text-amber-400 text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shrink-0">
                 <AlertTriangle className="w-3 h-3" /> {user.pendingPayments.length} kutilmoqda
               </span>
@@ -53,7 +53,7 @@ function UserRow({ user, onAssign }: { user: User; onAssign: (userId: string, co
         <div className="flex items-center gap-3 shrink-0">
           <div className="hidden sm:flex gap-1">
             <span className="bg-emerald-500/20 text-emerald-400 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">
-              <CheckCircle className="w-3 h-3" /> {user.enrolledCourses.length}
+              <CheckCircle className="w-3 h-3" /> {user.enrolledCourses ? user.enrolledCourses.length : 0}
             </span>
           </div>
           <ChevronRight className={`w-4 h-4 text-slate-500 transition-transform ${open ? "rotate-90" : ""}`} />
@@ -65,8 +65,8 @@ function UserRow({ user, onAssign }: { user: User; onAssign: (userId: string, co
           <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Kurslarni boshqarish</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {COURSES.map((course) => {
-              const enrolled = user.enrolledCourses.includes(course.id);
-              const pending = user.pendingPayments.includes(course.id);
+              const enrolled = user.enrolledCourses?.includes(course.id);
+              const pending = user.pendingPayments?.includes(course.id);
               const isSuccess = success === course.id;
 
               return (
@@ -125,24 +125,38 @@ function AdminContent() {
   const params = useParams();
   const locale = (params?.locale as string) || "uz";
   const router = useRouter();
-  const [admin, setAdmin] = useState<User | null>(null);
-  const [users, setUsers] = useState<User[]>([]);
+  const [admin, setAdmin] = useState<any>(null);
+  const [users, setUsers] = useState<UserDB[]>([]);
   const [search, setSearch] = useState("");
 
+  const loadData = async () => {
+    try {
+       const res = await fetch('/api/auth/session');
+       const sessionData = await res.json();
+       if (sessionData.user) setAdmin(sessionData.user);
+
+       const allStudents = await getAdminUsersAction();
+       setUsers(allStudents);
+    } catch(e) {
+       console.error(e);
+    }
+  };
+
   useEffect(() => {
-    const u = getCurrentUser();
-    setAdmin(u);
-    setUsers(getAllUsers());
+    loadData();
   }, []);
 
-  function handleAssign(userId: string, courseId: string) {
-    assignCourse(userId, courseId);
-    setUsers(getAllUsers()); // yangilash
+  async function handleAssign(userId: string, courseId: string) {
+    try {
+       await assignCourseAction(userId, courseId);
+       await loadData(); // refresh the view
+    } catch(e) {
+       console.error("Failed to assign course", e);
+    }
   }
 
-  function handleLogout() {
-    logout();
-    router.push(`/${locale}/login`);
+  async function handleLogout() {
+    await logoutAction();
   }
 
   const filtered = users.filter(
@@ -304,9 +318,5 @@ function AdminContent() {
 }
 
 export default function AdminPage() {
-  return (
-    <AuthGuard requireAdmin>
-      <AdminContent />
-    </AuthGuard>
-  );
+  return <AdminContent />;
 }

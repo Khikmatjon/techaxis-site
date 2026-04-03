@@ -3,27 +3,38 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { getCurrentUser, logout, User } from "@/lib/auth";
 import { getLessonById, getCourseById, Course, Lesson, Module } from "@/lib/courses";
 import {
   ChevronLeft, ChevronRight, Play, FileText, Image as ImageIcon,
   Lock, BookOpen, CheckCircle, LogOut, Zap, Clock, Download,
   ChevronDown, ChevronUp
 } from "lucide-react";
-import AuthGuard from "@/components/shared/auth-guard";
+import { getStudentDashboardAction } from "@/lib/actions/student-actions";
+import { logoutAction } from "@/lib/actions/auth-actions";
+import { UserDB } from "@/lib/users-db";
+
 
 function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: string }) {
   const params = useParams();
   const locale = (params?.locale as string) || "uz";
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserDB | null>(null);
   const [course, setCourse] = useState<Course | null>(null);
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [activeTab, setActiveTab] = useState<"video" | "text" | "pdf" | "images">("video");
 
+  const loadData = async () => {
+    try {
+      const dbUser = await getStudentDashboardAction();
+      setUser(dbUser);
+    } catch (e) {
+      console.error(e);
+      router.push(`/${locale}/login`);
+    }
+  };
+
   useEffect(() => {
-    const u = getCurrentUser();
-    setUser(u);
+    loadData();
 
     const result = getLessonById(courseId, lessonId);
     if (!result) { router.push(`/${locale}/dashboard`); return; }
@@ -39,7 +50,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
 
   if (!user || !course || !lesson) return null;
 
-  const isEnrolled = user.enrolledCourses.includes(course.id) || user.role === "admin";
+  const isEnrolled = user.enrolledCourses?.includes(course.id) || user.role === "admin";
   const canAccess = isEnrolled || lesson.isFree;
 
   // O'tgan/keyingi darsni topish
@@ -49,9 +60,8 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
   const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentIndex + 1] : null;
   const nextCanAccess = nextLesson && (isEnrolled || nextLesson.isFree);
 
-  function handleLogout() {
-    logout();
-    router.push(`/${locale}/login`);
+  async function handleLogout() {
+    await logoutAction();
   }
 
   const tabs = [
@@ -221,7 +231,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
                 </h3>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {lesson.images.map((img, i) => (
-                    <img key={i} src={img} alt={`Rasm ${i + 1}`} className="w-full rounded-xl border border-slate-700 object-cover" />
+                     <img key={i} src={img} alt={`Rasm ${i + 1}`} className="w-full rounded-xl border border-slate-700 object-cover" />
                   ))}
                 </div>
               </div>
@@ -262,9 +272,5 @@ export default function LessonPage() {
   const params = useParams();
   const courseId = params?.courseId as string;
   const lessonId = params?.lessonId as string;
-  return (
-    <AuthGuard>
-      <LessonContent courseId={courseId} lessonId={lessonId} />
-    </AuthGuard>
-  );
+  return <LessonContent courseId={courseId} lessonId={lessonId} />;
 }

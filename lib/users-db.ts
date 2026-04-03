@@ -10,7 +10,8 @@ export interface UserDB {
   email: string;
   hash: string;
   role: "student" | "admin";
-  courses: string[];
+  enrolledCourses: string[];
+  pendingPayments: string[];
 }
 
 // Demo usermiz uchun hashlangan parol generatori
@@ -21,15 +22,26 @@ const DEMO_USERS: UserDB[] = [
     email: "admin@techaxis.uz",
     hash: bcrypt.hashSync("admin123", 10),
     role: "admin",
-    courses: ["catia-v5", "solidworks-pro"]
+    enrolledCourses: ["solidworks-basics", "catia-v5", "3d-modeling", "plm-systems"],
+    pendingPayments: []
   },
   {
     id: "student-1",
-    name: "Demo Student",
+    name: "Alisher Karimov",
     email: "student@techaxis.uz",
     hash: bcrypt.hashSync("1234", 10),
     role: "student",
-    courses: []
+    enrolledCourses: ["solidworks-basics"],
+    pendingPayments: []
+  },
+  {
+    id: "student-2",
+    name: "Malika Toshmatova",
+    email: "student2@techaxis.uz",
+    hash: bcrypt.hashSync("1234", 10),
+    role: "student",
+    enrolledCourses: [],
+    pendingPayments: ["catia-v5"]
   }
 ];
 
@@ -60,7 +72,8 @@ export function addUser(name: string, email: string, pass: string) {
     email,
     hash: bcrypt.hashSync(pass, 10),
     role: "student",
-    courses: []
+    enrolledCourses: [],
+    pendingPayments: []
   };
 
   users.push(newUser);
