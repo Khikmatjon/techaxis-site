@@ -13,18 +13,19 @@ import { logoutAction } from "@/lib/actions/auth-actions";
 import { UserDB } from "@/lib/users-db";
 
 // ---- TO'LOV MODALI ----
-function PaymentModal({ course, onClose, onSuccess }: { course: Course; onClose: () => void; onSuccess: () => void }) {
+function PaymentModal({ course, locale, router, onClose, onSuccess }: { 
+  course: Course; 
+  locale: string;
+  router: any;
+  onClose: () => void; 
+  onSuccess: () => void;
+}) {
   const [method, setMethod] = useState<"click" | "payme" | null>(null);
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
 
   async function handlePay() {
-    if (!method) return;
-    setLoading(true);
-    await requestPaymentAction(course.id);
-    setLoading(false);
-    setSent(true);
-    setTimeout(() => { onClose(); onSuccess(); }, 2000);
+    router.push(`/${locale}/checkout/${course.id}`);
   }
 
   return (
@@ -180,8 +181,12 @@ function DashboardContent() {
     try {
       const dbUser = await getStudentDashboardAction();
       setUser(dbUser);
-    } catch (e) {
-      console.error(e);
+    } catch (e: any) {
+      console.error("DASHBOARD_ERROR:", e.message);
+      // Agar foydalanuvchi topilmasa (baza reset bo'lgan bo'lsa) login'ga qaytarish
+      if (e.message?.includes("User not found") || e.message?.includes("Unauthorized")) {
+        router.push(`/${locale}/login?error=session_lost`);
+      }
     }
   };
 
@@ -198,7 +203,20 @@ function DashboardContent() {
     setTimeout(() => setToast(""), 3000);
   }
 
-  if (!user) return null;
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-6 p-4">
+        <div className="relative">
+           <div className="w-16 h-16 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
+           <Zap className="absolute inset-0 m-auto w-6 h-6 text-blue-500 animate-pulse" />
+        </div>
+        <div className="text-center space-y-2">
+           <h2 className="text-xl font-bold text-white">Yuklanmoqda...</h2>
+           <p className="text-slate-500 text-sm">Dashboard tayyorlanmoqda, iltimos kuting</p>
+        </div>
+      </div>
+    );
+  }
 
   const enrolledCount = user.enrolledCourses?.length || 0;
   const pendingCount = user.pendingPayments?.length || 0;
@@ -216,6 +234,8 @@ function DashboardContent() {
       {selectedCourse && (
         <PaymentModal
           course={selectedCourse}
+          locale={locale}
+          router={router}
           onClose={() => setSelectedCourse(null)}
           onSuccess={async () => {
             await loadData();

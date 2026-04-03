@@ -30,6 +30,13 @@ export async function assignCourseAction(userId: string, courseId: string) {
   if (!user.enrolledCourses.includes(courseId)) {
     user.enrolledCourses.push(courseId);
     user.pendingPayments = user.pendingPayments.filter(id => id !== courseId);
+    
+    // To'lov holatini yangilash
+    const payment = user.payments?.find(p => p.courseId === courseId && p.status === "pending");
+    if (payment) {
+      payment.status = "completed";
+    }
+
     saveUsers(users);
   }
 

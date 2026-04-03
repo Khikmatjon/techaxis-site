@@ -54,3 +54,56 @@ export async function sendToTelegram(formData: FormData) {
   }
 }
 
+export async function handlePay(locale: string, courseId: string) {
+  return { redirect: `/${locale}/checkout/${courseId}` };
+}
+
+export async function sendPaymentNotification(data: {
+  userName: string;
+  userEmail: string;
+  courseTitle: string;
+  plan: string;
+  amount: number | string;
+  method: string;
+  status: string;
+  receiptUrl?: string;
+}) {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
+
+  const methodEmoji: Record<string, string> = {
+    click: "🔵",
+    payme: "🟢",
+    visa: "💳",
+    transfer: "🏦"
+  };
+
+  const text = `
+🆕 <b>Yangi To'lov So'rovi!</b>
+
+👤 <b>O'quvchi:</b> ${data.userName}
+📧 <b>Email:</b> ${data.userEmail}
+📚 <b>Kurs:</b> ${data.courseTitle}
+💎 <b>Tarif:</b> ${data.plan.toUpperCase()}
+💰 <b>Summa:</b> ${data.amount}
+🛠 <b>Usul:</b> ${methodEmoji[data.method] || "❓"} ${data.method.toUpperCase()}
+🕒 <b>Holat:</b> ${data.status === "completed" ? "✅ To'langan" : "⏳ Kutilmoqda"}
+
+${data.receiptUrl ? `📎 <b>Chek:</b> <a href="${data.receiptUrl}">Rasmni ko'rish</a>` : "❌ Chek yuklanmagan"}
+
+📅 <b>Vaqt:</b> ${new Date().toLocaleString("uz-UZ")}
+  `;
+
+  try {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: text,
+        parse_mode: "HTML",
+      }),
+    });
+  } catch (error) {
+    console.error("Telegram notification failed:", error);
+  }
+}

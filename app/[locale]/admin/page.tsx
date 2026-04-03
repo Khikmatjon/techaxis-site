@@ -67,6 +67,8 @@ function UserRow({ user, onAssign }: { user: UserDB; onAssign: (userId: string, 
             {COURSES.map((course) => {
               const enrolled = user.enrolledCourses?.includes(course.id);
               const pending = user.pendingPayments?.includes(course.id);
+              // Yangi payments arrayidan ushbu kurs uchun ma'lumot qidiramiz
+              const paymentDetail = user.payments?.find(p => p.courseId === course.id && p.status === "pending");
               const isSuccess = success === course.id;
 
               return (
@@ -83,7 +85,12 @@ function UserRow({ user, onAssign }: { user: UserDB; onAssign: (userId: string, 
                   <img src={course.thumbnail} alt={course.title} className="w-10 h-10 rounded-lg object-cover shrink-0" />
                   <div className="flex-1 min-w-0">
                     <p className="text-white text-xs font-semibold truncate">{course.title}</p>
-                    <p className="text-slate-500 text-xs">{getTotalLessons(course)} dars</p>
+                    {paymentDetail && (
+                      <div className="flex flex-wrap gap-1 mt-1">
+                         <span className="text-[9px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded font-bold uppercase">{paymentDetail.plan}</span>
+                         <span className="text-[9px] bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded font-bold uppercase">{paymentDetail.method}</span>
+                      </div>
+                    )}
                   </div>
                   {enrolled ? (
                     <span className="text-emerald-400 shrink-0">
@@ -92,23 +99,34 @@ function UserRow({ user, onAssign }: { user: UserDB; onAssign: (userId: string, 
                   ) : isSuccess ? (
                     <span className="text-emerald-400 text-xs font-bold shrink-0">✅ Berildi</span>
                   ) : (
-                    <button
-                      onClick={() => handleAssign(course.id)}
-                      disabled={assigning === course.id}
-                      className={`shrink-0 text-xs font-bold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 ${
-                        pending
-                          ? "bg-amber-500/30 hover:bg-amber-500/50 text-amber-300 border border-amber-500/30"
-                          : "bg-blue-500/20 hover:bg-blue-500/40 text-blue-400 border border-blue-500/20"
-                      }`}
-                    >
-                      {assigning === course.id ? (
-                        <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                      ) : pending ? (
-                        <><UserCheck className="w-3.5 h-3.5" /> Tasdiqlash</>
-                      ) : (
-                        <><Award className="w-3.5 h-3.5" /> Berish</>
+                    <div className="flex flex-col gap-1 items-end">
+                      {paymentDetail?.receiptUrl && (
+                        <a 
+                          href={paymentDetail.receiptUrl} 
+                          target="_blank" 
+                          className="text-[10px] text-blue-400 hover:underline flex items-center gap-1"
+                        >
+                          Chekni ko'rish
+                        </a>
                       )}
-                    </button>
+                      <button
+                        onClick={() => handleAssign(course.id)}
+                        disabled={assigning === course.id}
+                        className={`shrink-0 text-xs font-bold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 ${
+                          pending
+                            ? "bg-amber-500/30 hover:bg-amber-500/50 text-amber-300 border border-amber-500/30"
+                            : "bg-blue-500/20 hover:bg-blue-500/40 text-blue-400 border border-blue-500/20"
+                        }`}
+                      >
+                        {assigning === course.id ? (
+                          <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                        ) : pending ? (
+                          <><UserCheck className="w-3.5 h-3.5" /> Tasdiqlash</>
+                        ) : (
+                          <><Award className="w-3.5 h-3.5" /> Berish</>
+                        )}
+                      </button>
+                    </div>
                   )}
                 </div>
               );

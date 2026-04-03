@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id              String         @id @default(uuid())
+  name            String
+  email           String         @unique
+  hash            String
+  role            String         @default("student") // "student", "admin"
+  enrolledCourses String[]       // PostgreSQL array of strings ['courseId1']
+  pendingPayments String[]
+  payments        Payment[]
+
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model Payment {
+  id         String   @id @default(uuid())
+  courseId   String
+  plan       String
+  amount     Float
+  method     String // "transfer", "visa" vs
+  status     String // "pending", "completed", "failed"
+  receiptUrl String?
+  
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+}

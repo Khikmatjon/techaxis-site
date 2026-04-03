@@ -157,7 +157,7 @@ export default function CourseLandingPage({ params }: { params: { slug: string, 
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Link href={`/${locale}/register`} className="flex-1 sm:flex-none">
+                <Link href={`/${locale}/checkout/${course.id}`} className="flex-1 sm:flex-none">
                   <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-black py-5 px-10 rounded-2xl text-lg flex items-center justify-center gap-2 transition-all shadow-xl shadow-blue-500/25 hover:-translate-y-1">
                     Ro‘yxatdan o‘tish <ChevronRight className="w-5 h-5" />
                   </button>
@@ -350,7 +350,7 @@ export default function CourseLandingPage({ params }: { params: { slug: string, 
                        </li>
                      ))}
                   </ul>
-                  <Link href={`/${locale}/register`}>
+                  <Link href={`/${locale}/checkout/${course.id}`}>
                     <button className={`w-full py-4 rounded-2xl font-bold transition-all ${plan.best ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg' : 'bg-slate-800 hover:bg-slate-700 text-white'}`}>
                       {plan.cta}
                     </button>
@@ -387,7 +387,7 @@ export default function CourseLandingPage({ params }: { params: { slug: string, 
               <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight">Hoziroq boshlang va professionalga aylaning</h2>
               <p className="text-blue-100 text-lg opacity-80">TechAxis bilan xalqaro muhandislik olamiga ilk qadamingizni qo'ying.</p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
-                 <Link href={`/${locale}/register`}>
+                 <Link href={`/${locale}/checkout/${course.id}`}>
                    <button className="bg-white text-blue-700 font-black py-5 px-12 rounded-2xl text-xl hover:scale-105 transition-transform shadow-2xl">
                      Kursni boshlash
                    </button>

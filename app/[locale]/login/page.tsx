@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { loginAction } from "@/lib/actions/auth-actions";
 import { Eye, EyeOff, Mail, Lock, Zap, ArrowRight } from "lucide-react";
 
-export default function LoginPage({ params }: { params: { locale: string } }) {
-  const locale = params?.locale || "uz";
+export default function LoginPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = use(params);
   const router = useRouter();
   const [form, setForm] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
