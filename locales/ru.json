@@ -21,7 +21,9 @@
     "admin_panel": "Админ панель",
     "logout": "Выход",
     "industrial_solutions": "Пром. решения",
-    "curriculum": "Уч. программа"
+    "curriculum": "Уч. программа",
+    "blog": "База знаний",
+    "free_resources": "Бесплатные материалы"
   },
   "common": {
     "learn_more": "Узнать больше",

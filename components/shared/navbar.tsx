@@ -78,6 +78,14 @@ const Navbar = ({ dict }: { dict: any }) => {
       ]
     },
     {
+      title: dict?.navbar?.resources_title || "Resurslar",
+      href: `/${locale}/blog`,
+      items: [
+        { label: dict?.navbar?.blog || "Bilimlar bazasi", href: `/${locale}/blog` },
+        { label: dict?.navbar?.free_resources || "Bepul materiallar", href: `/${locale}/free` }
+      ]
+    },
+    {
       title: dict?.navbar?.about || "Haqimizda",
       href: `/${locale}/#about`,
       items: [

@@ -21,7 +21,9 @@
     "admin_panel": "Admin panel",
     "logout": "Chiqish",
     "industrial_solutions": "Sanoat yechimlari",
-    "curriculum": "O'quv dasturi"
+    "curriculum": "O'quv dasturi",
+    "blog": "Bilimlar bazasi",
+    "free_resources": "Bepul materiallar"
   },
   "common": {
     "learn_more": "Batafsil ma'lumot",

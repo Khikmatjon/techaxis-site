@@ -21,7 +21,9 @@
     "admin_panel": "Admin Panel",
     "logout": "Log Out",
     "industrial_solutions": "Industrial Solutions",
-    "curriculum": "Curriculum"
+    "curriculum": "Curriculum",
+    "blog": "Knowledge Base",
+    "free_resources": "Free Resources"
   },
   "common": {
     "learn_more": "Learn More",

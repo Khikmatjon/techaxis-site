@@ -4,6 +4,7 @@ import { Services } from "@/components/sections/services";
 import { Projects } from "@/components/sections/projects";
 import { Contact } from "@/components/sections/contact";
 import { About } from "@/components/sections/about";
+import { CoursesPreview } from "@/components/sections/courses-preview";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -87,7 +88,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* PASTDAGI KOMPONENTLARGA DICT UZATILGAN */}
+      {/* 2. COURSES PREVIEW - NEW SEO SECTION */}
+      <CoursesPreview dict={dict} locale={locale} />
+
+      {/* 3. OTHER SECTIONS */}
       <section id="services">
         <Services dict={dict} />
       </section>
