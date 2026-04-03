@@ -140,9 +140,11 @@ function DashboardContent() {
   const [user, setUser] = useState<UserDB | null>(null);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [toast, setToast] = useState("");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const loadData = async () => {
     try {
+      setErrorMsg(null);
       const dbUser = await getStudentDashboardAction();
       setUser(dbUser);
     } catch (e: any) {
@@ -150,6 +152,8 @@ function DashboardContent() {
       // Agar foydalanuvchi topilmasa (baza reset bo'lgan bo'lsa) login'ga qaytarish
       if (e.message?.includes("User not found") || e.message?.includes("Unauthorized")) {
         router.push(`/${locale}/login?error=session_lost`);
+      } else {
+        setErrorMsg("Ma'lumotlarni yuklashda xatolik yuz berdi. Iltimos, administratorga murojaat qiling yoki sahifani yangilang.");
       }
     }
   };
@@ -165,6 +169,30 @@ function DashboardContent() {
   function showToast(msg: string) {
     setToast(msg);
     setTimeout(() => setToast(""), 3000);
+  }
+
+  if (errorMsg) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-6 p-4 text-center">
+        <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mb-2">
+          <AlertCircle className="w-8 h-8 text-red-500" />
+        </div>
+        <h2 className="text-xl font-bold text-white">Xatolik!</h2>
+        <p className="text-slate-400 text-sm max-w-sm">{errorMsg}</p>
+        <button 
+          onClick={loadData}
+          className="mt-4 px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-medium transition-colors"
+        >
+          Qayta urinish
+        </button>
+        <button 
+          onClick={handleLogout}
+          className="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-medium transition-colors"
+        >
+          Tizimdan chiqish
+        </button>
+      </div>
+    );
   }
 
   if (!user) {
