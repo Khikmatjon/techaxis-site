@@ -32,7 +32,7 @@ export async function assignCourseAction(userId: string, courseId: string) {
 
   // Pending dan olib tashlash
   if (user.pendingPayments.includes(courseId)) {
-    updates.pendingPayments = user.pendingPayments.filter((id) => id !== courseId);
+    updates.pendingPayments = user.pendingPayments.filter((paymentId: string) => paymentId !== courseId);
   }
 
   if (Object.keys(updates).length > 0) {
