@@ -6,28 +6,19 @@ import Link from "next/link";
 import { COURSES, Course, getTotalLessons } from "@/lib/courses";
 import {
   BookOpen, Lock, Play, Star, Clock, Users, ChevronRight,
-  LogOut, Zap, CreditCard, CheckCircle, AlertCircle, X
+  LogOut, Zap, CheckCircle, AlertCircle, X
 } from "lucide-react";
-import { getStudentDashboardAction, requestPaymentAction } from "@/lib/actions/student-actions";
+import { getStudentDashboardAction } from "@/lib/actions/student-actions";
 import { logoutAction } from "@/lib/actions/auth-actions";
 import { UserDB } from "@/lib/users-db";
 
 // ---- TO'LOV MODALI ----
-function PaymentModal({ course, locale, router, onClose, onSuccess }: { 
+function PaymentModal({ course, locale, router, onClose }: { 
   course: Course; 
   locale: string;
   router: any;
   onClose: () => void; 
-  onSuccess: () => void;
 }) {
-  const [method, setMethod] = useState<"click" | "payme" | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [sent, setSent] = useState(false);
-
-  async function handlePay() {
-    router.push(`/${locale}/checkout/${course.id}`);
-  }
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
       <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md shadow-2xl">
@@ -39,53 +30,26 @@ function PaymentModal({ course, locale, router, onClose, onSuccess }: {
         </div>
 
         <div className="p-6 space-y-5">
-          {sent ? (
-            <div className="text-center py-4 space-y-3">
-              <CheckCircle className="w-12 h-12 text-emerald-500 mx-auto" />
-              <p className="text-white font-bold text-lg">To'lov ma'lumoti yuborildi!</p>
-              <p className="text-slate-400 text-sm">Admin tekshirib, kurs ochiladi</p>
+          <div className="bg-slate-800 rounded-xl p-4 flex items-center gap-3">
+            <img src={course.thumbnail} alt={course.title} className="w-14 h-14 rounded-lg object-cover" />
+            <div>
+              <p className="text-white font-semibold text-sm">{course.title}</p>
+              <p className="text-2xl font-black text-blue-400">{course.priceUZS.toLocaleString()} UZS</p>
             </div>
-          ) : (
-            <>
-              <div className="bg-slate-800 rounded-xl p-4 flex items-center gap-3">
-                <img src={course.thumbnail} alt={course.title} className="w-14 h-14 rounded-lg object-cover" />
-                <div>
-                  <p className="text-white font-semibold text-sm">{course.title}</p>
-                  <p className="text-2xl font-black text-blue-400">{course.priceUZS.toLocaleString()} UZS</p>
-                </div>
-              </div>
+          </div>
 
-              <div className="space-y-2">
-                <p className="text-sm font-semibold text-slate-400">To'lov usulini tanlang:</p>
-                {(["click", "payme"] as const).map((m) => (
-                  <button
-                    key={m}
-                    onClick={() => setMethod(m)}
-                    className={`w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all font-semibold ${method === m ? "border-blue-500 bg-blue-500/10 text-white" : "border-slate-700 text-slate-400 hover:border-slate-600"}`}
-                  >
-                    <CreditCard className="w-5 h-5" />
-                    {m === "click" ? "Click" : "Payme"}
-                    {method === m && <CheckCircle className="w-4 h-4 text-blue-400 ml-auto" />}
-                  </button>
-                ))}
-              </div>
+          <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
+            <p className="text-blue-300 text-sm">
+              <strong>To'lov usuli:</strong> 9860 4545 1111 1111 karta raqamiga o'tkazma amalga oshiriladi. Chek yuklash orqali to'lovingiz tasdiqlanadi.
+            </p>
+          </div>
 
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 flex gap-3">
-                <AlertCircle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-                <p className="text-amber-300 text-sm">
-                  <strong>Demo rejim:</strong> Haqiqiy to'lov amalga oshmaydi. Admin to'lovni tasdiqlagan so'ng kurs ochiladi.
-                </p>
-              </div>
-
-              <button
-                onClick={handlePay}
-                disabled={!method || loading}
-                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3.5 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {loading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : "To'lov qilish →"}
-              </button>
-            </>
-          )}
+          <button
+            onClick={() => router.push(`/${locale}/checkout/${course.id}`)}
+            className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2"
+          >
+            To'lovga o'tish →
+          </button>
         </div>
       </div>
     </div>
@@ -237,10 +201,6 @@ function DashboardContent() {
           locale={locale}
           router={router}
           onClose={() => setSelectedCourse(null)}
-          onSuccess={async () => {
-            await loadData();
-            showToast("To'lov ma'lumoti yuborildi! Admin tekshirmoqda.");
-          }}
         />
       )}
 

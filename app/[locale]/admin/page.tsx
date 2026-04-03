@@ -149,14 +149,11 @@ function AdminContent() {
 
   const loadData = async () => {
     try {
-       const res = await fetch('/api/auth/session');
-       const sessionData = await res.json();
-       if (sessionData.user) setAdmin(sessionData.user);
-
        const allStudents = await getAdminUsersAction();
        setUsers(allStudents);
     } catch(e) {
        console.error(e);
+       router.push(`/${locale}/login`);
     }
   };
 
