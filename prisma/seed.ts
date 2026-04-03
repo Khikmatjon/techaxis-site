@@ -2,15 +2,23 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcryptjs";
 
-const connectionString =
-  "postgresql://postgres.aovaqntrhpxbwmtohyiy:jon%400903jon@aws-1-ap-south-1.pooler.supabase.com:5432/postgres";
+// .env dan o'qiydi — to'g'ridan-to'g'ri yozilmagan
+const connectionString = process.env.DATABASE_URL;
+
+if (!connectionString) {
+  throw new Error("DATABASE_URL .env faylida topilmadi!");
+}
 
 const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  const adminEmail = "hikmatjon0903";
-  const adminPassword = "jon@0903jon";
+  const adminEmail = process.env.ADMIN_EMAIL || "hikmatjon0903";
+  const adminPassword = process.env.ADMIN_PASSWORD;
+
+  if (!adminPassword) {
+    throw new Error("ADMIN_PASSWORD .env faylida topilmadi!");
+  }
 
   const existing = await prisma.user.findUnique({ where: { email: adminEmail } });
 
