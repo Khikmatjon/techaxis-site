@@ -14,12 +14,11 @@ export interface UserDB {
   pendingPayments: string[];
 }
 
-// Ishlab chiqarish (Production) uchun asosiy admin hisobi
 const PRODUCTION_ADMINS: UserDB[] = [
   {
     id: "admin-production-1",
     name: "Hikmatjon",
-    email: "Hikmatjon0903", // Login sifatida ishlatiladi
+    email: "hikmatjon0903",
     hash: bcrypt.hashSync("jon@0903jon", 10),
     role: "admin",
     enrolledCourses: ["solidworks-basics", "catia-v5", "3d-modeling", "plm-systems"],
@@ -28,16 +27,35 @@ const PRODUCTION_ADMINS: UserDB[] = [
 ];
 
 export function getUsers(): UserDB[] {
-  if (!fs.existsSync(DB_PATH)) {
-    fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
-    fs.writeFileSync(DB_PATH, JSON.stringify(PRODUCTION_ADMINS, null, 2));
-    return PRODUCTION_ADMINS;
+  try {
+    const dbDir = path.dirname(DB_PATH);
+    if (!fs.existsSync(dbDir)) {
+      fs.mkdirSync(dbDir, { recursive: true });
+    }
+
+    if (!fs.existsSync(DB_PATH)) {
+      fs.writeFileSync(DB_PATH, JSON.stringify(PRODUCTION_ADMINS, null, 2));
+      return PRODUCTION_ADMINS;
+    }
+
+    const data = fs.readFileSync(DB_PATH, "utf-8");
+    return JSON.parse(data);
+  } catch (error) {
+    console.error("Database error in getUsers:", error);
+    return PRODUCTION_ADMINS; // Failsafe: hamma narsa buzilsa ham admin kira olsin
   }
-  return JSON.parse(fs.readFileSync(DB_PATH, "utf-8"));
 }
 
 export function saveUsers(users: UserDB[]) {
-  fs.writeFileSync(DB_PATH, JSON.stringify(users, null, 2));
+  try {
+    const dbDir = path.dirname(DB_PATH);
+    if (!fs.existsSync(dbDir)) {
+        fs.mkdirSync(dbDir, { recursive: true });
+    }
+    fs.writeFileSync(DB_PATH, JSON.stringify(users, null, 2));
+  } catch (error) {
+    console.error("Database save error:", error);
+  }
 }
 
 export function findUserByEmail(email: string) {
