@@ -1,8 +1,8 @@
 "use server";
 
+import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { encrypt } from "@/lib/session";
-import { findUserByEmail, addUser } from "@/lib/users-db";
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
 
@@ -19,13 +19,12 @@ export async function loginAction(formData: FormData) {
 
     console.log("LOGIN_ATTEMPT:", { email });
 
-    const user = findUserByEmail(email);
+    const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
+
     if (!user) {
       console.warn("LOGIN_FAILED: User not found", email);
       return { error: "Email yoki parol noto'g'ri" };
     }
-
-    console.log("LOGIN_USER_FOUND:", { id: user.id, email: user.email });
 
     const isPasswordCorrect = await bcrypt.compare(password, user.hash);
     if (!isPasswordCorrect) {
@@ -35,22 +34,19 @@ export async function loginAction(formData: FormData) {
 
     console.log("LOGIN_SUCCESS:", { id: user.id, role: user.role });
 
-    // Sessiya yaratish
     const expires = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 soat
-    const sessionData = {
+    const session = await encrypt({
       user: { id: user.id, email: user.email, role: user.role, name: user.name },
-      expires
-    };
-    const session = await encrypt(sessionData);
+      expires,
+    });
 
-    // Cooke o'rnatish
     const cookieStore = await cookies();
     cookieStore.set("session", session, {
       expires,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       path: "/",
-      sameSite: "lax"
+      sameSite: "lax",
     });
 
     return { success: true, role: user.role };
@@ -70,37 +66,43 @@ export async function registerAction(formData: FormData) {
       return { error: "Iltimos, barcha maydonlarni to'ldiring" };
     }
 
-    const email = emailRaw.trim();
+    const email = emailRaw.trim().toLowerCase();
 
     console.log("REGISTER_ATTEMPT:", { name, email });
 
-    if (findUserByEmail(email)) {
-      console.warn("REGISTER_FAILED: Email already exists", email);
-      return { error: "Bu email yoki login bilan allaqachon ro'yxatdan o'tilgan" };
+    const existing = await prisma.user.findUnique({ where: { email } });
+    if (existing) {
+      return { error: "Bu email bilan allaqachon ro'yxatdan o'tilgan" };
     }
 
-    const newUser = addUser(name, email.toLowerCase(), password);
-    if (!newUser) {
-      console.error("REGISTER_FAILED: Database error while adding user", email);
-      return { error: "Ro'yxatdan o'tishda texnik xatolik yuz berdi" };
-    }
+    const hash = await bcrypt.hash(password, 10);
 
-    console.log("REGISTER_SUCCESS:", { id: newUser.id, email: newUser.email });
+    const newUser = await prisma.user.create({
+      data: {
+        name,
+        email,
+        hash,
+        role: "student",
+        enrolledCourses: [],
+        pendingPayments: [],
+      },
+    });
 
-    // Sessiya yaratish
+    console.log("REGISTER_SUCCESS:", { id: newUser.id });
+
     const expires = new Date(Date.now() + 2 * 60 * 60 * 1000);
-    const session = await encrypt({ 
-      user: { id: newUser.id, email: newUser.email, role: newUser.role, name: newUser.name }, 
-      expires 
+    const session = await encrypt({
+      user: { id: newUser.id, email: newUser.email, role: newUser.role, name: newUser.name },
+      expires,
     });
 
     const cookieStore = await cookies();
-    cookieStore.set("session", session, { 
-      expires, 
+    cookieStore.set("session", session, {
+      expires,
       httpOnly: true,
       path: "/",
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production"
+      secure: process.env.NODE_ENV === "production",
     });
 
     return { success: true };

@@ -1,68 +1,68 @@
 "use server";
 
+import { prisma } from "@/lib/prisma";
 import { get_session } from "@/lib/session";
-import { getUsers, saveUsers } from "@/lib/users-db";
 import { sendPaymentNotification } from "./send-telegram";
 import { getCourseById } from "../courses";
 
 export async function getStudentDashboardAction() {
   const session = await get_session();
-  if (!session) {
-    throw new Error("Unauthorized");
-  }
+  if (!session) throw new Error("Unauthorized");
 
-  const users = getUsers();
-  const user = users.find((u) => u.id === session.user.id);
-  
-  if (!user) {
-    throw new Error("User not found");
-  }
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    include: { payments: true },
+  });
+
+  if (!user) throw new Error("User not found");
 
   return user;
 }
 
-export async function requestPaymentAction(courseId: string, plan: string, amount: number, method: string) {
+export async function requestPaymentAction(
+  courseId: string,
+  plan: string,
+  amount: number,
+  method: string
+) {
   const session = await get_session();
-  if (!session) {
-    throw new Error("Unauthorized");
-  }
+  if (!session) throw new Error("Unauthorized");
 
-  const users = getUsers();
-  const user = users.find((u) => u.id === session.user.id);
-  
-  if (!user) {
-    throw new Error("User not found");
-  }
+  const user = await prisma.user.findUnique({ where: { id: session.user.id } });
+  if (!user) throw new Error("User not found");
 
-  // To'lov ob'ektini yaratish
-  const newPayment = {
-    id: `pay-${Date.now()}`,
-    courseId,
-    plan,
-    amount,
-    method: method as any,
-    status: (method === "visa" ? "completed" : "pending") as "completed" | "pending", 
-    createdAt: new Date().toISOString()
-  };
+  const status = method === "visa" ? "completed" : "pending";
 
-  if (!user.payments) user.payments = [];
-  user.payments.push(newPayment);
+  // To'lov yaratish
+  const payment = await prisma.payment.create({
+    data: {
+      courseId,
+      plan,
+      amount,
+      method,
+      status,
+      userId: user.id,
+    },
+  });
 
-  // Agar to'lov yakunlangan bo'lsa (simulyatsiya)
-  if (newPayment.status === "completed") {
+  // Kursni ulash (visa bo'lsa darhol, boshqalarda pending)
+  if (status === "completed") {
     if (!user.enrolledCourses.includes(courseId)) {
-        user.enrolledCourses.push(courseId);
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { enrolledCourses: { push: courseId } },
+      });
     }
   } else {
-    // Agar kutilayotgan bo'lsa
     if (!user.pendingPayments.includes(courseId) && !user.enrolledCourses.includes(courseId)) {
-        user.pendingPayments.push(courseId);
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { pendingPayments: { push: courseId } },
+      });
     }
   }
 
-  saveUsers(users);
-
-  // Telegram bildirishnomasi
+  // Telegram xabarnoma
   const course = getCourseById(courseId);
   await sendPaymentNotification({
     userName: user.name,
@@ -71,40 +71,34 @@ export async function requestPaymentAction(courseId: string, plan: string, amoun
     plan,
     amount,
     method,
-    status: newPayment.status
+    status,
   });
 
-  return { success: true, paymentId: newPayment.id };
+  return { success: true, paymentId: payment.id };
 }
 
 export async function submitPaymentProofAction(paymentId: string, receiptUrl: string) {
   const session = await get_session();
   if (!session) throw new Error("Unauthorized");
 
-  const users = getUsers();
-  const user = users.find((u) => u.id === session.user.id);
-  if (!user) throw new Error("User not found");
+  const payment = await prisma.payment.update({
+    where: { id: paymentId },
+    data: { receiptUrl },
+    include: { user: true },
+  });
 
-  const payment = user.payments?.find(p => p.id === paymentId);
-  if (payment) {
-    payment.receiptUrl = receiptUrl;
-    saveUsers(users);
+  // Telegram xabarnoma (chek yuklanganda)
+  const course = getCourseById(payment.courseId);
+  await sendPaymentNotification({
+    userName: payment.user.name,
+    userEmail: payment.user.email,
+    courseTitle: course?.title || payment.courseId,
+    plan: payment.plan,
+    amount: payment.amount,
+    method: payment.method,
+    status: payment.status,
+    receiptUrl,
+  });
 
-    // Telegram bildirishnomasi (Chek yuklanganda)
-    const course = getCourseById(payment.courseId);
-    await sendPaymentNotification({
-        userName: user.name,
-        userEmail: user.email,
-        courseTitle: course?.title || payment.courseId,
-        plan: payment.plan,
-        amount: payment.amount,
-        method: payment.method,
-        status: payment.status,
-        receiptUrl: receiptUrl
-    });
-
-    return { success: true };
-  }
-
-  return { success: false };
+  return { success: true };
 }
