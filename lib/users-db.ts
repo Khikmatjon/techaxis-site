@@ -11,10 +11,10 @@ export interface PaymentRequest {
   courseId: string;
   plan: string;
   amount: number;
-  method: "transfer" | "visa";
-  status: "pending" | "completed" | "failed";
-  createdAt: string;
-  receiptUrl?: string;
+  method: string | "transfer" | "visa";
+  status: string | "pending" | "completed" | "failed";
+  createdAt: Date | string;
+  receiptUrl?: string | null;
 }
 
 export interface UserDB {
@@ -22,7 +22,7 @@ export interface UserDB {
   name: string;
   email: string;
   hash: string;
-  role: "student" | "admin";
+  role: string | "student" | "admin";
   enrolledCourses: string[];
   pendingPayments: string[];
   payments?: PaymentRequest[];
