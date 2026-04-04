@@ -45,5 +45,6 @@ export async function assignCourseAction(userId: string, courseId: string) {
     data: { status: "completed" },
   });
 
+  import("next/cache").then(mod => mod.revalidatePath("/", "layout")); // Revalidate the whole layout
   return { success: true };
 }
