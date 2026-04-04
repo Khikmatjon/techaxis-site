@@ -77,13 +77,15 @@ export async function requestPaymentAction(
   return { success: true, paymentId: payment.id };
 }
 
-export async function submitPaymentProofAction(paymentId: string, receiptUrl: string) {
+export async function submitPaymentProofAction(formData: FormData) {
+  const paymentId = formData.get("paymentId") as string;
+  const receiptFile = formData.get("receiptFile") as File;
   const session = await get_session();
   if (!session) throw new Error("Unauthorized");
 
   const payment = await prisma.payment.update({
     where: { id: paymentId },
-    data: { receiptUrl },
+    data: { receiptUrl: "Rasm Telegram orqali yuborildi" },
     include: { user: true },
   });
 
@@ -97,7 +99,7 @@ export async function submitPaymentProofAction(paymentId: string, receiptUrl: st
     amount: payment.amount,
     method: payment.method,
     status: payment.status,
-    receiptUrl,
+    receiptFile,
   });
 
   return { success: true };

@@ -155,7 +155,14 @@ const Navbar = ({ dict }: { dict: any }) => {
 
             {user ? (
               // ---- KIRGAN FOYDALANUVCHI ----
-              <div className="relative">
+              <div className="relative" ref={(el) => {
+                if (!el) return;
+                const handleClickOutside = (e: MouseEvent) => {
+                  if (!el.contains(e.target as Node)) setUserMenuOpen(false);
+                };
+                document.addEventListener('click', handleClickOutside);
+                return () => document.removeEventListener('click', handleClickOutside);
+              }}>
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
                   className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full pl-2 pr-3 py-1.5 transition-all"
@@ -172,53 +179,50 @@ const Navbar = ({ dict }: { dict: any }) => {
                 </button>
 
                 {userMenuOpen && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)} />
-                    <div className="absolute right-0 top-full mt-2 w-52 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl z-50 overflow-hidden">
-                      <div className="p-3 border-b border-slate-100 dark:border-slate-800">
-                        <p className="text-xs text-slate-400 font-medium">Tizimga kirgansiz</p>
-                        <p className="text-slate-800 dark:text-white font-semibold text-sm truncate">{user.name}</p>
-                        <p className="text-slate-400 text-xs truncate">{user.email}</p>
-                      </div>
-                      <div className="p-2 space-y-0.5">
+                  <div className="absolute right-0 top-full mt-2 w-52 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl z-50 overflow-hidden">
+                    <div className="p-3 border-b border-slate-100 dark:border-slate-800">
+                      <p className="text-xs text-slate-400 font-medium">Tizimga kirgansiz</p>
+                      <p className="text-slate-800 dark:text-white font-semibold text-sm truncate">{user.name}</p>
+                      <p className="text-slate-400 text-xs truncate">{user.email}</p>
+                    </div>
+                    <div className="p-2 space-y-0.5">
+                      <Link
+                        href={`/${locale}/dashboard`}
+                        onClick={() => setUserMenuOpen(false)}
+                        className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                      >
+                        <LayoutDashboard className="w-4 h-4 text-blue-500" />
+                        {dict?.navbar?.dashboard || "Mening kabinetim"}
+                      </Link>
+                      <Link
+                        href={`/${locale}/dashboard`}
+                        onClick={() => setUserMenuOpen(false)}
+                        className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                      >
+                        <BookOpen className="w-4 h-4 text-emerald-500" />
+                        {dict?.navbar?.my_courses || "Kurslarim"}
+                      </Link>
+                      {user.role === "admin" && (
                         <Link
-                          href={`/${locale}/dashboard`}
+                          href={`/${locale}/admin`}
                           onClick={() => setUserMenuOpen(false)}
                           className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
                         >
-                          <LayoutDashboard className="w-4 h-4 text-blue-500" />
-                          {dict?.navbar?.dashboard || "Mening kabinetim"}
+                          <Shield className="w-4 h-4 text-purple-500" />
+                          {dict?.navbar?.admin_panel || "Admin panel"}
                         </Link>
-                        <Link
-                          href={`/${locale}/dashboard`}
-                          onClick={() => setUserMenuOpen(false)}
-                          className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                      )}
+                      <div className="border-t border-slate-100 dark:border-slate-800 pt-1 mt-1">
+                        <button
+                          onClick={handleLogout}
+                          className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors"
                         >
-                          <BookOpen className="w-4 h-4 text-emerald-500" />
-                          {dict?.navbar?.my_courses || "Kurslarim"}
-                        </Link>
-                        {user.role === "admin" && (
-                          <Link
-                            href={`/${locale}/admin`}
-                            onClick={() => setUserMenuOpen(false)}
-                            className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
-                          >
-                            <Shield className="w-4 h-4 text-purple-500" />
-                            {dict?.navbar?.admin_panel || "Admin panel"}
-                          </Link>
-                        )}
-                        <div className="border-t border-slate-100 dark:border-slate-800 pt-1 mt-1">
-                          <button
-                            onClick={handleLogout}
-                            className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors"
-                          >
-                            <LogOut className="w-4 h-4" />
-                            {dict?.navbar?.logout || "Chiqish"}
-                          </button>
-                        </div>
+                          <LogOut className="w-4 h-4" />
+                          {dict?.navbar?.logout || "Chiqish"}
+                        </button>
                       </div>
                     </div>
-                  </>
+                  </div>
                 )}
               </div>
             ) : (

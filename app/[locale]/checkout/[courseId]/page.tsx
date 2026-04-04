@@ -23,7 +23,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
   const [method, setMethod] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [paymentId, setPaymentId] = useState<string | null>(null);
-  const [receiptUrl, setReceiptUrl] = useState("");
+  const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [sessionLoading, setSessionLoading] = useState(true);
 
   useEffect(() => {
@@ -91,9 +91,12 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
   }
 
   async function handleReceiptUpload() {
-    if (!receiptUrl) return;
+    if (!receiptFile) return;
     setLoading(true);
-    await submitPaymentProofAction(paymentId!, receiptUrl);
+    const formData = new FormData();
+    formData.append("paymentId", paymentId!);
+    formData.append("receiptFile", receiptFile);
+    await submitPaymentProofAction(formData);
     setLoading(false);
     setStep(4);
   }
@@ -248,25 +251,23 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
                     </div>
                  </div>
 
-                 <div className="space-y-4 pt-4">
-                    <label className="block text-sm font-bold text-slate-400">Chek rasmini yuklang (link)</label>
-                    <div className="relative">
+                  <div className="space-y-4 pt-4">
+                    <label className="block text-sm font-bold text-slate-400">Chek rasmini yuklang (JPG/PNG)</label>
+                    <div className="relative border border-slate-800 rounded-xl overflow-hidden bg-slate-950 focus-within:border-blue-500 transition-all">
                       <input 
-                        type="text" 
-                        placeholder="https://i.ibb.co/screenshot.png"
-                        value={receiptUrl}
-                        onChange={(e) => setReceiptUrl(e.target.value)}
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-4 focus:border-blue-500 outline-none transition-all pr-12"
+                        type="file" 
+                        accept="image/png, image/jpeg, image/jpg"
+                        onChange={(e) => setReceiptFile(e.target.files?.[0] || null)}
+                        className="w-full text-slate-400 file:mr-4 file:py-4 file:px-6 file:border-0 file:text-sm file:font-bold file:bg-blue-600 file:text-white hover:file:cursor-pointer hover:file:bg-blue-500 cursor-pointer"
                       />
-                      <Upload className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-600" />
                     </div>
                     <p className="text-[10px] text-slate-500 italic flex items-center gap-2">
-                       <Info className="w-3 h-3" /> Hozircha chek linkini kiriting (demo uchun)
+                       <Info className="w-3 h-3" /> Rasmni biriktiring. To'lov tasdiqlangach maqullanadi.
                     </p>
                  </div>
 
                  <button 
-                   disabled={!receiptUrl || loading}
+                   disabled={!receiptFile || loading}
                    onClick={handleReceiptUpload}
                    className="w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-black py-4 rounded-2xl shadow-xl transition-all"
                  >

@@ -66,7 +66,7 @@ export async function sendPaymentNotification(data: {
   amount: number | string;
   method: string;
   status: string;
-  receiptUrl?: string;
+  receiptFile?: File;
 }) {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
 
@@ -88,21 +88,34 @@ export async function sendPaymentNotification(data: {
 🛠 <b>Usul:</b> ${methodEmoji[data.method] || "❓"} ${data.method.toUpperCase()}
 🕒 <b>Holat:</b> ${data.status === "completed" ? "✅ To'langan" : "⏳ Kutilmoqda"}
 
-${data.receiptUrl ? `📎 <b>Chek:</b> <a href="${data.receiptUrl}">Rasmni ko'rish</a>` : "❌ Chek yuklanmagan"}
+${data.receiptFile ? `📎 <b>Chek:</b> Ilova qilingan rasm` : "❌ Chek yuklanmagan"}
 
 📅 <b>Vaqt:</b> ${new Date().toLocaleString("uz-UZ")}
   `;
 
   try {
-    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text: text,
-        parse_mode: "HTML",
-      }),
-    });
+    if (data.receiptFile && data.receiptFile.size > 0) {
+      const formData = new FormData();
+      formData.append("chat_id", TELEGRAM_CHAT_ID);
+      formData.append("caption", text);
+      formData.append("parse_mode", "HTML");
+      formData.append("photo", data.receiptFile);
+
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+        method: "POST",
+        body: formData,
+      });
+    } else {
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: text,
+          parse_mode: "HTML",
+        }),
+      });
+    }
   } catch (error) {
     console.error("Telegram notification failed:", error);
   }
