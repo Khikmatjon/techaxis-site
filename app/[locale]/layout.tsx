@@ -12,6 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const dict = await getDictionary(locale as Locale);
   
   return {
+    metadataBase: new URL('https://www.techaxis.uz'),
     title: dict.seo.title,
     description: dict.seo.description,
     keywords: dict.seo.keywords,
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description: dict.seo.description,
       type: 'website',
       locale: locale,
-      url: `https://techaxis.uz/${locale}`,
+      url: `https://www.techaxis.uz/${locale}`,
       siteName: 'TechAxis Group',
     }
   };

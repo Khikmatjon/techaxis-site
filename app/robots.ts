@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin/', '/api/'],
     },
-    sitemap: 'https://techaxis.uz/sitemap.xml',
+    sitemap: 'https://www.techaxis.uz/sitemap.xml',
   };
 }

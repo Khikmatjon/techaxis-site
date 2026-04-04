@@ -4,7 +4,7 @@ import { BLOG_POSTS } from '@/lib/blog';
 import { COURSES } from '@/lib/courses';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://techaxis.uz';
+  const baseUrl = 'https://www.techaxis.uz';
   const routes = ['', '/software', '/training', '/login', '/register', '/blog', '/free'];
   
   const sitemaps: MetadataRoute.Sitemap = [];
