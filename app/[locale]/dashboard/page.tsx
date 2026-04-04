@@ -294,7 +294,7 @@ function DashboardContent() {
             <CourseCard
               key={course.id}
               course={course}
-              isEnrolled={user.enrolledCourses?.includes(course.id) || false}
+              isEnrolled={user.enrolledCourses?.includes(course.id) || user.role === "admin"}
               isPending={user.pendingPayments?.includes(course.id) || false}
               locale={locale}
               onBuy={() => setSelectedCourse(course)}

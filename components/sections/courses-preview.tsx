@@ -72,7 +72,7 @@ export const CoursesPreview = ({ dict, locale }: { dict: any, locale: string }) 
         </div>
 
         <div className="mt-16 text-center">
-            <Link href={`/${locale}/dashboard`}>
+            <Link href={`/${locale}/courses`}>
                 <button className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold hover:gap-4 transition-all">
                     Barcha kurslarni ko'rish <ArrowRight className="w-5 h-5" />
                 </button>

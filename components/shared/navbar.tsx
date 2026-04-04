@@ -104,7 +104,7 @@ const Navbar = ({ dict }: { dict: any }) => {
       title: dict?.navbar?.training || "Ta'lim",
       href: `/${locale}/training`,
       items: [
-        { label: dict?.navbar?.courses || "Kurslar", href: `/${locale}/dashboard` },
+        { label: dict?.navbar?.courses || "Kurslar", href: `/${locale}/courses` },
         { label: dict?.navbar?.curriculum || "O'quv dasturi", href: `/${locale}/training#curriculum` }
       ]
     },
