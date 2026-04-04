@@ -14,8 +14,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string, locale: string } }): Promise<Metadata> {
-  const course = getCourseById(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string, locale: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const course = getCourseById(slug);
   if (!course) return {};
 
   return {
@@ -29,9 +30,10 @@ export async function generateMetadata({ params }: { params: { slug: string, loc
   };
 }
 
-export default function CourseLandingPage({ params }: { params: { slug: string, locale: string } }) {
-  const course = getCourseById(params.slug);
-  const locale = params.locale || "uz";
+export default async function CourseLandingPage({ params }: { params: Promise<{ slug: string, locale: string }> }) {
+  const { slug, locale: paramLocale } = await params;
+  const course = getCourseById(slug);
+  const locale = paramLocale || "uz";
   
   if (!course) {
     notFound();
