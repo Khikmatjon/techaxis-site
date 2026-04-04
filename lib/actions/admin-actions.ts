@@ -3,7 +3,10 @@
 import { prisma } from "@/lib/prisma";
 import { get_session } from "@/lib/session";
 
+import { unstable_noStore as noStore } from "next/cache";
+
 export async function getAdminUsersAction() {
+  noStore();
   const session = await get_session();
   if (!session || session.user.role !== "admin") throw new Error("Unauthorized");
 
