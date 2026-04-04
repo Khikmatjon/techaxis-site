@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
-import { encrypt } from "@/lib/session";
+import { encrypt, get_session } from "@/lib/session";
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
 import { checkRateLimit, resetRateLimit } from "@/lib/rate-limit";
@@ -127,4 +127,45 @@ export async function logoutAction() {
   const cookieStore = await cookies();
   cookieStore.set("session", "", { expires: new Date(0) });
   redirect("/");
+}
+
+export async function updateUserCredentialsAction(formData: FormData) {
+  try {
+    const sessionCookie = (await cookies()).get("session")?.value;
+    if (!sessionCookie) return { error: "Iltimos, tizimga qayta kiring" };
+
+    const session = await get_session();
+    if (!session) return { error: "Sessiya yaroqsiz" };
+
+    const newEmailRaw = formData.get("newEmail") as string;
+    const newPassword = formData.get("newPassword") as string;
+
+    if (!newEmailRaw || !newPassword) {
+      return { error: "Barcha maydonlarni to'ldiring" };
+    }
+
+    const newEmail = newEmailRaw.trim().toLowerCase();
+
+    // Check if new email is taken by another user
+    const existing = await prisma.user.findUnique({ where: { email: newEmail } });
+    if (existing && existing.id !== session.user.id) {
+      return { error: "Ushbu email allaqachon band qilingan" };
+    }
+
+    const hash = await bcrypt.hash(newPassword, 10);
+
+    await prisma.user.update({
+      where: { id: session.user.id },
+      data: { email: newEmail, hash },
+    });
+
+    // Avtomatik tizimdan chiqaramiz (xavfsizlik uchun qayta login qilishni talab qiladi)
+    const cookieStore = await cookies();
+    cookieStore.set("session", "", { expires: new Date(0) });
+
+    return { success: true };
+  } catch (error: any) {
+    console.error("CREDENTIAL_UPDATE_ERROR:", error.message || error);
+    return { error: "Xatolik yuz berdi" };
+  }
 }

@@ -3,15 +3,20 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, X, ChevronDown, Sun, Moon, LogOut, LayoutDashboard, Shield, User, BookOpen } from 'lucide-react';
+import { Menu, X, ChevronDown, Sun, Moon, LogOut, LayoutDashboard, Shield, User, BookOpen, Settings, Loader2 } from 'lucide-react';
 import { LanguageSwitcher } from "./language-switcher";
-import { logoutAction } from '@/lib/actions/auth-actions';
+import { logoutAction, updateUserCredentialsAction } from '@/lib/actions/auth-actions';
 import { useTheme } from "next-themes";
 
 const Navbar = ({ dict }: { dict: any }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<any | null>(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [settingsLoading, setSettingsLoading] = useState(false);
+  
   const pathname = usePathname();
   const router = useRouter();
   
@@ -27,8 +32,12 @@ const Navbar = ({ dict }: { dict: any }) => {
     fetch('/api/auth/session')
       .then(res => res.json())
       .then(data => {
-        if (data.user) setUser(data.user);
-        else setUser(null);
+        if (data.user) {
+          setUser(data.user);
+          setNewEmail(data.user.email);
+        } else {
+          setUser(null);
+        }
       });
   }, [pathname]); // sahifa o'zgarganda qayta tekshir
 
@@ -37,6 +46,28 @@ const Navbar = ({ dict }: { dict: any }) => {
     setUser(null);
     setUserMenuOpen(false);
     router.refresh(); // Statusni yangilash uchun
+  }
+
+  async function handleUpdateCredentials(e: React.FormEvent) {
+    e.preventDefault();
+    setSettingsLoading(true);
+    
+    const formData = new FormData();
+    formData.append("newEmail", newEmail);
+    formData.append("newPassword", newPassword);
+    
+    const res = await updateUserCredentialsAction(formData);
+    setSettingsLoading(false);
+    
+    if (res.error) {
+      alert("Xatolik: " + res.error);
+    } else {
+      alert("Muvaffaqiyatli o'zgartirildi! Iltimos yangi ma'lumotlar bilan qaytadan kiring.");
+      setSettingsOpen(false);
+      setUser(null);
+      setUserMenuOpen(false);
+      router.push(`/${locale}/login`);
+    }
   }
 
   const renderThemeToggle = () => {
@@ -104,7 +135,8 @@ const Navbar = ({ dict }: { dict: any }) => {
   ];
 
   return (
-    <nav className="sticky top-0 w-full z-[100] bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800 transition-all duration-300">
+    <>
+      <nav className="sticky top-0 w-full z-[100] bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
 
@@ -212,6 +244,18 @@ const Navbar = ({ dict }: { dict: any }) => {
                           {dict?.navbar?.admin_panel || "Admin panel"}
                         </Link>
                       )}
+                      
+                      <button
+                        onClick={() => {
+                          setSettingsOpen(true);
+                          setUserMenuOpen(false);
+                        }}
+                        className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                      >
+                        <Settings className="w-4 h-4 text-slate-500" />
+                        Sozlamalar
+                      </button>
+
                       <div className="border-t border-slate-100 dark:border-slate-800 pt-1 mt-1">
                         <button
                           onClick={handleLogout}
@@ -330,6 +374,61 @@ const Navbar = ({ dict }: { dict: any }) => {
         </div>
       )}
     </nav>
+
+    {/* SETTINGS MODAL */}
+    {settingsOpen && (
+      <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-950/50 backdrop-blur-sm">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl w-full max-w-sm shadow-2xl relative">
+          <button 
+            onClick={() => setSettingsOpen(false)}
+            className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <div className="mb-6">
+            <h2 className="text-xl font-bold dark:text-white">Sozlamalar</h2>
+            <p className="text-sm text-slate-500 mt-1">Emaili yoki parolni tahrirlash</p>
+          </div>
+
+          <form onSubmit={handleUpdateCredentials} className="space-y-4">
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                Yangi Email (Login)
+              </label>
+              <input
+                type="text"
+                required
+                value={newEmail}
+                onChange={e => setNewEmail(e.target.value)}
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl px-4 py-2.5 focus:border-blue-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                Yangi Parol
+              </label>
+              <input
+                type="password"
+                required
+                placeholder="Yangi parol (masalan: admin_h2)"
+                value={newPassword}
+                onChange={e => setNewPassword(e.target.value)}
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl px-4 py-2.5 focus:border-blue-500 focus:outline-none"
+              />
+            </div>
+
+            <button 
+              type="submit"
+              disabled={settingsLoading || (!newEmail || !newPassword)}
+              className="w-full mt-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center disabled:opacity-50"
+            >
+              {settingsLoading ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : "Saqlash"}
+            </button>
+          </form>
+        </div>
+      </div>
+    )}
+    </>
   );
 };
 
