@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { getDictionary } from '@/lib/dictionary';
 import { Locale } from '@/lib/i18n';
 
-export default async function NotFound({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
+export default async function NotFound() {
+  const locale = 'uz'; // not-found componenti params olmaydi Next.js da.
   const dict = await getDictionary(locale as Locale);
 
   return (
@@ -14,7 +14,7 @@ export default async function NotFound({ params }: { params: Promise<{ locale: s
       </h2>
       <p className="mt-4 text-slate-600 dark:text-slate-400 max-w-md">
         {locale === 'uz' 
-          ? 'Siz qidirayotgan sahifa mavjud emas yoki boshqa manzilga ko\'chirilgan.' 
+          ? "Siz qidirayotgan sahifa mavjud emas yoki boshqa manzilga ko'chirilgan." 
           : locale === 'ru' 
             ? 'Запрашиваемая страница не существует или была перемещена.' 
             : 'The page you are looking for does not exist or has been moved.'}

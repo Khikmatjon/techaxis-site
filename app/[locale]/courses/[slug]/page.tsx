@@ -8,11 +8,6 @@ import {
   Zap, Target, Briefcase, BookOpen, Layers
 } from "lucide-react";
 
-export async function generateStaticParams() {
-  return COURSES.map((course) => ({
-    slug: course.id,
-  }));
-}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string, locale: string }> }): Promise<Metadata> {
   const { slug } = await params;
