@@ -93,12 +93,18 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
   async function handleReceiptUpload() {
     if (!receiptFile) return;
     setLoading(true);
-    const formData = new FormData();
-    formData.append("paymentId", paymentId!);
-    formData.append("receiptFile", receiptFile);
-    await submitPaymentProofAction(formData);
-    setLoading(false);
-    setStep(4);
+    try {
+      const formData = new FormData();
+      formData.append("paymentId", paymentId!);
+      formData.append("receiptFile", receiptFile);
+      await submitPaymentProofAction(formData);
+      setStep(4);
+    } catch (e: any) {
+      alert("Yuklashda xatolik yuz berdi. Iltimos qaytadan urinib ko'ring yoki rasm hajmini kichraytiring.");
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
