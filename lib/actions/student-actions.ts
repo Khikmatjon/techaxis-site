@@ -98,7 +98,7 @@ export async function submitPaymentProofAction(formData: FormData) {
       // Supabase storagega yuklash
       const { data: uploadData, error } = await supabase.storage
         .from("receipts") // supabase dasbboarddan "receipts" nomli public bucket yaratish unutilmasin
-        .upload(fileName, buffer, { contentType: receiptFile.type, upsert: true });
+        .upload(fileName, buffer, { contentType: receiptFile.type, upsert: false });
 
       if (!error && uploadData) {
         const { data: publicData } = supabase.storage.from("receipts").getPublicUrl(fileName);
