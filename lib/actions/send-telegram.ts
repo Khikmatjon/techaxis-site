@@ -66,7 +66,7 @@ export async function sendPaymentNotification(data: {
   amount: number | string;
   method: string;
   status: string;
-  receiptFile?: File;
+  receiptUrl?: string; // Supabase url will be passed here
 }) {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
 
@@ -88,22 +88,23 @@ export async function sendPaymentNotification(data: {
 🛠 <b>Usul:</b> ${methodEmoji[data.method] || "❓"} ${data.method.toUpperCase()}
 🕒 <b>Holat:</b> ${data.status === "completed" ? "✅ To'langan" : "⏳ Kutilmoqda"}
 
-${data.receiptFile ? `📎 <b>Chek:</b> Ilova qilingan rasm` : "❌ Chek yuklanmagan"}
+${data.receiptUrl ? `📎 <b>Chek:</b> <a href="${data.receiptUrl}">Rasmni ko'rish</a>` : "❌ Chek yuklanmagan"}
 
 📅 <b>Vaqt:</b> ${new Date().toLocaleString("uz-UZ")}
   `;
 
   try {
-    if (data.receiptFile && data.receiptFile.size > 0) {
-      const formData = new FormData();
-      formData.append("chat_id", TELEGRAM_CHAT_ID);
-      formData.append("caption", text);
-      formData.append("parse_mode", "HTML");
-      formData.append("photo", data.receiptFile);
-
+    if (data.receiptUrl) {
+      // Telegram sendPhoto API can accept public HTTP URLs directly
       await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          photo: data.receiptUrl,
+          caption: text,
+          parse_mode: "HTML",
+        })
       });
     } else {
       await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {

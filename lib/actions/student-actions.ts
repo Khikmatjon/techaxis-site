@@ -77,19 +77,40 @@ export async function requestPaymentAction(
   return { success: true, paymentId: payment.id };
 }
 
+import { supabase } from "@/lib/supabase";
+
 export async function submitPaymentProofAction(formData: FormData) {
   const paymentId = formData.get("paymentId") as string;
   const receiptFile = formData.get("receiptFile") as File;
   const session = await get_session();
   if (!session) throw new Error("Unauthorized");
 
+  let receiptUrl = "";
+
+  if (receiptFile && receiptFile.size > 0) {
+    const ext = receiptFile.name.split('.').pop() || 'jpg';
+    const fileName = `receipt-${paymentId}-${Date.now()}.${ext}`;
+    
+    // Supabase storagega yuklash
+    const { data: uploadData, error } = await supabase.storage
+      .from("receipts") // supabase dasbboarddan "receipts" nomli public bucket yaratish unutilmasin
+      .upload(fileName, receiptFile, { contentType: receiptFile.type, upsert: true });
+
+    if (!error && uploadData) {
+      const { data: publicData } = supabase.storage.from("receipts").getPublicUrl(fileName);
+      receiptUrl = publicData.publicUrl;
+    } else {
+      console.error("Supabase yuklash xatosi:", error);
+    }
+  }
+
   const payment = await prisma.payment.update({
     where: { id: paymentId },
-    data: { receiptUrl: "Rasm Telegram orqali yuborildi" },
+    data: { receiptUrl: receiptUrl || "Rasm joylanmadi" },
     include: { user: true },
   });
 
-  // Telegram xabarnoma (chek yuklanganda)
+  // Telegram xabarnoma url bilan (Telegram avtomat rasmni ko'radi)
   const course = getCourseById(payment.courseId);
   await sendPaymentNotification({
     userName: payment.user.name,
@@ -99,7 +120,7 @@ export async function submitPaymentProofAction(formData: FormData) {
     amount: payment.amount,
     method: payment.method,
     status: payment.status,
-    receiptFile,
+    receiptUrl: receiptUrl || undefined,
   });
 
   return { success: true };
