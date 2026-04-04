@@ -88,19 +88,26 @@ export async function submitPaymentProofAction(formData: FormData) {
   let receiptUrl = "";
 
   if (receiptFile && receiptFile.size > 0) {
-    const ext = receiptFile.name.split('.').pop() || 'jpg';
-    const fileName = `receipt-${paymentId}-${Date.now()}.${ext}`;
-    
-    // Supabase storagega yuklash
-    const { data: uploadData, error } = await supabase.storage
-      .from("receipts") // supabase dasbboarddan "receipts" nomli public bucket yaratish unutilmasin
-      .upload(fileName, receiptFile, { contentType: receiptFile.type, upsert: true });
+    try {
+      const ext = receiptFile.name.split('.').pop() || 'jpg';
+      const fileName = `receipt-${paymentId}-${Date.now()}.${ext}`;
+      
+      const arrayBuffer = await receiptFile.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      
+      // Supabase storagega yuklash
+      const { data: uploadData, error } = await supabase.storage
+        .from("receipts") // supabase dasbboarddan "receipts" nomli public bucket yaratish unutilmasin
+        .upload(fileName, buffer, { contentType: receiptFile.type, upsert: true });
 
-    if (!error && uploadData) {
-      const { data: publicData } = supabase.storage.from("receipts").getPublicUrl(fileName);
-      receiptUrl = publicData.publicUrl;
-    } else {
-      console.error("Supabase yuklash xatosi:", error);
+      if (!error && uploadData) {
+        const { data: publicData } = supabase.storage.from("receipts").getPublicUrl(fileName);
+        receiptUrl = publicData.publicUrl;
+      } else {
+        console.error("Supabase yuklash xatosi:", error);
+      }
+    } catch (err) {
+      console.error("Faylni buferga o'tkazishda xato:", err);
     }
   }
 

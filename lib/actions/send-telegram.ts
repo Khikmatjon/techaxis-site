@@ -94,7 +94,7 @@ ${data.receiptUrl ? `📎 <b>Chek:</b> <a href="${data.receiptUrl}">Rasmni ko'ri
   `;
 
   try {
-    if (data.receiptUrl) {
+    if (data.receiptUrl && data.receiptUrl.startsWith("http")) {
       // Telegram sendPhoto API can accept public HTTP URLs directly
       await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
         method: "POST",
