@@ -1,6 +1,6 @@
 // Admin API client utilities
 
-const TIMEOUT = 10000; // 10 second timeout
+const TIMEOUT = 30000; // 30 second timeout for database queries
 
 async function fetchWithTimeout(url: string, options?: RequestInit) {
   const controller = new AbortController();
