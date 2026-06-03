@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { getCourses, updateCourse, deleteCourse, createModule, deleteModule, createLesson, deleteLesson, updateLesson, updateModule, getLessons } from "@/lib/admin-api";
+import { getCourses, updateCourse, deleteCourse, createModule, deleteModule, createLesson, deleteLesson, updateLesson, updateModule, getLessons, getModules } from "@/lib/admin-api";
 import { logoutAction } from "@/lib/actions/auth-actions";
 import { Plus, Edit2, Trash2, LogOut, Zap, ChevronDown, Save, X } from "lucide-react";
 import { getStudentDashboardAction } from "@/lib/actions/student-actions";
@@ -24,6 +24,7 @@ function CMSAdmin() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [moduleLessons, setModuleLessons] = useState<Record<string, any[]>>({});
+  const [courseModules, setCourseModules] = useState<Record<string, any[]>>({});
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -144,6 +145,16 @@ function CMSAdmin() {
     await logoutAction();
   }
 
+  async function loadCourseModules(courseId: string) {
+    if (courseModules[courseId]) return;
+    try {
+      const modules = await getModules(courseId);
+      setCourseModules((prev) => ({ ...prev, [courseId]: modules }));
+    } catch (err) {
+      console.error("Modullarni yuklashda xato:", err);
+    }
+  }
+
   async function loadModuleLessons(moduleId: string) {
     if (moduleLessons[moduleId]) return;
     try {
@@ -195,10 +206,10 @@ function CMSAdmin() {
         <div className="space-y-4">
           {courses.map((course) => (
             <div key={course.id} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-              <div className="p-6 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-800/50" onClick={() => setExpandedCourse(expandedCourse === course.id ? null : course.id)}>
+              <div className="p-6 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-800/50" onClick={() => { if (expandedCourse !== course.id) loadCourseModules(course.id); setExpandedCourse(expandedCourse === course.id ? null : course.id); }}>
                 <div className="flex-1">
                   <h3 className="text-xl font-bold text-white">{course.title}</h3>
-                  <p className="text-slate-400 text-sm">${course.price} | {course.modules?.length || 0} modul | {course.discountPercent}% chegirma</p>
+                  <p className="text-slate-400 text-sm">${course.price} | {(courseModules[course.id] || [])?.length || 0} modul | {course.discountPercent}% chegirma</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <button onClick={(e) => { e.stopPropagation(); setEditingCourse(course.id); }} className="text-blue-400 hover:bg-blue-500/20 p-2 rounded-lg">
@@ -217,7 +228,7 @@ function CMSAdmin() {
 
               {expandedCourse === course.id && (
                 <div className="border-t border-slate-800 p-6 space-y-4 bg-slate-900/50">
-                  {course.modules?.map((module: any) => (
+                  {(courseModules[course.id] || [])?.map((module: any) => (
                     <div key={module.id} className="bg-slate-800/50 rounded-xl overflow-hidden">
                       <div className="p-4 flex items-center justify-between cursor-pointer hover:bg-slate-800" onClick={() => { if (expandedModule !== module.id) loadModuleLessons(module.id); setExpandedModule(expandedModule === module.id ? null : module.id); }}>
                         <div>

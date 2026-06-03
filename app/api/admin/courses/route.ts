@@ -10,17 +10,6 @@ export async function GET() {
     }
 
     const courses = await prisma.course.findMany({
-      include: {
-        modules: {
-          select: {
-            id: true,
-            title: true,
-            createdAt: true,
-            courseId: true,
-          },
-          orderBy: { createdAt: "asc" },
-        },
-      },
       orderBy: { createdAt: "desc" },
       take: 100,
     });
