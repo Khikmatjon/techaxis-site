@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { getCourses, updateCourse, deleteCourse, createModule, deleteModule, createLesson, deleteLesson, updateLesson, updateModule } from "@/lib/admin-api";
+import { getCourses, updateCourse, deleteCourse, createModule, deleteModule, createLesson, deleteLesson, updateLesson, updateModule, getLessons } from "@/lib/admin-api";
 import { logoutAction } from "@/lib/actions/auth-actions";
 import { Plus, Edit2, Trash2, LogOut, Zap, ChevronDown, Save, X } from "lucide-react";
 import { getStudentDashboardAction } from "@/lib/actions/student-actions";
@@ -23,6 +23,7 @@ function CMSAdmin() {
   const [addingLesson, setAddingLesson] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [moduleLessons, setModuleLessons] = useState<Record<string, any[]>>({});
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -143,6 +144,16 @@ function CMSAdmin() {
     await logoutAction();
   }
 
+  async function loadModuleLessons(moduleId: string) {
+    if (moduleLessons[moduleId]) return;
+    try {
+      const lessons = await getLessons(moduleId);
+      setModuleLessons((prev) => ({ ...prev, [moduleId]: lessons }));
+    } catch (err) {
+      console.error("Darslarni yuklashda xato:", err);
+    }
+  }
+
   if (loading && courses.length === 0) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center flex-col gap-4">
@@ -208,10 +219,10 @@ function CMSAdmin() {
                 <div className="border-t border-slate-800 p-6 space-y-4 bg-slate-900/50">
                   {course.modules?.map((module: any) => (
                     <div key={module.id} className="bg-slate-800/50 rounded-xl overflow-hidden">
-                      <div className="p-4 flex items-center justify-between cursor-pointer hover:bg-slate-800" onClick={() => setExpandedModule(expandedModule === module.id ? null : module.id)}>
+                      <div className="p-4 flex items-center justify-between cursor-pointer hover:bg-slate-800" onClick={() => { if (expandedModule !== module.id) loadModuleLessons(module.id); setExpandedModule(expandedModule === module.id ? null : module.id); }}>
                         <div>
                           <h4 className="font-semibold text-white">{module.title}</h4>
-                          <p className="text-xs text-slate-400">{module.lessons?.length || 0} dars</p>
+                          <p className="text-xs text-slate-400">{moduleLessons[module.id]?.length || 0} dars</p>
                         </div>
                         <div className="flex gap-2">
                           <button onClick={(e) => { e.stopPropagation(); setEditingModule(module.id); }} className="text-blue-400 hover:bg-blue-500/20 p-1.5 rounded">
@@ -230,7 +241,7 @@ function CMSAdmin() {
 
                       {expandedModule === module.id && (
                         <div className="border-t border-slate-700 p-4 space-y-2 bg-slate-900/50">
-                          {module.lessons?.map((lesson: any) => (
+                          {(moduleLessons[module.id] || [])?.map((lesson: any) => (
                             <div key={lesson.id}>
                               {editingLesson === lesson.id ? (
                                 <LessonEditForm lesson={lesson} onSave={(updates: any) => { handleUpdateLesson(lesson.id, updates); }} onCancel={() => setEditingLesson(null)} />
