@@ -25,11 +25,58 @@ model Payment {
   courseId   String
   plan       String
   amount     Float
-  method     String // "transfer", "visa" vs
-  status     String // "pending", "completed", "failed"
+  method     String
+  status     String
   receiptUrl String?
-  
+
   userId     String
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
+}
+
+model Course {
+  id              String    @id @default(uuid())
+  title           String
+  subtitle        String
+  description     String
+  price           Int
+  priceUZS        Int
+  discountPercent Int       @default(0)
+  thumbnail       String
+  instructor      String
+  instructorAvatar String
+  level           String
+  duration        String
+  studentsCount   Int       @default(0)
+  rating          Float     @default(0)
+  tags            String[]
+  isActive        Boolean   @default(true)
+  modules         Module[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Module {
+  id        String    @id @default(uuid())
+  courseId  String
+  course    Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title     String
+  lessons   Lesson[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Lesson {
+  id        String    @id @default(uuid())
+  moduleId  String
+  module    Module    @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  title     String
+  duration  String
+  videoUrl  String?
+  pdfUrl    String?
+  text      String?
+  images    String[]
+  isFree    Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
