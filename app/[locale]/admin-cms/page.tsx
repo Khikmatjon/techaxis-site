@@ -27,19 +27,7 @@ function CMSAdmin() {
   const [courseModules, setCourseModules] = useState<Record<string, any[]>>({});
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const user = await getStudentDashboardAction();
-        if (user?.role !== "admin") {
-          router.push(`/${locale}/login`);
-        } else {
-          loadCourses();
-        }
-      } catch {
-        router.push(`/${locale}/login`);
-      }
-    };
-    checkAuth();
+    loadCourses();
   }, [locale, router]);
 
   async function loadCourses() {
