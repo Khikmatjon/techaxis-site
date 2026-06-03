@@ -46,8 +46,11 @@ function CMSAdmin() {
       const data = await getCourses();
       setCourses(data);
       setError(null);
-    } catch (err) {
-      setError("Kurslarni yuklashda xato");
+    } catch (err: any) {
+      const errorMsg = err?.message?.includes("AbortError")
+        ? "So'rov vaqti tugadi. Database bilan aloqa muammosi mavjud."
+        : "Kurslarni yuklashda xato";
+      setError(errorMsg);
       console.error(err);
     } finally {
       setLoading(false);
