@@ -30,14 +30,15 @@ function CMSAdmin() {
         const user = await getStudentDashboardAction();
         if (user?.role !== "admin") {
           router.push(`/${locale}/login`);
+        } else {
+          loadCourses();
         }
       } catch {
         router.push(`/${locale}/login`);
       }
     };
     checkAuth();
-    loadCourses();
-  }, []);
+  }, [locale, router]);
 
   async function loadCourses() {
     try {
@@ -141,8 +142,10 @@ function CMSAdmin() {
 
   if (loading && courses.length === 0) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center flex-col gap-4">
         <div className="text-white text-lg">Yuklanyapti...</div>
+        {error && <div className="text-red-400 text-sm text-center">{error}</div>}
+        {error && <button onClick={() => { setError(null); loadCourses(); }} className="text-blue-400 hover:text-blue-300 text-sm underline">Qayta urinish</button>}
       </div>
     );
   }
