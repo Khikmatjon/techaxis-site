@@ -3,8 +3,12 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { updateCourse, deleteCourse, createModule, deleteModule, createLesson, deleteLesson, updateLesson, updateModule } from "@/lib/admin-api";
-import { getAdminCoursesAction, getAdminModulesAction, getAdminLessonsAction } from "@/lib/actions/cms-actions";
+import {
+  getAdminCoursesAction, getAdminModulesAction, getAdminLessonsAction,
+  updateCourseAction, deleteCourseAction,
+  createModuleAction, updateModuleAction, deleteModuleAction,
+  createLessonAction, updateLessonAction, deleteLessonAction,
+} from "@/lib/actions/cms-actions";
 import { logoutAction } from "@/lib/actions/auth-actions";
 import { Plus, Edit2, Trash2, LogOut, Zap, ChevronDown, Save, X } from "lucide-react";
 
@@ -49,7 +53,7 @@ function CMSAdmin() {
 
   async function handleUpdateCourse(courseId: string, updates: any) {
     try {
-      await updateCourse(courseId, updates);
+      await updateCourseAction(courseId, updates);
       await loadCourses();
       setEditingCourse(null);
     } catch (err) {
@@ -60,7 +64,7 @@ function CMSAdmin() {
   async function handleDeleteCourse(courseId: string) {
     if (!confirm("Kursni o'chirishni tasdiqlaysizmi?")) return;
     try {
-      await deleteCourse(courseId);
+      await deleteCourseAction(courseId);
       await loadCourses();
     } catch (err) {
       setError("Kurs o'chirishda xato");
@@ -70,29 +74,29 @@ function CMSAdmin() {
   async function handleAddModule(courseId: string, title: string) {
     if (!title) return;
     try {
-      await createModule(courseId, { title });
-      await loadCourses();
+      await createModuleAction(courseId, title);
+      await loadCourseModules(courseId, true);
       setAddingModule(null);
     } catch (err) {
       setError("Modul qo'shishda xato");
     }
   }
 
-  async function handleUpdateModule(moduleId: string, updates: any) {
+  async function handleUpdateModule(moduleId: string, updates: any, courseId: string) {
     try {
-      await updateModule(moduleId, updates);
-      await loadCourses();
+      await updateModuleAction(moduleId, updates);
+      await loadCourseModules(courseId, true);
       setEditingModule(null);
     } catch (err) {
       setError("Modul yangilanishida xato");
     }
   }
 
-  async function handleDeleteModule(moduleId: string) {
+  async function handleDeleteModule(moduleId: string, courseId: string) {
     if (!confirm("Modulni o'chirishni tasdiqlaysizmi?")) return;
     try {
-      await deleteModule(moduleId);
-      await loadCourses();
+      await deleteModuleAction(moduleId);
+      await loadCourseModules(courseId, true);
     } catch (err) {
       setError("Modul o'chirishda xato");
     }
@@ -101,29 +105,29 @@ function CMSAdmin() {
   async function handleAddLesson(moduleId: string, title: string) {
     if (!title) return;
     try {
-      await createLesson(moduleId, { title, duration: "0:00" });
-      await loadCourses();
+      await createLessonAction(moduleId, { title, duration: "0:00" });
+      await loadModuleLessons(moduleId, true);
       setAddingLesson(null);
     } catch (err) {
       setError("Dars qo'shishda xato");
     }
   }
 
-  async function handleUpdateLesson(lessonId: string, updates: any) {
+  async function handleUpdateLesson(lessonId: string, updates: any, moduleId: string) {
     try {
-      await updateLesson(lessonId, updates);
-      await loadCourses();
+      await updateLessonAction(lessonId, updates);
+      await loadModuleLessons(moduleId, true);
       setEditingLesson(null);
     } catch (err) {
       setError("Dars yangilanishida xato");
     }
   }
 
-  async function handleDeleteLesson(lessonId: string) {
+  async function handleDeleteLesson(lessonId: string, moduleId: string) {
     if (!confirm("Darsni o'chirishni tasdiqlaysizmi?")) return;
     try {
-      await deleteLesson(lessonId);
-      await loadCourses();
+      await deleteLessonAction(lessonId);
+      await loadModuleLessons(moduleId, true);
     } catch (err) {
       setError("Dars o'chirishda xato");
     }
@@ -133,8 +137,8 @@ function CMSAdmin() {
     await logoutAction();
   }
 
-  async function loadCourseModules(courseId: string) {
-    if (courseModules[courseId]) return;
+  async function loadCourseModules(courseId: string, force = false) {
+    if (courseModules[courseId] && !force) return;
     try {
       const modules = await getAdminModulesAction(courseId);
       setCourseModules((prev) => ({ ...prev, [courseId]: modules }));
@@ -143,8 +147,8 @@ function CMSAdmin() {
     }
   }
 
-  async function loadModuleLessons(moduleId: string) {
-    if (moduleLessons[moduleId]) return;
+  async function loadModuleLessons(moduleId: string, force = false) {
+    if (moduleLessons[moduleId] && !force) return;
     try {
       const lessons = await getAdminLessonsAction(moduleId);
       setModuleLessons((prev) => ({ ...prev, [moduleId]: lessons }));
@@ -227,7 +231,7 @@ function CMSAdmin() {
                           <button onClick={(e) => { e.stopPropagation(); setEditingModule(module.id); }} className="text-blue-400 hover:bg-blue-500/20 p-1.5 rounded">
                             <Edit2 className="w-4 h-4" />
                           </button>
-                          <button onClick={(e) => { e.stopPropagation(); handleDeleteModule(module.id); }} className="text-red-400 hover:bg-red-500/20 p-1.5 rounded">
+                          <button onClick={(e) => { e.stopPropagation(); handleDeleteModule(module.id, course.id); }} className="text-red-400 hover:bg-red-500/20 p-1.5 rounded">
                             <Trash2 className="w-4 h-4" />
                           </button>
                           <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform ${expandedModule === module.id ? "rotate-180" : ""}`} />
@@ -235,7 +239,7 @@ function CMSAdmin() {
                       </div>
 
                       {editingModule === module.id && (
-                        <ModuleEditForm module={module} onSave={(updates: any) => { handleUpdateModule(module.id, updates); }} onCancel={() => setEditingModule(null)} />
+                        <ModuleEditForm module={module} onSave={(updates: any) => { handleUpdateModule(module.id, updates, course.id); }} onCancel={() => setEditingModule(null)} />
                       )}
 
                       {expandedModule === module.id && (
@@ -243,9 +247,9 @@ function CMSAdmin() {
                           {(moduleLessons[module.id] || [])?.map((lesson: any) => (
                             <div key={lesson.id}>
                               {editingLesson === lesson.id ? (
-                                <LessonEditForm lesson={lesson} onSave={(updates: any) => { handleUpdateLesson(lesson.id, updates); }} onCancel={() => setEditingLesson(null)} />
+                                <LessonEditForm lesson={lesson} onSave={(updates: any) => { handleUpdateLesson(lesson.id, updates, module.id); }} onCancel={() => setEditingLesson(null)} />
                               ) : (
-                                <LessonRow lesson={lesson} onEdit={() => setEditingLesson(lesson.id)} onDelete={() => handleDeleteLesson(lesson.id)} />
+                                <LessonRow lesson={lesson} onEdit={() => setEditingLesson(lesson.id)} onDelete={() => handleDeleteLesson(lesson.id, module.id)} />
                               )}
                             </div>
                           ))}

@@ -105,3 +105,90 @@ export async function getAdminLessonsAction(moduleId: string) {
   }
   return [];
 }
+
+// ---------------------------------------------------------------------------
+// WRITE actions. These persist to the DB. They require the Course/Module/Lesson
+// tables to exist and be seeded (done via `prisma db push` + lib/seed-courses).
+// ---------------------------------------------------------------------------
+
+async function requireAdmin() {
+  const session = await get_session();
+  if (!session || session.user.role !== "admin") throw new Error("Unauthorized");
+}
+
+function toInt(v: any, fallback = 0) {
+  const n = parseInt(v, 10);
+  return Number.isFinite(n) ? n : fallback;
+}
+
+export async function updateCourseAction(id: string, data: any) {
+  await requireAdmin();
+  const clean = {
+    title: data.title,
+    subtitle: data.subtitle ?? undefined,
+    description: data.description ?? undefined,
+    price: toInt(data.price),
+    priceUZS: toInt(data.priceUZS),
+    discountPercent: toInt(data.discountPercent),
+  };
+  return prisma.course.update({ where: { id }, data: clean });
+}
+
+export async function deleteCourseAction(id: string) {
+  await requireAdmin();
+  await prisma.course.delete({ where: { id } });
+  return { success: true };
+}
+
+export async function createModuleAction(courseId: string, title: string) {
+  await requireAdmin();
+  if (!title) throw new Error("Title required");
+  return prisma.module.create({ data: { courseId, title } });
+}
+
+export async function updateModuleAction(id: string, data: any) {
+  await requireAdmin();
+  return prisma.module.update({ where: { id }, data: { title: data.title } });
+}
+
+export async function deleteModuleAction(id: string) {
+  await requireAdmin();
+  await prisma.module.delete({ where: { id } });
+  return { success: true };
+}
+
+export async function createLessonAction(moduleId: string, data: any) {
+  await requireAdmin();
+  if (!data?.title) throw new Error("Title required");
+  return prisma.lesson.create({
+    data: {
+      moduleId,
+      title: data.title,
+      duration: data.duration || "0:00",
+      videoUrl: data.videoUrl || null,
+      pdfUrl: data.pdfUrl || null,
+      text: data.text || null,
+      images: data.images || [],
+      isFree: !!data.isFree,
+    },
+  });
+}
+
+export async function updateLessonAction(id: string, data: any) {
+  await requireAdmin();
+  const clean = {
+    title: data.title,
+    duration: data.duration,
+    videoUrl: data.videoUrl ?? null,
+    pdfUrl: data.pdfUrl ?? null,
+    text: data.text ?? null,
+    isFree: !!data.isFree,
+  };
+  return prisma.lesson.update({ where: { id }, data: clean });
+}
+
+export async function deleteLessonAction(id: string) {
+  await requireAdmin();
+  await prisma.lesson.delete({ where: { id } });
+  return { success: true };
+}
