@@ -205,7 +205,7 @@ const Navbar = ({ dict }: { dict: any }) => {
                     className="w-7 h-7 rounded-full"
                   />
                   <span className="text-slate-700 dark:text-slate-300 text-sm font-semibold max-w-[100px] truncate">
-                    {user.name.split(" ")[0]}
+                    {(user.name || user.email || "").split(" ")[0]}
                   </span>
                   <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${userMenuOpen ? "rotate-180" : ""}`} />
                 </button>
@@ -214,7 +214,7 @@ const Navbar = ({ dict }: { dict: any }) => {
                   <div className="absolute right-0 top-full mt-2 w-52 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl z-50 overflow-hidden">
                     <div className="p-3 border-b border-slate-100 dark:border-slate-800">
                       <p className="text-xs text-slate-400 font-medium">Tizimga kirgansiz</p>
-                      <p className="text-slate-800 dark:text-white font-semibold text-sm truncate">{user.name}</p>
+                      <p className="text-slate-800 dark:text-white font-semibold text-sm truncate">{user.name || user.email}</p>
                       <p className="text-slate-400 text-xs truncate">{user.email}</p>
                     </div>
                     <div className="p-2 space-y-0.5">

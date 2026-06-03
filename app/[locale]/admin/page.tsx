@@ -11,6 +11,7 @@ import {
 import { getAdminUsersAction, assignCourseAction, rejectCourseAction } from "@/lib/actions/admin-actions";
 import { logoutAction } from "@/lib/actions/auth-actions";
 import { UserDB } from "@/lib/users-db";
+import CourseManager from "@/components/admin/course-manager";
 
 // ---- FOYDALANUVCHI KARTOCHKASI ----
 function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId: string, courseId: string) => void; onReject: (userId: string, courseId: string) => void }) {
@@ -178,6 +179,7 @@ function AdminContent() {
   const [admin, setAdmin] = useState<any>(null);
   const [users, setUsers] = useState<UserDB[]>([]);
   const [search, setSearch] = useState("");
+  const [tab, setTab] = useState<"students" | "content">("students");
 
   const loadData = async () => {
     try {
@@ -273,9 +275,29 @@ function AdminContent() {
           <h1 className="text-3xl font-black text-white mb-1">
             Admin <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">Paneli</span>
           </h1>
-          <p className="text-slate-400">O'quvchilarga kurslarni biriktirish va to'lovlarni tasdiqlash</p>
+          <p className="text-slate-400">{tab === "students" ? "O'quvchilarga kurslarni biriktirish va to'lovlarni tasdiqlash" : "Kurs narxi, modullar va darslarni boshqarish — saytda darhol yangilanadi"}</p>
         </div>
 
+        {/* Tablar */}
+        <div className="flex gap-1 border-b border-slate-800">
+          <button
+            onClick={() => setTab("students")}
+            className={`px-5 py-3 text-sm font-bold transition-colors border-b-2 -mb-px ${tab === "students" ? "text-white border-cyan-500" : "text-slate-400 border-transparent hover:text-slate-200"}`}
+          >
+            O'quvchilar va to'lovlar
+          </button>
+          <button
+            onClick={() => setTab("content")}
+            className={`px-5 py-3 text-sm font-bold transition-colors border-b-2 -mb-px ${tab === "content" ? "text-white border-cyan-500" : "text-slate-400 border-transparent hover:text-slate-200"}`}
+          >
+            Kurslar mazmuni
+          </button>
+        </div>
+
+        {tab === "content" && <CourseManager />}
+
+        {tab === "students" && (
+        <div className="space-y-8">
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
@@ -368,6 +390,8 @@ function AdminContent() {
             })}
           </div>
         </div>
+        </div>
+        )}
       </div>
     </div>
   );
