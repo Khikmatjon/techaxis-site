@@ -6,7 +6,7 @@ import Link from "next/link";
 import { getCourseById, Course, Module, getTotalLessons } from "@/lib/courses";
 import {
   Play, Lock, FileText, Image, ChevronLeft, Clock, BookOpen,
-  Star, Users, CheckCircle, LogOut, Zap
+  Star, Users, CheckCircle, LogOut, Zap, Trophy
 } from "lucide-react";
 import { getStudentDashboardAction } from "@/lib/actions/student-actions";
 import { logoutAction } from "@/lib/actions/auth-actions";
@@ -20,6 +20,7 @@ function CourseContent({ courseId }: { courseId: string }) {
   const [user, setUser] = useState<UserDB | null>(null);
   const [course, setCourse] = useState<Course | null>(null);
   const [openModules, setOpenModules] = useState<Set<string>>(new Set());
+  const [completedLessons, setCompletedLessons] = useState<string[]>([]);
 
   const loadData = async () => {
     try {
@@ -36,9 +37,19 @@ function CourseContent({ courseId }: { courseId: string }) {
     const c = getCourseById(courseId);
     if (!c) { router.push(`/${locale}/dashboard`); return; }
     setCourse(c);
-    // Birinchi modulni ochiq qoldir
     if (c.modules.length > 0) setOpenModules(new Set([c.modules[0].id]));
   }, [courseId, locale, router]);
+
+  useEffect(() => {
+    if (!user) return;
+    const key = `techaxis_progress_${user.id}_${courseId}`;
+    try {
+      const stored = localStorage.getItem(key);
+      setCompletedLessons(stored ? JSON.parse(stored) : []);
+    } catch {
+      setCompletedLessons([]);
+    }
+  }, [user, courseId]);
 
   async function handleLogout() {
     await logoutAction();
@@ -56,7 +67,9 @@ function CourseContent({ courseId }: { courseId: string }) {
 
   const isEnrolled = user.enrolledCourses?.includes(course.id) || user.role === "admin";
   const totalLessons = getTotalLessons(course);
-  const totalDone = 0;
+  const totalDone = completedLessons.length;
+  const progressPercent = totalLessons > 0 ? Math.round((totalDone / totalLessons) * 100) : 0;
+  const isCompleted = progressPercent === 100;
 
   return (
     <div className="min-h-screen bg-slate-950">
@@ -111,12 +124,35 @@ function CourseContent({ courseId }: { courseId: string }) {
 
               <div className="p-6">
                 <p className="text-slate-400 text-sm leading-relaxed mb-5">{course.description}</p>
-                <div className="flex flex-wrap gap-4 text-sm text-slate-400">
+                <div className="flex flex-wrap gap-4 text-sm text-slate-400 mb-5">
                   <span className="flex items-center gap-1.5"><Star className="w-4 h-4 text-yellow-400" /> {course.rating} reyting</span>
                   <span className="flex items-center gap-1.5"><Users className="w-4 h-4 text-blue-400" /> {course.studentsCount} o'quvchi</span>
                   <span className="flex items-center gap-1.5"><BookOpen className="w-4 h-4 text-purple-400" /> {totalLessons} dars</span>
                   <span className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-emerald-400" /> {course.duration}</span>
                 </div>
+
+                {isEnrolled && (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-400">Jarayon</span>
+                      <span className={`font-bold ${isCompleted ? "text-emerald-400" : "text-white"}`}>
+                        {totalDone}/{totalLessons} dars ({progressPercent}%)
+                      </span>
+                    </div>
+                    <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all duration-500 ${isCompleted ? "bg-emerald-500" : "bg-gradient-to-r from-cyan-500 to-blue-600"}`}
+                        style={{ width: `${progressPercent}%` }}
+                      />
+                    </div>
+                    {isCompleted && (
+                      <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 mt-3">
+                        <Trophy className="w-5 h-5 text-yellow-400 shrink-0" />
+                        <p className="text-emerald-400 text-sm font-bold">Tabriklaymiz! Siz sertifikat olishga haqliisiz.</p>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -128,61 +164,65 @@ function CourseContent({ courseId }: { courseId: string }) {
               </div>
 
               <div className="divide-y divide-slate-800">
-                {course.modules.map((mod: Module, mi: number) => (
-                  <div key={mod.id}>
-                    <button
-                      onClick={() => toggleModule(mod.id)}
-                      className="w-full flex items-center justify-between p-5 hover:bg-slate-800/50 transition-colors text-left"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-7 h-7 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-400 text-xs font-bold">{mi + 1}</div>
-                        <div>
-                          <div className="text-white font-semibold text-sm">{mod.title}</div>
-                          <div className="text-slate-500 text-xs">{mod.lessons.length} dars</div>
+                {course.modules.map((mod: Module, mi: number) => {
+                  const modDone = mod.lessons.filter(l => completedLessons.includes(l.id)).length;
+                  return (
+                    <div key={mod.id}>
+                      <button
+                        onClick={() => toggleModule(mod.id)}
+                        className="w-full flex items-center justify-between p-5 hover:bg-slate-800/50 transition-colors text-left"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${modDone === mod.lessons.length && mod.lessons.length > 0 ? "bg-emerald-500/20 text-emerald-400" : "bg-blue-500/20 text-blue-400"}`}>{mi + 1}</div>
+                          <div>
+                            <div className="text-white font-semibold text-sm">{mod.title}</div>
+                            <div className="text-slate-500 text-xs">{modDone}/{mod.lessons.length} dars</div>
+                          </div>
                         </div>
-                      </div>
-                      <ChevronLeft className={`w-4 h-4 text-slate-500 transition-transform ${openModules.has(mod.id) ? "-rotate-90" : ""}`} />
-                    </button>
+                        <ChevronLeft className={`w-4 h-4 text-slate-500 transition-transform ${openModules.has(mod.id) ? "-rotate-90" : ""}`} />
+                      </button>
 
-                    {openModules.has(mod.id) && (
-                      <div className="border-t border-slate-800/50">
-                        {mod.lessons.map((lesson, li) => {
-                           const canAccess = isEnrolled || lesson.isFree;
-                          return (
-                            <div key={lesson.id} className={`flex items-center gap-4 px-5 py-3.5 hover:bg-slate-800/30 transition-colors ${!canAccess ? "opacity-60" : ""}`}>
-                              <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-slate-800 text-xs font-bold text-slate-400">
-                                {mi + 1}.{li + 1}
+                      {openModules.has(mod.id) && (
+                        <div className="border-t border-slate-800/50">
+                          {mod.lessons.map((lesson, li) => {
+                            const canAccess = isEnrolled || lesson.isFree;
+                            const isDone = completedLessons.includes(lesson.id);
+                            return (
+                              <div key={lesson.id} className={`flex items-center gap-4 px-5 py-3.5 hover:bg-slate-800/30 transition-colors ${!canAccess ? "opacity-60" : ""}`}>
+                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold ${isDone ? "bg-emerald-500/20 text-emerald-400" : "bg-slate-800 text-slate-400"}`}>
+                                  {isDone ? <CheckCircle className="w-4 h-4" /> : `${mi + 1}.${li + 1}`}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center gap-2">
+                                    <span className={`text-sm font-medium truncate ${isDone ? "text-emerald-400" : "text-slate-300"}`}>{lesson.title}</span>
+                                    {lesson.isFree && <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-semibold shrink-0">Bepul</span>}
+                                  </div>
+                                  <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
+                                    <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{lesson.duration}</span>
+                                    {lesson.videoUrl && <span className="flex items-center gap-1"><Play className="w-3 h-3" />Video</span>}
+                                    {lesson.pdfUrl && <span className="flex items-center gap-1"><FileText className="w-3 h-3" />PDF</span>}
+                                    {lesson.images && lesson.images.length > 0 && <span className="flex items-center gap-1"><Image className="w-3 h-3" />Rasm</span>}
+                                  </div>
+                                </div>
+                                {canAccess ? (
+                                  <Link href={`/${locale}/dashboard/${course.id}/${lesson.id}`}>
+                                    <button className={`shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isDone ? "bg-emerald-500/20 hover:bg-emerald-500/40" : "bg-blue-500/20 hover:bg-blue-500/40"}`}>
+                                      {isDone ? <CheckCircle className="w-3.5 h-3.5 text-emerald-400" /> : <Play className="w-3.5 h-3.5 text-blue-400" />}
+                                    </button>
+                                  </Link>
+                                ) : (
+                                  <div className="shrink-0 w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center">
+                                    <Lock className="w-3.5 h-3.5 text-slate-600" />
+                                  </div>
+                                )}
                               </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2">
-                                  <span className="text-slate-300 text-sm font-medium truncate">{lesson.title}</span>
-                                  {lesson.isFree && <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-semibold shrink-0">Bepul</span>}
-                                </div>
-                                <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
-                                  <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{lesson.duration}</span>
-                                  {lesson.videoUrl && <span className="flex items-center gap-1"><Play className="w-3 h-3" />Video</span>}
-                                  {lesson.pdfUrl && <span className="flex items-center gap-1"><FileText className="w-3 h-3" />PDF</span>}
-                                  {lesson.images && lesson.images.length > 0 && <span className="flex items-center gap-1"><Image className="w-3 h-3" />Rasm</span>}
-                                </div>
-                              </div>
-                              {canAccess ? (
-                                <Link href={`/${locale}/dashboard/${course.id}/${lesson.id}`}>
-                                  <button className="shrink-0 w-8 h-8 bg-blue-500/20 hover:bg-blue-500/40 rounded-lg flex items-center justify-center transition-colors">
-                                    <Play className="w-3.5 h-3.5 text-blue-400" />
-                                  </button>
-                                </Link>
-                              ) : (
-                                <div className="shrink-0 w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center">
-                                  <Lock className="w-3.5 h-3.5 text-slate-600" />
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

@@ -8,15 +8,17 @@ import {
   Users, BookOpen, CheckCircle, Clock, LogOut, Zap,
   Shield, UserCheck, ChevronRight, Search, X, Award, AlertTriangle
 } from "lucide-react";
-import { getAdminUsersAction, assignCourseAction } from "@/lib/actions/admin-actions";
+import { getAdminUsersAction, assignCourseAction, rejectCourseAction } from "@/lib/actions/admin-actions";
 import { logoutAction } from "@/lib/actions/auth-actions";
 import { UserDB } from "@/lib/users-db";
 
 // ---- FOYDALANUVCHI KARTOCHKASI ----
-function UserRow({ user, onAssign }: { user: UserDB; onAssign: (userId: string, courseId: string) => void }) {
+function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId: string, courseId: string) => void; onReject: (userId: string, courseId: string) => void }) {
   const [open, setOpen] = useState(false);
   const [assigning, setAssigning] = useState<string | null>(null);
+  const [rejecting, setRejecting] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [openReceipt, setOpenReceipt] = useState<string | null>(null);
 
   async function handleAssign(courseId: string) {
     setAssigning(courseId);
@@ -24,6 +26,13 @@ function UserRow({ user, onAssign }: { user: UserDB; onAssign: (userId: string, 
     setAssigning(null);
     setSuccess(courseId);
     setTimeout(() => setSuccess(null), 2000);
+  }
+
+  async function handleReject(courseId: string) {
+    if (!confirm("Rad etishni tasdiqlaysizmi?")) return;
+    setRejecting(courseId);
+    await onReject(user.id, courseId);
+    setRejecting(null);
   }
 
   return (
@@ -67,20 +76,19 @@ function UserRow({ user, onAssign }: { user: UserDB; onAssign: (userId: string, 
             {COURSES.map((course) => {
               const enrolled = user.enrolledCourses?.includes(course.id);
               const pending = user.pendingPayments?.includes(course.id);
-              // Yangi payments arrayidan ushbu kurs uchun ma'lumot qidiramiz
               const paymentDetail = user.payments?.find(p => p.courseId === course.id && p.status === "pending");
               const isSuccess = success === course.id;
 
               return (
+                <div key={course.id} className="space-y-0">
                 <div
-                  key={course.id}
                   className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${
                     enrolled
                       ? "bg-emerald-500/10 border-emerald-500/20"
                       : pending
                       ? "bg-amber-500/10 border-amber-500/20"
                       : "bg-slate-800/50 border-slate-700/50"
-                  }`}
+                  } ${openReceipt === course.id ? "rounded-b-none border-b-0" : ""}`}
                 >
                   <img src={course.thumbnail} alt={course.title} className="w-10 h-10 rounded-lg object-cover shrink-0" />
                   <div className="flex-1 min-w-0">
@@ -101,33 +109,57 @@ function UserRow({ user, onAssign }: { user: UserDB; onAssign: (userId: string, 
                   ) : (
                     <div className="flex flex-col gap-1 items-end">
                       {paymentDetail?.receiptUrl && (
-                        <a 
-                          href={paymentDetail.receiptUrl} 
-                          target="_blank" 
-                          className="text-[10px] text-blue-400 hover:underline flex items-center gap-1"
+                        <button
+                          onClick={() => setOpenReceipt(openReceipt === course.id ? null : course.id)}
+                          className="text-[10px] text-blue-400 hover:text-blue-300 flex items-center gap-1 font-bold"
                         >
-                          Chekni ko'rish
-                        </a>
+                          📎 Chek
+                        </button>
                       )}
-                      <button
-                        onClick={() => handleAssign(course.id)}
-                        disabled={assigning === course.id}
-                        className={`shrink-0 text-xs font-bold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 ${
-                          pending
-                            ? "bg-amber-500/30 hover:bg-amber-500/50 text-amber-300 border border-amber-500/30"
-                            : "bg-blue-500/20 hover:bg-blue-500/40 text-blue-400 border border-blue-500/20"
-                        }`}
-                      >
-                        {assigning === course.id ? (
-                          <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                        ) : pending ? (
-                          <><UserCheck className="w-3.5 h-3.5" /> Tasdiqlash</>
-                        ) : (
-                          <><Award className="w-3.5 h-3.5" /> Berish</>
+                      <div className="flex gap-1">
+                        <button
+                          onClick={() => handleAssign(course.id)}
+                          disabled={assigning === course.id}
+                          className={`shrink-0 text-xs font-bold px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1 ${
+                            pending
+                              ? "bg-amber-500/30 hover:bg-amber-500/50 text-amber-300 border border-amber-500/30"
+                              : "bg-blue-500/20 hover:bg-blue-500/40 text-blue-400 border border-blue-500/20"
+                          }`}
+                        >
+                          {assigning === course.id ? (
+                            <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                          ) : pending ? (
+                            <><UserCheck className="w-3 h-3" /> Tasdiqlash</>
+                          ) : (
+                            <><Award className="w-3 h-3" /> Berish</>
+                          )}
+                        </button>
+                        {pending && (
+                          <button
+                            onClick={() => handleReject(course.id)}
+                            disabled={rejecting === course.id}
+                            className="shrink-0 text-xs font-bold px-2 py-1.5 rounded-lg transition-all flex items-center gap-1 bg-red-500/20 hover:bg-red-500/40 text-red-400 border border-red-500/20"
+                          >
+                            {rejecting === course.id ? (
+                              <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                            ) : (
+                              <X className="w-3 h-3" />
+                            )}
+                          </button>
                         )}
-                      </button>
+                      </div>
                     </div>
                   )}
+                </div>
+                {openReceipt === course.id && paymentDetail?.receiptUrl && (
+                  <div className="bg-slate-800/70 border border-amber-500/20 border-t-0 rounded-b-xl p-3">
+                    <img
+                      src={paymentDetail.receiptUrl}
+                      alt="To'lov cheki"
+                      className="w-full max-h-64 object-contain rounded-lg border border-slate-700"
+                    />
+                  </div>
+                )}
                 </div>
               );
             })}
@@ -163,10 +195,19 @@ function AdminContent() {
 
   async function handleAssign(userId: string, courseId: string) {
     try {
-       await assignCourseAction(userId, courseId);
-       await loadData(); // refresh the view
+      await assignCourseAction(userId, courseId);
+      await loadData();
     } catch(e) {
-       console.error("Failed to assign course", e);
+      console.error("Failed to assign course", e);
+    }
+  }
+
+  async function handleReject(userId: string, courseId: string) {
+    try {
+      await rejectCourseAction(userId, courseId);
+      await loadData();
+    } catch(e) {
+      console.error("Failed to reject course", e);
     }
   }
 
@@ -296,7 +337,7 @@ function AdminContent() {
           ) : (
             <div className="space-y-3">
               {filtered.map((u) => (
-                <UserRow key={u.id} user={u} onAssign={handleAssign} />
+                <UserRow key={u.id} user={u} onAssign={handleAssign} onReject={handleReject} />
               ))}
             </div>
           )}

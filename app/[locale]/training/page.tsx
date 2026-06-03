@@ -1,34 +1,9 @@
 import React from 'react';
+import Link from 'next/link';
 import { getDictionary } from "@/lib/dictionary";
 import { Locale } from "@/lib/i18n";
+import { COURSES, getTotalLessons } from "@/lib/courses";
 import { Certifications } from "@/components/sections/certifications";
-
-const courses = [
-  {
-    title: "SOLIDWORKS Essential",
-    duration: "4 hafta",
-    level: "Boshlang'ich",
-    price: "$200",
-    topics: ["Sketching", "Part Modeling", "Assembly", "Drawings"],
-    image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070"
-  },
-  {
-    title: "CATIA Surface Expert",
-    duration: "6 hafta",
-    level: "Professional",
-    price: "$450",
-    topics: ["Generative Shape Design", "Class-A Surfaces", "Real-time Rendering"],
-    image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=2070"
-  },
-  {
-    title: "3DEXPERIENCE Admin",
-    duration: "3 hafta",
-    level: "Ekspert",
-    price: "$350",
-    topics: ["Cloud Setup", "Data Management", "PLM Workflow"],
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2070"
-  }
-];
 
 export default async function TrainingPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -42,46 +17,55 @@ export default async function TrainingPage({ params }: { params: Promise<{ local
           <div className="max-w-2xl">
             <h1 className="text-5xl font-bold mb-6 font-display">Professional Muhandislik Kurslari</h1>
             <p className="text-slate-600 dark:text-slate-400 text-lg">
-              Xalqaro standartlar asosida SOLIDWORKS va CATIA dasturlarini o'rganing. 
+              Xalqaro standartlar asosida SOLIDWORKS va CATIA dasturlarini o'rganing.
               Bizning kurslarimiz sizni CSWA, CSWP va CATIA V6 sertifikatlariga tayyorlaydi.
             </p>
           </div>
           <div className="flex gap-4">
-             <div className="px-6 py-3 bg-blue-600/10 text-blue-600 rounded-2xl font-bold border border-blue-600/20">
-               Authorized Training
-             </div>
+            <div className="px-6 py-3 bg-blue-600/10 text-blue-600 rounded-2xl font-bold border border-blue-600/20">
+              Authorized Training
+            </div>
           </div>
         </div>
 
         {/* Course Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-20">
-          {courses.map((course) => (
-            <div key={course.title} className="group rounded-[40px] overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 hover:shadow-2xl transition-all">
-              <div className="h-48 overflow-hidden">
-                <img src={course.image} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-              </div>
-              <div className="p-8">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-xs font-bold uppercase tracking-widest text-blue-600">{course.level}</span>
-                  <span className="text-sm text-slate-500">{course.duration}</span>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+          {COURSES.map((course) => {
+            const totalLessons = getTotalLessons(course);
+            return (
+            <Link key={course.id} href={`/${locale}/courses/${course.id}`} className="group block">
+              <div className="rounded-[2.5rem] overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 hover:shadow-2xl hover:-translate-y-2 transition-all h-full flex flex-col">
+                <div className="h-48 overflow-hidden">
+                  <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4">{course.title}</h3>
-                <ul className="space-y-2 mb-8">
-                  {course.topics.map(t => (
-                    <li key={t} className="text-sm text-slate-600 dark:text-slate-400 flex items-center">
-                      <span className="w-1 h-1 bg-blue-500 rounded-full mr-2" /> {t}
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex items-center justify-between pt-6 border-t border-slate-200 dark:border-slate-800">
-                  <span className="text-2xl font-bold">{course.price}</span>
-                  <button className="bg-slate-900 dark:bg-white dark:text-slate-900 text-white px-6 py-2 rounded-xl font-bold text-sm">
-                    Ro'yxatdan o'tish
-                  </button>
+                <div className="p-6 flex flex-col flex-1">
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-xs font-bold uppercase tracking-widest text-blue-600">{course.level}</span>
+                    <span className="text-sm text-slate-500">{course.duration}</span>
+                  </div>
+                  <h3 className="text-lg font-bold mb-3 text-slate-900 dark:text-white">{course.title}</h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 flex-1 line-clamp-2">{course.subtitle}</p>
+                  <ul className="space-y-1.5 mb-6">
+                    {course.tags.slice(0, 3).map(t => (
+                      <li key={t} className="text-xs text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
+                        <span className="w-1 h-1 bg-blue-500 rounded-full shrink-0" /> {t}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex items-center justify-between pt-5 border-t border-slate-200 dark:border-slate-800 mt-auto">
+                    <div>
+                      <span className="text-xl font-black text-slate-900 dark:text-white">${course.price}</span>
+                      <span className="text-xs text-slate-500 ml-1">{totalLessons} dars</span>
+                    </div>
+                    <span className="bg-slate-900 dark:bg-white dark:text-slate-900 text-white px-4 py-2 rounded-xl font-bold text-xs group-hover:bg-blue-600 dark:group-hover:bg-blue-600 dark:group-hover:text-white transition-colors">
+                      Ko'rish →
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            </Link>
+            );
+          })}
         </div>
 
         {/* B2B / University Section */}

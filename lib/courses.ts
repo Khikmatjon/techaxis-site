@@ -117,7 +117,53 @@ export const COURSES: Course[] = [
       ]
     },
     modules: [
-      { id: "sw-m1", title: "Kirish va Interfeys", lessons: [ { id: "sw-l1", title: "SOLIDWORKS'ga kirish", duration: "8:45", isFree: true } ] }
+      {
+        id: "sw-m1",
+        title: "Kirish va Muhit",
+        lessons: [
+          { id: "sw-l1", title: "SOLIDWORKS'ga kirish va o'rnatish", duration: "8:45", isFree: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Ushbu darsda SOLIDWORKS dasturini kompyuteringizga qanday o'rnatishni va birinchi marta ishga tushirishni o'rganamiz. Dasturning asosiy interfeysi va navigatsiya bilan tanishamiz." },
+          { id: "sw-l2", title: "Interfeys va asosiy buyruqlar", duration: "12:20", isFree: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "SOLIDWORKS interfeysi: Feature Manager, grafik maydon va buyruqlar paneli bilan ishlashni o'rganamiz. Sichqoncha va klaviatura yorliqlarini o'zlashtiramiz." },
+          { id: "sw-l3", title: "Loyiha sozlamalari va shablonlar", duration: "10:15", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Yangi loyiha yaratish, shablon tanlash va asosiy hujjat sozlamalarini o'rnatishni ko'ramiz. O'lchov birliklari va koordinata tizimlarini sozlaymiz." },
+        ]
+      },
+      {
+        id: "sw-m2",
+        title: "2D Sketch (Eskiz)",
+        lessons: [
+          { id: "sw-l4", title: "Sketch asoslari va chiziqlar", duration: "15:30", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "2D eskizda to'g'ri chiziq, qiyshiq chiziq va murakkab shakllarni qanday chizishni o'rganamiz. Smart Dimensions yordamida aniq o'lchamlar beramiz." },
+          { id: "sw-l5", title: "Geometric va Smart Dimensions", duration: "18:45", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Geometrik cheklovlar (horizontal, vertical, parallel, perpendicular) va o'lcham cheklovlari orqali eskizni to'liq aniqlashtiramiz." },
+          { id: "sw-l6", title: "Murakkab shakllar va spline", duration: "14:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Aylana, ellips, to'rtburchak va spline kabi murakkab shakllarni chizishni o'rganamiz. Mirror va pattern buyruqlari bilan vaqtni tejashni ko'ramiz." },
+          { id: "sw-l7", title: "Sketch amaliyoti: Detal chizish", duration: "22:10", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Real muhandislik detalining 2D eskizini chizamiz. Barcha o'rganilgan texnikalarni amalda qo'llaymiz va xatolarni tuzatish usullarini ko'ramiz." },
+        ]
+      },
+      {
+        id: "sw-m3",
+        title: "3D Modellashtirish",
+        lessons: [
+          { id: "sw-l8", title: "Extrude va Revolve", duration: "20:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "2D eskizdan 3D model yaratishning asosiy ikki usuli: Extrude (cho'zish) va Revolve (aylantirish) buyruqlarini o'rganamiz. Har bir buyruqning parametrlarini batafsil ko'ramiz." },
+          { id: "sw-l9", title: "Fillet, Chamfer va Shell", duration: "16:30", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Modelni chiroyli va ishlab chiqarishga tayyor qilish uchun burchaklarni yumshlatish (Fillet), kesish (Chamfer) va qobiq yaratish (Shell) buyruqlarini o'rganamiz." },
+          { id: "sw-l10", title: "Pattern va Mirror", duration: "19:15", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Bir xil elementlarni ko'paytirish uchun Linear Pattern, Circular Pattern va Mirror funksiyalarini o'rganamiz. Bu buyruqlar loyihalash vaqtini sezilarli qisqartiradi." },
+          { id: "sw-l11", title: "Murakkab 3D model: Amaliyot", duration: "35:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Haqiqiy muhandislik detalini (flanets yoki bracket) noldan yaratamiz. Barcha 3D modellashtirish texnikalarini kompleks loyihada birgalikda qo'llaymiz." },
+        ]
+      },
+      {
+        id: "sw-m4",
+        title: "Assembly (Yig'ma)",
+        lessons: [
+          { id: "sw-l12", title: "Assembly yaratish va Mates", duration: "25:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Bir nechta detallarni bir joyga yig'ish uchun Assembly modulini o'rganamiz. Coincident, Concentric va Distance Mates bilan detallarni to'g'ri joylashtirish usullarini ko'ramiz." },
+          { id: "sw-l13", title: "Harakatlanuvchi mexanizmlar", duration: "28:20", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Assembly'da harakat simulyatsiyasini ko'ramiz. Sharnir va mexanik bog'liqliklar yordamida mexanizmning harakatini tekshiramiz." },
+          { id: "sw-l14", title: "Interference Detection va BOM", duration: "22:45", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Detallar bir-biriga tegib ketmasligi uchun Interference Detection funksiyasini ishlatamiz. Bill of Materials (BOM) jadvalini avtomatik yaratishni o'rganamiz." },
+        ]
+      },
+      {
+        id: "sw-m5",
+        title: "Texnik Chizma (Drawing)",
+        lessons: [
+          { id: "sw-l15", title: "Drawing asoslari va ko'rinishlar", duration: "20:30", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "3D modeldan 2D texnik chizma yaratishni o'rganamiz. Frontal, lateral va plan ko'rinishlarini chiqarishni va GOST/ISO standartlariga mos holatga keltirishni ko'ramiz." },
+          { id: "sw-l16", title: "O'lchamlar va annotatsiyalar", duration: "18:15", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Texnik chizmaga o'lchamlar, toleranslar, sirt sifati belgilari va texnik talablarni qo'shishni o'rganamiz. Bu ma'lumotlar ishlab chiqarish uchun zarurdir." },
+          { id: "sw-l17", title: "Yakuniy loyiha: To'liq texnik hujjat", duration: "45:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Kurs yakuniy loyihasi: Murakkab mexanizm uchun to'liq texnik hujjat paketi tayyorlaymiz. Model, assembly va texnik chizmalar majmuasini portfolio uchun taqdim etamiz." },
+        ]
+      }
     ]
   },
   {
@@ -174,7 +220,42 @@ export const COURSES: Course[] = [
       ]
     },
     modules: [
-       { id: "cat-m1", title: "Kirish", lessons: [{ id: "cat-l1", title: "Interfeys", duration: "10:00", isFree: true }] }
+      {
+        id: "cat-m1",
+        title: "Kirish",
+        lessons: [
+          { id: "cat-l1", title: "CATIA V5 ga kirish va interfeys", duration: "10:00", isFree: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "CATIA V5 dasturini o'rnatish va birinchi marta ishga tushirish. Asosiy menyu, asboblar paneli va Product Structure brauzerini o'rganamiz." },
+          { id: "cat-l2", title: "Workbench tushunchasi va navigatsiya", duration: "13:30", isFree: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "CATIA V5 ning Workbench tizimini tushuntiramiz. Part Design, Assembly Design va Sketcher Workbench'lar o'rtasida qanday o'tishni ko'ramiz." },
+          { id: "cat-l3", title: "Sketcher: Asosiy shakllar va cheklovlar", duration: "17:45", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "CATIA Sketcher muhitida 2D profillar chizamiz. Constraints (cheklovlar) va dimensional constraints orqali eskizni to'liq aniqlaymiz." },
+        ]
+      },
+      {
+        id: "cat-m2",
+        title: "Part Design",
+        lessons: [
+          { id: "cat-l4", title: "Pad, Pocket va Shaft", duration: "22:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Part Design'ning asosiy buyruqlari: Pad (qo'shish), Pocket (kesish) va Shaft (aylantirish) yordamida 3D modellar yaratamiz." },
+          { id: "cat-l5", title: "Fillet, Chamfer va Draft", duration: "16:20", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Detallarni ishlab chiqarishga tayyor qilish: Fillet burchaklarni yumshlatadi, Chamfer qiyshiq kesim hosil qiladi, Draft qolipdan chiqarish uchun burchak beradi." },
+          { id: "cat-l6", title: "Pattern va Mirror funksiyalari", duration: "14:50", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Rectangular Pattern, Circular Pattern va Mirror funksiyalari yordamida takroriy elementlarni samarali modellashtirish usullarini o'rganamiz." },
+          { id: "cat-l7", title: "Part Design amaliyoti: Real detal", duration: "38:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Avtomobil yoki aerokosmik sohada ishlatiladigan real detalning CATIA V5 da modelini yaratamiz. Barcha o'rganilgan buyruqlarni kompleks loyihada qo'llaymiz." },
+        ]
+      },
+      {
+        id: "cat-m3",
+        title: "Assembly Design",
+        lessons: [
+          { id: "cat-l8", title: "Assembly yaratish va Constraints", duration: "26:15", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "CATIA Assembly Design Workbench'ini o'rganamiz. Coincidence, Contact va Offset Constraints yordamida detallarni to'g'ri joylashtirish usullarini ko'ramiz." },
+          { id: "cat-l9", title: "Top-Down va Bottom-Up yondashuv", duration: "20:30", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Yig'mani loyihalashning ikki asosiy metodologiyasi: Bottom-Up (tayyor detallarni yig'ish) va Top-Down (yig'ma ichida yangi detal yaratish) farqlarini tushuntiramiz." },
+          { id: "cat-l10", title: "DMU Kinematics: Mexanizm harakati", duration: "30:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Digital Mock-Up Kinematics yordamida yig'mandagi mexanizm harakatini simulyatsiya qilamiz. Joints va commands bilan harakatlanuvchi tizimlar tahlilini o'rganamiz." },
+        ]
+      },
+      {
+        id: "cat-m4",
+        title: "Drafting (Texnik Chizma)",
+        lessons: [
+          { id: "cat-l11", title: "Drawing yaratish va ko'rinishlar", duration: "24:40", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "CATIA Drafting Workbench'ida 3D modeldan texnik chizma yaratamiz. Front, Top, Right va isometric ko'rinishlarini qo'shamiz va ularni tartiblaymiz." },
+          { id: "cat-l12", title: "Yakuniy loyiha: Aviatsiya detali", duration: "50:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Kurs yakuniy loyihasi: Aviatsiya yoki avtomobil sohasi uchun to'liq muhandislik hujjat to'plami. Part, Assembly va Drawing fayllaridan iborat professional portfolio loyihasi." },
+        ]
+      }
     ]
   },
   {
@@ -230,7 +311,33 @@ export const COURSES: Course[] = [
       ]
     },
     modules: [
-       { id: "fea-m1", title: "Kirish", lessons: [{ id: "fea-l1", title: "Simulyatsiya", duration: "10:00", isFree: true }] }
+      {
+        id: "fea-m1",
+        title: "FEA Asoslari",
+        lessons: [
+          { id: "fea-l1", title: "FEA nima va nima uchun kerak?", duration: "11:00", isFree: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Finite Element Analysis (FEA) ning mohiyatini tushunamiz. Nima uchun fizik prototip o'rniga kompyuter simulyatsiyasi tejamkor va tezkor ekanligini ko'ramiz." },
+          { id: "fea-l2", title: "Elementlar, tugunlar va mesh tushunchasi", duration: "14:30", isFree: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "FEA ning matematik asosi: model mayda elementlarga (mesh) bo'linadi, har bir tugunida (node) kuchlanish va deformatsiya hisoblanadi. Bu jarayonning mantiqini o'rganamiz." },
+          { id: "fea-l3", title: "Material xossalari va Boundary Conditions", duration: "16:45", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "To'g'ri tahlil uchun material xossalarini (elastiklik moduli, Poisson koeffitsienti) kiritishni va chegara shartlarini (mahkamlash, yuk) o'rnatishni o'rganamiz." },
+        ]
+      },
+      {
+        id: "fea-m2",
+        title: "Simulation (Simulyatsiya)",
+        lessons: [
+          { id: "fea-l4", title: "Static Structural Analysis", duration: "25:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Statik yuklamalar ostidagi kuchlanish, deformatsiya va xavfsizlik koeffitsientini hisoblashni o'rganamiz. SolidWorks Simulation yoki ANSYS Mechanical ishlatamiz." },
+          { id: "fea-l5", title: "Mesh sifati va konvergentsiya", duration: "20:15", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Mesh sifati tahlil aniqligiga qanday ta'sir qilishini o'rganamiz. Mesh refinement (qayta ingichkalash) va konvergentsiya testini o'tkazamiz." },
+          { id: "fea-l6", title: "Thermal Analysis", duration: "22:30", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Issiqlik o'tkazuvchanlik va issiqlik kengayishini tahlil qilamiz. Elektron plata yoki dvigatel qismlari uchun termal simulyatsiya o'tkazamiz." },
+          { id: "fea-l7", title: "Natijalarni talqin qilish va hisobot", duration: "18:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Von Mises kuchlanish, umumiy deformatsiya va xavfsizlik koeffitsienti natijalarini qanday o'qish va talqin qilishni o'rganamiz. Muhandislik hisoboti yozamiz." },
+        ]
+      },
+      {
+        id: "fea-m3",
+        title: "Amaliy Loyihalar",
+        lessons: [
+          { id: "fea-l8", title: "Topologik optimizatsiya", duration: "30:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Topology Optimization yordamida material sarfini kamaytirib, detalning kuchliligini saqlaymiz. Zamonaviy muhandislikda bu usul vaqt va xarajatlarni keskin kamaytiradi." },
+          { id: "fea-l9", title: "Yakuniy loyiha: To'liq tahlil hisoboti", duration: "55:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Kurs yakuniy loyihasi: Real sanoat detaliga to'liq FEA tahlili o'tkazamiz — statik, termal va optimallashtirish. Professional muhandislik hisoboti tayyorlaymiz." },
+        ]
+      }
     ]
   },
   {
@@ -286,7 +393,33 @@ export const COURSES: Course[] = [
       ]
     },
     modules: [
-       { id: "plm-m1", title: "Kirish", lessons: [{ id: "plm-l1", title: "PLM ni his qilish", duration: "10:00", isFree: true }] }
+      {
+        id: "plm-m1",
+        title: "PLM Asoslari",
+        lessons: [
+          { id: "plm-l1", title: "PLM nima? PDM vs PLM farqi", duration: "12:00", isFree: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Product Lifecycle Management (PLM) va Product Data Management (PDM) tizimlarini taqqoslaymiz. Mahsulot hayoti davri boshqaruvining zamonaviy yondashuvlarini ko'ramiz." },
+          { id: "plm-l2", title: "Dassault Systèmes va 3DEXPERIENCE platformasi", duration: "15:20", isFree: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Dassault Systèmes kompaniyasi va ularning 3DEXPERIENCE platformasini tanishtirish. CATIA, ENOVIA, SIMULIA, DELMIA kabi applikatsiyalar bir ekotizimda qanday ishlashini tushunamiz." },
+          { id: "plm-m3", title: "3DEXPERIENCE interfeysi va Compass", duration: "14:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "3DEXPERIENCE platformasining Compass navigatsiyasi va asosiy widget'larini o'rganamiz. Bulutli muhitda ishlashning afzalliklari va xavfsizlik yondashuvlarini ko'ramiz." },
+        ]
+      },
+      {
+        id: "plm-m2",
+        title: "3DEXPERIENCE Amaliyoti",
+        lessons: [
+          { id: "plm-l4", title: "Collaborative Space va jamoa boshqaruvi", duration: "22:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Bir vaqtda bir nechta muhandis bitta loyihada ishlashi uchun Collaborative Space ni sozlaymiz. Ruxsatlar (roles), resurslarni taqsimlash va sinxronizatsiyani o'rganamiz." },
+          { id: "plm-l5", title: "Version Control va Revision management", duration: "19:30", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Dizayn o'zgarishlarini kuzatish: version (versiya) va revision (tahrirlash) tizimini o'rganamiz. Eski versiyaga qaytish va o'zgarishlar tarixini ko'rish usullarini ko'ramiz." },
+          { id: "plm-l6", title: "ENOVIA: BOM boshqaruvi", duration: "25:45", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "ENOVIA applikatsiyasida Bill of Materials (BOM) yaratish va boshqarishni o'rganamiz. Engineering BOM va Manufacturing BOM o'rtasidagi farqni tushuntiramiz." },
+          { id: "plm-l7", title: "Workflow va Change Management", duration: "21:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Dizayn o'zgarishlari (ECO — Engineering Change Order) jarayonini rasmiylashtirish. Tasdiqlash zanjiri (approval workflow) ni platformada qanday sozlash mumkinligini ko'ramiz." },
+        ]
+      },
+      {
+        id: "plm-m3",
+        title: "Amaliyot",
+        lessons: [
+          { id: "plm-l8", title: "Virtual kompaniya muhitini sozlash", duration: "35:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Amaliy mashg'ulot: Kichik virtual muhandislik kompaniyasi uchun 3DEXPERIENCE muhitini noldan sozlaymiz. Rollar, loyihalar, fayllar va workflow ni birgalikda quramiz." },
+          { id: "plm-l9", title: "Yakuniy loyiha: PLM joriy etish rejasi", duration: "40:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Kurs yakuniy loyihasi: Real kompaniya uchun PLM tizimini joriy etish rejasini (implementation plan) tayyorlaymiz. Muammolar tahlili, yechim arxitekturasi va ROI hisob-kitobini taqdim etamiz." },
+        ]
+      }
     ]
   }
 ];

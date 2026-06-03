@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { getLessonById, getCourseById, Course, Lesson, Module } from "@/lib/courses";
+import { getLessonById, getCourseById, Course, Lesson, Module, getTotalLessons } from "@/lib/courses";
 import {
   ChevronLeft, ChevronRight, Play, FileText, Image as ImageIcon,
   Lock, BookOpen, CheckCircle, LogOut, Zap, Clock, Download,
@@ -22,6 +22,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
   const [course, setCourse] = useState<Course | null>(null);
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [activeTab, setActiveTab] = useState<"video" | "text" | "pdf" | "images">("video");
+  const [completedLessons, setCompletedLessons] = useState<string[]>([]);
 
   const loadData = async () => {
     try {
@@ -41,24 +42,46 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
     setLesson(result.lesson);
     setCourse(result.course);
 
-    // Default tab
     if (result.lesson.videoUrl) setActiveTab("video");
     else if (result.lesson.text) setActiveTab("text");
     else if (result.lesson.pdfUrl) setActiveTab("pdf");
     else if (result.lesson.images?.length) setActiveTab("images");
   }, [courseId, lessonId, locale, router]);
 
+  useEffect(() => {
+    if (!user) return;
+    const key = `techaxis_progress_${user.id}_${courseId}`;
+    try {
+      const stored = localStorage.getItem(key);
+      setCompletedLessons(stored ? JSON.parse(stored) : []);
+    } catch {
+      setCompletedLessons([]);
+    }
+  }, [user, courseId]);
+
+  function markLessonDone() {
+    if (!user || !lesson) return;
+    const key = `techaxis_progress_${user.id}_${courseId}`;
+    if (completedLessons.includes(lesson.id)) return;
+    const updated = [...completedLessons, lesson.id];
+    setCompletedLessons(updated);
+    try { localStorage.setItem(key, JSON.stringify(updated)); } catch { /* ignore */ }
+  }
+
   if (!user || !course || !lesson) return null;
 
   const isEnrolled = user.enrolledCourses?.includes(course.id) || user.role === "admin";
   const canAccess = isEnrolled || lesson.isFree;
+  const isDone = completedLessons.includes(lesson.id);
 
-  // O'tgan/keyingi darsni topish
   const allLessons = course.modules.flatMap((m: Module) => m.lessons);
   const currentIndex = allLessons.findIndex((l) => l.id === lessonId);
   const prevLesson = currentIndex > 0 ? allLessons[currentIndex - 1] : null;
   const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentIndex + 1] : null;
   const nextCanAccess = nextLesson && (isEnrolled || nextLesson.isFree);
+  const totalLessons = allLessons.length;
+  const totalDone = completedLessons.length;
+  const progressPercent = totalLessons > 0 ? Math.round((totalDone / totalLessons) * 100) : 0;
 
   async function handleLogout() {
     await logoutAction();
@@ -92,6 +115,16 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
+            {/* Progress */}
+            <div className="hidden sm:flex flex-col items-end gap-1">
+              <span className="text-slate-400 text-xs font-mono">{totalDone}/{totalLessons} dars</span>
+              <div className="w-24 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full transition-all duration-300"
+                  style={{ width: `${progressPercent}%` }}
+                />
+              </div>
+            </div>
             {/* Nav */}
             <div className="flex items-center gap-1">
               <Link href={prevLesson ? `/${locale}/dashboard/${courseId}/${prevLesson.id}` : "#"}>
@@ -184,20 +217,30 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
 
             {/* Video */}
             {activeTab === "video" && lesson.videoUrl && (
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-                <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                  <iframe
-                    src={lesson.videoUrl}
-                    className="absolute inset-0 w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title={lesson.title}
-                  />
+              <div className="space-y-5">
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                  <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                    <iframe
+                      src={lesson.videoUrl}
+                      className="absolute inset-0 w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      title={lesson.title}
+                    />
+                  </div>
                 </div>
+                {lesson.text && (
+                  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                    <h3 className="text-base font-bold text-white mb-3 flex items-center gap-2">
+                      <BookOpen className="w-4 h-4 text-blue-400" /> Dars matni
+                    </h3>
+                    <p className="text-slate-300 leading-relaxed text-sm">{lesson.text}</p>
+                  </div>
+                )}
               </div>
             )}
 
-            {/* Matn */}
+            {/* Matn (to'g'ridan-to'g'ri tab) */}
             {activeTab === "text" && lesson.text && (
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8">
                 <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
@@ -236,6 +279,22 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
                 </div>
               </div>
             )}
+
+            {/* Dars tugadi tugmasi */}
+            <div className="flex justify-center pt-2">
+              <button
+                onClick={markLessonDone}
+                disabled={isDone}
+                className={`flex items-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-base transition-all ${
+                  isDone
+                    ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 cursor-default"
+                    : "bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:opacity-90 hover:-translate-y-0.5 shadow-lg hover:shadow-blue-500/25"
+                }`}
+              >
+                <CheckCircle className="w-5 h-5" />
+                {isDone ? "Tugallandi ✓" : "Dars tugadi ✓"}
+              </button>
+            </div>
 
             {/* Keyingi dars */}
             {nextLesson && (
