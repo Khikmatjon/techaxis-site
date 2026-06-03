@@ -10,8 +10,14 @@ export async function GET() {
     }
 
     const courses = await prisma.course.findMany({
-      include: { modules: { include: { lessons: true } } },
+      include: {
+        modules: {
+          include: { lessons: true },
+          orderBy: { createdAt: "asc" },
+        },
+      },
       orderBy: { createdAt: "desc" },
+      take: 100,
     });
 
     return NextResponse.json(courses);
