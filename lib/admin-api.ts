@@ -15,7 +15,11 @@ async function fetchWithTimeout(url: string, options?: RequestInit) {
 
 export async function getCourses() {
   const res = await fetchWithTimeout("/api/admin/courses");
-  if (!res.ok) throw new Error("Failed to fetch courses");
+  if (!res.ok) {
+    const errorText = await res.text().catch(() => "Unknown error");
+    console.error(`API error: ${res.status} ${res.statusText}`, errorText);
+    throw new Error(`API error: ${res.status} - ${res.statusText}`);
+  }
   return res.json();
 }
 
