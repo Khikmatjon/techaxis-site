@@ -171,8 +171,9 @@ function CMSAdmin() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {error && (
-          <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 mb-6 text-red-400">
-            {error}
+          <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 mb-6 text-red-400 flex items-center justify-between">
+            <span>{error}</span>
+            <button onClick={() => { setError(null); loadCourses(); }} className="text-blue-400 hover:text-blue-300 text-sm underline whitespace-nowrap ml-4">Qayta urinish</button>
           </div>
         )}
 
