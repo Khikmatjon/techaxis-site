@@ -129,6 +129,15 @@ export async function logoutAction() {
   redirect("/");
 }
 
+// Joriy sessiya foydalanuvchisini qaytaradi (id, email, role, name) yoki null.
+// Navbar buni `/api/auth/session` route handler o'rniga ishlatadi, chunki
+// bu deploymentda route handler'lar javob bermaydi (osilib qoladi).
+export async function getCurrentUserAction() {
+  const session = await get_session();
+  if (!session || !session.user) return null;
+  return session.user;
+}
+
 export async function updateUserCredentialsAction(formData: FormData) {
   try {
     const sessionCookie = (await cookies()).get("session")?.value;

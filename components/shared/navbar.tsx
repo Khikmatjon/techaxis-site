@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, ChevronDown, Sun, Moon, LogOut, LayoutDashboard, Shield, User, BookOpen, Settings, Loader2 } from 'lucide-react';
 import { LanguageSwitcher } from "./language-switcher";
-import { logoutAction, updateUserCredentialsAction } from '@/lib/actions/auth-actions';
+import { logoutAction, updateUserCredentialsAction, getCurrentUserAction } from '@/lib/actions/auth-actions';
 import { useTheme } from "next-themes";
 
 const Navbar = ({ dict }: { dict: any }) => {
@@ -28,17 +28,18 @@ const Navbar = ({ dict }: { dict: any }) => {
 
   useEffect(() => {
     setMounted(true);
-    // Severdan sessiyani tekshirish
-    fetch('/api/auth/session')
-      .then(res => res.json())
-      .then(data => {
-        if (data.user) {
-          setUser(data.user);
-          setNewEmail(data.user.email);
+    // Sessiyani server action orqali tekshirish (route handler emas — bu
+    // deploymentda /api/* route handler'lar javob bermaydi).
+    getCurrentUserAction()
+      .then((u) => {
+        if (u) {
+          setUser(u);
+          setNewEmail(u.email);
         } else {
           setUser(null);
         }
-      });
+      })
+      .catch(() => setUser(null));
   }, [pathname]); // sahifa o'zgarganda qayta tekshir
 
   async function handleLogout() {
