@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { getCourses, updateCourse, deleteCourse, createCourse, createModule, deleteModule, createLesson, deleteLesson, updateLesson } from "@/lib/admin-api";
+import { getCourses, updateCourse, deleteCourse, createModule, deleteModule, createLesson, deleteLesson, updateLesson, updateModule } from "@/lib/admin-api";
 import { logoutAction } from "@/lib/actions/auth-actions";
-import { Plus, Edit2, Trash2, LogOut, Zap, ChevronDown, ChevronUp, Save, X } from "lucide-react";
+import { Plus, Edit2, Trash2, LogOut, Zap, ChevronDown, Save, X } from "lucide-react";
 import { getStudentDashboardAction } from "@/lib/actions/student-actions";
 
 function CMSAdmin() {
@@ -17,6 +17,8 @@ function CMSAdmin() {
   const [expandedCourse, setExpandedCourse] = useState<string | null>(null);
   const [expandedModule, setExpandedModule] = useState<string | null>(null);
   const [editingCourse, setEditingCourse] = useState<string | null>(null);
+  const [editingModule, setEditingModule] = useState<string | null>(null);
+  const [editingLesson, setEditingLesson] = useState<string | null>(null);
   const [addingModule, setAddingModule] = useState<string | null>(null);
   const [addingLesson, setAddingLesson] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -82,6 +84,16 @@ function CMSAdmin() {
     }
   }
 
+  async function handleUpdateModule(moduleId: string, updates: any) {
+    try {
+      await updateModule(moduleId, updates);
+      await loadCourses();
+      setEditingModule(null);
+    } catch (err) {
+      setError("Modul yangilanishida xato");
+    }
+  }
+
   async function handleDeleteModule(moduleId: string) {
     if (!confirm("Modulni o'chirishni tasdiqlaysizmi?")) return;
     try {
@@ -100,6 +112,16 @@ function CMSAdmin() {
       setAddingLesson(null);
     } catch (err) {
       setError("Dars qo'shishda xato");
+    }
+  }
+
+  async function handleUpdateLesson(lessonId: string, updates: any) {
+    try {
+      await updateLesson(lessonId, updates);
+      await loadCourses();
+      setEditingLesson(null);
+    } catch (err) {
+      setError("Dars yangilanishida xato");
     }
   }
 
@@ -127,7 +149,6 @@ function CMSAdmin() {
 
   return (
     <div className="min-h-screen bg-slate-950">
-      {/* Header */}
       <div className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-800 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <Link href={`/${locale}`} className="flex items-center gap-2">
@@ -153,15 +174,13 @@ function CMSAdmin() {
           Kurslarni <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Boshqarish</span>
         </h1>
 
-        {/* Courses List */}
         <div className="space-y-4">
           {courses.map((course) => (
             <div key={course.id} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-              {/* Course Header */}
               <div className="p-6 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-800/50" onClick={() => setExpandedCourse(expandedCourse === course.id ? null : course.id)}>
                 <div className="flex-1">
                   <h3 className="text-xl font-bold text-white">{course.title}</h3>
-                  <p className="text-slate-400 text-sm">${course.price} | {course.modules?.length || 0} modul</p>
+                  <p className="text-slate-400 text-sm">${course.price} | {course.modules?.length || 0} modul | {course.discountPercent}% chegirma</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <button onClick={(e) => { e.stopPropagation(); setEditingCourse(course.id); }} className="text-blue-400 hover:bg-blue-500/20 p-2 rounded-lg">
@@ -174,12 +193,10 @@ function CMSAdmin() {
                 </div>
               </div>
 
-              {/* Edit Form */}
               {editingCourse === course.id && (
                 <CourseEditForm course={course} onSave={(updates: any) => { handleUpdateCourse(course.id, updates); }} onCancel={() => setEditingCourse(null)} />
               )}
 
-              {/* Modules */}
               {expandedCourse === course.id && (
                 <div className="border-t border-slate-800 p-6 space-y-4 bg-slate-900/50">
                   {course.modules?.map((module: any) => (
@@ -190,6 +207,9 @@ function CMSAdmin() {
                           <p className="text-xs text-slate-400">{module.lessons?.length || 0} dars</p>
                         </div>
                         <div className="flex gap-2">
+                          <button onClick={(e) => { e.stopPropagation(); setEditingModule(module.id); }} className="text-blue-400 hover:bg-blue-500/20 p-1.5 rounded">
+                            <Edit2 className="w-4 h-4" />
+                          </button>
                           <button onClick={(e) => { e.stopPropagation(); handleDeleteModule(module.id); }} className="text-red-400 hover:bg-red-500/20 p-1.5 rounded">
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -197,11 +217,20 @@ function CMSAdmin() {
                         </div>
                       </div>
 
-                      {/* Lessons */}
+                      {editingModule === module.id && (
+                        <ModuleEditForm module={module} onSave={(updates: any) => { handleUpdateModule(module.id, updates); }} onCancel={() => setEditingModule(null)} />
+                      )}
+
                       {expandedModule === module.id && (
                         <div className="border-t border-slate-700 p-4 space-y-2 bg-slate-900/50">
                           {module.lessons?.map((lesson: any) => (
-                            <LessonRow key={lesson.id} lesson={lesson} onDelete={() => handleDeleteLesson(lesson.id)} />
+                            <div key={lesson.id}>
+                              {editingLesson === lesson.id ? (
+                                <LessonEditForm lesson={lesson} onSave={(updates: any) => { handleUpdateLesson(lesson.id, updates); }} onCancel={() => setEditingLesson(null)} />
+                              ) : (
+                                <LessonRow lesson={lesson} onEdit={() => setEditingLesson(lesson.id)} onDelete={() => handleDeleteLesson(lesson.id)} />
+                              )}
+                            </div>
                           ))}
                           {addingLesson === module.id ? (
                             <AddLessonForm moduleId={module.id} onAdd={(title: string) => handleAddLesson(module.id, title)} onCancel={() => setAddingLesson(null)} />
@@ -238,18 +267,82 @@ function CourseEditForm({ course, onSave, onCancel }: any) {
   return (
     <div className="border-t border-slate-800 p-6 bg-slate-900/50 space-y-4">
       <div className="grid grid-cols-2 gap-4">
-        <input type="text" placeholder="Sarlavha" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} className="bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-lg" />
-        <input type="number" placeholder="Narx USD" value={formData.price} onChange={(e) => setFormData({ ...formData, price: parseInt(e.target.value) })} className="bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-lg" />
-        <input type="number" placeholder="Narx UZS" value={formData.priceUZS} onChange={(e) => setFormData({ ...formData, priceUZS: parseInt(e.target.value) })} className="bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-lg" />
-        <input type="number" placeholder="Chegirma %" min="0" max="100" value={formData.discountPercent} onChange={(e) => setFormData({ ...formData, discountPercent: parseInt(e.target.value) })} className="bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-lg" />
+        <input type="text" placeholder="Sarlavha" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} className="bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-lg text-sm" />
+        <input type="number" placeholder="Narx USD" value={formData.price} onChange={(e) => setFormData({ ...formData, price: parseInt(e.target.value) })} className="bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-lg text-sm" />
+        <input type="number" placeholder="Narx UZS" value={formData.priceUZS} onChange={(e) => setFormData({ ...formData, priceUZS: parseInt(e.target.value) })} className="bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-lg text-sm" />
+        <input type="number" placeholder="Chegirma %" min="0" max="100" value={formData.discountPercent} onChange={(e) => setFormData({ ...formData, discountPercent: parseInt(e.target.value) })} className="bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-lg text-sm" />
       </div>
-      <textarea placeholder="Tavsif" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} className="w-full bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-lg" rows={3} />
+      <textarea placeholder="Tavsif" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} className="w-full bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-lg text-sm" rows={3} />
       <div className="flex gap-2 justify-end">
-        <button onClick={onCancel} className="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-2">
+        <button onClick={onCancel} className="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-2 text-sm">
           <X className="w-4 h-4" /> Bekor
         </button>
-        <button onClick={() => onSave(formData)} className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-2">
+        <button onClick={() => onSave(formData)} className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-2 text-sm">
           <Save className="w-4 h-4" /> Saqlash
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ModuleEditForm({ module, onSave, onCancel }: any) {
+  const [title, setTitle] = useState(module.title);
+
+  return (
+    <div className="border-t border-slate-700 p-4 bg-slate-800/30 space-y-3">
+      <input type="text" placeholder="Modul nomi" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full bg-slate-700 border border-slate-600 text-white px-3 py-2 rounded text-sm" />
+      <div className="flex gap-2 justify-end">
+        <button onClick={onCancel} className="px-3 py-1.5 rounded bg-slate-700 text-slate-300 hover:bg-slate-600 flex items-center gap-1 text-xs">
+          <X className="w-3 h-3" /> Bekor
+        </button>
+        <button onClick={() => onSave({ title })} className="px-3 py-1.5 rounded bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-1 text-xs">
+          <Save className="w-3 h-3" /> Saqlash
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function LessonEditForm({ lesson, onSave, onCancel }: any) {
+  const [formData, setFormData] = useState(lesson);
+
+  return (
+    <div className="bg-slate-700/50 rounded p-4 space-y-3 mb-2">
+      <div className="grid grid-cols-2 gap-2">
+        <input type="text" placeholder="Dars nomi" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} className="bg-slate-600 border border-slate-500 text-white px-3 py-2 rounded text-sm" />
+        <input type="text" placeholder="Davomiyligi (hh:mm)" value={formData.duration} onChange={(e) => setFormData({ ...formData, duration: e.target.value })} className="bg-slate-600 border border-slate-500 text-white px-3 py-2 rounded text-sm" />
+      </div>
+      <input type="text" placeholder="Video URL (YouTube embed)" value={formData.videoUrl || ""} onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })} className="w-full bg-slate-600 border border-slate-500 text-white px-3 py-2 rounded text-sm" />
+      <textarea placeholder="Dars matnini yozish" value={formData.text || ""} onChange={(e) => setFormData({ ...formData, text: e.target.value })} className="w-full bg-slate-600 border border-slate-500 text-white px-3 py-2 rounded text-sm" rows={2} />
+      <label className="flex items-center gap-2 text-white text-sm">
+        <input type="checkbox" checked={formData.isFree} onChange={(e) => setFormData({ ...formData, isFree: e.target.checked })} />
+        Bepul dars
+      </label>
+      <div className="flex gap-2 justify-end">
+        <button onClick={onCancel} className="px-3 py-1.5 rounded bg-slate-600 text-slate-300 hover:bg-slate-700 flex items-center gap-1 text-xs">
+          <X className="w-3 h-3" /> Bekor
+        </button>
+        <button onClick={() => onSave(formData)} className="px-3 py-1.5 rounded bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-1 text-xs">
+          <Save className="w-3 h-3" /> Saqlash
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function LessonRow({ lesson, onEdit, onDelete }: any) {
+  return (
+    <div className="bg-slate-700/30 rounded p-3 flex items-center justify-between">
+      <div>
+        <p className="text-white text-sm font-medium">{lesson.title}</p>
+        <p className="text-xs text-slate-400">{lesson.duration}</p>
+      </div>
+      <div className="flex gap-2">
+        <button onClick={onEdit} className="text-blue-400 hover:bg-blue-500/20 p-1 rounded">
+          <Edit2 className="w-4 h-4" />
+        </button>
+        <button onClick={onDelete} className="text-red-400 hover:bg-red-500/20 p-1 rounded">
+          <Trash2 className="w-4 h-4" />
         </button>
       </div>
     </div>
@@ -274,20 +367,6 @@ function AddLessonForm({ moduleId, onAdd, onCancel }: any) {
       <input type="text" placeholder="Dars nomi..." value={title} onChange={(e) => setTitle(e.target.value)} className="flex-1 bg-slate-600 border border-slate-500 text-white px-3 py-1 rounded text-xs" />
       <button onClick={() => onAdd(title)} className="text-cyan-400 hover:bg-cyan-500/20 px-2 py-1 rounded font-bold text-xs">Qo'sh</button>
       <button onClick={onCancel} className="text-slate-400 hover:bg-slate-600 px-2 py-1 rounded text-xs">Bekor</button>
-    </div>
-  );
-}
-
-function LessonRow({ lesson, onDelete }: any) {
-  return (
-    <div className="bg-slate-700/30 rounded p-3 flex items-center justify-between">
-      <div>
-        <p className="text-white text-sm font-medium">{lesson.title}</p>
-        <p className="text-xs text-slate-400">{lesson.duration}</p>
-      </div>
-      <button onClick={onDelete} className="text-red-400 hover:bg-red-500/20 p-1 rounded">
-        <Trash2 className="w-4 h-4" />
-      </button>
     </div>
   );
 }
