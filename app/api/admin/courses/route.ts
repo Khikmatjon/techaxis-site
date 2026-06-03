@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { get_session } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
+import { COURSES } from "@/lib/courses";
 
 export async function GET() {
   try {
@@ -9,12 +10,42 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const courses = await prisma.course.findMany({
-      orderBy: { createdAt: "desc" },
-      take: 100,
-    });
+    // Try to fetch from database first (with timeout)
+    try {
+      const dbPromise = prisma.course.findMany({
+        orderBy: { createdAt: "desc" },
+        take: 100,
+      });
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("DB timeout")), 5000)
+      );
+      const courses = await Promise.race([dbPromise, timeoutPromise]) as any[];
+      if (courses && courses.length > 0) {
+        return NextResponse.json(courses);
+      }
+    } catch (dbError) {
+      console.warn("DB unavailable, using fallback:", dbError);
+    }
 
-    return NextResponse.json(courses);
+    // Fallback: return hardcoded courses with normalized fields
+    const fallbackCourses = COURSES.map((c: any) => ({
+      id: c.id,
+      title: c.title,
+      subtitle: c.subtitle || "",
+      description: c.description || "",
+      price: c.price || 0,
+      priceUZS: c.priceUZS || 0,
+      discountPercent: c.marketing?.discountPercent || 0,
+      thumbnail: c.thumbnail || "",
+      instructor: c.instructor || "TechAxis",
+      level: c.level || "Boshlang'ich",
+      duration: c.duration || "",
+      tags: c.tags || [],
+      isActive: true,
+      createdAt: new Date(),
+    }));
+
+    return NextResponse.json(fallbackCourses);
   } catch (error) {
     console.error("GET /api/admin/courses error:", error);
     return NextResponse.json({ error: "Internal error" }, { status: 500 });
