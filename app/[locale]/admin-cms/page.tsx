@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { getCourses, updateCourse, deleteCourse, createModule, deleteModule, createLesson, deleteLesson, updateLesson, updateModule, getLessons, getModules } from "@/lib/admin-api";
+import { updateCourse, deleteCourse, createModule, deleteModule, createLesson, deleteLesson, updateLesson, updateModule } from "@/lib/admin-api";
+import { getAdminCoursesAction, getAdminModulesAction, getAdminLessonsAction } from "@/lib/actions/cms-actions";
 import { logoutAction } from "@/lib/actions/auth-actions";
 import { Plus, Edit2, Trash2, LogOut, Zap, ChevronDown, Save, X } from "lucide-react";
-import { getStudentDashboardAction } from "@/lib/actions/student-actions";
 
 function CMSAdmin() {
   const params = useParams();
@@ -33,7 +33,7 @@ function CMSAdmin() {
   async function loadCourses() {
     try {
       setLoading(true);
-      const data = await getCourses();
+      const data = await getAdminCoursesAction();
       setCourses(data);
       setError(null);
     } catch (err: any) {
@@ -136,7 +136,7 @@ function CMSAdmin() {
   async function loadCourseModules(courseId: string) {
     if (courseModules[courseId]) return;
     try {
-      const modules = await getModules(courseId);
+      const modules = await getAdminModulesAction(courseId);
       setCourseModules((prev) => ({ ...prev, [courseId]: modules }));
     } catch (err) {
       console.error("Modullarni yuklashda xato:", err);
@@ -146,7 +146,7 @@ function CMSAdmin() {
   async function loadModuleLessons(moduleId: string) {
     if (moduleLessons[moduleId]) return;
     try {
-      const lessons = await getLessons(moduleId);
+      const lessons = await getAdminLessonsAction(moduleId);
       setModuleLessons((prev) => ({ ...prev, [moduleId]: lessons }));
     } catch (err) {
       console.error("Darslarni yuklashda xato:", err);
