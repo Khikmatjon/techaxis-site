@@ -70,6 +70,10 @@ export const Footer = ({ dict }: { dict: any }) => {
                 <span>info@techaxis.uz</span>
               </li>
               <li className="flex items-center space-x-3">
+                <Mail size={16} className="text-blue-500" />
+                <span>khikmatjonm@gmail.com</span>
+              </li>
+              <li className="flex items-center space-x-3">
                 <MapPin size={16} className="text-blue-500" />
                 <span className="text-xs">{f?.location || "Toshkent, O'zbekiston / Janubiy Koreya"}</span>
               </li>
