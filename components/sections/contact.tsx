@@ -40,6 +40,13 @@ export const Contact = ({ dict }: { dict: any }) => {
       href: "mailto:info@techaxis.uz"
     },
     {
+      icon: <Mail className="w-6 h-6 text-emerald-600" />,
+      label: dict?.contact?.email_label || "Email",
+      value: "khikmatjonm@gmail.com",
+      color: "bg-emerald-50",
+      href: "mailto:khikmatjonm@gmail.com"
+    },
+    {
       icon: <MessageSquareText className="w-6 h-6 text-cyan-600" />,
       label: dict?.contact?.telegram_label || "Telegram Bot",
       value: "TechAxis info",

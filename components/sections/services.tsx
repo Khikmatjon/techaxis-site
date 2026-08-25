@@ -18,7 +18,7 @@ export const Services = ({ dict }: { dict: any }) => {
       desc: dict?.services?.design_desc || "HMC/KIA standartlari bo'yicha yuqori aniqlikdagi 3D modellashtirish.",
       icon: <Ruler className="w-8 h-8 text-emerald-600" />,
       color: "bg-emerald-50",
-      href: "/solutions#design"
+      href: "#contact"
     },
     {
       title: dict?.services?.training || "Korporativ Ta'lim",
@@ -39,14 +39,14 @@ export const Services = ({ dict }: { dict: any }) => {
       desc: dict?.services?.analysis_desc || "Mustahkamlik va termal tahlillarni raqamli tekshirish.",
       icon: <BarChart3 className="w-8 h-8 text-amber-600" />,
       color: "bg-amber-50",
-      href: "/solutions#analysis"
+      href: "#contact"
     },
     {
       title: dict?.services?.consulting || "Texnik Konsalting",
       desc: dict?.services?.consulting_desc || "Ishlab chiqarishni raqamlashtirish bo'yicha maslahatlar.",
       icon: <Cpu className="w-8 h-8 text-cyan-600" />,
       color: "bg-cyan-50",
-      href: "/solutions#consulting"
+      href: "#contact"
     }
   ];
 
