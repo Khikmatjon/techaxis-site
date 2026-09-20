@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { Suspense, useCallback, useEffect, useState } from "react";
+import { useParams, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { COURSES, getCourseById, getTotalLessons } from "@/lib/courses";
 import {
@@ -12,6 +12,40 @@ import { getAdminUsersAction, assignCourseAction, rejectCourseAction } from "@/l
 import { logoutAction } from "@/lib/actions/auth-actions";
 import { UserDB } from "@/lib/users-db";
 import CourseManager from "@/components/admin/course-manager";
+import BlogManager from "@/components/admin/blog-manager";
+
+type Tab = "students" | "content" | "blog";
+
+const TABS: { id: Tab; label: string; description: string }[] = [
+  { id: "students", label: "O'quvchilar va to'lovlar", description: "O'quvchilarga kurslarni biriktirish va to'lovlarni tasdiqlash" },
+  { id: "content", label: "Kurslar mazmuni", description: "Kurs narxi, modullar va darslarni boshqarish — saytda darhol yangilanadi" },
+  { id: "blog", label: "Blog va yangiliklar", description: "Haftalik faktlar, maqolalar, yangiliklar va ishlarimizni yozish va nashr qilish" },
+];
+
+const LOAD_ERROR_TEXT = "O'quvchilar ro'yxatini yuklab bo'lmadi (baza bilan aloqa yo'q bo'lishi mumkin).";
+const RETRY_TEXT = "Qayta urinish";
+
+// Ismning bosh harflaridan yasalgan avatar. Tashqi xizmatga (pravatar) o'quvchi emaili yuborilmaydi.
+function Avatar({ name, className = "" }: { name: string; className?: string }) {
+  const initials =
+    (name || "?")
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((w) => w[0]?.toUpperCase())
+      .join("") || "?";
+  let hue = 0;
+  for (const ch of name || "?") hue = (hue * 31 + ch.charCodeAt(0)) % 360;
+  return (
+    <div
+      className={`flex items-center justify-center font-bold text-white shrink-0 ${className}`}
+      style={{ backgroundColor: `hsl(${hue} 55% 38%)` }}
+      aria-hidden="true"
+    >
+      {initials}
+    </div>
+  );
+}
 
 // ---- FOYDALANUVCHI KARTOCHKASI ----
 function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId: string, courseId: string) => void; onReject: (userId: string, courseId: string) => void }) {
@@ -42,11 +76,7 @@ function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId
         className="flex items-center gap-4 p-4 cursor-pointer select-none"
         onClick={() => setOpen(!open)}
       >
-        <img
-          src={`https://i.pravatar.cc/100?u=${user.email}`}
-          alt={user.name}
-          className="w-10 h-10 rounded-full border-2 border-slate-700 shrink-0"
-        />
+        <Avatar name={user.name} className="w-10 h-10 rounded-full border-2 border-slate-700 text-sm" />
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
@@ -175,25 +205,35 @@ function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId
 function AdminContent() {
   const params = useParams();
   const locale = (params?.locale as string) || "uz";
-  const router = useRouter();
+  const searchParams = useSearchParams();
   const [admin, setAdmin] = useState<any>(null);
   const [users, setUsers] = useState<UserDB[]>([]);
   const [search, setSearch] = useState("");
-  const [tab, setTab] = useState<"students" | "content">("students");
+  const [loadError, setLoadError] = useState(false);
+  // Tanlangan tab manzilda saqlanadi (?tab=blog): sahifa yangilansa yoki havola ulashilsa ham shu tab ochiladi
+  const [tab, setTab] = useState<Tab>(TABS.find((t) => t.id === searchParams.get("tab"))?.id ?? "students");
 
-  const loadData = async () => {
+  function selectTab(next: Tab) {
+    setTab(next);
+    window.history.replaceState(null, "", `?tab=${next}`);
+  }
+
+  const loadData = useCallback(async () => {
     try {
-       const allStudents = await getAdminUsersAction();
-       setUsers(allStudents);
-    } catch(e) {
-       console.error(e);
-       router.push(`/${locale}/login`);
+      const allStudents = await getAdminUsersAction();
+      setUsers(allStudents);
+      setLoadError(false);
+    } catch (e) {
+      // Baza vaqtincha javob bermasa admin tizimdan chiqarib yuborilmaydi (kirishni proxy.ts nazorat qiladi).
+      console.error(e);
+      setLoadError(true);
     }
-  };
-
-  useEffect(() => {
-    loadData();
   }, []);
+
+  // O'quvchilar ro'yxati faqat o'quvchilar tabi ochilganda yuklanadi (Blog yoki Kurslar tabida keraksiz so'rov yo'q)
+  useEffect(() => {
+    if (tab === "students") loadData();
+  }, [tab, loadData]);
 
   async function handleAssign(userId: string, courseId: string) {
     try {
@@ -250,11 +290,7 @@ function AdminContent() {
           <div className="flex items-center gap-3">
             {admin && (
               <div className="hidden sm:flex items-center gap-2 bg-slate-800 rounded-full px-3 py-1.5">
-                <img
-                  src={`https://i.pravatar.cc/100?u=${admin.email}`}
-                  alt={admin.name}
-                  className="w-6 h-6 rounded-full"
-                />
+                <Avatar name={admin.name} className="w-6 h-6 rounded-full text-[10px]" />
                 <span className="text-slate-300 text-sm font-medium">{admin.name}</span>
               </div>
             )}
@@ -275,29 +311,41 @@ function AdminContent() {
           <h1 className="text-3xl font-black text-white mb-1">
             Admin <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">Paneli</span>
           </h1>
-          <p className="text-slate-400">{tab === "students" ? "O'quvchilarga kurslarni biriktirish va to'lovlarni tasdiqlash" : "Kurs narxi, modullar va darslarni boshqarish — saytda darhol yangilanadi"}</p>
+          <p className="text-slate-400">{TABS.find((t) => t.id === tab)?.description}</p>
         </div>
 
         {/* Tablar */}
-        <div className="flex gap-1 border-b border-slate-800">
-          <button
-            onClick={() => setTab("students")}
-            className={`px-5 py-3 text-sm font-bold transition-colors border-b-2 -mb-px ${tab === "students" ? "text-white border-cyan-500" : "text-slate-400 border-transparent hover:text-slate-200"}`}
-          >
-            O'quvchilar va to'lovlar
-          </button>
-          <button
-            onClick={() => setTab("content")}
-            className={`px-5 py-3 text-sm font-bold transition-colors border-b-2 -mb-px ${tab === "content" ? "text-white border-cyan-500" : "text-slate-400 border-transparent hover:text-slate-200"}`}
-          >
-            Kurslar mazmuni
-          </button>
+        <div className="flex gap-1 border-b border-slate-800 overflow-x-auto" role="tablist">
+          {TABS.map((t) => (
+            <button
+              key={t.id}
+              role="tab"
+              aria-selected={tab === t.id}
+              onClick={() => selectTab(t.id)}
+              className={`px-5 py-3 text-sm font-bold transition-colors border-b-2 -mb-px whitespace-nowrap ${tab === t.id ? "text-white border-cyan-500" : "text-slate-400 border-transparent hover:text-slate-200"}`}
+            >
+              {t.label}
+            </button>
+          ))}
         </div>
 
         {tab === "content" && <CourseManager />}
 
+        {tab === "blog" && <BlogManager />}
+
         {tab === "students" && (
         <div className="space-y-8">
+        {loadError && (
+          <div className="flex flex-wrap items-center justify-between gap-4 bg-amber-500/10 border border-amber-500/30 text-amber-200 rounded-xl p-4 text-sm">
+            <span>{LOAD_ERROR_TEXT}</span>
+            <button
+              onClick={loadData}
+              className="text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-100 border border-amber-500/40 rounded-lg px-3 py-2 transition-colors"
+            >
+              {RETRY_TEXT}
+            </button>
+          </div>
+        )}
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
@@ -398,5 +446,10 @@ function AdminContent() {
 }
 
 export default function AdminPage() {
-  return <AdminContent />;
+  // useSearchParams (?tab=...) uchun Suspense kerak
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-950" />}>
+      <AdminContent />
+    </Suspense>
+  );
 }

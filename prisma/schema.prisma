@@ -80,3 +80,20 @@ model Lesson {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
+
+// Blog: haftalik faktlar, maqolalar, yangiliklar va bizning ishlarimiz (admin panelidan boshqariladi).
+model Post {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  type        String   @default("article") // "fact" | "article" | "news" | "work"
+  title       String
+  excerpt     String
+  content     String
+  coverImage  String?
+  published   Boolean  @default(false)
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([published, publishedAt])
+}

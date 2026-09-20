@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# local dev data (blog posts written in the admin without a database)
+/.data/
+
 # vercel
 .vercel
 
