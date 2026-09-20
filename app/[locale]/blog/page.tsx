@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BLOG_POSTS } from "@/lib/blog";
+import { PostImage } from "@/components/blog/post-image";
 import { BookOpen, Calendar, ArrowRight, BookMarked } from "lucide-react";
 
 export const metadata = {
@@ -37,16 +38,20 @@ export default async function BlogIndexPage({ params }: { params: Promise<{ loca
         </div>
 
         {/* Blog ro'yxati */}
+        {BLOG_POSTS.length === 0 && (
+          <p className="text-center text-slate-500 dark:text-slate-400">
+            Maqolalar tez orada chiqadi.
+          </p>
+        )}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {BLOG_POSTS.map((post) => (
             <Link key={post.id} href={`/${locale}/blog/${post.slug}`} className="group block h-full">
               <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] overflow-hidden hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2 transition-all h-full flex flex-col">
                 <div className="relative h-52 overflow-hidden">
-                  <img
+                  <PostImage
                     src={post.image}
                     alt={post.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    onError={(e) => { (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800"; }}
                   />
                   <div className={`absolute top-4 left-4 text-xs font-bold px-3 py-1.5 rounded-full border backdrop-blur-md ${CATEGORY_COLORS[post.category] ?? "bg-slate-800/80 text-slate-300 border-slate-700"}`}>
                     {post.category}
