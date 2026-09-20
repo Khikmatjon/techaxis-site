@@ -1,17 +1,20 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { getBlogPostBySlug, BLOG_POSTS } from "@/lib/blog";
+import { locales } from "@/lib/i18n";
 import Link from "next/link";
 import { ChevronLeft, Calendar, BookOpen, Share2 } from "lucide-react";
 
+// Next.js 16 da params — Promise. Sinxron params.slug undefined beradi va hamma maqola 404 bo'lib qoladi.
+type BlogPostPageProps = { params: Promise<{ slug: string; locale: string }> };
+
 export async function generateStaticParams() {
-  return BLOG_POSTS.map((post) => ({
-    slug: post.slug,
-  }));
+  return locales.flatMap((locale) => BLOG_POSTS.map((post) => ({ locale, slug: post.slug })));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string, locale: string } }): Promise<Metadata> {
-  const post = getBlogPostBySlug(params.slug);
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getBlogPostBySlug(slug);
   if (!post) return {};
 
   return {
@@ -26,8 +29,9 @@ export async function generateMetadata({ params }: { params: { slug: string, loc
   };
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string, locale: string } }) {
-  const post = getBlogPostBySlug(params.slug);
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug, locale } = await params;
+  const post = getBlogPostBySlug(slug);
   
   if (!post) {
     notFound();
@@ -38,7 +42,7 @@ export default function BlogPostPage({ params }: { params: { slug: string, local
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Orqaga qaytish */}
-        <Link href={`/${params.locale}/blog`} className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors font-medium mb-10">
+        <Link href={`/${locale}/blog`} className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors font-medium mb-10">
            <ChevronLeft className="w-5 h-5" /> Maqolalarga qaytish
         </Link>
         
@@ -83,7 +87,7 @@ export default function BlogPostPage({ params }: { params: { slug: string, local
         <div className="mt-16 bg-gradient-to-br from-blue-600/20 to-cyan-500/10 border border-blue-500/30 rounded-3xl p-8 sm:p-10 text-center flex flex-col items-center justify-center space-y-6">
            <h3 className="text-2xl font-bold text-white">Shu mavzuni amaliy o'rganmoqchimisiz?</h3>
            <p className="text-slate-400">Bizning interaktiv kurslarimizga qo'shiling va haqiqiy loyihalarni noldan yaratishni o'rganing.</p>
-           <Link href={`/${params.locale}/courses/solidworks-basics`}>
+           <Link href={`/${locale}/courses/solidworks-basics`}>
              <button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3 px-8 rounded-xl transition-all hover:shadow-lg shadow-blue-500/25">
                Kurslarni ko'rish
              </button>
