@@ -2,19 +2,26 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-const secretKey = process.env.JWT_SECRET || "techaxis-fallback-secret";
-const key = new TextEncoder().encode(secretKey);
+// Kalit faqat JWT_SECRET muhit o'zgaruvchisidan olinadi. Kodda zaxira kalit yo'q:
+// repo PUBLIC, kodga yozilgan kalit bilan har kim soxta sessiya yasay olardi.
+function getKey() {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error("JWT_SECRET muhit o'zgaruvchisi o'rnatilmagan");
+  }
+  return new TextEncoder().encode(secret);
+}
 
 export async function encrypt(payload: any) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("2h")
-    .sign(key);
+    .sign(getKey());
 }
 
 export async function decrypt(input: string): Promise<any> {
-  const { payload } = await jwtVerify(input, key, {
+  const { payload } = await jwtVerify(input, getKey(), {
     algorithms: ["HS256"],
   });
   return payload;
