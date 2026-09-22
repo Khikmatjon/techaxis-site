@@ -67,11 +67,6 @@
     "updating_desc": "We are currently working on adding our best engineering practices and industrial projects to the portfolio. Until then, you can explore our Training Center courses.",
     "cta_training": "Jump to Training",
     "items": {
-      "tmed": {
-        "title": "TMED P1/P2 Telemetry System",
-        "client": "Hyundai Motor Company (HMC)",
-        "desc": "Real-time temperature monitoring system for hybrid powertrain units."
-      },
       "motor": {
         "title": "Motor Component 3D Design",
         "client": "LG Magna e-Powertrain",

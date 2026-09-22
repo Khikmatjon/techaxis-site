@@ -172,46 +172,4 @@ Manba: [SOLIDWORKS 3D CAD](https://www.solidworks.com/product/solidworks-3d-cad)
     published: false,
     publishedAt: SEED_DATE,
   },
-  {
-    // Eski blogdan saqlab qo'yilgan qoralama. Ochiq emas: xohlasangiz tahrirlab nashr qiling yoki o'chiring.
-    id: "seed-retractable-cord-device-design",
-    slug: "retractable-cord-device-design",
-    type: "work",
-    title: "Retractable Cord Device Design (SolidWorks Case Study)",
-    excerpt:
-      "Garaj va ustaxonalar uchun devor ichiga o'rnatiladigan ixcham retractable power cord tizimi mexanik dizayni.",
-    content: `Garage va workshoplar uchun mo‘ljallangan, devor ichiga o‘rnatiladigan retractable power cord device dizayni ustida ishladim.
-Maqsad — standart 2×4 wall cavity (≈3.5 inch) ichiga sig‘adigan, kabelni tortib ishlatish va qayta ichkariga yig‘ib qo‘yish imkonini beradigan ixcham mexanik tizim yaratish.
-
-### Project Overview
-*   **Loyiha turi:** Mechanical Product Design
-*   **Dastur:** SolidWorks (Part + Assembly + Sheet Metal)
-*   **Metodlar:** Parametric modeling, Assembly design, Compact mechanism design
-
-### Design Requirements
-*   Qurilma devor ichiga sig‘ishi kerak (≤ 3.5 inch depth)
-*   Retractable cord mexanizmi ishlashi
-*   Qurilma flush (tekis) yopilishi
-*   Standart outlet orqali ishlashi
-*   Oson montaj (stud orasiga o‘rnatish)
-
-### Mechanical Design Solution
-**Cord Retraction System**
-*   Spring-loaded spool (kabelni yig‘uvchi baraban)
-*   Controlled tension system
-*   Smooth retraction (kabel chirmashmaydi)
-
-**Housing Design**
-*   Ikki qismli корпус (old cover + main body)
-*   Devor ichiga mos o‘lchamlar
-*   Ventilation va kabel yo‘llari
-
-### Engineering Challenges & Solutions
-1.  **Muammo:** Kichik joyda kabelni yig‘ish. **Yechim:** Compact spool design + optimized radius.
-2.  **Muammo:** Cord tangling (chirmashish). **Yechim:** Guide channel + controlled tension system.
-3.  **Muammo:** Installation qiyinligi. **Yechim:** Modular housing + bracket system.`,
-    coverImage: null,
-    published: false,
-    publishedAt: "2026-04-03T00:00:00.000Z",
-  },
 ];
