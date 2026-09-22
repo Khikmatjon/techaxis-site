@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, MessageSquareText, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { sendToTelegram } from '@/lib/actions/send-telegram';
+import { SITE_PHONE } from '@/config/site';
 
 export const Contact = ({ dict }: { dict: any }) => {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -29,8 +30,9 @@ export const Contact = ({ dict }: { dict: any }) => {
     {
       icon: <Phone className="w-6 h-6 text-blue-600" />,
       label: dict?.contact?.phone_label || "Telefon",
-      value: "+998 90 000 00 00",
-      color: "bg-blue-50"
+      value: SITE_PHONE.display,
+      color: "bg-blue-50",
+      href: `tel:${SITE_PHONE.tel}`
     },
     {
       icon: <Mail className="w-6 h-6 text-emerald-600" />,
@@ -38,13 +40,6 @@ export const Contact = ({ dict }: { dict: any }) => {
       value: "info@techaxis.uz",
       color: "bg-emerald-50",
       href: "mailto:info@techaxis.uz"
-    },
-    {
-      icon: <Mail className="w-6 h-6 text-emerald-600" />,
-      label: dict?.contact?.email_label || "Email",
-      value: "khikmatjonm@gmail.com",
-      color: "bg-emerald-50",
-      href: "mailto:khikmatjonm@gmail.com"
     },
     {
       icon: <MessageSquareText className="w-6 h-6 text-cyan-600" />,
@@ -83,12 +78,13 @@ export const Contact = ({ dict }: { dict: any }) => {
             <div className="grid sm:grid-cols-2 gap-6">
               {contactOptions.map((item, index) => {
                 const CardWrapper: any = item.href ? 'a' : 'div';
+                const isExternal = item.href?.startsWith("http");
                 return (
                   <CardWrapper
                     key={index}
                     href={item.href}
-                    target={item.href ? "_blank" : undefined}
-                    rel={item.href ? "noopener noreferrer" : undefined}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noopener noreferrer" : undefined}
                     className="group p-6 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 transition-all hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl hover:-translate-y-1 block cursor-pointer"
                   >
                     <div className={`w-12 h-12 ${item.color} dark:bg-opacity-10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>

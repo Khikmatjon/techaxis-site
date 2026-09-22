@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Youtube, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { SITE_PHONE } from '@/config/site';
 
 export const Footer = ({ dict }: { dict: any }) => {
   const currentYear = new Date().getFullYear();
@@ -63,15 +64,11 @@ export const Footer = ({ dict }: { dict: any }) => {
             <ul className="space-y-4 text-slate-400 text-sm">
               <li className="flex items-center space-x-3">
                 <Phone size={16} className="text-blue-500" />
-                <span>+998 90 000 00 00</span>
+                <a href={`tel:${SITE_PHONE.tel}`} className="hover:text-blue-400 transition-colors">{SITE_PHONE.display}</a>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail size={16} className="text-blue-500" />
                 <span>info@techaxis.uz</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <Mail size={16} className="text-blue-500" />
-                <span>khikmatjonm@gmail.com</span>
               </li>
               <li className="flex items-center space-x-3">
                 <MapPin size={16} className="text-blue-500" />
