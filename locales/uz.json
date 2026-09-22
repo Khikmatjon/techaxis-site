@@ -67,11 +67,6 @@
     "updating_desc": "Biz ayni paytda eng yaxshi muhandislik amaliyotlarimiz va sanoat loyihalarimizni portfolioga kiritish ustida ishlayapmiz. Ungacha, siz O'quv markazimizning kurslari va treninglari bilan tanishishingiz mumkin.",
     "cta_training": "Treninglarga o'tish",
     "items": {
-      "tmed": {
-        "title": "TMED P1/P2 Telemetriya Tizimi",
-        "client": "Hyundai Motor Company (HMC)",
-        "desc": "Gibrid avtomobil kuch qurilmalari uchun real vaqt rejimida haroratni monitoring qiluvchi tizim."
-      },
       "motor": {
         "title": "Dvigatel Qismlari 3D Dizayni",
         "client": "LG Magna e-Powertrain",
