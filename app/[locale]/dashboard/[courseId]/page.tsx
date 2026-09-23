@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { getStudentDashboardAction } from "@/lib/actions/student-actions";
 import { logoutAction } from "@/lib/actions/auth-actions";
+import { Avatar } from "@/components/shared/avatar";
 import { UserDB } from "@/lib/users-db";
 
 
@@ -90,7 +91,7 @@ function CourseContent({ courseId }: { courseId: string }) {
 
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2 bg-slate-800 rounded-full px-3 py-1.5">
-              <img src={`https://i.pravatar.cc/100?u=${user.email}`} alt={user.name} className="w-6 h-6 rounded-full" />
+              <Avatar name={user.name} className="w-6 h-6 rounded-full text-[10px]" />
               <span className="text-slate-300 text-sm font-medium">{user.name}</span>
             </div>
             <button onClick={handleLogout} className="flex items-center gap-1.5 text-slate-400 hover:text-red-400 transition-colors text-sm">

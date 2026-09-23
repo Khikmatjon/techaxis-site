@@ -13,6 +13,7 @@ import { logoutAction } from "@/lib/actions/auth-actions";
 import { UserDB } from "@/lib/users-db";
 import CourseManager from "@/components/admin/course-manager";
 import BlogManager from "@/components/admin/blog-manager";
+import { Avatar } from "@/components/shared/avatar";
 
 type Tab = "students" | "content" | "blog";
 
@@ -24,28 +25,6 @@ const TABS: { id: Tab; label: string; description: string }[] = [
 
 const LOAD_ERROR_TEXT = "O'quvchilar ro'yxatini yuklab bo'lmadi (baza bilan aloqa yo'q bo'lishi mumkin).";
 const RETRY_TEXT = "Qayta urinish";
-
-// Ismning bosh harflaridan yasalgan avatar. Tashqi xizmatga (pravatar) o'quvchi emaili yuborilmaydi.
-function Avatar({ name, className = "" }: { name: string; className?: string }) {
-  const initials =
-    (name || "?")
-      .split(/\s+/)
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((w) => w[0]?.toUpperCase())
-      .join("") || "?";
-  let hue = 0;
-  for (const ch of name || "?") hue = (hue * 31 + ch.charCodeAt(0)) % 360;
-  return (
-    <div
-      className={`flex items-center justify-center font-bold text-white shrink-0 ${className}`}
-      style={{ backgroundColor: `hsl(${hue} 55% 38%)` }}
-      aria-hidden="true"
-    >
-      {initials}
-    </div>
-  );
-}
 
 // ---- FOYDALANUVCHI KARTOCHKASI ----
 function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId: string, courseId: string) => void; onReject: (userId: string, courseId: string) => void }) {

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, ChevronDown, Sun, Moon, LogOut, LayoutDashboard, Shield, User, BookOpen, Settings, Loader2 } from 'lucide-react';
 import { LanguageSwitcher } from "./language-switcher";
+import { Avatar } from "./avatar";
 import { logoutAction, updateUserCredentialsAction, getCurrentUserAction } from '@/lib/actions/auth-actions';
 import { useTheme } from "next-themes";
 
@@ -201,11 +202,11 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
                   className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full pl-2 pr-3 py-1.5 transition-all"
                 >
-                  <img
-                    src={user.avatar || `https://i.pravatar.cc/100?u=${user.email}`}
-                    alt={user.name}
-                    className="w-7 h-7 rounded-full"
-                  />
+                  {user.avatar ? (
+                    <img src={user.avatar} alt={user.name} className="w-7 h-7 rounded-full" />
+                  ) : (
+                    <Avatar name={user.name || user.email} className="w-7 h-7 rounded-full text-[11px]" />
+                  )}
                   <span className="text-slate-700 dark:text-slate-300 text-sm font-semibold max-w-[100px] truncate">
                     {(user.name || user.email || "").split(" ")[0]}
                   </span>
@@ -296,11 +297,11 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
             <LanguageSwitcher />
             {user && (
               <Link href={`/${locale}/dashboard`}>
-                <img
-                  src={user.avatar || `https://i.pravatar.cc/100?u=${user.email}`}
-                  alt={user.name}
-                  className="w-8 h-8 rounded-full border-2 border-blue-500"
-                />
+                {user.avatar ? (
+                  <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full border-2 border-blue-500" />
+                ) : (
+                  <Avatar name={user.name || user.email} className="w-8 h-8 rounded-full border-2 border-blue-500 text-xs" />
+                )}
               </Link>
             )}
             <button
