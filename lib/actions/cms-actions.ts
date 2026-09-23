@@ -1,8 +1,21 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { get_session } from "@/lib/session";
+import { locales } from "@/lib/i18n";
 import { COURSES } from "@/lib/courses";
+
+// Admin bu yerda o'zgartirsa, ommaviy kurs sahifalari (bosh sahifa, katalog,
+// alohida kurs) darhol yangi ma'lumotni ko'rsatishi uchun keshni yangilaydi.
+function refreshPublicCoursePages(courseId?: string) {
+  for (const locale of locales) {
+    revalidatePath(`/${locale}`);
+    revalidatePath(`/${locale}/courses`);
+    revalidatePath(`/${locale}/training`);
+    if (courseId) revalidatePath(`/${locale}/courses/${courseId}`);
+  }
+}
 
 // Server Actions for the Admin CMS read path.
 // We use Server Actions (not Route Handlers) because the /api/admin/* route
@@ -131,36 +144,44 @@ export async function updateCourseAction(id: string, data: any) {
     priceUZS: toInt(data.priceUZS),
     discountPercent: toInt(data.discountPercent),
   };
-  return prisma.course.update({ where: { id }, data: clean });
+  const course = await prisma.course.update({ where: { id }, data: clean });
+  refreshPublicCoursePages(id);
+  return course;
 }
 
 export async function deleteCourseAction(id: string) {
   await requireAdmin();
   await prisma.course.delete({ where: { id } });
+  refreshPublicCoursePages(id);
   return { success: true };
 }
 
 export async function createModuleAction(courseId: string, title: string) {
   await requireAdmin();
   if (!title) throw new Error("Title required");
-  return prisma.module.create({ data: { courseId, title } });
+  const mod = await prisma.module.create({ data: { courseId, title } });
+  refreshPublicCoursePages(courseId);
+  return mod;
 }
 
 export async function updateModuleAction(id: string, data: any) {
   await requireAdmin();
-  return prisma.module.update({ where: { id }, data: { title: data.title } });
+  const mod = await prisma.module.update({ where: { id }, data: { title: data.title } });
+  refreshPublicCoursePages(mod.courseId);
+  return mod;
 }
 
 export async function deleteModuleAction(id: string) {
   await requireAdmin();
-  await prisma.module.delete({ where: { id } });
+  const mod = await prisma.module.delete({ where: { id } });
+  refreshPublicCoursePages(mod.courseId);
   return { success: true };
 }
 
 export async function createLessonAction(moduleId: string, data: any) {
   await requireAdmin();
   if (!data?.title) throw new Error("Title required");
-  return prisma.lesson.create({
+  const lesson = await prisma.lesson.create({
     data: {
       moduleId,
       title: data.title,
@@ -171,7 +192,10 @@ export async function createLessonAction(moduleId: string, data: any) {
       images: data.images || [],
       isFree: !!data.isFree,
     },
+    include: { module: true },
   });
+  refreshPublicCoursePages(lesson.module.courseId);
+  return lesson;
 }
 
 export async function updateLessonAction(id: string, data: any) {
@@ -184,11 +208,14 @@ export async function updateLessonAction(id: string, data: any) {
     text: data.text ?? null,
     isFree: !!data.isFree,
   };
-  return prisma.lesson.update({ where: { id }, data: clean });
+  const lesson = await prisma.lesson.update({ where: { id }, data: clean, include: { module: true } });
+  refreshPublicCoursePages(lesson.module.courseId);
+  return lesson;
 }
 
 export async function deleteLessonAction(id: string) {
   await requireAdmin();
-  await prisma.lesson.delete({ where: { id } });
+  const lesson = await prisma.lesson.delete({ where: { id }, include: { module: true } });
+  refreshPublicCoursePages(lesson.module.courseId);
   return { success: true };
 }

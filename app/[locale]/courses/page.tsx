@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Play, Star, Users, ArrowRight, BookOpen, Clock, Layers } from "lucide-react";
-import { COURSES } from "@/lib/courses";
+import { getCourses } from "@/lib/courses-db";
 import { getDictionary } from "@/lib/dictionary";
 import { Locale } from "@/lib/i18n";
 
@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function CoursesCatalog({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict = await getDictionary(locale as Locale);
+  const courses = await getCourses();
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 font-sans">
@@ -45,7 +46,7 @@ export default async function CoursesCatalog({ params }: { params: Promise<{ loc
       <section className="py-20 lg:py-32">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {COURSES.map((course) => (
+              {courses.map((course) => (
                 <div key={course.id} className="group bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all hover:-translate-y-2 flex flex-col">
                   {/* RASM */}
                   <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">

@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { COURSES, Course, getTotalLessons } from "@/lib/courses";
+import { Course, getTotalLessons } from "@/lib/courses";
 import {
   BookOpen, Lock, Play, Star, Clock, Users, ChevronRight,
   LogOut, Zap, CheckCircle, AlertCircle, X
 } from "lucide-react";
 import { getStudentDashboardAction } from "@/lib/actions/student-actions";
+import { getCoursesAction } from "@/lib/actions/courses-actions";
 import { logoutAction } from "@/lib/actions/auth-actions";
 import { UserDB } from "@/lib/users-db";
 import { Avatar } from "@/components/shared/avatar";
@@ -139,6 +140,7 @@ function DashboardContent() {
   const locale = (params?.locale as string) || "uz";
   const router = useRouter();
   const [user, setUser] = useState<UserDB | null>(null);
+  const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [toast, setToast] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -146,8 +148,9 @@ function DashboardContent() {
   const loadData = async () => {
     try {
       setErrorMsg(null);
-      const dbUser = await getStudentDashboardAction();
+      const [dbUser, allCourses] = await Promise.all([getStudentDashboardAction(), getCoursesAction()]);
       setUser(dbUser);
+      setCourses(allCourses);
     } catch (e: any) {
       console.error("DASHBOARD_ERROR:", e.message);
       // Agar foydalanuvchi topilmasa (baza reset bo'lgan bo'lsa) login'ga qaytarish
@@ -273,7 +276,7 @@ function DashboardContent() {
           {[
             { label: "Ochiq kurslar", value: enrolledCount, icon: "✅", color: "text-emerald-400" },
             { label: "Kutilayotgan", value: pendingCount, icon: "⏳", color: "text-amber-400" },
-            { label: "Jami kurslar", value: COURSES.length, icon: "📚", color: "text-blue-400" },
+            { label: "Jami kurslar", value: courses.length, icon: "📚", color: "text-blue-400" },
             { label: "Bajarildi", value: "0%", icon: "🏆", color: "text-purple-400" },
           ].map((s) => (
             <div key={s.label} className="bg-slate-900 border border-slate-800 rounded-xl p-4">
@@ -291,7 +294,7 @@ function DashboardContent() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
-          {COURSES.map((course) => (
+          {courses.map((course) => (
             <CourseCard
               key={course.id}
               course={course}

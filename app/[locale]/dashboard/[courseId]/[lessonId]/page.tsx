@@ -3,7 +3,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { getLessonById, getCourseById, Course, Lesson, Module, getTotalLessons } from "@/lib/courses";
+import { Course, Lesson, Module, getTotalLessons } from "@/lib/courses";
+import { getLessonByIdAction } from "@/lib/actions/courses-actions";
 import {
   ChevronLeft, ChevronRight, Play, FileText, Image as ImageIcon,
   Lock, BookOpen, CheckCircle, LogOut, Zap, Clock, Download,
@@ -37,15 +38,16 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
   useEffect(() => {
     loadData();
 
-    const result = getLessonById(courseId, lessonId);
-    if (!result) { router.push(`/${locale}/dashboard`); return; }
-    setLesson(result.lesson);
-    setCourse(result.course);
+    getLessonByIdAction(courseId, lessonId).then((result) => {
+      if (!result) { router.push(`/${locale}/dashboard`); return; }
+      setLesson(result.lesson);
+      setCourse(result.course);
 
-    if (result.lesson.videoUrl) setActiveTab("video");
-    else if (result.lesson.text) setActiveTab("text");
-    else if (result.lesson.pdfUrl) setActiveTab("pdf");
-    else if (result.lesson.images?.length) setActiveTab("images");
+      if (result.lesson.videoUrl) setActiveTab("video");
+      else if (result.lesson.text) setActiveTab("text");
+      else if (result.lesson.pdfUrl) setActiveTab("pdf");
+      else if (result.lesson.images?.length) setActiveTab("images");
+    });
   }, [courseId, lessonId, locale, router]);
 
   useEffect(() => {

@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { getCourseById, Course, Module, getTotalLessons } from "@/lib/courses";
+import { Course, Module, getTotalLessons } from "@/lib/courses";
+import { getCourseByIdAction } from "@/lib/actions/courses-actions";
 import {
   Play, Lock, FileText, Image, ChevronLeft, Clock, BookOpen,
   Star, Users, CheckCircle, LogOut, Zap, Trophy
@@ -35,10 +36,11 @@ function CourseContent({ courseId }: { courseId: string }) {
 
   useEffect(() => {
     loadData();
-    const c = getCourseById(courseId);
-    if (!c) { router.push(`/${locale}/dashboard`); return; }
-    setCourse(c);
-    if (c.modules.length > 0) setOpenModules(new Set([c.modules[0].id]));
+    getCourseByIdAction(courseId).then((c) => {
+      if (!c) { router.push(`/${locale}/dashboard`); return; }
+      setCourse(c);
+      if (c.modules.length > 0) setOpenModules(new Set([c.modules[0].id]));
+    });
   }, [courseId, locale, router]);
 
   useEffect(() => {

@@ -6,11 +6,12 @@ import { Contact } from "@/components/sections/contact";
 import { About } from "@/components/sections/about";
 import { CoursesPreview } from "@/components/sections/courses-preview";
 import { getStats } from "@/lib/stats";
+import { getCourses } from "@/lib/courses-db";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict: any = await getDictionary(locale as Locale);
-  const stats = await getStats();
+  const [stats, courses] = await Promise.all([getStats(), getCourses()]);
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950">
@@ -88,7 +89,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       {/* 2. COURSES PREVIEW - NEW SEO SECTION */}
-      <CoursesPreview dict={dict} locale={locale} />
+      <CoursesPreview dict={dict} locale={locale} courses={courses} />
 
       {/* 3. OTHER SECTIONS */}
       <section id="services">
