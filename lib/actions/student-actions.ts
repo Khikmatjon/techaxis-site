@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { get_session } from "@/lib/session";
 import { sendPaymentNotification } from "./send-telegram";
-import { getCourseById } from "../courses";
+import { getCourseById } from "../courses-db";
 
 export async function getStudentDashboardAction() {
   const session = await get_session();
@@ -63,7 +63,7 @@ export async function requestPaymentAction(
   }
 
   // Telegram xabarnoma
-  const course = getCourseById(courseId);
+  const course = await getCourseById(courseId);
   await sendPaymentNotification({
     userName: user.name,
     userEmail: user.email,
@@ -118,7 +118,7 @@ export async function submitPaymentProofAction(formData: FormData) {
   });
 
   // Telegram xabarnoma url bilan (Telegram avtomat rasmni ko'radi)
-  const course = getCourseById(payment.courseId);
+  const course = await getCourseById(payment.courseId);
   await sendPaymentNotification({
     userName: payment.user.name,
     userEmail: payment.user.email,

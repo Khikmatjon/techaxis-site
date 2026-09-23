@@ -2,10 +2,10 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { COURSES } from '@/lib/courses';
+import type { Course } from '@/lib/courses';
 import { Star, Users, ArrowRight, Zap, Play } from 'lucide-react';
 
-export const CoursesPreview = ({ dict, locale }: { dict: any, locale: string }) => {
+export const CoursesPreview = ({ dict, locale, courses }: { dict: any, locale: string, courses: Course[] }) => {
   return (
     <section id="courses" className="py-24 bg-slate-50 dark:bg-slate-950/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,7 +23,7 @@ export const CoursesPreview = ({ dict, locale }: { dict: any, locale: string }) 
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {COURSES.slice(0, 3).map((course) => (
+          {courses.slice(0, 3).map((course) => (
             <div key={course.id} className="group bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all hover:-translate-y-2 flex flex-col">
               <div className="relative h-56 overflow-hidden">
                 <img 

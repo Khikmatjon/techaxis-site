@@ -2,12 +2,13 @@ import React from 'react';
 import Link from 'next/link';
 import { getDictionary } from "@/lib/dictionary";
 import { Locale } from "@/lib/i18n";
-import { COURSES, getTotalLessons } from "@/lib/courses";
+import { getCourses, getTotalLessons } from "@/lib/courses-db";
 import { Certifications } from "@/components/sections/certifications";
 
 export default async function TrainingPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict: any = await getDictionary(locale as Locale);
+  const courses = await getCourses();
 
   return (
     <div className="pt-32 pb-20 bg-white dark:bg-slate-950">
@@ -30,7 +31,7 @@ export default async function TrainingPage({ params }: { params: Promise<{ local
 
         {/* Course Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-          {COURSES.map((course) => {
+          {courses.map((course) => {
             const totalLessons = getTotalLessons(course);
             return (
             <Link key={course.id} href={`/${locale}/courses/${course.id}`} className="group block">

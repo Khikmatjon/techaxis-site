@@ -3,9 +3,10 @@
 import { useState, use } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { getCourseById } from "@/lib/courses";
-import { 
-  ChevronLeft, CreditCard, Wallet, Banknote, 
+import type { Course } from "@/lib/courses";
+import { getCourseByIdAction } from "@/lib/actions/courses-actions";
+import {
+  ChevronLeft, CreditCard, Wallet, Banknote,
   CheckCircle2, ShieldCheck, Zap, ArrowRight,
   Info, Loader2, Upload, AlertCircle
 } from "lucide-react";
@@ -16,7 +17,7 @@ import { useEffect } from "react";
 export default function CheckoutPage({ params }: { params: Promise<{ locale: string, courseId: string }> }) {
   const { locale, courseId } = use(params);
   const router = useRouter();
-  const course = getCourseById(courseId);
+  const [course, setCourse] = useState<Course | null | undefined>(undefined);
 
   const [step, setStep] = useState(1); // 1: Plan, 2: Method, 3: Process, 4: Result
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
@@ -38,7 +39,11 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
     checkAuth();
   }, [locale, courseId, router]);
 
-  if (sessionLoading) return (
+  useEffect(() => {
+    getCourseByIdAction(courseId).then((c) => setCourse(c ?? null));
+  }, [courseId]);
+
+  if (sessionLoading || course === undefined) return (
     <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white gap-4">
       <Loader2 className="w-10 h-10 animate-spin text-blue-500" />
       <p className="text-slate-400 font-medium">Yuklanmoqda...</p>

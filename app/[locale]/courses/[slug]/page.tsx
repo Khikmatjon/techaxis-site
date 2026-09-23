@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getCourseById, COURSES } from "@/lib/courses";
+import { getCourseById } from "@/lib/courses-db";
 import Link from "next/link";
 import { 
   Play, CheckCircle, ChevronRight, Users, Star, Clock, 
@@ -11,7 +11,7 @@ import {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string, locale: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const course = getCourseById(slug);
+  const course = await getCourseById(slug);
   if (!course) return {};
 
   return {
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function CourseLandingPage({ params }: { params: Promise<{ slug: string, locale: string }> }) {
   const { slug, locale: paramLocale } = await params;
-  const course = getCourseById(slug);
+  const course = await getCourseById(slug);
   const locale = paramLocale || "uz";
   
   if (!course) {
