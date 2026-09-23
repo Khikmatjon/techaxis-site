@@ -5,11 +5,12 @@ import { Projects } from "@/components/sections/projects";
 import { Contact } from "@/components/sections/contact";
 import { About } from "@/components/sections/about";
 import { CoursesPreview } from "@/components/sections/courses-preview";
-import { STATS } from "@/lib/stats";
+import { getStats } from "@/lib/stats";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict: any = await getDictionary(locale as Locale);
+  const stats = await getStats();
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950">
@@ -50,10 +51,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </button>
             </div>
 
-            {STATS.clients != null && (
+            {stats.clients != null && (
               <div className="flex items-center gap-4 pt-8 border-t border-slate-100 dark:border-slate-800">
                 <div className="text-sm font-medium text-slate-600 dark:text-slate-400">
-                  <span className="text-slate-900 dark:text-white font-bold">{STATS.clients}+</span> {dict?.hero?.trust_text}
+                  <span className="text-slate-900 dark:text-white font-bold">{stats.clients}+</span> {dict?.hero?.trust_text}
                 </div>
               </div>
             )}
@@ -95,7 +96,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       <section id="about">
-        <About dict={dict} />
+        <About dict={dict} stats={stats} />
       </section>
 
       <section id="projects">

@@ -97,3 +97,17 @@ model Post {
 
   @@index([published, publishedAt])
 }
+
+// Bosh sahifadagi statistika (mijozlar, hamkorlar, loyihalar, o'quvchilar,
+// reyting). Bitta qator (id har doim "singleton"), admin panelidan
+// tahrirlanadi. Qiymat null bo'lsa, saytda mos raqam ko'rsatilmaydi
+// (tasdiqlanmagan raqam qo'ymaslik uchun).
+model SiteStats {
+  id        String   @id @default("singleton")
+  clients   Int?
+  partners  Int?
+  projects  Int?
+  students  Int?
+  rating    Float?
+  updatedAt DateTime @updatedAt
+}

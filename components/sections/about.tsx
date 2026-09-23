@@ -3,20 +3,20 @@
 import React from 'react';
 import { Users, Award, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { STATS } from '@/lib/stats';
+import type { Stats } from '@/lib/stats';
 
-export const About = ({ dict }: { dict: any }) => {
-  // Qiymat data/stats.json'da null bo'lsa, mos statistika ko'rinmaydi
-  // (tasdiqlanmagan raqam saytda turmasin).
+export const About = ({ dict, stats: siteStats }: { dict: any; stats: Stats }) => {
+  // Qiymat bazada null bo'lsa (admin panelda hali to'ldirilmagan), mos
+  // statistika ko'rinmaydi (tasdiqlanmagan raqam saytda turmasin).
   const stats = [
-    STATS.projects != null && {
+    siteStats.projects != null && {
       label: dict?.about?.exp_label || "Loyiha tajribasi",
-      value: `${STATS.projects}+`,
+      value: `${siteStats.projects}+`,
       icon: <Award className="w-5 h-5 text-blue-500" />
     },
-    STATS.partners != null && {
+    siteStats.partners != null && {
       label: dict?.about?.partners_label || "Partners",
-      value: `${STATS.partners}+`,
+      value: `${siteStats.partners}+`,
       icon: <Users className="w-5 h-5 text-emerald-500" />
     },
   ].filter(Boolean) as { label: string; value: string; icon: React.ReactNode }[];
