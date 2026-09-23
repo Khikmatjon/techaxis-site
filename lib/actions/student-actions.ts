@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { get_session } from "@/lib/session";
 import { sendPaymentNotification } from "./send-telegram";
+import { sendEnrollmentNotificationEmail } from "../email";
 import { getCourseById } from "../courses-db";
 
 export async function getStudentDashboardAction() {
@@ -62,9 +63,9 @@ export async function requestPaymentAction(
     }
   }
 
-  // Telegram xabarnoma
+  // Telegram va email xabarnoma
   const course = await getCourseById(courseId);
-  await sendPaymentNotification({
+  const notifyData = {
     userName: user.name,
     userEmail: user.email,
     courseTitle: course?.title || courseId,
@@ -72,7 +73,11 @@ export async function requestPaymentAction(
     amount,
     method,
     status,
-  });
+  };
+  await Promise.all([
+    sendPaymentNotification(notifyData),
+    sendEnrollmentNotificationEmail(notifyData),
+  ]);
 
   return { success: true, paymentId: payment.id };
 }
@@ -117,9 +122,9 @@ export async function submitPaymentProofAction(formData: FormData) {
     include: { user: true },
   });
 
-  // Telegram xabarnoma url bilan (Telegram avtomat rasmni ko'radi)
+  // Telegram va email xabarnoma (chek url bilan)
   const course = await getCourseById(payment.courseId);
-  await sendPaymentNotification({
+  const notifyData = {
     userName: payment.user.name,
     userEmail: payment.user.email,
     courseTitle: course?.title || payment.courseId,
@@ -128,7 +133,11 @@ export async function submitPaymentProofAction(formData: FormData) {
     method: payment.method,
     status: payment.status,
     receiptUrl: receiptUrl || undefined,
-  });
+  };
+  await Promise.all([
+    sendPaymentNotification(notifyData),
+    sendEnrollmentNotificationEmail(notifyData),
+  ]);
 
   return { success: true };
 }

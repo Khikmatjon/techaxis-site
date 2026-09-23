@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { get_session } from "@/lib/session";
+import { sendEmail } from "@/lib/email";
 
 import { unstable_noStore as noStore } from "next/cache";
 
@@ -72,6 +73,33 @@ export async function rejectCourseAction(userId: string, courseId: string) {
   });
 
   import("next/cache").then(mod => mod.revalidatePath("/", "layout"));
+  return { success: true };
+}
+
+// Admin o'quvchiga saytdan to'g'ridan-to'g'ri email yozadi (Zoho Mail orqali).
+export async function sendEmailToUserAction(userId: string, subject: string, message: string) {
+  const session = await get_session();
+  if (!session || session.user.role !== "admin") throw new Error("Unauthorized");
+
+  if (!subject?.trim() || !message?.trim()) {
+    return { success: false, error: "Mavzu va xabar matni to'ldirilishi shart" };
+  }
+
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) throw new Error("User not found");
+
+  const html = `
+    <div style="font-family: system-ui, sans-serif; max-width: 480px; margin: 0 auto;">
+      <p>Assalomu alaykum, ${user.name}!</p>
+      <div style="white-space: pre-wrap; line-height: 1.6;">${message}</div>
+      <p style="color:#999; font-size:12px; margin-top:24px;">TechAxis Group</p>
+    </div>
+  `;
+
+  const result = await sendEmail({ to: user.email, subject, html });
+  if (!result.success) {
+    return { success: false, error: "Email yuborilmadi. Server sozlamalarini tekshiring (ZOHO_EMAIL / ZOHO_APP_PASSWORD)." };
+  }
   return { success: true };
 }
 

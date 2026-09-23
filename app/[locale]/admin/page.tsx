@@ -6,9 +6,9 @@ import Link from "next/link";
 import { COURSES, getCourseById, getTotalLessons } from "@/lib/courses";
 import {
   Users, BookOpen, CheckCircle, Clock, LogOut, Zap,
-  Shield, UserCheck, ChevronRight, Search, X, Award, AlertTriangle
+  Shield, UserCheck, ChevronRight, Search, X, Award, AlertTriangle, Mail, Send, Loader2
 } from "lucide-react";
-import { getAdminUsersAction, assignCourseAction, rejectCourseAction } from "@/lib/actions/admin-actions";
+import { getAdminUsersAction, assignCourseAction, rejectCourseAction, sendEmailToUserAction } from "@/lib/actions/admin-actions";
 import { logoutAction } from "@/lib/actions/auth-actions";
 import { UserDB } from "@/lib/users-db";
 import CourseManager from "@/components/admin/course-manager";
@@ -28,6 +28,75 @@ const TABS: { id: Tab; label: string; description: string }[] = [
 const LOAD_ERROR_TEXT = "O'quvchilar ro'yxatini yuklab bo'lmadi (baza bilan aloqa yo'q bo'lishi mumkin).";
 const RETRY_TEXT = "Qayta urinish";
 
+// ---- EMAIL YOZISH OYNASI ----
+function EmailModal({ user, onClose }: { user: UserDB; onClose: () => void }) {
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [sending, setSending] = useState(false);
+  const [result, setResult] = useState<{ ok: boolean; text: string } | null>(null);
+
+  async function handleSend() {
+    setSending(true);
+    setResult(null);
+    try {
+      const res = await sendEmailToUserAction(user.id, subject, message);
+      if (res.success) {
+        setResult({ ok: true, text: "Yuborildi!" });
+        setTimeout(onClose, 1200);
+      } else {
+        setResult({ ok: false, text: res.error || "Xatolik yuz berdi" });
+      }
+    } catch {
+      setResult({ ok: false, text: "Xatolik yuz berdi" });
+    } finally {
+      setSending(false);
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onClick={onClose}>
+      <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between p-5 border-b border-slate-800">
+          <div>
+            <h3 className="text-white font-bold flex items-center gap-2"><Mail className="w-4 h-4 text-blue-400" /> Email yozish</h3>
+            <p className="text-slate-500 text-xs mt-0.5">{user.name} · {user.email}</p>
+          </div>
+          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+        <div className="p-5 space-y-3">
+          <input
+            type="text"
+            placeholder="Mavzu"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+          />
+          <textarea
+            placeholder="Xabar matni"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            rows={6}
+            className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 resize-none"
+          />
+          {result && (
+            <p className={`text-sm font-bold ${result.ok ? "text-emerald-400" : "text-red-400"}`}>{result.text}</p>
+          )}
+          <button
+            onClick={handleSend}
+            disabled={sending || !subject.trim() || !message.trim()}
+            className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-bold py-3 rounded-xl transition-all"
+          >
+            {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+            Yuborish
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ---- FOYDALANUVCHI KARTOCHKASI ----
 function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId: string, courseId: string) => void; onReject: (userId: string, courseId: string) => void }) {
   const [open, setOpen] = useState(false);
@@ -35,6 +104,7 @@ function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId
   const [rejecting, setRejecting] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [openReceipt, setOpenReceipt] = useState<string | null>(null);
+  const [emailOpen, setEmailOpen] = useState(false);
 
   async function handleAssign(courseId: string) {
     setAssigning(courseId);
@@ -77,9 +147,18 @@ function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId
               <CheckCircle className="w-3 h-3" /> {user.enrolledCourses ? user.enrolledCourses.length : 0}
             </span>
           </div>
+          <button
+            onClick={(e) => { e.stopPropagation(); setEmailOpen(true); }}
+            title="Email yozish"
+            className="text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 p-1.5 rounded-lg transition-colors"
+          >
+            <Mail className="w-4 h-4" />
+          </button>
           <ChevronRight className={`w-4 h-4 text-slate-500 transition-transform ${open ? "rotate-90" : ""}`} />
         </div>
       </div>
+
+      {emailOpen && <EmailModal user={user} onClose={() => setEmailOpen(false)} />}
 
       {open && (
         <div className="border-t border-slate-800 p-4 space-y-3 bg-slate-900/50">
