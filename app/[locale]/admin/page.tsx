@@ -13,14 +13,16 @@ import { logoutAction } from "@/lib/actions/auth-actions";
 import { UserDB } from "@/lib/users-db";
 import CourseManager from "@/components/admin/course-manager";
 import BlogManager from "@/components/admin/blog-manager";
+import StatsManager from "@/components/admin/stats-manager";
 import { Avatar } from "@/components/shared/avatar";
 
-type Tab = "students" | "content" | "blog";
+type Tab = "students" | "content" | "blog" | "stats";
 
 const TABS: { id: Tab; label: string; description: string }[] = [
   { id: "students", label: "O'quvchilar va to'lovlar", description: "O'quvchilarga kurslarni biriktirish va to'lovlarni tasdiqlash" },
   { id: "content", label: "Kurslar mazmuni", description: "Kurs narxi, modullar va darslarni boshqarish — saytda darhol yangilanadi" },
   { id: "blog", label: "Blog va yangiliklar", description: "Haftalik faktlar, maqolalar, yangiliklar va ishlarimizni yozish va nashr qilish" },
+  { id: "stats", label: "Statistika", description: "Bosh sahifadagi raqamlar (mijozlar, hamkorlar, loyihalar) — saytda darhol yangilanadi" },
 ];
 
 const LOAD_ERROR_TEXT = "O'quvchilar ro'yxatini yuklab bo'lmadi (baza bilan aloqa yo'q bo'lishi mumkin).";
@@ -311,6 +313,8 @@ function AdminContent() {
         {tab === "content" && <CourseManager />}
 
         {tab === "blog" && <BlogManager />}
+
+        {tab === "stats" && <StatsManager />}
 
         {tab === "students" && (
         <div className="space-y-8">
