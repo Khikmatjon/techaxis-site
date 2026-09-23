@@ -42,12 +42,12 @@ export default async function LocaleLayout({
       <body className="antialiased font-display bg-white dark:bg-slate-950">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <AnnouncementBar dict={dict} />
-          <Navbar dict={dict} />
+          <Navbar dict={dict} locale={locale} />
           {/* pt-20 qo'shildi, Hero Navbar tagida qolmasligi uchun */}
-          <main className="min-h-screen"> 
+          <main className="min-h-screen">
             {children}
           </main>
-          <Footer dict={dict} />
+          <Footer dict={dict} locale={locale} />
         </ThemeProvider>
       </body>
     </html>

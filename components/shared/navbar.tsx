@@ -8,7 +8,7 @@ import { LanguageSwitcher } from "./language-switcher";
 import { logoutAction, updateUserCredentialsAction, getCurrentUserAction } from '@/lib/actions/auth-actions';
 import { useTheme } from "next-themes";
 
-const Navbar = ({ dict }: { dict: any }) => {
+const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<any | null>(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -23,8 +23,10 @@ const Navbar = ({ dict }: { dict: any }) => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Locale ni pathdan olish
-  const locale = pathname.split("/")[1] || "uz";
+  // Locale: avval layout'dan kelgan prop (ishonchli, SSR'da ham to'g'ri),
+  // bo'lmasa pathdan olinadi (usePathname() bu komponentda SSR paytida
+  // ba'zan bo'sh qaytishi kuzatildi, shuning uchun prop ustuvor).
+  const locale = localeProp || pathname.split("/")[1] || "uz";
 
   useEffect(() => {
     setMounted(true);
@@ -83,6 +85,10 @@ const Navbar = ({ dict }: { dict: any }) => {
     );
   };
 
+  // Qisqartirilgan menyu (Day 3): faqat haqiqiy, ishlaydigan manzillarga
+  // ega punktlar qoladi. Haqimizda/Sertifikatlar ustki menyudan olib
+  // tashlandi (ular #about ga dublikat havolalar tashigan edi); mazmuni
+  // hali ham footer va bosh sahifani pastga aylantirib ko'rinadi.
   const navLinks = [
     {
       title: dict?.navbar?.software || "Dasturlar",
@@ -94,23 +100,25 @@ const Navbar = ({ dict }: { dict: any }) => {
       ]
     },
     {
-      title: dict?.navbar?.solutions || "Yechimlar",
-      href: `/${locale}/#projects`,
-      items: [
-        { label: dict?.navbar?.projects || "Loyihalar", href: `/${locale}/#projects` },
-        { label: dict?.navbar?.industrial_solutions || "Sanoat yechimlari", href: `/${locale}/#services` }
-      ]
-    },
-    {
-      title: dict?.navbar?.training || "Ta'lim",
-      href: `/${locale}/training`,
+      title: dict?.navbar?.courses || "Kurslar",
+      href: `/${locale}/courses`,
       items: [
         { label: dict?.navbar?.courses || "Kurslar", href: `/${locale}/courses` },
-        { label: dict?.navbar?.curriculum || "O'quv dasturi", href: `/${locale}/training#curriculum` }
+        { label: dict?.navbar?.curriculum || "O'quv dasturi", href: `/${locale}/training` }
       ]
     },
     {
-      title: dict?.navbar?.resources_title || "Resurslar",
+      title: dict?.navbar?.services || "Xizmatlar",
+      href: `/${locale}/#services`,
+      items: []
+    },
+    {
+      title: dict?.navbar?.projects || "Loyihalar",
+      href: `/${locale}/#projects`,
+      items: []
+    },
+    {
+      title: "Blog",
       href: `/${locale}/blog`,
       items: [
         { label: dict?.navbar?.blog || "Bilimlar bazasi", href: `/${locale}/blog` },
@@ -118,20 +126,9 @@ const Navbar = ({ dict }: { dict: any }) => {
       ]
     },
     {
-      title: dict?.navbar?.about || "Haqimizda",
-      href: `/${locale}/#about`,
-      items: [
-        { label: dict?.navbar?.history || "Kompaniya tarixi", href: `/${locale}/#about` },
-        { label: dict?.navbar?.experience || dict?.about?.exp_label || "Tajriba", href: `/${locale}/#about` }
-      ]
-    },
-    {
-      title: dict?.navbar?.certificates || "Sertifikatlar",
-      href: `/${locale}/#certificates`,
-      items: [
-        { label: dict?.navbar?.global_certs || "Xalqaro litsenziyalar", href: `/${locale}/#about` },
-        { label: dict?.navbar?.partners || "Hamkorlarimiz", href: `/${locale}/#about` }
-      ]
+      title: dict?.navbar?.contact || "Aloqa",
+      href: `/${locale}/#contact`,
+      items: []
     }
   ];
 
@@ -162,21 +159,25 @@ const Navbar = ({ dict }: { dict: any }) => {
                   className="flex items-center gap-1 px-3 py-2 text-[14px] font-medium text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/50"
                 >
                   {link.title}
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-transform group-hover:rotate-180" />
+                  {link.items.length > 0 && (
+                    <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-transform group-hover:rotate-180" />
+                  )}
                 </Link>
 
                 {/* Dropdown */}
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top shadow-xl bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 p-2 z-50">
-                  {link.items.map((sub, j) => (
-                    <Link
-                      key={j}
-                      href={sub.href}
-                      className="block px-4 py-2 text-sm font-medium text-slate-600 hover:text-cyan-500 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800 rounded-lg transition-colors"
-                    >
-                      {sub.label}
-                    </Link>
-                  ))}
-                </div>
+                {link.items.length > 0 && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top shadow-xl bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 p-2 z-50">
+                    {link.items.map((sub, j) => (
+                      <Link
+                        key={j}
+                        href={sub.href}
+                        className="block px-4 py-2 text-sm font-medium text-slate-600 hover:text-cyan-500 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>

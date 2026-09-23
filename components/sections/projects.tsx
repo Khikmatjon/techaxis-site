@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 import { Lightbulb, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -45,13 +46,13 @@ export const Projects = ({ dict }: { dict: any }) => {
               </p>
               
               <div className="pt-4 flex justify-center">
-                <a 
-                  href="#services" 
+                <Link
+                  href="/training"
                   className="group flex items-center gap-3 bg-[#0084FF] hover:bg-blue-600 text-white px-8 py-5 rounded-full font-black transition-all shadow-xl hover:shadow-2xl active:scale-95 cursor-pointer"
                 >
                   {dict?.projects?.cta_training}
                   <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </a>
+                </Link>
               </div>
             </div>
         </motion.div>

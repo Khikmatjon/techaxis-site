@@ -5,9 +5,14 @@ import Link from 'next/link';
 import { Youtube, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { SITE_PHONE } from '@/config/site';
 
-export const Footer = ({ dict }: { dict: any }) => {
+export const Footer = ({ dict, locale }: { dict: any; locale: string }) => {
   const currentYear = new Date().getFullYear();
   const f = dict?.footer;
+  // Bu bo'limlar (#services/#about/#projects) faqat bosh sahifada bor, lekin
+  // footer har sahifada chiqadi, shuning uchun havolalar doim bosh sahifaga
+  // (joriy tilda) yo'naltirilishi kerak, aks holda boshqa sahifalarda ular
+  // hech qayerga olib bormaydi. Locale layout'dan prop sifatida keladi
+  // (usePathname() bu yerda SSR paytida ishonchsiz natija berdi).
 
   return (
     <footer className="bg-slate-950 text-white pt-20 pb-10 border-t border-white/5">
@@ -39,9 +44,9 @@ export const Footer = ({ dict }: { dict: any }) => {
           <div>
             <h4 className="text-lg font-bold mb-6">{f?.nav_title || "Navigatsiya"}</h4>
             <ul className="space-y-4 text-slate-400 text-sm">
-              <li><Link href="#services" className="hover:text-blue-400 transition-colors">{f?.services || "Xizmatlar"}</Link></li>
-              <li><Link href="#about" className="hover:text-blue-400 transition-colors">{f?.about || "Biz haqimizda"}</Link></li>
-              <li><Link href="#projects" className="hover:text-blue-400 transition-colors">{f?.projects || "Loyihalar"}</Link></li>
+              <li><Link href={`/${locale}/#services`} className="hover:text-blue-400 transition-colors">{f?.services || "Xizmatlar"}</Link></li>
+              <li><Link href={`/${locale}/#about`} className="hover:text-blue-400 transition-colors">{f?.about || "Biz haqimizda"}</Link></li>
+              <li><Link href={`/${locale}/#projects`} className="hover:text-blue-400 transition-colors">{f?.projects || "Loyihalar"}</Link></li>
               <li><Link href="/software/solidworks" className="hover:text-blue-400 transition-colors">SOLIDWORKS</Link></li>
               <li><Link href="/software/catia" className="hover:text-blue-400 transition-colors">CATIA</Link></li>
             </ul>
