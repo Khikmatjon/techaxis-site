@@ -5,6 +5,7 @@ import { Projects } from "@/components/sections/projects";
 import { Contact } from "@/components/sections/contact";
 import { About } from "@/components/sections/about";
 import { CoursesPreview } from "@/components/sections/courses-preview";
+import { STATS } from "@/lib/stats";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -49,16 +50,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </button>
             </div>
 
-            <div className="flex items-center gap-4 pt-8 border-t border-slate-100 dark:border-slate-800">
-              <div className="flex -space-x-3">
-                <img className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900" src="https://i.pravatar.cc/100?img=33" alt="Client 1" />
-                <img className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900" src="https://i.pravatar.cc/100?img=47" alt="Client 2" />
-                <img className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900" src="https://i.pravatar.cc/100?img=12" alt="Client 3" />
+            {STATS.clients != null && (
+              <div className="flex items-center gap-4 pt-8 border-t border-slate-100 dark:border-slate-800">
+                <div className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                  <span className="text-slate-900 dark:text-white font-bold">{STATS.clients}+</span> {dict?.hero?.trust_text}
+                </div>
               </div>
-              <div className="text-sm font-medium text-slate-600 dark:text-slate-400">
-                <span className="text-slate-900 dark:text-white font-bold">50+</span> {dict?.hero?.trust_text}
-              </div>
-            </div>
+            )}
           </div>
 
           {/* R: RASM & 3D MODEL PHO QISMI */}

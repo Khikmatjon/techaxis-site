@@ -1,27 +1,25 @@
 "use client";
 
 import React from 'react';
-import { ShieldCheck, Users, Award, ArrowUpRight } from 'lucide-react';
+import { Users, Award, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { STATS } from '@/lib/stats';
 
 export const About = ({ dict }: { dict: any }) => {
+  // Qiymat data/stats.json'da null bo'lsa, mos statistika ko'rinmaydi
+  // (tasdiqlanmagan raqam saytda turmasin).
   const stats = [
-    { 
-      label: dict?.about?.exp_label || "Loyiha tajribasi", 
-      value: "10+", 
-      icon: <Award className="w-5 h-5 text-blue-500" /> 
+    STATS.projects != null && {
+      label: dict?.about?.exp_label || "Loyiha tajribasi",
+      value: `${STATS.projects}+`,
+      icon: <Award className="w-5 h-5 text-blue-500" />
     },
-    { 
-      label: dict?.about?.partners_label || "Partners", 
-      value: "15+", 
-      icon: <Users className="w-5 h-5 text-emerald-500" /> 
+    STATS.partners != null && {
+      label: dict?.about?.partners_label || "Partners",
+      value: `${STATS.partners}+`,
+      icon: <Users className="w-5 h-5 text-emerald-500" />
     },
-    { 
-      label: dict?.about?.standards_label || "Industry Standards", 
-      value: "100%", 
-      icon: <ShieldCheck className="w-5 h-5 text-red-500" /> 
-    },
-  ];
+  ].filter(Boolean) as { label: string; value: string; icon: React.ReactNode }[];
 
   return (
     <section id="about" className="relative py-24 lg:py-32 overflow-hidden bg-white dark:bg-slate-950">
@@ -72,23 +70,25 @@ export const About = ({ dict }: { dict: any }) => {
             </div>
 
             {/* Statistika - Modern Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 pt-8 border-t border-slate-100 dark:border-slate-800">
-              {stats.map((stat, index) => (
-                <div key={index} className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="p-2 bg-slate-50 dark:bg-slate-900 rounded-lg">
-                      {stat.icon}
+            {stats.length > 0 && (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-8 pt-8 border-t border-slate-100 dark:border-slate-800">
+                {stats.map((stat, index) => (
+                  <div key={index} className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="p-2 bg-slate-50 dark:bg-slate-900 rounded-lg">
+                        {stat.icon}
+                      </div>
+                      <span className="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white leading-none">
+                        {stat.value}
+                      </span>
                     </div>
-                    <span className="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white leading-none">
-                      {stat.value}
-                    </span>
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest leading-tight">
+                      {stat.label}
+                    </p>
                   </div>
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest leading-tight">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
             <div className="pt-4">
               <button className="group flex items-center gap-3 bg-[#0084FF] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl active:scale-95">
