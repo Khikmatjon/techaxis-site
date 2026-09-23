@@ -19,12 +19,20 @@ export default async function NotFound() {
             ? 'Запрашиваемая страница не существует или была перемещена.' 
             : 'The page you are looking for does not exist or has been moved.'}
       </p>
-      <Link
-        href={`/${locale}`}
-        className="mt-8 px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-all shadow-lg shadow-blue-500/20 active:scale-95"
-      >
-        {locale === 'uz' ? 'Bosh sahifaga qaytish' : locale === 'ru' ? 'Вернуться на главную' : 'Back to Home'}
-      </Link>
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <Link
+          href={`/${locale}`}
+          className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-all shadow-lg shadow-blue-500/20 active:scale-95"
+        >
+          {locale === 'uz' ? 'Bosh sahifaga qaytish' : locale === 'ru' ? 'Вернуться на главную' : 'Back to Home'}
+        </Link>
+        <Link
+          href={`/${locale}/courses`}
+          className="px-8 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold rounded-full transition-all active:scale-95"
+        >
+          {locale === 'uz' ? 'Kurslarni ko\'rish' : locale === 'ru' ? 'Смотреть курсы' : 'Browse Courses'}
+        </Link>
+      </div>
     </div>
   );
 }

@@ -21,6 +21,7 @@
     "admin_panel": "Admin panel",
     "logout": "Chiqish",
     "industrial_solutions": "Sanoat yechimlari",
+    "services": "Xizmatlar",
     "curriculum": "O'quv dasturi",
     "blog": "Bilimlar bazasi",
     "free_resources": "Bepul materiallar"
@@ -55,7 +56,8 @@
     "analysis": "Simulyatsiya va Tahlil",
     "analysis_desc": "Mustahkamlik va termal tahlillarni raqamli tekshirish.",
     "consulting": "Texnik Konsalting",
-    "consulting_desc": "Ishlab chiqarishni raqamlashtirish bo'yicha maslahatlar."
+    "consulting_desc": "Ishlab chiqarishni raqamlashtirish bo'yicha maslahatlar.",
+    "request_cta": "So'rov yuborish"
   },
   "projects": {
     "title": "Muvaffaqiyat hikoyalari",

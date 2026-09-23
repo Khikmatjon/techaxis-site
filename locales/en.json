@@ -21,6 +21,7 @@
     "admin_panel": "Admin Panel",
     "logout": "Log Out",
     "industrial_solutions": "Industrial Solutions",
+    "services": "Services",
     "curriculum": "Curriculum",
     "blog": "Knowledge Base",
     "free_resources": "Free Resources"
@@ -55,7 +56,8 @@
     "analysis": "Simulation & Analysis",
     "analysis_desc": "Digital validation of structural strength and thermal analysis.",
     "consulting": "Technical Consulting",
-    "consulting_desc": "Expert advice on production digitalization and engineering optimization."
+    "consulting_desc": "Expert advice on production digitalization and engineering optimization.",
+    "request_cta": "Send a request"
   },
   "projects": {
     "title": "Success Stories",
