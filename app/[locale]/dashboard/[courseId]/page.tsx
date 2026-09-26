@@ -7,7 +7,7 @@ import { Course, Module, getTotalLessons } from "@/lib/courses";
 import { getCourseByIdAction } from "@/lib/actions/courses-actions";
 import {
   Play, Lock, FileText, Image, ChevronLeft, Clock, BookOpen,
-  Star, Users, CheckCircle, LogOut, Zap, Trophy
+  CheckCircle, LogOut, Zap, Trophy
 } from "lucide-react";
 import { getStudentDashboardAction } from "@/lib/actions/student-actions";
 import { logoutAction } from "@/lib/actions/auth-actions";
@@ -128,8 +128,6 @@ function CourseContent({ courseId }: { courseId: string }) {
               <div className="p-6">
                 <p className="text-slate-400 text-sm leading-relaxed mb-5">{course.description}</p>
                 <div className="flex flex-wrap gap-4 text-sm text-slate-400 mb-5">
-                  <span className="flex items-center gap-1.5"><Star className="w-4 h-4 text-yellow-400" /> {course.rating} reyting</span>
-                  <span className="flex items-center gap-1.5"><Users className="w-4 h-4 text-blue-400" /> {course.studentsCount} o'quvchi</span>
                   <span className="flex items-center gap-1.5"><BookOpen className="w-4 h-4 text-purple-400" /> {totalLessons} dars</span>
                   <span className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-emerald-400" /> {course.duration}</span>
                 </div>
@@ -235,7 +233,7 @@ function CourseContent({ courseId }: { courseId: string }) {
             <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
               <h3 className="text-white font-bold mb-4">O'qituvchi</h3>
               <div className="flex items-center gap-3">
-                <img src={course.instructorAvatar} alt={course.instructor} className="w-12 h-12 rounded-full border-2 border-slate-700" />
+                <Avatar name={course.instructor} className="w-12 h-12 rounded-full border-2 border-slate-700" />
                 <div>
                   <div className="text-white font-semibold">{course.instructor}</div>
                   <div className="text-slate-400 text-sm">TechAxis Muallifi</div>

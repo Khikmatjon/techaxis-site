@@ -40,12 +40,10 @@ Qaysi kalitlar borligi `.env.example` faylida yozilgan (qiymatlarsiz).
 - **To'lov kartasi** — `config/site.ts` dagi raqamni tekshiring (`...1111 1111` namuna raqamga o'xshaydi).
 - **Kompaniya ijtimoiy tarmoqlari** — ochilgach `config/site.ts` dagi havolalarni almashtiring.
 - **Pulni qaytarish shartlari** — `content/foydalanish-shartlari.ts`.
-- **Tasdiqlanmagan da'volar** (qoldirish / yumshatish / olib tashlash kerak):
-  - `locales/*.json` → `hero.badge` ("1-raqamli"), `hero.expert_badge` ("Sertifikatlangan Ekspert"),
-    `services.design_desc` ("HMC/KIA"), `services.software_sales_desc` ("rasmiy litsenziyalash"),
-    `seo.keywords` ("HMC standartlari"), `projects.items` (LG Magna, KIA — hozir saytda ko'rinmaydi)
-  - `app/[locale]/training/page.tsx` → "500+ Bitiruvchilar", "12+ Hamkor OTMlar", "Authorized Training", CSWA/CSWP
-  - `lib/courses.ts` → kurs matnlaridagi Tesla, SpaceX, UzAuto, Airbus/Boeing/BMW, "maosh 2–3 baravar"
+- **Da'volar qoidasi:** saytga kompaniya nomlari (mijoz yoki "falon kompaniya ishlatadi"),
+  "1-raqamli", "rasmiy hamkor", maosh va'dalari, o'ylab topilgan raqamlar yozilmaydi — faqat
+  isbotlanadigan ma'lumot. Raqamlar (mijozlar, hamkorlar, o'quvchilar) faqat admin paneldagi
+  "Statistika" tabidan, haqiqiy qiymat bo'lsa.
 
 ## Kodda o'zgartirgandan keyin
 

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { Play, Star, Users, ArrowRight, BookOpen, Clock, Layers } from "lucide-react";
+import { Play, ArrowRight, BookOpen, Clock, Layers } from "lucide-react";
 import { getCourses } from "@/lib/courses-db";
 import { getDictionary } from "@/lib/dictionary";
 import { Locale } from "@/lib/i18n";
@@ -70,8 +70,7 @@ export default async function CoursesCatalog({ params }: { params: Promise<{ loc
                   {/* KONTENT */}
                   <div className="p-8 flex flex-col flex-1 space-y-5">
                     <div className="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
-                      <span className="flex items-center gap-1.5"><Star className="w-4 h-4 text-yellow-500" /> {course.rating}</span>
-                      <span className="flex items-center gap-1.5"><Users className="w-4 h-4 text-blue-500" /> {course.studentsCount} {locale === 'uz' ? "o'quvchi" : "students"}</span>
+                      <span className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-blue-500" /> {course.duration}</span>
                     </div>
 
                     <div>

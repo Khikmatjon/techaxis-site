@@ -44,10 +44,10 @@ export default async function SoftwarePage({ params }: { params: Promise<{ local
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20 space-y-6">
           <h1 className="text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-            Rasmiy Dasturiy <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">Ta'minotlar</span>
+            Dasturiy <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">Ta'minotlar</span>
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 font-medium">
-            TechAxis Group - O'zbekistonda SOLIDWORKS va Dassault Systèmes mahsulotlarining ishonchli hamkori. Biz litsenziyalar, texnik yordam va joriy qilish hizmatlarini taklif etamiz.
+            SOLIDWORKS, CATIA va 3DEXPERIENCE bo'yicha litsenziya tanlash, o'rnatish va ishlashni o'rganishda yordam beramiz.
           </p>
         </div>
 

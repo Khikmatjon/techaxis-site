@@ -5,7 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { Course, getTotalLessons } from "@/lib/courses";
 import {
-  BookOpen, Lock, Play, Star, Clock, Users, ChevronRight,
+  BookOpen, Lock, Play, Clock, ChevronRight,
   LogOut, Zap, CheckCircle, AlertCircle, X
 } from "lucide-react";
 import { getStudentDashboardAction } from "@/lib/actions/student-actions";
@@ -101,15 +101,13 @@ function CourseCard({ course, isEnrolled, isPending, locale, onBuy }: {
 
         {/* Stats */}
         <div className="flex items-center gap-4 text-xs text-slate-500 font-medium">
-          <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-yellow-400" /> {course.rating}</span>
-          <span className="flex items-center gap-1"><Users className="w-3.5 h-3.5" /> {course.studentsCount}</span>
           <span className="flex items-center gap-1"><BookOpen className="w-3.5 h-3.5" /> {totalLessons} dars</span>
           <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {course.duration}</span>
         </div>
 
         {/* Instructor */}
         <div className="flex items-center gap-2 pt-2 border-t border-slate-800">
-          <img src={course.instructorAvatar} alt={course.instructor} className="w-7 h-7 rounded-full" />
+          <Avatar name={course.instructor} className="w-7 h-7 rounded-full text-[10px]" />
           <span className="text-slate-400 text-xs">{course.instructor}</span>
         </div>
 

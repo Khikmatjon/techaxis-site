@@ -33,22 +33,22 @@
     "error": "Xatolik"
   },
   "hero": {
-    "badge": "O'zbekistondagi 1-raqamli Muhandislik Markazi",
+    "badge": "SOLIDWORKS va CATIA bo'yicha muhandislik markazi",
     "title": "O'zbekistonda ilg'or CAD va Muhandislik Yechimlari",
     "subtitle": "Sanoat korxonalari va injenerlar uchun xalqaro darajadagi dasturiy ta'minotlar (SOLIDWORKS, CATIA), noldan boshlab professional o'quv kurslari va muhandislik konsaltingi.",
     "cta_primary": "Xizmatlar bilan tanishish",
     "cta_secondary": "Bepul konsultatsiya",
     "trust_text": "sanoat korxonalari ishonchini qozongan",
-    "expert_badge": "Sertifikatlangan Ekspert"
+    "expert_badge": "3D loyihalash va o'qitish"
   },
   "services": {
     "title": "Bizning xizmatlar",
     "subtitle": "Sanoat uchun kompleks muhandislik yechimlari",
     "description": "Biz g'oyadan tortib ishlab chiqarishgacha bo'lgan barcha bosqichlarda ko'maklashamiz.",
     "software_sales": "Dasturiy Ta'minot Savdosi",
-    "software_sales_desc": "SOLIDWORKS, CATIA va 3DEXPERIENCE platformalari uchun rasmiy litsenziyalash.",
+    "software_sales_desc": "SOLIDWORKS, CATIA va 3DEXPERIENCE litsenziyalari bo'yicha maslahat va yordam.",
     "design": "Mexanik Dizayn",
-    "design_desc": "HMC/KIA standartlari bo'yicha yuqori aniqlikdagi 3D modellashtirish.",
+    "design_desc": "Yuqori aniqlikdagi 3D modellashtirish va texnik chizmalar.",
     "training": "Korporativ Ta'lim",
     "training_desc": "Xalqaro standartlar bo'yicha xodimlarni o'qitish va sertifikatlash.",
     "plm": "PLM Tizimlari",
@@ -61,25 +61,12 @@
   },
   "projects": {
     "title": "Muvaffaqiyat hikoyalari",
-    "subtitle": "Amalga oshirilgan yirik loyihalar",
+    "subtitle": "Bizning loyihalar",
     "description": "Muhandislik yechimlari bo'yicha loyihalarimiz sahifasi tez kunda yangilanadi. Hozirda asosiy e'tibor ta'lim va professional treninglarga qaratilgan.",
     "view_all": "To'liq portfolioni ko'rish",
-    "more_projects": "Va yana 10 dan ortiq sanoat loyihalari...",
     "updating_title": "Loyihalar portfeli yangilanmoqda...",
     "updating_desc": "Biz ayni paytda eng yaxshi muhandislik amaliyotlarimiz va sanoat loyihalarimizni portfolioga kiritish ustida ishlayapmiz. Ungacha, siz O'quv markazimizning kurslari va treninglari bilan tanishishingiz mumkin.",
-    "cta_training": "Treninglarga o'tish",
-    "items": {
-      "motor": {
-        "title": "Dvigatel Qismlari 3D Dizayni",
-        "client": "LG Magna e-Powertrain",
-        "desc": "Elektr dvigatel qismlarini yuqori aniqlikda modellashtirish va ishlab chiqarishni optimallashtirish."
-      },
-      "transmission": {
-        "title": "Transmissiya Bloklarini Yig'ish",
-        "client": "KIA Motors",
-        "desc": "Raqamli egizak (Digital Twin) texnologiyasi orqali yig'ish jarayonlarini simulyatsiya qilish."
-      }
-    }
+    "cta_training": "Treninglarga o'tish"
   },
   "about": {
     "title": "Kompaniya haqida",
@@ -93,7 +80,7 @@
   "seo": {
     "title": "TechAxis Group - O'zbekistonda ilg'or CAD va Muhandislik Yechimlari",
     "description": "Sanoat korxonalari va injenerlar uchun xalqaro darajadagi dasturiy ta'minotlar (SOLIDWORKS, CATIA), professional o'quv kurslari va muhandislik konsaltingi.",
-    "keywords": "SOLIDWORKS O'zbekiston, CATIA, muhandislik xizmatlari, CAD dizayni, HMC standartlari, muhandislik o'quv markazi"
+    "keywords": "SOLIDWORKS O'zbekiston, CATIA, muhandislik xizmatlari, CAD dizayni, SOLIDWORKS kurslari, muhandislik o'quv markazi"
   },
   "footer": {
     "nav_title": "Navigatsiya",

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Course } from '@/lib/courses';
-import { Star, Users, ArrowRight, Zap, Play } from 'lucide-react';
+import { Clock, ArrowRight, Zap, Play } from 'lucide-react';
 
 export const CoursesPreview = ({ dict, locale, courses }: { dict: any, locale: string, courses: Course[] }) => {
   return (
@@ -43,8 +43,7 @@ export const CoursesPreview = ({ dict, locale, courses }: { dict: any, locale: s
 
               <div className="p-8 flex flex-col flex-1 space-y-4">
                 <div className="flex items-center justify-between text-xs font-bold text-slate-400">
-                  <span className="flex items-center gap-1.5"><Star className="w-4 h-4 text-yellow-500" /> {course.rating}</span>
-                  <span className="flex items-center gap-1.5"><Users className="w-4 h-4 text-blue-500" /> {course.studentsCount} o'quvchi</span>
+                  <span className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-blue-500" /> {course.duration}</span>
                 </div>
 
                 <h3 className="text-xl font-black text-slate-900 dark:text-white group-hover:text-blue-500 transition-colors">

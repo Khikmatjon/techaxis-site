@@ -17,17 +17,9 @@ export default async function TrainingPage({ params }: { params: Promise<{ local
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">
             <h1 className="text-5xl font-bold mb-6 font-display">Professional Muhandislik Kurslari</h1>
-            {/* KEYIN-TOLDIRING: "CSWA, CSWP va CATIA V6 sertifikatlariga tayyorlaydi" va pastdagi
-                "Authorized Training" tasdiqlanmagan da'volar (5-kun da'volar jadvali). */}
             <p className="text-slate-600 dark:text-slate-400 text-lg">
-              Xalqaro standartlar asosida SOLIDWORKS va CATIA dasturlarini o'rganing.
-              Bizning kurslarimiz sizni CSWA, CSWP va CATIA V6 sertifikatlariga tayyorlaydi.
+              SOLIDWORKS va CATIA dasturlarini noldan, amaliy loyihalar orqali o'rganing.
             </p>
-          </div>
-          <div className="flex gap-4">
-            <div className="px-6 py-3 bg-blue-600/10 text-blue-600 rounded-2xl font-bold border border-blue-600/20">
-              Authorized Training
-            </div>
           </div>
         </div>
 
@@ -73,30 +65,16 @@ export default async function TrainingPage({ params }: { params: Promise<{ local
 
         {/* B2B / University Section */}
         <div className="bg-blue-600 rounded-[50px] p-12 text-white relative overflow-hidden">
-          <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+          <div className="relative z-10 max-w-3xl">
             <div>
               <h2 className="text-4xl font-bold mb-6">Universitetlar va Korxonalar uchun</h2>
               <p className="text-blue-100 text-lg mb-8 leading-relaxed">
                 Biz ta'lim muassasalari va zavodlar uchun maxsus o'quv dasturlarini taqdim etamiz. 
-                Guruh bo'lib o'qish, litsenziyalarni o'rnatish va xalqaro imtihonlarni tashkil qilishda yordam beramiz.
+                Guruh bo'lib o'qish va dasturlarni o'rnatishda yordam beramiz.
               </p>
               <button className="bg-white text-blue-600 px-10 py-4 rounded-2xl font-bold shadow-xl hover:bg-blue-50 transition-colors">
                 Hamkorlik taklifini yuklab olish (PDF)
               </button>
-            </div>
-            <div className="hidden lg:block">
-               {/* KEYIN-TOLDIRING: "500+ Bitiruvchilar" va "12+ Hamkor OTMlar" tasdiqlanmagan raqamlar
-                   (5-kun). Haqiqiy raqam bo'lmasa, bu blokni olib tashlash kerak. */}
-               <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20">
-                    <div className="text-3xl font-bold mb-2">500+</div>
-                    <div className="text-sm text-blue-100">Bitiruvchilar</div>
-                  </div>
-                  <div className="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20">
-                    <div className="text-3xl font-bold mb-2">12+</div>
-                    <div className="text-sm text-blue-100">Hamkor OTMlar</div>
-                  </div>
-               </div>
             </div>
           </div>
           {/* Decorative Circle */}

@@ -33,22 +33,22 @@
     "error": "Error"
   },
   "hero": {
-    "badge": "#1 Engineering Center in Uzbekistan",
+    "badge": "SOLIDWORKS & CATIA engineering center",
     "title": "Advanced CAD & Engineering Solutions in Uzbekistan",
     "subtitle": "World-class industrial software solutions (SOLIDWORKS, CATIA), professional training courses from scratch, and premier engineering consulting for enterprises.",
     "cta_primary": "Explore Services",
     "cta_secondary": "Free Consultation",
     "trust_text": "industrial enterprises trust us",
-    "expert_badge": "Certified Expert"
+    "expert_badge": "3D design and training"
   },
   "services": {
     "title": "Our Services",
     "subtitle": "Comprehensive Engineering Solutions for Industry",
     "description": "We support all stages from initial idea to production-ready manufacturing.",
     "software_sales": "Software Licensing",
-    "software_sales_desc": "Official licensing for SOLIDWORKS, CATIA, and 3DEXPERIENCE platforms.",
+    "software_sales_desc": "Advice and support with SOLIDWORKS, CATIA and 3DEXPERIENCE licenses.",
     "design": "Mechanical Design",
-    "design_desc": "High-precision 3D modeling following HMC/KIA global standards.",
+    "design_desc": "High-precision 3D modeling and technical drawings.",
     "training": "Corporate Training",
     "training_desc": "Personnel training and certification based on international standards.",
     "plm": "PLM Systems",
@@ -61,25 +61,12 @@
   },
   "projects": {
     "title": "Success Stories",
-    "subtitle": "Major Projects Executed",
+    "subtitle": "Our Projects",
     "description": "Our engineering solutions project page will be updated soon. Currently, the main focus is on education and professional training.",
     "view_all": "View Full Portfolio",
-    "more_projects": "And over 10 more industrial projects...",
     "updating_title": "Project portfolio being updated...",
     "updating_desc": "We are currently working on adding our best engineering practices and industrial projects to the portfolio. Until then, you can explore our Training Center courses.",
-    "cta_training": "Jump to Training",
-    "items": {
-      "motor": {
-        "title": "Motor Component 3D Design",
-        "client": "LG Magna e-Powertrain",
-        "desc": "High-precision modeling and production optimization for electric motors."
-      },
-      "transmission": {
-        "title": "Transmission Assembly Simulation",
-        "client": "KIA Motors",
-        "desc": "Digital Twin simulation for automotive transmission assembly processes."
-      }
-    }
+    "cta_training": "Jump to Training"
   },
   "about": {
     "title": "About Company",
@@ -93,7 +80,7 @@
   "seo": {
     "title": "TechAxis Group - Advanced CAD & Engineering Solutions in Uzbekistan",
     "description": "World-class industrial software solutions (SOLIDWORKS, CATIA), professional training courses, and premier engineering consulting.",
-    "keywords": "SOLIDWORKS Uzbekistan, CATIA, engineering services, CAD design, HMC standards, engineering training center"
+    "keywords": "SOLIDWORKS Uzbekistan, CATIA, engineering services, CAD design, SOLIDWORKS courses, engineering training center"
   },
   "footer": {
     "nav_title": "Navigation",
