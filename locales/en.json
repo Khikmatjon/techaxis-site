@@ -127,5 +127,87 @@
     "send_button": "Send Message",
     "success_msg": "Sent!",
     "error_msg": "An error occurred. Please try again."
+  },
+  "legal": {
+    "updated": "Last updated: September 26, 2026",
+    "draft_notice": "The site is currently running in test mode. This document is a preliminary draft and will be reviewed by a lawyer before the official launch.",
+    "entity_label": "Legal entity",
+    "entity_pending": "details will be added soon",
+    "contact_label": "Contact",
+    "contact_cta": "If you have any questions or requests, write to us at:"
+  },
+  "privacy": {
+    "nav_title": "Privacy Policy",
+    "title": "Privacy Policy",
+    "intro": "This privacy policy explains how TechAxis (\"we\", \"the site\") collects, uses and stores the personal data of users (\"you\", \"the user\") of techaxis.uz.",
+    "sections": [
+      {
+        "h": "1. Who we are",
+        "p": "TechAxis is a project focused on CAD software and engineering education. Legal entity and contact details are shown at the bottom of this page."
+      },
+      {
+        "h": "2. What data we collect",
+        "p": "When you register: your full name, email address and password (stored in our database only in encrypted form — a hash; nobody, including our team, can see your original password). When you enroll in a course: the selected course, plan, amount, payment method and (if you pay by card transfer) a photo of the receipt. Through the contact form: your name, email, phone number, the selected service and your message. While using the site: which lessons you have completed (stored only in your browser, not in our database)."
+      },
+      {
+        "h": "3. How we use your data",
+        "p": "To create and manage your account, grant access to courses you have purchased, verify and confirm your payment, and notify you and us (the administrator) about course enrollments or payment status."
+      },
+      {
+        "h": "4. Where data is stored",
+        "p": "All data is stored in Supabase (PostgreSQL, a cloud database); the site itself runs on Vercel servers. Receipt photos are stored separately in the Supabase Storage service."
+      },
+      {
+        "h": "5. Third-party services",
+        "p": "We share your data with the following services only to the extent necessary. Telegram: to notify the administrator about a course enrollment or a contact form submission (name, email, course or service, plan, amount, payment method, receipt link; from the form — also phone number and message). Zoho Mail: to email the administrator the same enrollment details, and when the administrator writes to you directly. Your data is never sold or rented to third parties for advertising."
+      },
+      {
+        "h": "6. Cookies",
+        "p": "When you sign in, only one functional cookie (session) is set — to remember that you are logged in (httpOnly, secure). No advertising or tracking cookies are currently used."
+      },
+      {
+        "h": "7. Your rights",
+        "p": "You can request to view, correct or delete your data at any time — just write to info@techaxis.uz."
+      },
+      {
+        "h": "8. Changes to this document",
+        "p": "This policy may be updated from time to time. If there are significant changes, we will update the date at the top of this page."
+      }
+    ]
+  },
+  "terms": {
+    "nav_title": "Terms of Use",
+    "title": "Terms of Use",
+    "intro": "These terms govern the use of the TechAxis website (techaxis.uz). By using the site, you agree to these terms.",
+    "sections": [
+      {
+        "h": "1. Site status",
+        "p": "The site is currently running in test mode and has not officially launched. Some sections are updated regularly."
+      },
+      {
+        "h": "2. Creating an account",
+        "p": "When registering, you must provide your real name and a working email address. You are responsible for the security of your account and password."
+      },
+      {
+        "h": "3. Course enrollment and payment",
+        "p": "Course prices are shown on the site in UZS and USD. For now, payment is made by direct card transfer and confirmed manually by the administrator (usually within 1–2 hours). Uploading a receipt (screenshot) is required."
+      },
+      {
+        "h": "4. Refund policy",
+        "p": "Refund terms have not been defined yet and will be added here before the official launch. If you have questions about this, please write to us."
+      },
+      {
+        "h": "5. Content rights",
+        "p": "Course videos, texts and other materials belong to TechAxis. Copying, redistributing or using them for commercial purposes is prohibited."
+      },
+      {
+        "h": "6. Limitation of liability",
+        "p": "The site is provided \"as is\". We cannot guarantee uninterrupted, error-free operation, but we do our best to resolve issues as quickly as possible."
+      },
+      {
+        "h": "7. Changes to these terms",
+        "p": "These terms may be updated from time to time. If there are significant changes, we will update the date at the top of this page."
+      }
+    ]
   }
 }

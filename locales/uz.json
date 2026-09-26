@@ -127,5 +127,87 @@
     "send_button": "Xabar yuborish",
     "success_msg": "Yuborildi!",
     "error_msg": "Xatolik yuz berdi. Qaytadan urining."
+  },
+  "legal": {
+    "updated": "Oxirgi yangilanish: 2026-yil 26-sentabr",
+    "draft_notice": "Sayt hozircha sinov rejimida ishlamoqda. Ushbu hujjat dastlabki loyiha bo'lib, rasmiy ishga tushirishdan oldin yurist tomonidan ko'rib chiqiladi.",
+    "entity_label": "Yuridik shaxs",
+    "entity_pending": "ma'lumotlar tez orada qo'shiladi",
+    "contact_label": "Bog'lanish",
+    "contact_cta": "Savol yoki so'rovlaringiz bo'lsa, quyidagi manzilga yozing:"
+  },
+  "privacy": {
+    "nav_title": "Maxfiylik siyosati",
+    "title": "Maxfiylik siyosati",
+    "intro": "Ushbu maxfiylik siyosati TechAxis (\"biz\", \"sayt\") techaxis.uz saytidan foydalanuvchilarning (\"siz\", \"foydalanuvchi\") shaxsiy ma'lumotlarini qanday yig'ishi, ishlatishi va saqlashini tushuntiradi.",
+    "sections": [
+      {
+        "h": "1. Kim biz",
+        "p": "TechAxis — CAD dasturiy ta'minot va muhandislik ta'limi bilan shug'ullanuvchi loyiha. Yuridik shaxs va aloqa ma'lumotlari ushbu sahifaning pastki qismida ko'rsatilgan."
+      },
+      {
+        "h": "2. Qanday ma'lumot yig'amiz",
+        "p": "Ro'yxatdan o'tganda: ism-familiya, email manzili va parol (bazada faqat shifrlangan — hash — ko'rinishda saqlanadi, hech kim, jumladan bizning jamoamiz ham, asl parolingizni ko'ra olmaydi). Kursga yozilganda: tanlangan kurs, tarif, summa, to'lov usuli va (agar karta orqali o'tkazma tanlansa) chek rasmi. Bog'lanish formasi orqali: ism, email, telefon raqami, tanlangan xizmat va xabaringiz matni. Saytdan foydalanish davomida: qaysi darslarni tugatganingiz (faqat brauzeringizda saqlanadi, bizning bazamizda emas)."
+      },
+      {
+        "h": "3. Ma'lumotdan qanday foydalanamiz",
+        "p": "Hisobingizni yaratish va boshqarish, sotib olingan kurslarga kirish huquqini berish, to'lovingizni tekshirish va tasdiqlash, kursga yozilish yoki to'lov holati haqida sizga va bizga (admin) xabar berish uchun."
+      },
+      {
+        "h": "4. Ma'lumot qayerda saqlanadi",
+        "p": "Barcha ma'lumotlar Supabase (PostgreSQL, bulutli baza) da saqlanadi, sayt esa Vercel serverlarida ishlaydi. To'lov cheklari rasmi alohida Supabase Storage xizmatida saqlanadi."
+      },
+      {
+        "h": "5. Uchinchi tomon xizmatlari",
+        "p": "Ma'lumotlaringizni quyidagi xizmatlarga faqat kerakli miqdorda uzatamiz. Telegram: kursga yozilganda yoki bog'lanish formasi to'ldirilganda administratorga xabar yuborish uchun (ism, email, kurs yoki xizmat, tarif, summa, to'lov usuli, chek havolasi; formadan — telefon va xabar matni ham). Zoho Mail: administratorga xuddi shu yozilish ma'lumotlari bilan email yuborish, shuningdek administrator sizga to'g'ridan-to'g'ri email yozganda. Ma'lumotlaringiz reklama maqsadida uchinchi tomonlarga sotilmaydi yoki ijaraga berilmaydi."
+      },
+      {
+        "h": "6. Cookie fayllar",
+        "p": "Saytga kirganingizda faqat bitta funksional cookie (sessiya) qo'yiladi — tizimga kirgan holatingizni eslab qolish uchun (httpOnly, xavfsiz). Hozircha reklama yoki kuzatuv (tracking) cookie'lari ishlatilmaydi."
+      },
+      {
+        "h": "7. Sizning huquqlaringiz",
+        "p": "Istalgan vaqtda o'z ma'lumotlaringizni ko'rishni, to'g'rilashni yoki o'chirishni so'rashingiz mumkin — buning uchun info@techaxis.uz manziliga yozing."
+      },
+      {
+        "h": "8. Hujjatga o'zgartirish",
+        "p": "Ushbu siyosat vaqti-vaqti bilan yangilanishi mumkin. Muhim o'zgarishlar bo'lsa, sahifa tepasidagi sanani yangilaymiz."
+      }
+    ]
+  },
+  "terms": {
+    "nav_title": "Foydalanish shartlari",
+    "title": "Foydalanish shartlari",
+    "intro": "Ushbu shartlar TechAxis (techaxis.uz) saytidan foydalanish tartibini belgilaydi. Saytdan foydalanish orqali siz ushbu shartlarga rozilik bildirasiz.",
+    "sections": [
+      {
+        "h": "1. Sayt holati",
+        "p": "Sayt hozircha sinov (test) rejimida ishlamoqda va rasman ishga tushirilmagan. Ba'zi bo'limlar muntazam yangilanib turadi."
+      },
+      {
+        "h": "2. Hisob yaratish",
+        "p": "Ro'yxatdan o'tayotganda haqiqiy ism va ishlaydigan email manzil ko'rsatishingiz kerak. Hisobingiz va parolingiz xavfsizligi uchun siz javobgarsiz."
+      },
+      {
+        "h": "3. Kurslarga yozilish va to'lov",
+        "p": "Kurs narxlari sahifada UZS va USD da ko'rsatiladi. Hozircha to'lov karta orqali to'g'ridan-to'g'ri o'tkazma shaklida amalga oshiriladi va administrator tomonidan qo'lda tasdiqlanadi (odatda 1–2 soat ichida). To'lov cheki (skrinshot) yuklash majburiy."
+      },
+      {
+        "h": "4. Qaytarish siyosati",
+        "p": "Pulni qaytarish shartlari hali belgilanmagan va rasmiy ishga tushirishdan oldin shu yerga qo'shiladi. Hozircha bu borada savollar bo'lsa, bizga yozing."
+      },
+      {
+        "h": "5. Kontent huquqlari",
+        "p": "Kurs videolari, matnlari va boshqa materiallar TechAxis'ga tegishli. Ularni ko'chirish, qayta tarqatish yoki tijorat maqsadida ishlatish taqiqlanadi."
+      },
+      {
+        "h": "6. Javobgarlikni cheklash",
+        "p": "Sayt \"bor holicha\" taqdim etiladi. Biz uzluksiz, xatosiz ishlashni kafolatlay olmaymiz, lekin muammolarni imkon qadar tezroq hal qilishga harakat qilamiz."
+      },
+      {
+        "h": "7. Shartlarga o'zgartirish",
+        "p": "Ushbu shartlar vaqti-vaqti bilan yangilanishi mumkin. Muhim o'zgarishlar bo'lsa, sahifa tepasidagi sanani yangilaymiz."
+      }
+    ]
   }
 }
