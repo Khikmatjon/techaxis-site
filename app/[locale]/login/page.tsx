@@ -77,10 +77,11 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
             )}
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-slate-300">Email</label>
+              <label htmlFor="login-email" className="text-sm font-semibold text-slate-300">Email</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
+                  id="login-email"
                   type="text"
                   required
                   placeholder="Email yoki Login"
@@ -92,10 +93,11 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-slate-300">Parol</label>
+              <label htmlFor="login-password" className="text-sm font-semibold text-slate-300">Parol</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
+                  id="login-password"
                   type={showPassword ? "text" : "password"}
                   required
                   placeholder="••••••••"
@@ -106,6 +108,7 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Parolni yashirish" : "Parolni ko'rsatish"}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}

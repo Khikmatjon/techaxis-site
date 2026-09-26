@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Course, Module, getTotalLessons } from "@/lib/courses";
 import { getCourseByIdAction } from "@/lib/actions/courses-actions";
 import {
-  Play, Lock, FileText, Image, ChevronLeft, Clock, BookOpen,
+  Play, Lock, FileText, Image as ImageIcon, ChevronLeft, Clock, BookOpen,
   CheckCircle, LogOut, Zap, Trophy
 } from "lucide-react";
 import { getStudentDashboardAction } from "@/lib/actions/student-actions";
@@ -112,7 +113,7 @@ function CourseContent({ courseId }: { courseId: string }) {
             {/* Kurs header */}
             <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
               <div className="relative h-52 overflow-hidden">
-                <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover" />
+                <Image src={course.thumbnail} alt={course.title} fill sizes="(min-width: 1024px) 66vw, 100vw" className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent" />
                 <div className="absolute bottom-5 left-6 right-6">
                   <div className={`inline-flex text-xs font-semibold px-2.5 py-1 rounded-full mb-2 ${
@@ -202,15 +203,13 @@ function CourseContent({ courseId }: { courseId: string }) {
                                     <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{lesson.duration}</span>
                                     {lesson.videoUrl && <span className="flex items-center gap-1"><Play className="w-3 h-3" />Video</span>}
                                     {lesson.pdfUrl && <span className="flex items-center gap-1"><FileText className="w-3 h-3" />PDF</span>}
-                                    {lesson.images && lesson.images.length > 0 && <span className="flex items-center gap-1"><Image className="w-3 h-3" />Rasm</span>}
+                                    {lesson.images && lesson.images.length > 0 && <span className="flex items-center gap-1"><ImageIcon className="w-3 h-3" />Rasm</span>}
                                   </div>
                                 </div>
                                 {canAccess ? (
-                                  <Link href={`/${locale}/dashboard/${course.id}/${lesson.id}`}>
-                                    <button className={`shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isDone ? "bg-emerald-500/20 hover:bg-emerald-500/40" : "bg-blue-500/20 hover:bg-blue-500/40"}`}>
+                                  <Link href={`/${locale}/dashboard/${course.id}/${lesson.id}`} className={`shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isDone ? "bg-emerald-500/20 hover:bg-emerald-500/40" : "bg-blue-500/20 hover:bg-blue-500/40"}`}>
                                       {isDone ? <CheckCircle className="w-3.5 h-3.5 text-emerald-400" /> : <Play className="w-3.5 h-3.5 text-blue-400" />}
-                                    </button>
-                                  </Link>
+                                    </Link>
                                 ) : (
                                   <div className="shrink-0 w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center">
                                     <Lock className="w-3.5 h-3.5 text-slate-600" />
@@ -254,11 +253,9 @@ function CourseContent({ courseId }: { courseId: string }) {
               <div className="bg-gradient-to-br from-blue-600/20 to-cyan-500/10 border border-blue-500/30 rounded-2xl p-5">
                 <div className="text-3xl font-black text-white mb-1">{course.priceUZS.toLocaleString()} UZS</div>
                 <div className="text-slate-400 text-sm mb-4">yoki ${course.price}</div>
-                <Link href={`/${locale}/dashboard`}>
-                  <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold py-3 rounded-xl hover:opacity-90 transition-all">
+                <Link href={`/${locale}/dashboard`} className="block text-center w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold py-3 rounded-xl hover:opacity-90 transition-all">
                     Sotib olish →
-                  </button>
-                </Link>
+                  </Link>
               </div>
             )}
 

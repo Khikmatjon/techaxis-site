@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { getCourseById, getCourses } from "@/lib/courses-db";
 import { locales } from "@/lib/i18n";
 import Link from "next/link";
+import Image from "next/image";
 import { 
   Play, CheckCircle, ChevronRight, Clock, 
   HelpCircle, Sparkles, Layout, Database, Terminal, ShieldCheck,
@@ -83,18 +84,16 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Link href={`/${locale}/checkout/${course.id}`} className="flex-1 sm:flex-none">
-                  <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-black py-5 px-10 rounded-2xl text-lg flex items-center justify-center gap-2 transition-all shadow-xl shadow-blue-500/25 hover:-translate-y-1">
+                <Link href={`/${locale}/checkout/${course.id}`} className="flex-1 sm:flex-none w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-black py-5 px-10 rounded-2xl text-lg flex items-center justify-center gap-2 transition-all shadow-xl shadow-blue-500/25 hover:-translate-y-1">
                     Ro‘yxatdan o‘tish <ChevronRight className="w-5 h-5" />
-                  </button>
-                </Link>
+                  </Link>
               </div>
             </div>
 
             <div className="relative group">
               <div className="absolute inset-0 bg-blue-500/20 rounded-[2.5rem] blur-3xl transform rotate-6 scale-95 transition-transform group-hover:rotate-3"></div>
               <div className="relative bg-slate-900 border border-slate-800 p-3 rounded-[2.5rem] shadow-2xl overflow-hidden flex items-center justify-center">
-                 <img src={course.thumbnail} alt={`${course.title} kurs`} className="w-full h-auto object-cover rounded-[2rem]" />
+                 <Image src={course.thumbnail} alt={`${course.title} kurs`} width={800} height={533} preload fetchPriority="high" sizes="(min-width: 1024px) 45vw, 100vw" className="w-full h-auto object-cover rounded-[2rem]" />
               </div>
             </div>
           </div>
@@ -255,11 +254,9 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
                        </li>
                      ))}
                   </ul>
-                  <Link href={`/${locale}/checkout/${course.id}`}>
-                    <button className={`w-full py-4 rounded-2xl font-bold transition-all ${plan.best ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg' : 'bg-slate-800 hover:bg-slate-700 text-white'}`}>
+                  <Link href={`/${locale}/checkout/${course.id}`} className={`block text-center w-full py-4 rounded-2xl font-bold transition-all ${plan.best ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg' : 'bg-slate-800 hover:bg-slate-700 text-white'}`}>
                       {plan.cta}
-                    </button>
-                  </Link>
+                    </Link>
                </div>
              ))}
           </div>
@@ -291,11 +288,9 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
               <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight">Hoziroq boshlang va professionalga aylaning</h2>
               <p className="text-blue-100 text-lg opacity-80">TechAxis bilan xalqaro muhandislik olamiga ilk qadamingizni qat'iy qo'ying va xalqaro bozorda mutaxassis sifatida qadrlaning.</p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
-                 <Link href={`/${locale}/checkout/${course.id}`}>
-                   <button className="bg-white text-blue-700 font-black py-5 px-12 rounded-2xl text-xl hover:scale-105 transition-transform shadow-2xl">
+                 <Link href={`/${locale}/checkout/${course.id}`} className="inline-block bg-white text-blue-700 font-black py-5 px-12 rounded-2xl text-xl hover:scale-105 transition-transform shadow-2xl">
                      Ro'yxatdan o'tish
-                   </button>
-                 </Link>
+                   </Link>
               </div>
            </div>
         </section>

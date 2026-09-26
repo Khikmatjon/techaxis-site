@@ -1,4 +1,5 @@
 import { getDictionary } from "@/lib/dictionary";
+import Image from "next/image";
 import { Locale } from "@/lib/i18n";
 import { Services } from "@/components/sections/services";
 import { Projects } from "@/components/sections/projects";
@@ -71,10 +72,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-cyan-100 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 rounded-full blur-3xl opacity-50 z-0"></div>
             
             <div className="relative z-10 w-full aspect-square rounded-[40px] overflow-hidden bg-slate-100 dark:bg-slate-800 border-8 border-white dark:border-slate-900 shadow-2xl">
-              <img 
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070" 
-                alt="Industrial CAD Design" 
-                className="w-full h-full object-cover"
+              <Image
+                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070"
+                alt="Industrial CAD Design"
+                fill
+                preload
+                fetchPriority="high"
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                className="object-cover"
               />
               {/* O'ylab topilgan interfeys elementi (Hovered badge) */}
               <div className="absolute bottom-8 right-8 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-4 rounded-2xl shadow-xl flex items-center gap-4 border border-slate-100 dark:border-slate-800">

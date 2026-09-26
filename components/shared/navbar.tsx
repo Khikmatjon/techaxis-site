@@ -79,6 +79,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
     return (
       <button 
         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+        aria-label={theme === 'dark' ? "Yorug' rejim" : "Qorong'i rejim"}
         className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
       >
         {theme === 'dark' ? <Sun className="w-5 h-5 text-yellow-500" /> : <Moon className="w-5 h-5 text-slate-600" />}
@@ -306,6 +307,8 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
             )}
             <button
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Menyuni yopish" : "Menyuni ochish"}
+              aria-expanded={isOpen}
               className="text-slate-600 dark:text-slate-300 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             >
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -384,6 +387,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl w-full max-w-sm shadow-2xl relative">
           <button 
             onClick={() => setSettingsOpen(false)}
+            aria-label="Yopish"
             className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
           >
             <X className="w-5 h-5" />

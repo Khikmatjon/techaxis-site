@@ -105,10 +105,11 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
 
             {/* Ism */}
             <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-slate-300">Ism Familiya</label>
+              <label htmlFor="reg-name" className="text-sm font-semibold text-slate-300">Ism Familiya</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
+                  id="reg-name"
                   type="text"
                   required
                   placeholder="Alisher Karimov"
@@ -121,10 +122,11 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
 
             {/* Email */}
             <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-slate-300">Email</label>
+              <label htmlFor="reg-email" className="text-sm font-semibold text-slate-300">Email</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
+                  id="reg-email"
                   type="email"
                   required
                   placeholder="email@example.com"
@@ -137,10 +139,11 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
 
             {/* Parol */}
             <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-slate-300">Parol</label>
+              <label htmlFor="reg-password" className="text-sm font-semibold text-slate-300">Parol</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
+                  id="reg-password"
                   type={showPassword ? "text" : "password"}
                   required
                   placeholder="••••••••"
@@ -151,6 +154,7 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Parolni yashirish" : "Parolni ko'rsatish"}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -173,10 +177,11 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
 
             {/* Tasdiqlash */}
             <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-slate-300">Parolni tasdiqlang</label>
+              <label htmlFor="reg-password2" className="text-sm font-semibold text-slate-300">Parolni tasdiqlang</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
+                  id="reg-password2"
                   type={showPassword ? "text" : "password"}
                   required
                   placeholder="••••••••"

@@ -1,7 +1,6 @@
-"use client";
-
 import React from 'react';
 import Link from 'next/link';
+import Image from "next/image";
 import type { Course } from '@/lib/courses';
 import { Clock, ArrowRight, Zap, Play } from 'lucide-react';
 
@@ -26,10 +25,12 @@ export const CoursesPreview = ({ dict, locale, courses }: { dict: any, locale: s
           {courses.slice(0, 3).map((course) => (
             <div key={course.id} className="group bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all hover:-translate-y-2 flex flex-col">
               <div className="relative h-56 overflow-hidden">
-                <img 
-                  src={course.thumbnail} 
-                  alt={course.title} 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                <Image
+                  src={course.thumbnail}
+                  alt={course.title}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                    <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 text-white">
@@ -59,11 +60,9 @@ export const CoursesPreview = ({ dict, locale, courses }: { dict: any, locale: s
                     <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{locale === 'uz' ? 'Kurs narxi' : 'Course price'}</div>
                     <div className="text-xl font-black text-slate-900 dark:text-white">{course.priceUZS.toLocaleString()} UZS</div>
                   </div>
-                  <Link href={`/${locale}/courses/${course.id}`}>
-                    <button className="bg-slate-900 dark:bg-slate-800 hover:bg-blue-600 dark:hover:bg-blue-600 text-white p-3 rounded-2xl transition-all">
+                  <Link href={`/${locale}/courses/${course.id}`} aria-label={course.title} className="inline-block bg-slate-900 dark:bg-slate-800 hover:bg-blue-600 dark:hover:bg-blue-600 text-white p-3 rounded-2xl transition-all">
                       <ArrowRight className="w-5 h-5" />
-                    </button>
-                  </Link>
+                    </Link>
                 </div>
               </div>
             </div>
@@ -71,11 +70,9 @@ export const CoursesPreview = ({ dict, locale, courses }: { dict: any, locale: s
         </div>
 
         <div className="mt-16 text-center">
-            <Link href={`/${locale}/courses`}>
-                <button className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold hover:gap-4 transition-all">
+            <Link href={`/${locale}/courses`} className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold hover:gap-4 transition-all">
                     Barcha kurslarni ko'rish <ArrowRight className="w-5 h-5" />
-                </button>
-            </Link>
+                </Link>
         </div>
       </div>
     </section>

@@ -1,7 +1,4 @@
-"use client";
-
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Award, ExternalLink, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 export const Certifications = ({ dict }: { dict: any }) => {
@@ -56,13 +53,9 @@ export const Certifications = ({ dict }: { dict: any }) => {
         {/* Cards */}
         <div className="grid lg:grid-cols-2 gap-8">
           {certifications.map((cert, index) => (
-            <motion.div 
+            <div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2 }}
-              viewport={{ once: true }}
-              className="relative bg-slate-50 dark:bg-slate-900 rounded-[32px] p-8 lg:p-12 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden group"
+              className="reveal-up relative bg-slate-50 dark:bg-slate-900 rounded-[32px] p-8 lg:p-12 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden group"
             >
               {/* Background gradient blur */}
               <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${cert.color} rounded-full blur-[100px] opacity-10 group-hover:opacity-20 transition-opacity`}></div>
@@ -109,7 +102,7 @@ export const Certifications = ({ dict }: { dict: any }) => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 

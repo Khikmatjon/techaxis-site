@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Play, ArrowRight, BookOpen, Clock, Layers } from "lucide-react";
 import { getCourses } from "@/lib/courses-db";
 import { getDictionary } from "@/lib/dictionary";
@@ -54,13 +55,15 @@ export default async function CoursesCatalog({ params }: { params: Promise<{ loc
                 <div key={course.id} className="group bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all hover:-translate-y-2 flex flex-col">
                   {/* RASM */}
                   <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <img 
-                      src={course.thumbnail} 
-                      alt={course.title} 
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                    <Image
+                      src={course.thumbnail}
+                      alt={course.title}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                       <Link href={`/${locale}/courses/${course.id}`}>
+                       <Link href={`/${locale}/courses/${course.id}`} aria-label={course.title}>
                          <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 text-white hover:scale-110 transition-transform">
                             <Play className="w-6 h-6 fill-white" />
                          </div>
@@ -98,11 +101,9 @@ export default async function CoursesCatalog({ params }: { params: Promise<{ loc
                         <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{locale === 'uz' ? 'Kurs narxi' : 'Course price'}</div>
                         <div className="text-[1.3rem] font-black text-slate-900 dark:text-white">{course.priceUZS.toLocaleString()} UZS</div>
                       </div>
-                      <Link href={`/${locale}/courses/${course.id}`}>
-                        <button className="bg-slate-100 dark:bg-slate-800 hover:bg-blue-600 dark:hover:bg-blue-600 hover:text-white text-slate-900 dark:text-white p-3.5 rounded-2xl transition-all shadow-sm group-hover:-translate-x-1">
+                      <Link href={`/${locale}/courses/${course.id}`} aria-label={course.title} className="inline-block bg-slate-100 dark:bg-slate-800 hover:bg-blue-600 dark:hover:bg-blue-600 hover:text-white text-slate-900 dark:text-white p-3.5 rounded-2xl transition-all shadow-sm group-hover:-translate-x-1">
                           <ArrowRight className="w-5 h-5" />
-                        </button>
-                      </Link>
+                        </Link>
                     </div>
                   </div>
                 </div>
