@@ -8,6 +8,10 @@ import { CoursesPreview } from "@/components/sections/courses-preview";
 import { getStats } from "@/lib/stats";
 import { getCourses } from "@/lib/courses-db";
 
+// Bazadan o'qiladi: soatiga bir marta yangilanadi, admin panelda saqlanganda esa darhol
+// (revalidatePath). Oraliqda sahifa CDN keshidan tez beriladi.
+export const revalidate = 3600;
+
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict: any = await getDictionary(locale as Locale);

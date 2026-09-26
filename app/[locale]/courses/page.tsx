@@ -5,6 +5,10 @@ import { getCourses } from "@/lib/courses-db";
 import { getDictionary } from "@/lib/dictionary";
 import { Locale } from "@/lib/i18n";
 
+// Bazadan o'qiladi: soatiga bir marta yangilanadi, admin panelda saqlanganda esa darhol
+// (revalidatePath). Oraliqda sahifa CDN keshidan tez beriladi.
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const dict = await getDictionary(locale as Locale);

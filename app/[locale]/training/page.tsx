@@ -5,6 +5,10 @@ import { Locale } from "@/lib/i18n";
 import { getCourses, getTotalLessons } from "@/lib/courses-db";
 import { Certifications } from "@/components/sections/certifications";
 
+// Bazadan o'qiladi: soatiga bir marta yangilanadi, admin panelda saqlanganda esa darhol
+// (revalidatePath). Oraliqda sahifa CDN keshidan tez beriladi.
+export const revalidate = 3600;
+
 export default async function TrainingPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict: any = await getDictionary(locale as Locale);

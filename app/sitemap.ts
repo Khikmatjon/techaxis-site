@@ -3,8 +3,8 @@ import { locales } from '@/lib/i18n';
 import { listPublishedPosts } from '@/lib/blog-store';
 import { getCourses } from '@/lib/courses-db';
 
-// Blog va kurslar bazadan olinadi va admin paneldan o'zgaradi, shuning uchun sitemap har so'rovda tayyorlanadi.
-export const dynamic = 'force-dynamic';
+// Soatiga bir marta yangilanadi (blog va kurslar admin panelda o'zgarganda ham revalidatePath bor).
+export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.techaxis.uz';

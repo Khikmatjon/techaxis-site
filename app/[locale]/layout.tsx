@@ -5,7 +5,14 @@ import Navbar from "@/components/shared/navbar"; // Default import, qavssiz!
 import { Footer } from '@/components/shared/footer';  
 import { ThemeProvider } from "@/components/theme-provider";
 import { AnnouncementBar } from '@/components/shared/announcement-bar';
-import { Locale } from '@/lib/i18n';
+import { Locale, locales } from '@/lib/i18n';
+
+// Uch til oldindan ma'lum: sahifalar build paytida tayyorlanadi va CDN keshidan
+// beriladi (har so'rovda qaytadan qurilmaydi). Bazadan o'qiydigan sahifalar o'zida
+// `revalidate` bilan vaqti-vaqti bilan, admin panelda saqlanganda esa darhol yangilanadi.
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
