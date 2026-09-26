@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from "next/image";
 import { getDictionary } from "@/lib/dictionary";
 import { Locale } from "@/lib/i18n";
 import { getCourses, getTotalLessons } from "@/lib/courses-db";
@@ -34,8 +35,8 @@ export default async function TrainingPage({ params }: { params: Promise<{ local
             return (
             <Link key={course.id} href={`/${locale}/courses/${course.id}`} className="group block">
               <div className="rounded-[2.5rem] overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 hover:shadow-2xl hover:-translate-y-2 transition-all h-full flex flex-col">
-                <div className="h-48 overflow-hidden">
-                  <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div className="relative h-48 overflow-hidden">
+                  <Image src={course.thumbnail} alt={course.title} fill sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw" className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 </div>
                 <div className="p-6 flex flex-col flex-1">
                   <div className="flex justify-between items-center mb-3">

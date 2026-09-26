@@ -12,11 +12,14 @@ export const PostImage = ({
   alt,
   className,
   fallback,
+  eager = false,
 }: {
   src: string;
   alt: string;
   className?: string;
   fallback?: ReactNode;
+  // Sahifaning asosiy (birinchi ko'rinadigan) rasmi bo'lsa true -- darhol yuklanadi.
+  eager?: boolean;
 }) => {
   const [failed, setFailed] = useState(false);
 
@@ -28,12 +31,15 @@ export const PostImage = ({
   if (failed && fallback) return <>{fallback}</>;
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element -- next/image ga o'tkazish 7-kunda
+    // Muqova manzilini admin istalgan saytdan qo'yadi, shuning uchun next/image emas, oddiy img.
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       ref={checkAlreadyFailed}
       src={failed ? FALLBACK_IMAGE : src}
       alt={alt}
       className={className}
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
       onError={() => setFailed(true)}
     />
   );

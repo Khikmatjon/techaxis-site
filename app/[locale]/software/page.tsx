@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from "next/image";
 import { getDictionary } from "@/lib/dictionary";
 import { Locale } from "@/lib/i18n";
 import { ArrowUpRight, CheckCircle2, Download } from 'lucide-react';
@@ -89,7 +90,7 @@ export default async function SoftwarePage({ params }: { params: Promise<{ local
               <div className="flex-1 w-full">
                 <div className="relative aspect-video rounded-[32px] overflow-hidden shadow-2xl border-8 border-white dark:border-slate-800">
                   <div className={`absolute inset-0 bg-gradient-to-tr ${software.color} opacity-20 mix-blend-overlay z-10`}></div>
-                  <img src={software.image} alt={software.name} className="w-full h-full object-cover" />
+                  <Image src={software.image} alt={software.name} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
                 </div>
               </div>
             </div>

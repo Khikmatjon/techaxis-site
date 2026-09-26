@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Course, getTotalLessons } from "@/lib/courses";
 import {
   BookOpen, Lock, Play, Clock, ChevronRight,
@@ -34,7 +35,7 @@ function PaymentModal({ course, locale, router, onClose }: {
 
         <div className="p-6 space-y-5">
           <div className="bg-slate-800 rounded-xl p-4 flex items-center gap-3">
-            <img src={course.thumbnail} alt={course.title} className="w-14 h-14 rounded-lg object-cover" />
+            <Image src={course.thumbnail} alt={course.title} width={56} height={56} className="w-14 h-14 rounded-lg object-cover" />
             <div>
               <p className="text-white font-semibold text-sm">{course.title}</p>
               <p className="text-2xl font-black text-blue-400">{course.priceUZS.toLocaleString()} UZS</p>
@@ -74,7 +75,7 @@ function CourseCard({ course, isEnrolled, isPending, locale, onBuy }: {
     <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-black/30">
       {/* Rasm */}
       <div className="relative h-44 overflow-hidden">
-        <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover" />
+        <Image src={course.thumbnail} alt={course.title} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
         {isEnrolled ? (
           <div className="absolute top-3 right-3 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">

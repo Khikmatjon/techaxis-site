@@ -1,8 +1,6 @@
-"use client";
-
 import React from 'react';
+import Image from "next/image";
 import { Users, Award, ArrowUpRight } from 'lucide-react';
-import { motion } from 'framer-motion';
 import type { Stats } from '@/lib/stats';
 
 export const About = ({ dict, stats: siteStats }: { dict: any; stats: Stats }) => {
@@ -32,18 +30,18 @@ export const About = ({ dict, stats: siteStats }: { dict: any; stats: Stats }) =
           {/* L: VIZUAL QISM */}
           <div className="relative">
             {/* Asosiy rasm ramkasi */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="relative z-10 rounded-[48px] overflow-hidden border-8 border-white dark:border-slate-900 shadow-2xl"
+            <div
+              className="reveal-left relative z-10 rounded-[48px] overflow-hidden border-8 border-white dark:border-slate-900 shadow-2xl"
             >
-              <img 
-                src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=2070" 
-                alt="Engineering Training" 
+              <Image
+                src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=2070"
+                alt="Engineering Training"
+                width={800}
+                height={1000}
+                sizes="(min-width: 1024px) 45vw, 100vw"
                 className="w-full h-auto aspect-[4/5] object-cover"
               />
-            </motion.div>
+            </div>
 
             {/* Decorative dots/shapes */}
             <div className="absolute -top-12 -left-12 w-32 h-32 bg-gradient-to-br from-cyan-400/20 to-blue-600/20 rounded-full blur-2xl -z-0"></div>

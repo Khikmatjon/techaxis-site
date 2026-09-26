@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { getCourseById, getCourses } from "@/lib/courses-db";
 import { locales } from "@/lib/i18n";
 import Link from "next/link";
+import Image from "next/image";
 import { 
   Play, CheckCircle, ChevronRight, Clock, 
   HelpCircle, Sparkles, Layout, Database, Terminal, ShieldCheck,
@@ -94,7 +95,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
             <div className="relative group">
               <div className="absolute inset-0 bg-blue-500/20 rounded-[2.5rem] blur-3xl transform rotate-6 scale-95 transition-transform group-hover:rotate-3"></div>
               <div className="relative bg-slate-900 border border-slate-800 p-3 rounded-[2.5rem] shadow-2xl overflow-hidden flex items-center justify-center">
-                 <img src={course.thumbnail} alt={`${course.title} kurs`} className="w-full h-auto object-cover rounded-[2rem]" />
+                 <Image src={course.thumbnail} alt={`${course.title} kurs`} width={800} height={533} priority sizes="(min-width: 1024px) 45vw, 100vw" className="w-full h-auto object-cover rounded-[2rem]" />
               </div>
             </div>
           </div>

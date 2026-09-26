@@ -1,9 +1,6 @@
-"use client";
-
 import React from 'react';
 import Link from 'next/link';
 import { Lightbulb, ArrowUpRight } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 export const Projects = ({ dict }: { dict: any }) => {
   return (
@@ -26,11 +23,8 @@ export const Projects = ({ dict }: { dict: any }) => {
         </div>
 
         {/* Empty State / Training CTA */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="relative overflow-hidden bg-white dark:bg-slate-900 rounded-[40px] border border-slate-100 dark:border-slate-800 shadow-xl p-12 lg:p-24 text-center"
+        <div
+          className="reveal-up relative overflow-hidden bg-white dark:bg-slate-900 rounded-[40px] border border-slate-100 dark:border-slate-800 shadow-xl p-12 lg:p-24 text-center"
         >
             <div className="absolute inset-0 bg-blue-50/50 dark:bg-blue-900/10 backdrop-blur-3xl -z-0"></div>
             
@@ -55,7 +49,7 @@ export const Projects = ({ dict }: { dict: any }) => {
                 </Link>
               </div>
             </div>
-        </motion.div>
+        </div>
 
       </div>
     </section>

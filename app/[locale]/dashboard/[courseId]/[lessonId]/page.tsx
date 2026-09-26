@@ -276,7 +276,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
                 </h3>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {lesson.images.map((img, i) => (
-                     <img key={i} src={img} alt={`Rasm ${i + 1}`} className="w-full rounded-xl border border-slate-700 object-cover" />
+                     <img key={i} src={img} alt={`Rasm ${i + 1}`} loading="lazy" decoding="async" className="w-full rounded-xl border border-slate-700 object-cover" />
                   ))}
                 </div>
               </div>

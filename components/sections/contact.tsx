@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, MessageSquareText, CheckCircle2 } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { sendToTelegram } from '@/lib/actions/send-telegram';
 import { SITE_PHONE, SITE_EMAIL, SITE_ADDRESS, SITE_SOCIAL } from '@/config/site';
 

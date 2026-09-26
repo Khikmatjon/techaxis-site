@@ -85,6 +85,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {post.coverImage && (
           <div className="rounded-3xl overflow-hidden mb-10 border border-slate-800">
             <PostImage
+              eager
               src={post.coverImage}
               alt={post.title}
               className="w-full h-auto object-cover aspect-video"

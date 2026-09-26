@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Play, ArrowRight, BookOpen, Clock, Layers } from "lucide-react";
 import { getCourses } from "@/lib/courses-db";
 import { getDictionary } from "@/lib/dictionary";
@@ -54,10 +55,12 @@ export default async function CoursesCatalog({ params }: { params: Promise<{ loc
                 <div key={course.id} className="group bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all hover:-translate-y-2 flex flex-col">
                   {/* RASM */}
                   <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <img 
-                      src={course.thumbnail} 
-                      alt={course.title} 
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                    <Image
+                      src={course.thumbnail}
+                      alt={course.title}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                        <Link href={`/${locale}/courses/${course.id}`}>
