@@ -7,8 +7,13 @@ import { POST_TYPE_META, formatPostDate, readMinutes } from "@/lib/blog";
 import { PostContent } from "@/components/blog/post-content";
 import { PostImage } from "@/components/blog/post-image";
 
-// Yozuvlar bazadan o'qiladi va admin paneldan o'zgaradi, shuning uchun sahifa har so'rovda tayyorlanadi.
-export const dynamic = "force-dynamic";
+// Yozuvlar bazadan o'qiladi. Sahifa birinchi so'rovda quriladi va keshga tushadi; admin panelda
+// saqlanganda darhol (revalidatePath), aks holda soatiga bir marta yangilanadi.
+export const revalidate = 3600;
+
+export function generateStaticParams() {
+  return [];
+}
 
 // Next.js 16 da params — Promise. Sinxron params.slug undefined beradi va hamma maqola 404 bo'lib qoladi.
 type BlogPostPageProps = { params: Promise<{ slug: string; locale: string }> };

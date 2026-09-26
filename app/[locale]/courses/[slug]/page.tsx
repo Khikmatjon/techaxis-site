@@ -1,12 +1,24 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getCourseById } from "@/lib/courses-db";
+import { getCourseById, getCourses } from "@/lib/courses-db";
+import { locales } from "@/lib/i18n";
 import Link from "next/link";
 import { 
   Play, CheckCircle, ChevronRight, Clock, 
   HelpCircle, Sparkles, Layout, Database, Terminal, ShieldCheck,
   Zap, Target, Briefcase, BookOpen, Layers
 } from "lucide-react";
+
+// Bazadan o'qiladi: soatiga bir marta yangilanadi, admin panelda saqlanganda esa darhol
+// (revalidatePath). Oraliqda sahifa CDN keshidan tez beriladi.
+export const revalidate = 3600;
+
+// Mavjud kurslar build paytida tayyorlanadi; admin keyin qo'shgan kurs birinchi
+// so'rovda quriladi va keshga tushadi.
+export async function generateStaticParams() {
+  const courses = await getCourses();
+  return locales.flatMap((locale) => courses.map((c) => ({ locale, slug: c.id })));
+}
 
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string, locale: string }> }): Promise<Metadata> {
