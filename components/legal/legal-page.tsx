@@ -1,4 +1,4 @@
-import { Info, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { SITE_EMAIL, LEGAL_ENTITY } from "@/config/site";
 
 type Section = { h: string; p: string };
@@ -17,7 +17,6 @@ export function LegalPage({
   sections: Section[];
   legal: {
     updated: string;
-    draft_notice: string;
     entity_label: string;
     entity_pending: string;
     contact_label: string;
@@ -29,11 +28,6 @@ export function LegalPage({
       <article className="max-w-3xl mx-auto px-4 sm:px-6">
         <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">{title}</h1>
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">{legal.updated}</p>
-
-        <div className="mt-8 flex items-start gap-3 rounded-2xl border border-amber-200 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-500/10 p-4 text-sm text-amber-800 dark:text-amber-300">
-          <Info className="w-5 h-5 shrink-0 mt-0.5" />
-          <p>{legal.draft_notice}</p>
-        </div>
 
         <p className="mt-10 text-lg leading-relaxed text-slate-700 dark:text-slate-300">{intro}</p>
 
