@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, MessageSquareText, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { sendToTelegram } from '@/lib/actions/send-telegram';
-import { SITE_PHONE } from '@/config/site';
+import { SITE_PHONE, SITE_EMAIL, SITE_ADDRESS, SITE_SOCIAL } from '@/config/site';
 
-export const Contact = ({ dict }: { dict: any }) => {
+export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -37,21 +37,21 @@ export const Contact = ({ dict }: { dict: any }) => {
     {
       icon: <Mail className="w-6 h-6 text-emerald-600" />,
       label: dict?.contact?.email_label || "Email",
-      value: "info@techaxis.uz",
+      value: SITE_EMAIL,
       color: "bg-emerald-50",
-      href: "mailto:info@techaxis.uz"
+      href: `mailto:${SITE_EMAIL}`
     },
     {
       icon: <MessageSquareText className="w-6 h-6 text-cyan-600" />,
       label: dict?.contact?.telegram_label || "Telegram Bot",
       value: "TechAxis info",
       color: "bg-cyan-50",
-      href: "https://t.me/techaxisinfobot"
+      href: SITE_SOCIAL.telegramBot
     },
     {
       icon: <MapPin className="w-6 h-6 text-indigo-600" />,
       label: dict?.contact?.address_label || "Manzil",
-      value: dict?.footer?.location || "Toshkent, Uzbekistan",
+      value: SITE_ADDRESS[locale as keyof typeof SITE_ADDRESS] ?? SITE_ADDRESS.uz,
       color: "bg-indigo-50"
     }
   ];

@@ -77,6 +77,12 @@ export async function registerAction(formData: FormData) {
       return { error: "Iltimos, barcha maydonlarni to'ldiring" };
     }
 
+    // Maxfiylik siyosati va shartlarga rozilik majburiy -- faqat brauzerdagi
+    // checkboxga ishonmaymiz, to'g'ridan-to'g'ri so'rov bilan chetlab o'tilmasin.
+    if (formData.get("consent") !== "true") {
+      return { error: "Ro'yxatdan o'tish uchun maxfiylik siyosati va foydalanish shartlariga rozilik bildiring" };
+    }
+
     const email = emailRaw.trim().toLowerCase();
 
     console.log("REGISTER_ATTEMPT:", { name, email });

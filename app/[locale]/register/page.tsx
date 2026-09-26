@@ -10,7 +10,15 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
   const { locale } = use(params);
   const router = useRouter();
   const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
+  const [agreed, setAgreed] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const CONSENT_TEXT = {
+    uz: { before: "Men ", privacy: "Maxfiylik siyosati", and: " va ", terms: "Foydalanish shartlari", after: " bilan tanishdim va roziman", required: "Davom etish uchun shartlarga rozilik bildiring" },
+    ru: { before: "Я ознакомился(ась) и согласен(на) с ", privacy: "Политикой конфиденциальности", and: " и ", terms: "Условиями использования", after: "", required: "Чтобы продолжить, примите условия" },
+    en: { before: "I have read and agree to the ", privacy: "Privacy Policy", and: " and ", terms: "Terms of Use", after: "", required: "Please accept the terms to continue" },
+  };
+  const consent = CONSENT_TEXT[locale as keyof typeof CONSENT_TEXT] ?? CONSENT_TEXT.uz;
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -37,12 +45,17 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
       setError("Parol kamida 4 ta belgi bo'lishi kerak");
       return;
     }
+    if (!agreed) {
+      setError(consent.required);
+      return;
+    }
 
     setLoading(true);
     const formData = new FormData();
     formData.append("name", form.name);
     formData.append("email", form.email);
     formData.append("password", form.password);
+    formData.append("consent", agreed ? "true" : "false");
 
     const result = await registerAction(formData);
     setLoading(false);
@@ -177,9 +190,31 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
               </div>
             </div>
 
+            {/* Rozilik (majburiy) */}
+            <label className="flex items-start gap-3 pt-1 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                required
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-0.5 w-4 h-4 shrink-0 rounded border-slate-600 bg-slate-800 accent-blue-500 cursor-pointer"
+              />
+              <span className="text-sm text-slate-400 leading-relaxed">
+                {consent.before}
+                <Link href={`/${locale}/privacy`} target="_blank" className="text-blue-400 hover:text-blue-300 underline underline-offset-2">
+                  {consent.privacy}
+                </Link>
+                {consent.and}
+                <Link href={`/${locale}/terms`} target="_blank" className="text-blue-400 hover:text-blue-300 underline underline-offset-2">
+                  {consent.terms}
+                </Link>
+                {consent.after}
+              </span>
+            </label>
+
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !agreed}
               className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3 px-4 rounded-xl transition-all hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 mt-2"
             >
               {loading ? (

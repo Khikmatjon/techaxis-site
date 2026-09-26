@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Youtube, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
-import { SITE_PHONE } from '@/config/site';
+import { SITE_PHONE, SITE_EMAIL, SITE_ADDRESS } from '@/config/site';
 
 export const Footer = ({ dict, locale }: { dict: any; locale: string }) => {
   const currentYear = new Date().getFullYear();
@@ -56,10 +56,10 @@ export const Footer = ({ dict, locale }: { dict: any; locale: string }) => {
           <div>
             <h4 className="text-lg font-bold mb-6">{f?.resources_title || "Resurslar"}</h4>
             <ul className="space-y-4 text-slate-400 text-sm">
-              <li><Link href="/training" className="hover:text-blue-400 transition-colors">{f?.training_center || "O'quv markazi"}</Link></li>
-              <li><Link href="#" className="hover:text-blue-400 transition-colors">{f?.support || "Texnik qo'llab-quvvatlash"}</Link></li>
-              <li><Link href="#" className="hover:text-blue-400 transition-colors">{f?.docs || "Hujjatlar"}</Link></li>
-              <li><Link href="#" className="hover:text-blue-400 transition-colors">{f?.privacy || "Maxfiylik siyosati"}</Link></li>
+              <li><Link href={`/${locale}/training`} className="hover:text-blue-400 transition-colors">{f?.training_center || "O'quv markazi"}</Link></li>
+              <li><Link href={`/${locale}/#contact`} className="hover:text-blue-400 transition-colors">{f?.support || "Texnik qo'llab-quvvatlash"}</Link></li>
+              <li><Link href={`/${locale}/privacy`} className="hover:text-blue-400 transition-colors">{dict?.privacy?.nav_title || f?.privacy || "Maxfiylik siyosati"}</Link></li>
+              <li><Link href={`/${locale}/terms`} className="hover:text-blue-400 transition-colors">{dict?.terms?.nav_title || "Foydalanish shartlari"}</Link></li>
             </ul>
           </div>
 
@@ -73,11 +73,11 @@ export const Footer = ({ dict, locale }: { dict: any; locale: string }) => {
               </li>
               <li className="flex items-center space-x-3">
                 <Mail size={16} className="text-blue-500" />
-                <span>info@techaxis.uz</span>
+                <a href={`mailto:${SITE_EMAIL}`} className="hover:text-blue-400 transition-colors">{SITE_EMAIL}</a>
               </li>
               <li className="flex items-center space-x-3">
                 <MapPin size={16} className="text-blue-500" />
-                <span className="text-xs">{f?.location || "Toshkent, O'zbekiston / Janubiy Koreya"}</span>
+                <span className="text-xs">{SITE_ADDRESS[locale as keyof typeof SITE_ADDRESS] ?? SITE_ADDRESS.uz}</span>
               </li>
             </ul>
           </div>

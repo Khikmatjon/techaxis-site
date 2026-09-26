@@ -105,7 +105,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       <section id="contact">
-        <Contact dict={dict} />
+        <Contact dict={dict} locale={locale} />
       </section>
 
     </div>
