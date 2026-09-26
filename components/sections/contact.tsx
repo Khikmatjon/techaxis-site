@@ -118,6 +118,7 @@ export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
                   <div className="space-y-4">
                     <input
                       name="name"
+                      aria-label={dict?.contact?.form_name}
                       required
                       type="text"
                       placeholder={dict?.contact?.form_name}
@@ -126,6 +127,7 @@ export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
                     <div className="grid md:grid-cols-2 gap-4">
                       <input
                         name="email"
+                        aria-label={dict?.contact?.form_email}
                         required
                         type="email"
                         placeholder={dict?.contact?.form_email}
@@ -133,6 +135,7 @@ export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
                       />
                       <input
                         name="phone"
+                        aria-label={dict?.contact?.form_phone}
                         required
                         type="tel"
                         placeholder={dict?.contact?.form_phone}
@@ -143,6 +146,7 @@ export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
 
                 <select
                   name="service"
+                  aria-label={dict?.navbar?.services || "Xizmat"}
                   className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-900 dark:text-white focus:ring-2 ring-blue-500 outline-none appearance-none cursor-pointer font-medium"
                 >
                   <option value="SOLIDWORKS">SOLIDWORKS</option>
@@ -153,6 +157,7 @@ export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
 
                 <textarea
                   name="message"
+                  aria-label={dict?.contact?.form_message}
                   required
                   rows={4}
                   placeholder={dict?.contact?.form_message}

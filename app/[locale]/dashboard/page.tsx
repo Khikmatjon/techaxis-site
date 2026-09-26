@@ -114,11 +114,9 @@ function CourseCard({ course, isEnrolled, isPending, locale, onBuy }: {
 
         {/* Tugma */}
         {isEnrolled ? (
-          <Link href={`/${locale}/dashboard/${course.id}`}>
-            <button className="w-full bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-400 font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2">
+          <Link href={`/${locale}/dashboard/${course.id}`} className="w-full bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-400 font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2">
               <Play className="w-4 h-4" /> Davom etish <ChevronRight className="w-4 h-4" />
-            </button>
-          </Link>
+            </Link>
         ) : isPending ? (
           <button disabled className="w-full bg-amber-500/10 border border-amber-500/20 text-amber-400 font-bold py-2.5 rounded-xl cursor-not-allowed flex items-center justify-center gap-2">
             <Clock className="w-4 h-4" /> Admin kutilmoqda...

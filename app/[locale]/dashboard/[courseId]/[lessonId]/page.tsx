@@ -130,7 +130,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
             {/* Nav */}
             <div className="flex items-center gap-1">
               <Link href={prevLesson ? `/${locale}/dashboard/${courseId}/${prevLesson.id}` : "#"}>
-                <button disabled={!prevLesson} className="w-8 h-8 bg-slate-800 hover:bg-slate-700 rounded-lg flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                <button disabled={!prevLesson} aria-label="Oldingi dars" className="w-8 h-8 bg-slate-800 hover:bg-slate-700 rounded-lg flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
                   <ChevronLeft className="w-4 h-4 text-slate-300" />
                 </button>
               </Link>
@@ -138,7 +138,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
                 {currentIndex + 1}/{allLessons.length}
               </span>
               <Link href={nextLesson && nextCanAccess ? `/${locale}/dashboard/${courseId}/${nextLesson.id}` : "#"}>
-                <button disabled={!nextLesson || !nextCanAccess} className="w-8 h-8 bg-slate-800 hover:bg-slate-700 rounded-lg flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                <button disabled={!nextLesson || !nextCanAccess} aria-label="Keyingi dars" className="w-8 h-8 bg-slate-800 hover:bg-slate-700 rounded-lg flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
                   <ChevronRight className="w-4 h-4 text-slate-300" />
                 </button>
               </Link>
@@ -189,11 +189,9 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
             <p className="text-slate-400 max-w-sm mx-auto">
               Bu darsni ko'rish uchun kursni sotib olishingiz kerak.
             </p>
-            <Link href={`/${locale}/dashboard`}>
-              <button className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold px-6 py-3 rounded-xl hover:opacity-90 transition-all">
+            <Link href={`/${locale}/dashboard`} className="inline-block bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold px-6 py-3 rounded-xl hover:opacity-90 transition-all">
                 Kursni sotib olish →
-              </button>
-            </Link>
+              </Link>
           </div>
         ) : (
           <div className="space-y-5">
@@ -309,11 +307,9 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
                   </p>
                 </div>
                 {nextCanAccess ? (
-                  <Link href={`/${locale}/dashboard/${courseId}/${nextLesson.id}`}>
-                    <button className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-5 py-2.5 rounded-xl transition-all flex items-center gap-2 shrink-0">
+                  <Link href={`/${locale}/dashboard/${courseId}/${nextLesson.id}`} className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-5 py-2.5 rounded-xl transition-all flex items-center gap-2 shrink-0">
                       Keyingisi <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </Link>
+                    </Link>
                 ) : (
                   <div className="flex items-center gap-2 text-slate-500 shrink-0">
                     <Lock className="w-4 h-4" />

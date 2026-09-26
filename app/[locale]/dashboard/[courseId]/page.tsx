@@ -207,11 +207,9 @@ function CourseContent({ courseId }: { courseId: string }) {
                                   </div>
                                 </div>
                                 {canAccess ? (
-                                  <Link href={`/${locale}/dashboard/${course.id}/${lesson.id}`}>
-                                    <button className={`shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isDone ? "bg-emerald-500/20 hover:bg-emerald-500/40" : "bg-blue-500/20 hover:bg-blue-500/40"}`}>
+                                  <Link href={`/${locale}/dashboard/${course.id}/${lesson.id}`} className={`shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isDone ? "bg-emerald-500/20 hover:bg-emerald-500/40" : "bg-blue-500/20 hover:bg-blue-500/40"}`}>
                                       {isDone ? <CheckCircle className="w-3.5 h-3.5 text-emerald-400" /> : <Play className="w-3.5 h-3.5 text-blue-400" />}
-                                    </button>
-                                  </Link>
+                                    </Link>
                                 ) : (
                                   <div className="shrink-0 w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center">
                                     <Lock className="w-3.5 h-3.5 text-slate-600" />
@@ -255,11 +253,9 @@ function CourseContent({ courseId }: { courseId: string }) {
               <div className="bg-gradient-to-br from-blue-600/20 to-cyan-500/10 border border-blue-500/30 rounded-2xl p-5">
                 <div className="text-3xl font-black text-white mb-1">{course.priceUZS.toLocaleString()} UZS</div>
                 <div className="text-slate-400 text-sm mb-4">yoki ${course.price}</div>
-                <Link href={`/${locale}/dashboard`}>
-                  <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold py-3 rounded-xl hover:opacity-90 transition-all">
+                <Link href={`/${locale}/dashboard`} className="block text-center w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold py-3 rounded-xl hover:opacity-90 transition-all">
                     Sotib olish →
-                  </button>
-                </Link>
+                  </Link>
               </div>
             )}
 

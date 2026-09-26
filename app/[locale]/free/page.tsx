@@ -86,17 +86,16 @@ export default function FreeResourcesPage({ params }: { params: { locale: string
                     <p className="text-slate-400 text-sm">
                       Mutaxassislarimiz tez orada materialni siz belgilagan havola ustida taqdim etadi. Bunga qadar maqolalarimizni o'qib turing.
                     </p>
-                    <Link href={`/${params.locale}/blog`}>
-                      <button className="mt-4 bg-slate-800 hover:bg-slate-700 text-white font-semibold py-2.5 px-6 rounded-xl transition-colors">
+                    <Link href={`/${params.locale}/blog`} className="inline-block mt-4 bg-slate-800 hover:bg-slate-700 text-white font-semibold py-2.5 px-6 rounded-xl transition-colors">
                         Blogga o'tish
-                      </button>
-                    </Link>
+                      </Link>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                      <label className="text-sm font-semibold text-slate-300 block mb-1.5">Ismingiz</label>
+                      <label htmlFor="free-name" className="text-sm font-semibold text-slate-300 block mb-1.5">Ismingiz</label>
                       <input
+                  id="free-name"
                         required
                         type="text"
                         value={form.name}
@@ -106,8 +105,9 @@ export default function FreeResourcesPage({ params }: { params: { locale: string
                       />
                     </div>
                     <div>
-                      <label className="text-sm font-semibold text-slate-300 block mb-1.5">Telefon yoki Email</label>
+                      <label htmlFor="free-contact" className="text-sm font-semibold text-slate-300 block mb-1.5">Telefon yoki Email</label>
                       <input
+                  id="free-contact"
                         required
                         type="text"
                         value={form.contact}

@@ -60,11 +60,9 @@ export const CoursesPreview = ({ dict, locale, courses }: { dict: any, locale: s
                     <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{locale === 'uz' ? 'Kurs narxi' : 'Course price'}</div>
                     <div className="text-xl font-black text-slate-900 dark:text-white">{course.priceUZS.toLocaleString()} UZS</div>
                   </div>
-                  <Link href={`/${locale}/courses/${course.id}`}>
-                    <button className="bg-slate-900 dark:bg-slate-800 hover:bg-blue-600 dark:hover:bg-blue-600 text-white p-3 rounded-2xl transition-all">
+                  <Link href={`/${locale}/courses/${course.id}`} aria-label={course.title} className="inline-block bg-slate-900 dark:bg-slate-800 hover:bg-blue-600 dark:hover:bg-blue-600 text-white p-3 rounded-2xl transition-all">
                       <ArrowRight className="w-5 h-5" />
-                    </button>
-                  </Link>
+                    </Link>
                 </div>
               </div>
             </div>
@@ -72,11 +70,9 @@ export const CoursesPreview = ({ dict, locale, courses }: { dict: any, locale: s
         </div>
 
         <div className="mt-16 text-center">
-            <Link href={`/${locale}/courses`}>
-                <button className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold hover:gap-4 transition-all">
+            <Link href={`/${locale}/courses`} className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold hover:gap-4 transition-all">
                     Barcha kurslarni ko'rish <ArrowRight className="w-5 h-5" />
-                </button>
-            </Link>
+                </Link>
         </div>
       </div>
     </section>

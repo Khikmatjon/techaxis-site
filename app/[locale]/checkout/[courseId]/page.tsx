@@ -320,16 +320,12 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
               </div>
 
               <div className="flex flex-col gap-4 max-w-xs mx-auto pt-8">
-                 <Link href={`/${locale}/dashboard`}>
-                   <button className="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-4 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2">
+                 <Link href={`/${locale}/dashboard`} className="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-4 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2">
                      Dashboardga o'tish <ArrowRight className="w-5 h-5" />
-                   </button>
-                 </Link>
-                 <Link href={`/${locale}`}>
-                    <button className="w-full py-4 text-slate-500 hover:text-white transition-colors font-bold">
+                   </Link>
+                 <Link href={`/${locale}`} className="block text-center w-full py-4 text-slate-500 hover:text-white transition-colors font-bold">
                       Asosiy sahifaga qaytish
-                    </button>
-                 </Link>
+                    </Link>
               </div>
             </motion.div>
           )}
