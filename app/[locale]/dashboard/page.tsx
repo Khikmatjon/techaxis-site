@@ -13,6 +13,7 @@ import { getCoursesAction } from "@/lib/actions/courses-actions";
 import { logoutAction } from "@/lib/actions/auth-actions";
 import { UserDB } from "@/lib/users-db";
 import { Avatar } from "@/components/shared/avatar";
+import { PAYMENT_CARD } from "@/config/site";
 
 // ---- TO'LOV MODALI ----
 function PaymentModal({ course, locale, router, onClose }: { 
@@ -42,7 +43,7 @@ function PaymentModal({ course, locale, router, onClose }: {
 
           <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
             <p className="text-blue-300 text-sm">
-              <strong>To'lov usuli:</strong> 9860 4545 1111 1111 karta raqamiga o'tkazma amalga oshiriladi. Chek yuklash orqali to'lovingiz tasdiqlanadi.
+              <strong>To'lov usuli:</strong> {PAYMENT_CARD.number} karta raqamiga o'tkazma amalga oshiriladi. Chek yuklash orqali to'lovingiz tasdiqlanadi.
             </p>
           </div>
 

@@ -60,6 +60,11 @@ export interface Course {
   marketing: MarketingData;
 }
 
+// Narx, daraja, instruktor, modul va darslar saytga BAZADAN keladi (admin panel ->
+// "Kurslar mazmuni"). Bu fayldan faqat har bir kursning "marketing" matni (Nega bu
+// kurs, dastur bosqichlari, tariflar jadvali, FAQ) olinadi -- uni shu yerda tahrirlang.
+// KEYIN-TOLDIRING: marketing matnida tasdiqlanmagan da'volar bor (Tesla, SpaceX, UzAuto,
+// Airbus/Boeing/BMW, "maosh 2-3 baravar yuqori") -- 5-kun da'volar jadvali bo'yicha hal qilinadi.
 export const COURSES: Course[] = [
   {
     id: "solidworks-basics",

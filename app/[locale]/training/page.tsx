@@ -17,6 +17,8 @@ export default async function TrainingPage({ params }: { params: Promise<{ local
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">
             <h1 className="text-5xl font-bold mb-6 font-display">Professional Muhandislik Kurslari</h1>
+            {/* KEYIN-TOLDIRING: "CSWA, CSWP va CATIA V6 sertifikatlariga tayyorlaydi" va pastdagi
+                "Authorized Training" tasdiqlanmagan da'volar (5-kun da'volar jadvali). */}
             <p className="text-slate-600 dark:text-slate-400 text-lg">
               Xalqaro standartlar asosida SOLIDWORKS va CATIA dasturlarini o'rganing.
               Bizning kurslarimiz sizni CSWA, CSWP va CATIA V6 sertifikatlariga tayyorlaydi.
@@ -83,6 +85,8 @@ export default async function TrainingPage({ params }: { params: Promise<{ local
               </button>
             </div>
             <div className="hidden lg:block">
+               {/* KEYIN-TOLDIRING: "500+ Bitiruvchilar" va "12+ Hamkor OTMlar" tasdiqlanmagan raqamlar
+                   (5-kun). Haqiqiy raqam bo'lmasa, bu blokni olib tashlash kerak. */}
                <div className="grid grid-cols-2 gap-4">
                   <div className="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20">
                     <div className="text-3xl font-bold mb-2">500+</div>
