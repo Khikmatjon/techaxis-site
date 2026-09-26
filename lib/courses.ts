@@ -63,8 +63,8 @@ export interface Course {
 // Narx, daraja, instruktor, modul va darslar saytga BAZADAN keladi (admin panel ->
 // "Kurslar mazmuni"). Bu fayldan faqat har bir kursning "marketing" matni (Nega bu
 // kurs, dastur bosqichlari, tariflar jadvali, FAQ) olinadi -- uni shu yerda tahrirlang.
-// KEYIN-TOLDIRING: marketing matnida tasdiqlanmagan da'volar bor (Tesla, SpaceX, UzAuto,
-// Airbus/Boeing/BMW, "maosh 2-3 baravar yuqori") -- 5-kun da'volar jadvali bo'yicha hal qilinadi.
+// Qoida: kompaniya nomlari, maosh va'dalari, o'ylab topilgan raqamlar yozilmaydi --
+// faqat isbotlanadigan ma'lumot.
 export const COURSES: Course[] = [
   {
     id: "solidworks-basics",
@@ -75,7 +75,7 @@ export const COURSES: Course[] = [
     priceUZS: 1260000,
     thumbnail: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800",
     instructor: "Javokhir Yusupov",
-    instructorAvatar: "https://i.pravatar.cc/100?img=11",
+    instructorAvatar: "",
     level: "Boshlang'ich",
     duration: "24 soat",
     studentsCount: 128,
@@ -86,8 +86,7 @@ export const COURSES: Course[] = [
       whyDesc: "Odamlarni va sanoatni o'ziga jalb qiluvchi eng ilg'or muhandislik vositasi.",
       benefits: [
         { title: "G'oyadan Haqiqatgacha", desc: "Bu shunchaki detal chizish emas, balki virtual 3D olamda jonlantirish." },
-        { title: "Dunyo Standarti", desc: "Dunyoda 2 mln dan ortiq muhandis va Tesla, SpaceX gigantlari SolidWorks'da ishlaydi." },
-        { title: "Yuqori Daromad", desc: "Sohani biladigan mutaxassislarning maoshi boshqalardan kamida 2-3 baravar yuqori." },
+        { title: "Keng tarqalgan", desc: "Mashinasozlik va mahsulot dizaynida eng ko'p ishlatiladigan 3D CAD dasturlaridan biri." },
         { title: "Universal vosita", desc: "Zargarlikdan tortib to avtomobilsozlik va robototexnikagacha barcha joyda qo'llaniladi." }
       ],
       capabilitiesTitle: "SolidWorks yordamida nimalar qila olasiz?",
@@ -107,8 +106,7 @@ export const COURSES: Course[] = [
       outcomes: [
         "SolidWorks'da istalgan shakldagi uyni emas, murakkab mexanizmlarni vizual jonlantirasiz",
         "Ishlab chiqarish (zavod) uchun tayyor texnik chizmangiz (Blueprint) o'z qo'lingizda bo'ladi",
-        "Hali ishlab chiqarilmagan buyumlarni sinish va chidamlilikka test QILIShNI o'rganasiz",
-        "Dunyo gigantlari (Tesla, UzAuto) so'raydigan xalqaro CAD talablariga mos muhandis bo'lasiz"
+        "Hali ishlab chiqarilmagan buyumlarni sinish va chidamlilikka test qilishni o'rganasiz"
       ],
       pricing: [
         { name: "Starter", price: "Asosiy", desc: "0 dan boshlovchilar uchun", features: ["Asosiy (Poydevor) qism videolari", "Dastur instalyatsiyasiga yordam", "2 ta kichik loyiha chizish", "Sertifikat (Asosiy bosqich)"], cta: "Sotib Olish", best: false },
@@ -175,12 +173,12 @@ export const COURSES: Course[] = [
     id: "catia-v5",
     title: "CATIA V5 Professional",
     subtitle: "Zamondosh Sanoat Dizayni",
-    description: "CATIA bu shunchaki dastur emas — bu yirik komplekslarning (Samolyot, Avto, Kosmik stansiya) ichki muhandislik yadrosi. Airbus, Boeing va BMW tizimi.",
+    description: "CATIA — aviatsiya, avtomobilsozlik va sanoat uskunalarini loyihalashda ishlatiladigan Dassault Systèmes dasturi.",
     price: 149,
     priceUZS: 1890000,
     thumbnail: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800",
     instructor: "Bobur Mirzayev",
-    instructorAvatar: "https://i.pravatar.cc/100?img=15",
+    instructorAvatar: "",
     level: "O'rta",
     duration: "36 soat",
     studentsCount: 84,
@@ -190,17 +188,16 @@ export const COURSES: Course[] = [
       whyTitle: "Nega CATIA V5?",
       whyDesc: "Bu oddiygina mexanizmlar emas, balki butun boshli ishlab chiqarish zavodlari tanlagan ulkan masshtab.",
       benefits: [
-        { title: "Aviatsiya Standarti", desc: "Airbus va Boeing muhandislari nima uchun arzimagan maoshga rozi bo'lishmaydi? CATIA bilgani uchun." },
+        { title: "Aviatsiya va avtomobilsozlik", desc: "CATIA aynan shu sohalarda murakkab yuzalar va katta yig'malar uchun ishlatiladi." },
         { title: "Super Qamrov", desc: "Bu orqali siz avtomobil kuzovidan tortib eng ichki dvigatel detallarini Surface Modeling bilan qilasiz." },
-        { title: "Zavod va Integratsiya", desc: "Bu PLM tizimning bir qismi hisoblanib, ko'plab xoldinglar xodimlari bitta faylda bir xil ishlaydi." },
-        { title: "Ishqalaydigan maosh", desc: "CATIA texnologiyasining og'irligi sohada xodim taqchilligini yaratar ekan, bu katta imkoniyat degani." }
+        { title: "Zavod va Integratsiya", desc: "Bu PLM tizimning bir qismi hisoblanib, ko'plab xoldinglar xodimlari bitta faylda bir xil ishlaydi." }
       ],
       capabilitiesTitle: "CATIA yordamida mo'jizalar",
       capabilities: [
         { title: "Avtomobil Sirti (GSD)", desc: "Generative Shape Design yordamida dizaynerlarning sketchlarini matematik to'g'ri kuzovga aylantirish." },
         { title: "Product Assembly", desc: "Nafaqat mexanika, balki ulardagi elektr o'tkazgichlari (Wiring) va trubkalar tartibini ham ko'rish." },
         { title: "Kinetika va Analiz", desc: "Har bir detalning aerodinamik xossalarini joyida o'rganish." },
-        { title: "Massiv Yig'ma", desc: "UzAuto yoki yirik aviozavodlardagi o'n minglab detallardan iborat platformani kompyuterda boshqarish." }
+        { title: "Massiv Yig'ma", desc: "Yirik zavodlardagi kabi minglab detallardan iborat yig'mani kompyuterda boshqarish." }
       ],
       stepsTitle: "Kurs bosqichlari (CATIA Syllabus)",
       steps: [
@@ -211,8 +208,8 @@ export const COURSES: Course[] = [
       ],
       outcomes: [
         "CATIA muhitida GSD arxitekturasida silliq dizayn (Kuzov, fuzelaj) yig'a olasiz",
-        "Yirik zavod muhandislik jamoasida (Masalan BYD, UzAuto) uzluksiz integratsiyada ishlayolasiz",
-        "10 000+ detallik Assembly arxitekturasini 'crash' siz yo'naltira bilish texnikasi."
+        "Zavod muhandislik jamoasida boshqa muhandislar bilan bitta loyihada ishlay olasiz",
+        "Katta yig'malar bilan dastur qotib qolmasdan ishlash usullarini bilasiz"
       ],
       pricing: [
         { name: "Starter", price: "$49", desc: "Boshlang'ich imkonyat", features: ["CATIA vizual kurslari (Part Design)", "Standart muhandislik amaliyoti", "Guruhda muhokama"], cta: "O'qish", best: false },
@@ -272,7 +269,7 @@ export const COURSES: Course[] = [
     priceUZS: 1000000,
     thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=800",
     instructor: "Sardor Nazarov",
-    instructorAvatar: "https://i.pravatar.cc/100?img=20",
+    instructorAvatar: "",
     level: "O'rta",
     duration: "18 soat",
     studentsCount: 62,
@@ -282,7 +279,7 @@ export const COURSES: Course[] = [
       whyTitle: "Niyatingiz — Sifatmi?",
       whyDesc: "Millionlab zararlar ko'pincha bittagina kichkina detal materialining chidamsizligidan kelib chiqadi. Siz buni kompyuterda sinaysiz.",
       benefits: [
-        { title: "Zararni Yo'qotish", desc: "Haqiqiy prototipni quyib buzib yurgandan ko'ra kompyuterda 100x tezroq va tekin tahlil qiling." },
+        { title: "Zararni Yo'qotish", desc: "Haqiqiy prototip yasab sindirishdan oldin detalni kompyuterda tekshiring." },
         { title: "Optimal Material", desc: "Metalning og'irini ishlatmay, keraksiz qismini qirqib tashlab zavod materialini qutqaring (Optimisation)." },
         { title: "ANSYS va SolidWorks", desc: "Ikki yirik tizimda yagona haqiqatni isbotlash sirlari." },
         { title: "Ekspert Muhandis", desc: "Quruvchi ustadan farq qiladigan yagona jihati - siz Ilmiy Tahlilchisiz!" }
@@ -302,8 +299,7 @@ export const COURSES: Course[] = [
         { step: "4", title: "Amaliy Hisobot", points: ["Zavod uchun Ilmiy hisobot (Reports) yozish", "Optimallashtirish algoritmlari va yakun."] }
       ],
       outcomes: [
-        "Siz chizgan detalingiz yuz foiz ishlashiga ilmiy javob bera olasiz",
-        "Xalqaro bozordagi ANSYS mutaxassislarning ish haqqi ro'yxatiga nomzod bo'lasiz",
+        "Detalingiz yuklamaga chidashini hisob-kitob bilan asoslay olasiz",
         "Material tanlash va sarfini (Topologik optimizatsiya) mukammallashtirasiz"
       ],
       pricing: [
@@ -354,7 +350,7 @@ export const COURSES: Course[] = [
     priceUZS: 1130000,
     thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
     instructor: "Javokhir Yusupov",
-    instructorAvatar: "https://i.pravatar.cc/100?img=11",
+    instructorAvatar: "",
     level: "Yuqori",
     duration: "20 soat",
     studentsCount: 45,
@@ -362,12 +358,12 @@ export const COURSES: Course[] = [
     tags: ["PLM", "PDM", "3DEXPERIENCE", "Boshqaruv"],
     marketing: {
       whyTitle: "PLM asrining oltin kaliti",
-      whyDesc: "O'zbekistonda kompaniyalar yiriklashayotgan siri shuki ular barcha ma'lumotlarni PDM/PLM orqali bir nuqtada birlashtirmoqda.",
+      whyDesc: "PDM/PLM tizimlari kompaniyaning barcha muhandislik ma'lumotlarini bir joyda boshqarish imkonini beradi.",
       benefits: [
         { title: "Zavod Digitalizatsiyasi", desc: "Raqamli egizak modelida butun boshli zavod ma'lumotlarni yagona tizimda boshqarish." },
         { title: "Menejer Muhandislar", desc: "Bosh muhandis sifatida jamoalarni bulutli platformalarda koordinatsiya qilasiz." },
         { title: "Vaqt qadrida", desc: "Fayllarning dublikatlari yo'qoladi, xatolar soni kamayadi, hujjat almashinuvi silliqlashadi." },
-        { title: "Dassault Systèmes Tizimi", desc: "Xalqaro standartdagi 3DEXPERIENCE platformasi O'zbekistonga ham o'ta tezlik bilan kirib keladi." }
+        { title: "Dassault Systèmes Tizimi", desc: "3DEXPERIENCE platformasida CATIA, SOLIDWORKS, ENOVIA va boshqa dasturlar bir joyda ishlaydi." }
       ],
       capabilitiesTitle: "PLM kursda nimani qila olasiz?",
       capabilities: [
@@ -385,13 +381,12 @@ export const COURSES: Course[] = [
       ],
       outcomes: [
         "Jamoaviy muhandislik bo'limini mukammal boshqarish konsepti shakllanadi",
-        "Siz shunchaki SAP, 1C tizimlari kabi lekin faqat muhandislarga xos PLM larni joriy qila olasiz",
-        "Bu kurs kelajak korporatsiyalarida Top-Menejment roliga sizni eng yaqinlashtiradigan zinalardan biridir"
+        "Siz shunchaki SAP, 1C tizimlari kabi lekin faqat muhandislarga xos PLM larni joriy qila olasiz"
       ],
       pricing: [
         { name: "Concept", price: "$49", desc: "Tushuncha", features: ["Barcha asosiy videolar", "Platforma demo ishlash logikasi", "Asosiy sertifikat"], cta: "Sotib Olish", best: false },
         { name: "Integrator", price: "$89", desc: "Menejer", features: ["To'liq ENOVIA amaliyotlari", "3DEXPERIENCE doirasida real Keyslar", "Premium qo'llab quvvatlash"], cta: "Saylash", best: true },
-        { name: "Enterprise", price: "$$$", desc: "Jamoa", features: ["Kompaniyangiz uchun PLM integratsiyasi buyurtmasi", "Xodimlaringizni onlayn o'qitish platformasi kafolati"], cta: "Ariza", best: false }
+        { name: "Enterprise", price: "$$$", desc: "Jamoa", features: ["Kompaniyangiz uchun PLM integratsiyasi buyurtmasi", "Xodimlaringizni onlayn o'qitish"], cta: "Ariza", best: false }
       ],
       faq: [
         { q: "Menga o'zi bu kerak bo'ladimi?", a: "Agar siz yakka o'zingiz chizib ishlasangiz, unchalik emas. Lekin 2 dan ortiq kishi bo'lib katta loyihaga kirsangiz, bu havo kabi muhim!" }

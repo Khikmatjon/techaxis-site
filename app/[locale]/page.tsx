@@ -23,16 +23,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           {/* L: MATN QISMI */}
-          {/* KEYIN-TOLDIRING: "1-raqamli Muhandislik Markazi" (hero.badge) va "Sertifikatlangan
-              Ekspert" (hero.expert_badge) tasdiqlanmagan da'volar -- matni locales/uz.json, ru.json,
-              en.json ichida. 5-kun da'volar jadvali bo'yicha hal qilinadi. */}
           <div className="space-y-8">
             <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800/50 text-blue-600 dark:text-blue-400 text-sm font-semibold shadow-sm">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
               </span>
-              <span>{dict?.hero?.badge || "O'zbekistondagi 1-raqamli Markaz"}</span>
+              <span>{dict?.hero?.badge}</span>
             </div>
 
             <h1 className="text-5xl lg:text-6xl xl:text-7xl font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight">

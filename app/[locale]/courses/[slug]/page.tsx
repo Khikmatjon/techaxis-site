@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { getCourseById } from "@/lib/courses-db";
 import Link from "next/link";
 import { 
-  Play, CheckCircle, ChevronRight, Users, Star, Clock, 
+  Play, CheckCircle, ChevronRight, Clock, 
   HelpCircle, Sparkles, Layout, Database, Terminal, ShieldCheck,
   Zap, Target, Briefcase, BookOpen, Layers
 } from "lucide-react";
@@ -61,20 +61,6 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
               </p>
 
               <div className="flex flex-wrap gap-4 pt-2">
-                 <div className="flex items-center gap-2 bg-slate-900/50 backdrop-blur-sm border border-slate-800 px-5 py-3 rounded-2xl">
-                    <Users className="w-5 h-5 text-blue-400" />
-                    <div>
-                      <div className="text-white font-bold">{course.studentsCount}+</div>
-                      <div className="text-slate-500 text-[10px] uppercase font-bold">O'quvchilar</div>
-                    </div>
-                 </div>
-                 <div className="flex items-center gap-2 bg-slate-900/50 backdrop-blur-sm border border-slate-800 px-5 py-3 rounded-2xl">
-                    <Star className="w-5 h-5 text-yellow-500" />
-                    <div>
-                      <div className="text-white font-bold">{course.rating}</div>
-                      <div className="text-slate-500 text-[10px] uppercase font-bold">Reyting</div>
-                    </div>
-                 </div>
                  <div className="flex items-center gap-2 bg-slate-900/50 backdrop-blur-sm border border-slate-800 px-5 py-3 rounded-2xl">
                     <Clock className="w-5 h-5 text-emerald-500" />
                     <div>
@@ -216,9 +202,9 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
               <h2 className="text-3xl font-black text-white">Nima uchun TechAxis?</h2>
               <div className="grid gap-6">
                  {[
-                   { t: "Xalqaro daraja", d: "Loyihalar mahalliy emas, butunjahon standartlariga aoslanadi." },
+                   { t: "Standart chizmalar", d: "Chizmalar GOST va ISO standartlari asosida tayyorlanadi." },
                    { t: "Real amaliyot", d: "Nazariya juda kam, asosan muhandislik masalalari ustida ishlanadi." },
-                   { t: "Ishga yo'naltirilgan", d: "Kursni tugatib siz tayyor Kasb va Karyera egasiga aylanasiz." }
+                   { t: "Portfolio", d: "Kurs davomida portfolio uchun o'z loyihalaringizni tayyorlaysiz." }
                  ].map((item, i) => (
                    <div key={i} className="flex gap-4">
                       <div className="w-10 h-10 bg-cyan-500/10 rounded-xl flex items-center justify-center shrink-0 border border-cyan-500/20">

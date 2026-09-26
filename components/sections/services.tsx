@@ -8,14 +8,14 @@ export const Services = ({ dict }: { dict: any }) => {
   const services = [
     {
       title: dict?.services?.software_sales || "Dasturiy Ta'minot Savdosi",
-      desc: dict?.services?.software_sales_desc || "SOLIDWORKS, CATIA va 3DEXPERIENCE platformalari uchun rasmiy litsenziyalash.",
+      desc: dict?.services?.software_sales_desc || "SOLIDWORKS, CATIA va 3DEXPERIENCE litsenziyalari bo'yicha maslahat va yordam.",
       icon: <Settings className="w-8 h-8 text-blue-600" />,
       color: "bg-blue-50",
       href: "/software"
     },
     {
       title: dict?.services?.design || "Mexanik Dizayn",
-      desc: dict?.services?.design_desc || "HMC/KIA standartlari bo'yicha yuqori aniqlikdagi 3D modellashtirish.",
+      desc: dict?.services?.design_desc || "Yuqori aniqlikdagi 3D modellashtirish va texnik chizmalar.",
       icon: <Ruler className="w-8 h-8 text-emerald-600" />,
       color: "bg-emerald-50",
       href: "#contact"

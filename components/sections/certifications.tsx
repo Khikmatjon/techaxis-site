@@ -8,8 +8,8 @@ export const Certifications = ({ dict }: { dict: any }) => {
   const certifications = [
     {
       title: "SOLIDWORKS Sertifikatlari",
-      level: "CSWA, CSWP, CSWE",
-      desc: "Xalqaro darajadagi SOLIDWORKS mutaxassisi ekanligingizni tasdiqlovchi rasmiy sertifikatlar. Bizning kurslarimiz sizni ushbu imtihonlarga 100% tayyorlaydi.",
+      level: "CSWA, CSWP",
+      desc: "SOLIDWORKS mutaxassisi ekanligingizni tasdiqlovchi rasmiy sertifikatlar.",
       steps: [
         "CSWA (Asosiy) darajaga tayyorgarlik",
         "CSWP (Professional) murakkab detallar",
@@ -23,11 +23,11 @@ export const Certifications = ({ dict }: { dict: any }) => {
     {
       title: "CATIA Sertifikatlari",
       level: "Part Design, Assembly",
-      desc: "Dassault Systèmes tomonidan taqdim etiladigan CATIA rasmiy sertifikatlari. Sanoat va avtomobilsozlik standartlari asosida tayyorgarlik.",
+      desc: "Dassault Systèmes tomonidan taqdim etiladigan CATIA rasmiy sertifikatlari.",
       steps: [
         "V5 / 3DEXPERIENCE asoslari",
         "Yuzaki modellashtirish (Surface Design)",
-        "Rasmiy imtihon strategiyalari"
+        "Imtihon talablari bilan tanishish"
       ],
       link: "https://www.3ds.com/training/certification",
       color: "from-blue-500 to-blue-700",
@@ -49,7 +49,7 @@ export const Certifications = ({ dict }: { dict: any }) => {
             Rasmiy sertifikatlarga tayyorgarlik
           </h3>
           <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
-            O'quv markazimiz sizni nufuzli sanoat sertifikatlarini olishga tayyorlaydi. Barcha o'quv dasturlari va talablar rasmiy manbalardan olingan.
+            Kurslarimizda sanoat sertifikatlari imtihonlarida so'raladigan asosiy mavzular o'tiladi. Imtihon talablarini rasmiy sahifalardan tekshiring.
           </p>
         </div>
 
