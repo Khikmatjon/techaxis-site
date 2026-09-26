@@ -3,7 +3,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { Youtube, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
-import { SITE_PHONE, SITE_EMAIL, SITE_ADDRESS } from '@/config/site';
+import { SITE_PHONE, SITE_EMAIL, SITE_ADDRESS, SITE_SOCIAL } from '@/config/site';
+import { MAXFIYLIK_SIYOSATI } from '@/content/maxfiylik-siyosati';
+import { FOYDALANISH_SHARTLARI } from '@/content/foydalanish-shartlari';
+import { pickLocale } from '@/components/legal/legal-page';
 
 export const Footer = ({ dict, locale }: { dict: any; locale: string }) => {
   const currentYear = new Date().getFullYear();
@@ -28,13 +31,13 @@ export const Footer = ({ dict, locale }: { dict: any; locale: string }) => {
               {dict?.hero?.subtitle}
             </p>
             <div className="flex space-x-4">
-              <a href="https://youtube.com/@techaxis_academy?si=Xrhh9iFOkFJQu7EI" target="_blank" className="p-3 bg-white/5 rounded-xl hover:bg-red-600 transition-all text-white">
+              <a href={SITE_SOCIAL.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="p-3 bg-white/5 rounded-xl hover:bg-red-600 transition-all text-white">
                 <Youtube size={20} />
               </a>
-              <a href="https://instagram.com/hikmatjon.m" target="_blank" className="p-3 bg-white/5 rounded-xl hover:bg-pink-600 transition-all text-white">
+              <a href={SITE_SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="p-3 bg-white/5 rounded-xl hover:bg-pink-600 transition-all text-white">
                 <Instagram size={20} />
               </a>
-              <a href="https://linkedin.com/in/melikuziev-khikmatjon" target="_blank" className="p-3 bg-white/5 rounded-xl hover:bg-blue-600 transition-all text-white">
+              <a href={SITE_SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-3 bg-white/5 rounded-xl hover:bg-blue-600 transition-all text-white">
                 <Linkedin size={20} />
               </a>
             </div>
@@ -58,8 +61,8 @@ export const Footer = ({ dict, locale }: { dict: any; locale: string }) => {
             <ul className="space-y-4 text-slate-400 text-sm">
               <li><Link href={`/${locale}/training`} className="hover:text-blue-400 transition-colors">{f?.training_center || "O'quv markazi"}</Link></li>
               <li><Link href={`/${locale}/#contact`} className="hover:text-blue-400 transition-colors">{f?.support || "Texnik qo'llab-quvvatlash"}</Link></li>
-              <li><Link href={`/${locale}/privacy`} className="hover:text-blue-400 transition-colors">{dict?.privacy?.nav_title || f?.privacy || "Maxfiylik siyosati"}</Link></li>
-              <li><Link href={`/${locale}/terms`} className="hover:text-blue-400 transition-colors">{dict?.terms?.nav_title || "Foydalanish shartlari"}</Link></li>
+              <li><Link href={`/${locale}/privacy`} className="hover:text-blue-400 transition-colors">{pickLocale(MAXFIYLIK_SIYOSATI, locale).sarlavha}</Link></li>
+              <li><Link href={`/${locale}/terms`} className="hover:text-blue-400 transition-colors">{pickLocale(FOYDALANISH_SHARTLARI, locale).sarlavha}</Link></li>
             </ul>
           </div>
 

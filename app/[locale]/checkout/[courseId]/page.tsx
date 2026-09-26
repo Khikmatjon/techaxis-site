@@ -13,6 +13,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { requestPaymentAction, submitPaymentProofAction, getStudentDashboardAction } from "@/lib/actions/student-actions";
 import { useEffect } from "react";
+import { PAYMENT_CARD } from "@/config/site";
 
 export default function CheckoutPage({ params }: { params: Promise<{ locale: string, courseId: string }> }) {
   const { locale, courseId } = use(params);
@@ -52,7 +53,9 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
 
   if (!course) return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Kurs topilmadi</div>;
 
-  // Kursga qarab narxlar (Demo uchun landingdagilar bilan moslashtiramiz)
+  // KEYIN-TOLDIRING: tarif narxlari (Starter/Pro/Mentor) shu yerda qo'lda yozilgan va
+  // admin paneldagi kurs narxiga bog'lanmagan. Rejadagi 16-kun (narx va tariflar)
+  // ishida bitta joyga yig'iladi. Hozircha narxni o'zgartirish uchun shu ro'yxatni tahrirlang.
   const isCatia = courseId === "catia-v5";
   const plans = isCatia ? [
     { id: "starter", name: "Starter", price: 30, priceUZS: "380,000", desc: "Asoslar", features: ["Video darslar", "Topshiriqlar", "Sertifikat"] },
@@ -251,10 +254,10 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
                     <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 flex items-center justify-between">
                        <div>
                           <div className="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1">Karta raqami</div>
-                          <div className="text-lg font-bold text-white tracking-widest">9860 4545 1111 1111</div>
-                          <div className="text-xs text-slate-400 mt-1">Meliqo'ziyev Xikmatjon</div>
+                          <div className="text-lg font-bold text-white tracking-widest">{PAYMENT_CARD.number}</div>
+                          <div className="text-xs text-slate-400 mt-1">{PAYMENT_CARD.holder}</div>
                        </div>
-                       <button onClick={() => navigator.clipboard.writeText("9860454511111111")} className="bg-slate-700 hover:bg-slate-600 p-2 rounded-lg text-xs transition-colors">Nusxa</button>
+                       <button onClick={() => navigator.clipboard.writeText(PAYMENT_CARD.number.replace(/\s/g, ""))} className="bg-slate-700 hover:bg-slate-600 p-2 rounded-lg text-xs transition-colors">Nusxa</button>
                     </div>
                     <div className="flex items-center justify-between px-2">
                        <span className="text-slate-400 text-sm">To'lov miqdori:</span>

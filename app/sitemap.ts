@@ -1,15 +1,16 @@
 import { MetadataRoute } from 'next';
 import { locales } from '@/lib/i18n';
 import { listPublishedPosts } from '@/lib/blog-store';
-import { COURSES } from '@/lib/courses';
+import { getCourses } from '@/lib/courses-db';
 
-// Blog yozuvlari bazadan olinadi va admin paneldan o'zgaradi, shuning uchun sitemap har so'rovda tayyorlanadi.
+// Blog va kurslar bazadan olinadi va admin paneldan o'zgaradi, shuning uchun sitemap har so'rovda tayyorlanadi.
 export const dynamic = 'force-dynamic';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.techaxis.uz';
-  const routes = ['', '/software', '/training', '/login', '/register', '/blog', '/free', '/privacy', '/terms'];
-  const posts = await listPublishedPosts();
+  const routes = ['', '/software', '/training', '/courses', '/login', '/register', '/blog', '/free', '/privacy', '/terms'];
+  // Faqat faol kurslar (admin o'chirgan kurs sitemap'dan ham tushadi); baza ishlamasa statik ro'yxatga qaytadi.
+  const [posts, courses] = await Promise.all([listPublishedPosts(), getCourses()]);
 
   const sitemaps: MetadataRoute.Sitemap = [];
 
@@ -35,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
 
     // Dinamik Kurs Landing sahifalari
-    COURSES.forEach((course) => {
+    courses.forEach((course) => {
       sitemaps.push({
         url: `${baseUrl}/${locale}/courses/${course.id}`,
         lastModified: new Date(),

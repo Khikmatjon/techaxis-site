@@ -129,64 +129,9 @@
     "error_msg": "An error occurred. Please try again."
   },
   "legal": {
-    "updated": "Last updated: September 26, 2026",
     "entity_label": "Legal entity",
     "entity_pending": "details will be added soon",
     "contact_label": "Contact",
     "contact_cta": "If you have questions, write to us:"
-  },
-  "privacy": {
-    "nav_title": "Privacy Policy",
-    "title": "Privacy Policy",
-    "intro": "This page explains what information we collect on techaxis.uz and how we use it.",
-    "sections": [
-      {
-        "h": "What we collect",
-        "p": "When you register — your name, email and password. When you enroll in a course — the selected course and payment details. Through the contact form — your name, email, phone and message."
-      },
-      {
-        "h": "Why we need it",
-        "p": "To create your account, give you access to courses, confirm your payment and get in touch with you."
-      },
-      {
-        "h": "Where it's stored",
-        "p": "Your data is stored on secure servers. Your password is stored encrypted — nobody, including us, can see it."
-      },
-      {
-        "h": "Do we share it",
-        "p": "No. Your data is never sold or shared with others for advertising."
-      },
-      {
-        "h": "Cookies",
-        "p": "The site uses a cookie only to remember that you're signed in. There are no advertising or tracking cookies."
-      },
-      {
-        "h": "Deleting your data",
-        "p": "If you want to view, change or delete your data, write to info@techaxis.uz."
-      }
-    ]
-  },
-  "terms": {
-    "nav_title": "Terms of Use",
-    "title": "Terms of Use",
-    "intro": "By using the site, you agree to the following terms.",
-    "sections": [
-      {
-        "h": "Account",
-        "p": "Use your real name and email when you register. Don't share your password with others."
-      },
-      {
-        "h": "Courses and payment",
-        "p": "Course prices are shown on the site. Payment is made by card transfer; once it's checked, the course is unlocked (usually within 1–2 hours)."
-      },
-      {
-        "h": "Refunds",
-        "p": "Refund terms will be added soon. If you have questions, please write to us."
-      },
-      {
-        "h": "Course materials",
-        "p": "Course videos and materials may not be copied or shared."
-      }
-    ]
   }
 }

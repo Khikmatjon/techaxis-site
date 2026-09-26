@@ -129,64 +129,9 @@
     "error_msg": "Xatolik yuz berdi. Qaytadan urining."
   },
   "legal": {
-    "updated": "Oxirgi yangilanish: 2026-yil 26-sentabr",
     "entity_label": "Yuridik shaxs",
     "entity_pending": "ma'lumotlar tez orada qo'shiladi",
     "contact_label": "Bog'lanish",
     "contact_cta": "Savollaringiz bo'lsa, yozing:"
-  },
-  "privacy": {
-    "nav_title": "Maxfiylik siyosati",
-    "title": "Maxfiylik siyosati",
-    "intro": "Bu sahifada techaxis.uz saytida qanday ma'lumotlaringizni olishimiz va ulardan qanday foydalanishimiz haqida yozilgan.",
-    "sections": [
-      {
-        "h": "Qanday ma'lumot olamiz",
-        "p": "Ro'yxatdan o'tganingizda — ismingiz, emailingiz va parolingiz. Kursga yozilganingizda — tanlangan kurs va to'lov ma'lumotlari. Bog'lanish formasi orqali — ismingiz, emailingiz, telefoningiz va xabaringiz."
-      },
-      {
-        "h": "Nima uchun kerak",
-        "p": "Hisobingizni ochish, kurslarga kirish, to'lovni tasdiqlash va siz bilan bog'lanish uchun."
-      },
-      {
-        "h": "Qayerda saqlanadi",
-        "p": "Ma'lumotlaringiz himoyalangan serverlarda saqlanadi. Parolingiz shifrlangan holda saqlanadi — uni hech kim, jumladan biz ham ko'ra olmaymiz."
-      },
-      {
-        "h": "Boshqalarga beriladimi",
-        "p": "Yo'q. Ma'lumotlaringiz sotilmaydi va reklama uchun boshqalarga berilmaydi."
-      },
-      {
-        "h": "Cookie",
-        "p": "Sayt faqat tizimga kirganingizni eslab qolish uchun cookie ishlatadi. Reklama yoki kuzatuv cookie'lari yo'q."
-      },
-      {
-        "h": "Ma'lumotlaringizni o'chirish",
-        "p": "Ma'lumotlaringizni ko'rish, o'zgartirish yoki o'chirishni xohlasangiz, info@techaxis.uz manziliga yozing."
-      }
-    ]
-  },
-  "terms": {
-    "nav_title": "Foydalanish shartlari",
-    "title": "Foydalanish shartlari",
-    "intro": "Saytdan foydalanish orqali siz quyidagi shartlarga rozilik bildirasiz.",
-    "sections": [
-      {
-        "h": "Hisob",
-        "p": "Ro'yxatdan o'tishda haqiqiy ismingiz va emailingizni kiriting. Parolingizni boshqalarga bermang."
-      },
-      {
-        "h": "Kurslar va to'lov",
-        "p": "Kurs narxlari saytda ko'rsatilgan. To'lov karta orqali o'tkaziladi, tekshirilgach kurs ochiladi (odatda 1–2 soat ichida)."
-      },
-      {
-        "h": "Pulni qaytarish",
-        "p": "Pulni qaytarish shartlari tez orada qo'shiladi. Savollar bo'lsa, bizga yozing."
-      },
-      {
-        "h": "Kurs materiallari",
-        "p": "Kurs videolari va materiallarini ko'chirish yoki boshqalarga tarqatish mumkin emas."
-      }
-    ]
   }
 }
