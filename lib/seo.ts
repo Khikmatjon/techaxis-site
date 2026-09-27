@@ -9,11 +9,12 @@ import type { Course } from "@/lib/courses";
 const SITE_URL = "https://www.techaxis.uz";
 const OG_LOCALE = { uz: "uz_UZ", ru: "ru_RU", en: "en_US" } as const;
 type Loc = keyof typeof OG_LOCALE;
-const NOINDEX: ReadonlySet<SeoKey> = new Set<SeoKey>(["login", "register"]);
+const NOINDEX: ReadonlySet<SeoKey> = new Set<SeoKey>(["login", "register", "checkout", "smartBand"]);
 
 const asLocale = (locale: string): Loc => (locale in OG_LOCALE ? (locale as Loc) : "uz");
 
-function build(locale: Loc, path: string, title: string, description: string, noindex = false): Metadata {
+// path = null: manzil (og:url) qo'yilmaydi -- layout'dagi standart qiymat uchun.
+function build(locale: Loc, path: string | null, title: string, description: string, noindex = false): Metadata {
   const image = { url: `/${locale}/opengraph-image`, width: 1200, height: 630, alt: "TechAxis" };
   return {
     title,
@@ -22,7 +23,7 @@ function build(locale: Loc, path: string, title: string, description: string, no
     openGraph: {
       title,
       description,
-      url: `${SITE_URL}/${locale}${path}`,
+      ...(path === null ? {} : { url: `${SITE_URL}/${locale}${path}` }),
       siteName: "TechAxis",
       locale: OG_LOCALE[locale],
       type: "website",
@@ -36,6 +37,14 @@ export function pageMetadata(key: SeoKey, locale: string, path: string): Metadat
   const loc = asLocale(locale);
   const { title, description } = SEO[key][loc];
   return build(loc, path, title, description, NOINDEX.has(key));
+}
+
+// Layout uchun: o'z metadata'si yo'q sahifalar (masalan 404) bosh sahifa matnini oladi,
+// lekin bosh sahifaning manzilini (og:url) olmaydi.
+export function defaultMetadata(locale: string): Metadata {
+  const loc = asLocale(locale);
+  const { title, description } = SEO.home[loc];
+  return build(loc, null, title, description);
 }
 
 // Kurs matni (bazada) faqat o'zbekcha, shuning uchun sarlavha va tavsif har tilda
@@ -74,7 +83,7 @@ export function courseMetadata(course: Course, locale: string): Metadata {
   const meta = build(loc, `/courses/${course.id}`, text.title, text.description);
   // Kursning o'z rasmi umumiy ulashish rasmidan ko'ra aniqroq.
   if (course.thumbnail) {
-    meta.openGraph = { ...meta.openGraph, images: [course.thumbnail] };
+    meta.openGraph = { ...meta.openGraph, images: [{ url: course.thumbnail, alt: course.title }] };
     meta.twitter = { ...meta.twitter, images: [course.thumbnail] };
   }
   return meta;

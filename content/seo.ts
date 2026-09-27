@@ -199,6 +199,17 @@ export const SEO = {
     ru: { title: "Регистрация | TechAxis", description: "Создайте аккаунт TechAxis и записывайтесь на курсы." },
     en: { title: "Sign up | TechAxis", description: "Create a TechAxis account and enroll in courses." },
   },
+  // Qidiruvga chiqmaydigan sahifalar (noindex): xarid sahifasi va eski «HAYOT Band» loyihasi.
+  checkout: {
+    uz: { title: "Kursga yozilish va to'lov | TechAxis", description: "Tarifni tanlang va kurs uchun to'lovni amalga oshiring." },
+    ru: { title: "Запись на курс и оплата | TechAxis", description: "Выберите тариф и оплатите курс." },
+    en: { title: "Course enrollment and payment | TechAxis", description: "Choose a plan and pay for the course." },
+  },
+  smartBand: {
+    uz: { title: "HAYOT Band loyihasi | TechAxis", description: "HAYOT Band aqlli bilaguzuk loyihasi haqida." },
+    ru: { title: "Проект HAYOT Band | TechAxis", description: "О проекте умного браслета HAYOT Band." },
+    en: { title: "HAYOT Band project | TechAxis", description: "About the HAYOT Band smart wristband project." },
+  },
 } satisfies Record<string, SeoSahifa>;
 
 export type SeoKey = keyof typeof SEO;

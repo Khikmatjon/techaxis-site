@@ -7,7 +7,7 @@ import { Footer } from '@/components/shared/footer';
 import { ThemeProvider } from "@/components/theme-provider";
 import { AnnouncementBar } from '@/components/shared/announcement-bar';
 import { Locale, locales } from '@/lib/i18n';
-import { pageMetadata } from '@/lib/seo';
+import { defaultMetadata } from '@/lib/seo';
 
 // Shrift build paytida yuklab olinib saytning o'zidan beriladi: Google'ga alohida
 // so'rov yo'q va sahifa chizilishi shriftni kutib to'xtab qolmaydi.
@@ -29,11 +29,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const dict = await getDictionary(locale as Locale);
 
-  // Sahifa o'z metadata'sini bermasa, bosh sahifaniki ishlatiladi (content/seo.ts).
+  // Sahifa o'z metadata'sini bermasa, bosh sahifa matni ishlatiladi (content/seo.ts).
   return {
     metadataBase: new URL('https://www.techaxis.uz'),
     keywords: dict.seo.keywords,
-    ...pageMetadata("home", locale, ""),
+    ...defaultMetadata(locale),
   };
 }
 

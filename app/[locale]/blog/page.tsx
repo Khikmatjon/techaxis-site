@@ -14,7 +14,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return pageMetadata("blog", locale, "/blog");
 }
 
-
 const TEXT = {
   heading1: "Muhandislik va CAD",
   heading2: "Bilimlar Bazasi",
