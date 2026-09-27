@@ -13,6 +13,16 @@ const NOINDEX: ReadonlySet<SeoKey> = new Set<SeoKey>(["login", "register", "chec
 
 const asLocale = (locale: string): Loc => (locale in OG_LOCALE ? (locale as Loc) : "uz");
 
+// Sahifaning asosiy manzili (canonical) va uch til versiyasi (hreflang). x-default --
+// o'zbekcha: sayt asosiy tili, "/" ham /uz ga yo'naltiriladi. path "" yoki "/..." bo'ladi.
+export function alternatesFor(locale: string, path: string): NonNullable<Metadata["alternates"]> {
+  const url = (l: Loc) => `${SITE_URL}/${l}${path}`;
+  return {
+    canonical: url(asLocale(locale)),
+    languages: { uz: url("uz"), ru: url("ru"), en: url("en"), "x-default": url("uz") },
+  };
+}
+
 // path = null: manzil (og:url) qo'yilmaydi -- layout'dagi standart qiymat uchun.
 function build(locale: Loc, path: string | null, title: string, description: string, noindex = false): Metadata {
   const image = { url: `/${locale}/opengraph-image`, width: 1200, height: 630, alt: "TechAxis" };
@@ -20,6 +30,7 @@ function build(locale: Loc, path: string | null, title: string, description: str
     title,
     description,
     ...(noindex ? { robots: { index: false, follow: false } } : {}),
+    ...(path === null ? {} : { alternates: alternatesFor(locale, path) }),
     openGraph: {
       title,
       description,

@@ -42,6 +42,16 @@ function fetchCourse(id: string) {
   });
 }
 
+// Kurs, uning modullari va darslari ichidagi eng oxirgi o'zgarish vaqti.
+function latestUpdate(row: NonNullable<DbCourse>): string {
+  const times = [
+    row.updatedAt.getTime(),
+    ...row.modules.map((m) => m.updatedAt.getTime()),
+    ...row.modules.flatMap((m) => m.lessons.map((l) => l.updatedAt.getTime())),
+  ];
+  return new Date(Math.max(...times)).toISOString();
+}
+
 function toCourse(row: NonNullable<DbCourse>): Course {
   return {
     id: row.id,
@@ -59,6 +69,7 @@ function toCourse(row: NonNullable<DbCourse>): Course {
     rating: row.rating,
     tags: row.tags,
     marketing: MARKETING_BY_ID.get(row.id) ?? EMPTY_MARKETING,
+    updatedAt: latestUpdate(row),
     modules: row.modules.map(
       (m): Module => ({
         id: m.id,

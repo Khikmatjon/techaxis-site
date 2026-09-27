@@ -58,6 +58,9 @@ export interface Course {
   tags: string[];
   modules: Module[];
   marketing: MarketingData;
+  // Kurs, modul yoki darsning eng oxirgi o'zgargan vaqti (ISO). Faqat bazadan
+  // o'qilganda bor; sitemap'dagi lastmod uchun.
+  updatedAt?: string;
 }
 
 // Narx, daraja, instruktor, modul va darslar saytga BAZADAN keladi (admin panel ->
