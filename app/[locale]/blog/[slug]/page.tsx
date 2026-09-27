@@ -1,4 +1,6 @@
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/seo/json-ld";
+import { blogPostingLd, breadcrumbLd, crumb } from "@/lib/structured-data";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Calendar, ChevronLeft, Clock } from "lucide-react";
@@ -62,6 +64,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <div className="min-h-screen bg-slate-950 pt-24 pb-16">
+      <JsonLd data={[
+        blogPostingLd(post, locale),
+        breadcrumbLd(locale, [
+          { name: crumb("blog", locale), path: "/blog" },
+          { name: post.title, path: `/blog/${post.slug}` },
+        ]),
+      ]} />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Orqaga qaytish */}
         <Link

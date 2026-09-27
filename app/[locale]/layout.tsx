@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { AnnouncementBar } from '@/components/shared/announcement-bar';
 import { Locale, locales } from '@/lib/i18n';
 import { defaultMetadata } from '@/lib/seo';
+import { SEARCH_VERIFICATION } from '@/config/site';
 
 // Shrift build paytida yuklab olinib saytning o'zidan beriladi: Google'ga alohida
 // so'rov yo'q va sahifa chizilishi shriftni kutib to'xtab qolmaydi.
@@ -34,6 +35,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     metadataBase: new URL('https://www.techaxis.uz'),
     keywords: dict.seo.keywords,
     ...defaultMetadata(locale),
+    // Search Console / Yandex Webmaster tasdiqlash (config/site.ts).
+    verification: {
+      ...(SEARCH_VERIFICATION.google ? { google: SEARCH_VERIFICATION.google } : {}),
+      ...(SEARCH_VERIFICATION.yandex ? { yandex: SEARCH_VERIFICATION.yandex } : {}),
+    },
   };
 }
 

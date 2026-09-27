@@ -22,6 +22,8 @@ Loyihada shu so'zni qidirsangiz (VS Code: `Ctrl+Shift+F`), hammasi chiqadi.
 | Yuridik shaxs nomi | `config/site.ts` → `LEGAL_ENTITY` |
 | Ijtimoiy tarmoqlar (YouTube, Instagram, LinkedIn, Telegram bot) | `config/site.ts` → `SITE_SOCIAL` |
 | To'lov kartasi raqami va egasi | `config/site.ts` → `PAYMENT_CARD` |
+| Google Search Console / Yandex Webmaster tasdiqlash kodi | `config/site.ts` → `SEARCH_VERIFICATION` |
+| Tarjima qilingan sahifalar ro'yxati (hreflang) | `content/seo.ts` → `TARJIMA_QILINGAN` |
 | Maxfiylik siyosati (3 tilda) | `content/maxfiylik-siyosati.ts` |
 | Foydalanish shartlari, pulni qaytarish (3 tilda) | `content/foydalanish-shartlari.ts` |
 | Sahifa sarlavhalari va tavsiflari (Google, Telegram kartasi) | `content/seo.ts` |

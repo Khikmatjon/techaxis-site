@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbLd, crumb } from "@/lib/structured-data";
 import type { Metadata } from "next";
 import { ArrowRight, BookMarked, Calendar, Clock, Lightbulb } from "lucide-react";
 import { listPublishedPosts } from "@/lib/blog-store";
@@ -108,6 +110,7 @@ export default async function BlogIndexPage({
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 pt-24 pb-16">
+      <JsonLd data={breadcrumbLd(locale, [{ name: crumb("blog", locale), path: "/blog" }])} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Sarlavha */}
         <div className="text-center max-w-3xl mx-auto mb-12">

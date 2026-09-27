@@ -1,4 +1,6 @@
 import React from 'react';
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbLd, crumb } from "@/lib/structured-data";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 
@@ -56,9 +58,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return pageMetadata("catia", locale, "/software/catia");
 }
 
-export default function CatiaPage() {
+export default async function CatiaPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return (
     <div className="pt-32 pb-20 bg-slate-50 dark:bg-slate-950">
+      <JsonLd data={breadcrumbLd(locale, [
+        { name: crumb("software", locale), path: "/software" },
+        { name: "CATIA", path: "/software/catia" },
+      ])} />
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-4 font-display text-blue-600">CATIA V6 & 3DEXPERIENCE</h1>
