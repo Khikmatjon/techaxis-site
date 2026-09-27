@@ -5,7 +5,9 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin/', '/api/'],
+      // Manzillar til prefiksi bilan boshlanadi (/uz/admin), shuning uchun /*/ ... ko'rinishida.
+      // /checkout bu yerda yo'q: u noindex, Google buni ko'rishi uchun sahifani ochishi kerak.
+      disallow: ['/api/', '/*/admin', '/*/dashboard'],
     },
     sitemap: 'https://www.techaxis.uz/sitemap.xml',
   };

@@ -72,6 +72,7 @@ function fromRow(r: Post): BlogPost {
     coverImage: r.coverImage,
     published: r.published,
     publishedAt: r.publishedAt.toISOString(),
+    updatedAt: r.updatedAt.toISOString(),
   };
 }
 

@@ -41,6 +41,7 @@ export interface BlogPost {
   coverImage: string | null;
   published: boolean;
   publishedAt: string; // ISO sana-vaqt (UTC)
+  updatedAt?: string; // oxirgi tahrir (ISO); faqat bazadan o'qilganda bor -- sitemap lastmod uchun
 }
 
 export const POST_LIMITS = {

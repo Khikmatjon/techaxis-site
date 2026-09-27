@@ -3,10 +3,15 @@
 // - title 60, description 155 belgidan oshmasin, bo'sh bo'lmasin;
 // - bir xil title yoki description ikki sahifada takrorlanmasin (tilni hisobga olib);
 // - /login, /register, /checkout "noindex" bo'lsin;
-// - har sahifada og:image va twitter:card = summary_large_image bo'lsin.
+// - har sahifada og:image va twitter:card = summary_large_image bo'lsin;
+// - canonical/hreflang content/seo.ts dagi TARJIMA_QILINGAN ro'yxatiga mos bo'lsin:
+//   tarjima qilingan sahifa -> canonical o'zi, hreflang uz/ru/en/x-default;
+//   tarjima qilinmagan sahifa -> canonical /uz versiya, hreflang yo'q.
 //
 //   node scripts/check-meta.mjs                        -> http://localhost:3000
 //   node scripts/check-meta.mjs https://www.techaxis.uz -> jonli sayt
+
+import { readFileSync } from "node:fs";
 
 const base = (process.argv[2] || "http://localhost:3000").replace(/\/$/, "");
 const LOCALES = ["uz", "ru", "en"];
@@ -15,6 +20,13 @@ const PAGES = [
   "/courses/solidworks-basics", "/courses/catia-v5", "/courses/3d-modeling", "/courses/plm-systems",
   "/blog", "/free", "/privacy", "/terms", "/login", "/register", "/checkout/catia-v5",
 ];
+const SITE = "https://www.techaxis.uz";
+// Tarjima qilingan sahifalar ro'yxati content/seo.ts dan o'qiladi (ikki joyda saqlanmasin).
+const seoSrc = readFileSync(new URL("../content/seo.ts", import.meta.url), "utf8");
+const TRANSLATED = new Set(
+  [...(seoSrc.match(/TARJIMA_QILINGAN[^=]*=\s*\[([^\]]*)\]/)?.[1] ?? "").matchAll(/"([^"]*)"/g)].map((m) => m[1]),
+);
+if (!TRANSLATED.has("")) throw new Error("content/seo.ts dan TARJIMA_QILINGAN o'qilmadi");
 const NOINDEX = new Set(["/login", "/register", "/checkout/catia-v5"]);
 
 const decode = (s) =>
@@ -39,6 +51,10 @@ for (const loc of LOCALES) {
     const robots = meta(html, "name", "robots") ?? "";
     const ogImage = meta(html, "property", "og:image");
     const card = meta(html, "name", "twitter:card");
+    const canonical = html.match(/<link[^>]*rel="canonical"[^>]*href="([^"]*)"/i)?.[1];
+    const hreflang = Object.fromEntries(
+      [...html.matchAll(/<link[^>]*rel="alternate"[^>]*hrefLang="([^"]*)"[^>]*href="([^"]*)"/gi)].map((m) => [m[1], m[2]]),
+    );
     rows.push({ loc, p, path, title, desc });
 
     if (res.status !== 200) problems.push(`${path}: HTTP ${res.status}`);
@@ -50,6 +66,16 @@ for (const loc of LOCALES) {
     if (!NOINDEX.has(p) && /noindex/.test(robots)) problems.push(`${path}: noindex bo'lmasligi kerak`);
     if (!ogImage) problems.push(`${path}: og:image yo'q`);
     if (card !== "summary_large_image") problems.push(`${path}: twitter:card = ${card}`);
+    if (TRANSLATED.has(p)) {
+      if (canonical !== SITE + path) problems.push(`${path}: canonical = ${canonical}`);
+      const want = { uz: `${SITE}/uz${p}`, ru: `${SITE}/ru${p}`, en: `${SITE}/en${p}`, "x-default": `${SITE}/uz${p}` };
+      for (const [lang, url] of Object.entries(want)) {
+        if (hreflang[lang] !== url) problems.push(`${path}: hreflang ${lang} = ${hreflang[lang]}`);
+      }
+    } else {
+      if (canonical !== `${SITE}/uz${p}`) problems.push(`${path}: canonical = ${canonical} (kutilgan /uz${p})`);
+      if (Object.keys(hreflang).length) problems.push(`${path}: tarjima qilinmagan, lekin hreflang bor`);
+    }
   }
 }
 

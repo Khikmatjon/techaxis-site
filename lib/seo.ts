@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SEO, type SeoKey } from "@/content/seo";
+import { SEO, TARJIMA_QILINGAN, type SeoKey } from "@/content/seo";
 import type { Course } from "@/lib/courses";
 
 // Sahifa metadata'sini content/seo.ts dagi matndan yig'adi. Ulashish rasmi
@@ -13,17 +13,36 @@ const NOINDEX: ReadonlySet<SeoKey> = new Set<SeoKey>(["login", "register", "chec
 
 const asLocale = (locale: string): Loc => (locale in OG_LOCALE ? (locale as Loc) : "uz");
 
+export const isTranslated = (path: string) => TARJIMA_QILINGAN.includes(path);
+
+// Sahifaning asosiy manzili (canonical) va til versiyalari (hreflang). path "" yoki "/...".
+// - Tarjima qilingan sahifa (content/seo.ts -> TARJIMA_QILINGAN): har til o'zini canonical
+//   qiladi, hreflang uz/ru/en va x-default (= uz: sayt asosiy tili, "/" ham /uz ga boradi).
+// - Tarjima qilinmagan sahifa: /ru va /en da asosiy matn o'zbekcha, ya'ni /uz ning nusxasi --
+//   canonical /uz ga, hreflang yo'q (Google'ga "bu ruscha sahifa" deb noto'g'ri aytilmaydi).
+export function alternatesFor(locale: string, path: string): NonNullable<Metadata["alternates"]> {
+  const url = (l: Loc) => `${SITE_URL}/${l}${path}`;
+  if (!isTranslated(path)) return { canonical: url("uz") };
+  return {
+    canonical: url(asLocale(locale)),
+    languages: { uz: url("uz"), ru: url("ru"), en: url("en"), "x-default": url("uz") },
+  };
+}
+
 // path = null: manzil (og:url) qo'yilmaydi -- layout'dagi standart qiymat uchun.
 function build(locale: Loc, path: string | null, title: string, description: string, noindex = false): Metadata {
   const image = { url: `/${locale}/opengraph-image`, width: 1200, height: 630, alt: "TechAxis" };
+  const alternates = path === null ? null : alternatesFor(locale, path);
   return {
     title,
     description,
     ...(noindex ? { robots: { index: false, follow: false } } : {}),
+    ...(alternates ? { alternates } : {}),
     openGraph: {
       title,
       description,
-      ...(path === null ? {} : { url: `${SITE_URL}/${locale}${path}` }),
+      // Ulashilgan havola asosiy manzilga (canonical) olib boradi.
+      ...(alternates ? { url: alternates.canonical as string } : {}),
       siteName: "TechAxis",
       locale: OG_LOCALE[locale],
       type: "website",
