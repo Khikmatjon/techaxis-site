@@ -1,4 +1,6 @@
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbLd, courseLd, crumb } from "@/lib/structured-data";
 import { Metadata } from "next";
 import { getCourseById, getCourses } from "@/lib/courses-db";
 import { locales } from "@/lib/i18n";
@@ -44,6 +46,13 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200">
+      <JsonLd data={[
+        courseLd(course),
+        breadcrumbLd(locale, [
+          { name: crumb("courses", locale), path: "/courses" },
+          { name: course.title, path: `/courses/${course.id}` },
+        ]),
+      ]} />
       
       {/* 🚀 HERO SECTION */}
       <section className="relative pt-32 pb-20 overflow-hidden">

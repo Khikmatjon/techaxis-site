@@ -1,4 +1,6 @@
 import React from 'react';
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbLd, crumb } from "@/lib/structured-data";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
@@ -47,6 +49,7 @@ export default async function SoftwarePage({ params }: { params: Promise<{ local
 
   return (
     <div className="pt-32 pb-24 bg-white dark:bg-slate-950 min-h-screen">
+      <JsonLd data={breadcrumbLd(locale, [{ name: crumb("software", locale), path: "/software" }])} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}

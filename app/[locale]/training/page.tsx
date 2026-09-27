@@ -1,4 +1,6 @@
 import React from 'react';
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbLd, crumb } from "@/lib/structured-data";
 import Link from 'next/link';
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
@@ -24,6 +26,7 @@ export default async function TrainingPage({ params }: { params: Promise<{ local
 
   return (
     <div className="pt-32 pb-20 bg-white dark:bg-slate-950">
+      <JsonLd data={breadcrumbLd(locale, [{ name: crumb("training", locale), path: "/training" }])} />
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">

@@ -45,3 +45,11 @@ export const PAYMENT_CARD = {
   number: "9860 4545 1111 1111", // bo'sh joylar bilan yozing, nusxalashda o'zi olib tashlanadi
   holder: "Meliqo'ziyev Xikmatjon",
 } as const;
+
+// Google Search Console va Yandex Webmaster'da saytni tasdiqlash kodlari ("HTML teg"
+// usuli: <meta name="google-site-verification" content="KOD"> dagi faqat KOD qismi).
+// KEYIN-TOLDIRING: kodlarni olgach shu yerga yozing (null -> teg qo'yilmaydi).
+export const SEARCH_VERIFICATION: { google: string | null; yandex: string | null } = {
+  google: null,
+  yandex: null,
+};

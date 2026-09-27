@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbLd, crumb } from "@/lib/structured-data";
 import Link from "next/link";
 import Image from "next/image";
 import { Play, ArrowRight, BookOpen, Clock, Layers } from "lucide-react";
@@ -23,6 +25,7 @@ export default async function CoursesCatalog({ params }: { params: Promise<{ loc
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 font-sans">
+      <JsonLd data={breadcrumbLd(locale, [{ name: crumb("courses", locale), path: "/courses" }])} />
       
       {/* 🚀 HEADER SECTION */}
       <section className="relative pt-32 pb-20 overflow-hidden bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">

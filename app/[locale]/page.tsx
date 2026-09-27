@@ -1,4 +1,6 @@
 import { getDictionary } from "@/lib/dictionary";
+import { JsonLd } from "@/components/seo/json-ld";
+import { organizationLd } from "@/lib/structured-data";
 import Image from "next/image";
 import { Locale } from "@/lib/i18n";
 import { Services } from "@/components/sections/services";
@@ -27,6 +29,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950">
+      <JsonLd data={organizationLd(locale)} />
       
       {/* 1. HERO SECTION */}
       <section id="home" className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden bg-white dark:bg-slate-950">
