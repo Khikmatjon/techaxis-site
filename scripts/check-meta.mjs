@@ -2,7 +2,7 @@
 // teglarini tekshiradi:
 // - title 60, description 155 belgidan oshmasin, bo'sh bo'lmasin;
 // - bir xil title yoki description ikki sahifada takrorlanmasin (tilni hisobga olib);
-// - /login, /register, /checkout, /smart-band "noindex" bo'lsin;
+// - /login, /register, /checkout "noindex" bo'lsin;
 // - har sahifada og:image va twitter:card = summary_large_image bo'lsin.
 //
 //   node scripts/check-meta.mjs                        -> http://localhost:3000
@@ -13,9 +13,9 @@ const LOCALES = ["uz", "ru", "en"];
 const PAGES = [
   "", "/software", "/software/solidworks", "/software/catia", "/training", "/courses",
   "/courses/solidworks-basics", "/courses/catia-v5", "/courses/3d-modeling", "/courses/plm-systems",
-  "/blog", "/free", "/privacy", "/terms", "/login", "/register", "/checkout/catia-v5", "/smart-band",
+  "/blog", "/free", "/privacy", "/terms", "/login", "/register", "/checkout/catia-v5",
 ];
-const NOINDEX = new Set(["/login", "/register", "/checkout/catia-v5", "/smart-band"]);
+const NOINDEX = new Set(["/login", "/register", "/checkout/catia-v5"]);
 
 const decode = (s) =>
   s.replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">");

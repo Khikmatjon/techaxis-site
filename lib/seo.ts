@@ -9,7 +9,7 @@ import type { Course } from "@/lib/courses";
 const SITE_URL = "https://www.techaxis.uz";
 const OG_LOCALE = { uz: "uz_UZ", ru: "ru_RU", en: "en_US" } as const;
 type Loc = keyof typeof OG_LOCALE;
-const NOINDEX: ReadonlySet<SeoKey> = new Set<SeoKey>(["login", "register", "checkout", "smartBand"]);
+const NOINDEX: ReadonlySet<SeoKey> = new Set<SeoKey>(["login", "register", "checkout"]);
 
 const asLocale = (locale: string): Loc => (locale in OG_LOCALE ? (locale as Loc) : "uz");
 
