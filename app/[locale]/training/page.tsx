@@ -1,5 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import { getDictionary } from "@/lib/dictionary";
 import { Locale } from "@/lib/i18n";
@@ -9,6 +11,11 @@ import { Certifications } from "@/components/sections/certifications";
 // Bazadan o'qiladi: soatiga bir marta yangilanadi, admin panelda saqlanganda esa darhol
 // (revalidatePath). Oraliqda sahifa CDN keshidan tez beriladi.
 export const revalidate = 3600;
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return pageMetadata("training", locale, "/training");
+}
 
 export default async function TrainingPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

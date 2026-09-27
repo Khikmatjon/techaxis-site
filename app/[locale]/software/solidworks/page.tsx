@@ -1,4 +1,6 @@
 import React from 'react';
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
 const swOffers = [
   {
@@ -54,6 +56,11 @@ const swOffers = [
     cta: "Premium Sotib Olish"
   }
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return pageMetadata("solidworks", locale, "/software/solidworks");
+}
 
 export default function SolidworksPage() {
   return (

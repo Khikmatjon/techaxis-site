@@ -8,7 +8,8 @@ export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.techaxis.uz';
-  const routes = ['', '/software', '/training', '/courses', '/login', '/register', '/blog', '/free', '/privacy', '/terms'];
+  // /login va /register bu yerda yo'q: ular qidiruvdan yashirilgan (noindex).
+  const routes = ['', '/software', '/training', '/courses', '/blog', '/free', '/privacy', '/terms'];
   // Faqat faol kurslar (admin o'chirgan kurs sitemap'dan ham tushadi); baza ishlamasa statik ro'yxatga qaytadi.
   const [posts, courses] = await Promise.all([listPublishedPosts(), getCourses()]);
 

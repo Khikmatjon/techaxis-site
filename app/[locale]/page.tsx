@@ -8,10 +8,17 @@ import { About } from "@/components/sections/about";
 import { CoursesPreview } from "@/components/sections/courses-preview";
 import { getStats } from "@/lib/stats";
 import { getCourses } from "@/lib/courses-db";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
 // Bazadan o'qiladi: soatiga bir marta yangilanadi, admin panelda saqlanganda esa darhol
 // (revalidatePath). Oraliqda sahifa CDN keshidan tez beriladi.
 export const revalidate = 3600;
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return pageMetadata("home", locale, "");
+}
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

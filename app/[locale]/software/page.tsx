@@ -1,8 +1,15 @@
 import React from 'react';
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import { getDictionary } from "@/lib/dictionary";
 import { Locale } from "@/lib/i18n";
 import { ArrowUpRight, CheckCircle2, Download } from 'lucide-react';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return pageMetadata("software", locale, "/software");
+}
 
 export default async function SoftwarePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

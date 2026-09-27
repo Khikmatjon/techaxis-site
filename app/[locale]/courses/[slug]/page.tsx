@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { getCourseById, getCourses } from "@/lib/courses-db";
 import { locales } from "@/lib/i18n";
+import { courseMetadata } from "@/lib/seo";
 import Link from "next/link";
 import Image from "next/image";
 import { 
@@ -23,19 +24,10 @@ export async function generateStaticParams() {
 
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string, locale: string }> }): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const course = await getCourseById(slug);
   if (!course) return {};
-
-  return {
-    title: `${course.title} | TechAxis Kurslari`,
-    description: course.description,
-    openGraph: {
-      title: `${course.title} | TechAxis Kurslari`,
-      description: course.description,
-      images: [course.thumbnail],
-    },
-  };
+  return courseMetadata(course, locale);
 }
 
 export default async function CourseLandingPage({ params }: { params: Promise<{ slug: string, locale: string }> }) {
