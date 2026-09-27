@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Play, ArrowRight, BookOpen, Clock, Layers } from "lucide-react";
 import { getCourses } from "@/lib/courses-db";
+import { pageMetadata } from "@/lib/seo";
 import { getDictionary } from "@/lib/dictionary";
 import { Locale } from "@/lib/i18n";
 
@@ -12,11 +13,7 @@ export const revalidate = 3600;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
-  const dict = await getDictionary(locale as Locale);
-  return {
-    title: dict?.navbar?.courses ? `${dict.navbar.courses} | TechAxis` : "Barcha Kurslar | TechAxis",
-    description: "Sanoat standartlari asosida tayyorlangan professional muhandislik kurslari ro'yxati.",
-  };
+  return pageMetadata("courses", locale, "/courses");
 }
 
 export default async function CoursesCatalog({ params }: { params: Promise<{ locale: string }> }) {

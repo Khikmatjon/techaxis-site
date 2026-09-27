@@ -7,10 +7,8 @@ import { Footer } from '@/components/shared/footer';
 import { ThemeProvider } from "@/components/theme-provider";
 import { AnnouncementBar } from '@/components/shared/announcement-bar';
 import { Locale, locales } from '@/lib/i18n';
+import { pageMetadata } from '@/lib/seo';
 
-// Uch til oldindan ma'lum: sahifalar build paytida tayyorlanadi va CDN keshidan
-// beriladi (har so'rovda qaytadan qurilmaydi). Bazadan o'qiydigan sahifalar o'zida
-// `revalidate` bilan vaqti-vaqti bilan, admin panelda saqlanganda esa darhol yangilanadi.
 // Shrift build paytida yuklab olinib saytning o'zidan beriladi: Google'ga alohida
 // so'rov yo'q va sahifa chizilishi shriftni kutib to'xtab qolmaydi.
 const sora = Sora({
@@ -20,6 +18,9 @@ const sora = Sora({
   variable: '--font-sora',
 });
 
+// Uch til oldindan ma'lum: sahifalar build paytida tayyorlanadi va CDN keshidan
+// beriladi (har so'rovda qaytadan qurilmaydi). Bazadan o'qiydigan sahifalar o'zida
+// `revalidate` bilan vaqti-vaqti bilan, admin panelda saqlanganda esa darhol yangilanadi.
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -27,20 +28,12 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const dict = await getDictionary(locale as Locale);
-  
+
+  // Sahifa o'z metadata'sini bermasa, bosh sahifaniki ishlatiladi (content/seo.ts).
   return {
     metadataBase: new URL('https://www.techaxis.uz'),
-    title: dict.seo.title,
-    description: dict.seo.description,
     keywords: dict.seo.keywords,
-    openGraph: {
-      title: dict.seo.title,
-      description: dict.seo.description,
-      type: 'website',
-      locale: locale,
-      url: `https://www.techaxis.uz/${locale}`,
-      siteName: 'TechAxis Group',
-    }
+    ...pageMetadata("home", locale, ""),
   };
 }
 

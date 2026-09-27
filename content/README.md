@@ -24,6 +24,8 @@ Loyihada shu so'zni qidirsangiz (VS Code: `Ctrl+Shift+F`), hammasi chiqadi.
 | To'lov kartasi raqami va egasi | `config/site.ts` → `PAYMENT_CARD` |
 | Maxfiylik siyosati (3 tilda) | `content/maxfiylik-siyosati.ts` |
 | Foydalanish shartlari, pulni qaytarish (3 tilda) | `content/foydalanish-shartlari.ts` |
+| Sahifa sarlavhalari va tavsiflari (Google, Telegram kartasi) | `content/seo.ts` |
+| Havola ulashilganda chiqadigan rasm (logo shu yerda almashtiriladi) | `app/[locale]/opengraph-image.tsx` |
 | Menyu, bosh sahifa, xizmatlar, footer va boshqa sayt matnlari | `locales/uz.json`, `locales/ru.json`, `locales/en.json` (uchala tilni birga o'zgartiring) |
 | Kurs sahifasidagi batafsil matn (Nega bu kurs, dastur, tariflar jadvali, FAQ) | `lib/courses.ts` |
 | To'lov sahifasidagi tariflar (Starter/Pro/Mentor narxi) | `app/[locale]/checkout/[courseId]/page.tsx` |

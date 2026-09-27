@@ -1,4 +1,6 @@
 import React from 'react';
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
 const catiaOffers = [
   {
@@ -48,6 +50,11 @@ const catiaOffers = [
     color: "blue"
   }
 ];
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return pageMetadata("catia", locale, "/software/catia");
+}
 
 export default function CatiaPage() {
   return (

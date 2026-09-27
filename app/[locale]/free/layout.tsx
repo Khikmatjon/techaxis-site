@@ -5,9 +5,9 @@ import { pageMetadata } from "@/lib/seo";
 // (matn: content/seo.ts).
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
-  return pageMetadata("register", locale, "/register");
+  return pageMetadata("free", locale, "/free");
 }
 
-export default function RegisterLayout({ children }: { children: React.ReactNode }) {
+export default function FreeLayout({ children }: { children: React.ReactNode }) {
   return children;
 }

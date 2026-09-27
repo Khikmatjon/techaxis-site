@@ -2,17 +2,18 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowRight, BookMarked, Calendar, Clock, Lightbulb } from "lucide-react";
 import { listPublishedPosts } from "@/lib/blog-store";
+import { pageMetadata } from "@/lib/seo";
 import { POST_TYPES, POST_TYPE_META, formatPostDate, isPostType, readMinutes, type BlogPost } from "@/lib/blog";
 import { PostImage } from "@/components/blog/post-image";
 
 // Yozuvlar bazadan o'qiladi va admin paneldan o'zgaradi, shuning uchun sahifa har so'rovda tayyorlanadi.
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Blog: faktlar, maqolalar va yangiliklar | TechAxis",
-  description:
-    "SOLIDWORKS, CATIA va 3DEXPERIENCE haqida haftalik faktlar, maqolalar, yangiliklar va bizning ishlarimiz.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return pageMetadata("blog", locale, "/blog");
+}
+
 
 const TEXT = {
   heading1: "Muhandislik va CAD",
