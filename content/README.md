@@ -27,7 +27,9 @@ Loyihada shu so'zni qidirsangiz (VS Code: `Ctrl+Shift+F`), hammasi chiqadi.
 | Maxfiylik siyosati (3 tilda) | `content/maxfiylik-siyosati.ts` |
 | Foydalanish shartlari, pulni qaytarish (3 tilda) | `content/foydalanish-shartlari.ts` |
 | Sahifa sarlavhalari va tavsiflari (Google, Telegram kartasi) | `content/seo.ts` |
-| Havola ulashilganda chiqadigan rasm (logo shu yerda almashtiriladi) | `app/[locale]/opengraph-image.tsx` |
+| Havola ulashilganda chiqadigan rasm | `app/[locale]/opengraph-image.tsx` |
+| Logo (izometrik kub): menyu va footer / favicon / Apple ikonka va Google logosi | `components/shared/logo-mark.tsx` / `app/icon.svg` (keyin `node scripts/make-favicon.mjs`) / `app/apple-icon.tsx` |
+| Sayt ranglari, brend va animatsiyalar | `app/globals.css` → "SAYT DIZAYNI" bo'limi |
 | Menyu, bosh sahifa, xizmatlar, footer va boshqa sayt matnlari | `locales/uz.json`, `locales/ru.json`, `locales/en.json` (uchala tilni birga o'zgartiring) |
 | Kurs sahifasidagi batafsil matn (Nega bu kurs, dastur, tariflar jadvali, FAQ) | `lib/courses.ts` |
 | To'lov sahifasidagi tariflar (Starter/Pro/Mentor narxi) | `app/[locale]/checkout/[courseId]/page.tsx` |

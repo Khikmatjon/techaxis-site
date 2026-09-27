@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, ChevronDown, Sun, Moon, LogOut, LayoutDashboard, Shield, User, BookOpen, Settings, Loader2 } from 'lucide-react';
+import { LogoMark } from '@/components/shared/logo-mark';
 import { LanguageSwitcher } from "./language-switcher";
 import { Avatar } from "./avatar";
 import { logoutAction, updateUserCredentialsAction, getCurrentUserAction } from '@/lib/actions/auth-actions';
@@ -136,18 +137,19 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
 
   return (
     <>
-      <nav className="sticky top-0 w-full z-[100] bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800 transition-all duration-300">
+      {/* site-nav: pastga aylantirganda yashirinadi (globals.css "SAYT DIZAYNI"); menyu ochiq bo'lsa yashirinmaydi */}
+      <nav className={`site-nav sticky top-0 w-full z-[100] bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800${isOpen || userMenuOpen ? " menu-open" : ""}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
 
           {/* LOGO */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href={`/${locale}`} className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg flex items-center justify-center shadow-md shadow-blue-500/20">
-                <span className="text-white font-black text-xs">TA</span>
-              </div>
-              <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white">
-                Tech<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">Axis</span>
+            <Link href={`/${locale}`} className="brand flex items-center" aria-label="TechAxis">
+              <span className="brand-mark flex items-center justify-center">
+                <LogoMark />
+              </span>
+              <span className="brand-name font-black">
+                <span className="brand-tech">Tech</span><span className="brand-axis">Axis</span>
               </span>
             </Link>
           </div>

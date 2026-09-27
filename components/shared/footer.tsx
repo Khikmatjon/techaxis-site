@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { LogoMark } from '@/components/shared/logo-mark';
 import Link from 'next/link';
 import { Youtube, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { SITE_PHONE, SITE_EMAIL, SITE_ADDRESS, SITE_SOCIAL } from '@/config/site';
@@ -24,8 +25,14 @@ export const Footer = ({ dict, locale }: { dict: any; locale: string }) => {
           
           {/* Kompaniya haqida */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold font-display tracking-tighter">
-              TechAxis<span className="text-blue-500">Group</span>
+            <h2 className="brand flex items-center">
+              <span className="brand-mark flex items-center justify-center">
+                <LogoMark />
+              </span>
+              <span className="brand-name font-black">
+                <span className="brand-tech">Tech</span><span className="brand-axis">Axis</span>
+                <span className="ml-1.5 text-base font-semibold text-slate-400">Group</span>
+              </span>
             </h2>
             <p className="text-slate-400 text-sm leading-relaxed">
               {dict?.hero?.subtitle}
@@ -95,4 +102,4 @@ export const Footer = ({ dict, locale }: { dict: any; locale: string }) => {
       </div>
     </footer>
   );
-};
+};

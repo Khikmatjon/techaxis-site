@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 // Havola Telegram, Facebook, X va boshqalarda ulashilganda chiqadigan rasm (1200x630).
-// Haqiqiy logo tayyor bo'lgach, shu yerdagi "TA" belgisini logo rasmi bilan almashtiring.
+// Belgi: izometrik kub (components/shared/logo-mark.tsx bilan bir xil shakl).
 // Matn lotincha: rasm shriftida kirill harflari yo'q, shuning uchun uch tilda bir xil.
 
 export const alt = "TechAxis — SOLIDWORKS, CATIA, 3DEXPERIENCE";
@@ -34,7 +34,7 @@ export default async function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px 80px",
-          background: "linear-gradient(135deg, #020617 0%, #0f172a 55%, #0c4a6e 100%)",
+          background: "linear-gradient(135deg, #182232 0%, #1f2b3d 55%, #164e63 100%)",
           color: "white",
           fontFamily: sora ? "Sora" : "sans-serif",
         }}
@@ -42,22 +42,35 @@ export default async function OpengraphImage() {
         <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
           <div
             style={{
-              width: 120,
-              height: 120,
-              borderRadius: 28,
-              background: "linear-gradient(135deg, #22d3ee 0%, #2563eb 100%)",
+              width: 124,
+              height: 124,
+              borderRadius: 30,
+              background: "#111a28",
+              border: "2px solid rgba(34, 211, 238, 0.55)",
+              boxShadow: "0 0 36px rgba(34, 211, 238, 0.35)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 58,
-              fontWeight: 800,
             }}
           >
-            TA
+            <svg width="92" height="92" viewBox="0 0 32 32" fill="none" strokeLinejoin="round">
+              <defs>
+                <linearGradient id="o" x1="5" y1="4" x2="27" y2="28" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stopColor="#22d3ee" />
+                  <stop offset="1" stopColor="#a78bfa" />
+                </linearGradient>
+              </defs>
+              <path d="M16 4 26.4 10 16 16 5.6 10Z" fill="#22d3ee" fillOpacity=".35" />
+              <path d="M5.6 10 16 16v12L5.6 22Z" fill="#60a5fa" fillOpacity=".25" />
+              <path d="M26.4 10 16 16v12l10.4-6Z" fill="#a78bfa" fillOpacity=".2" />
+              <path d="M16 4 26.4 10v12L16 28 5.6 22V10Z" stroke="url(#o)" strokeWidth="2" />
+              <path d="M5.6 10 16 16l10.4-6M16 16v12" stroke="#e2e8f0" strokeOpacity=".75" strokeWidth="1.4" />
+              <circle cx="16" cy="16" r="1.9" fill="#22d3ee" />
+            </svg>
           </div>
           <div style={{ display: "flex", fontSize: 88, fontWeight: 800, letterSpacing: -2 }}>
             <span>Tech</span>
-            <span style={{ color: "#38bdf8" }}>Axis</span>
+            <span style={{ color: "#60a5fa" }}>Axis</span>
           </div>
         </div>
 

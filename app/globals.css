@@ -158,3 +158,116 @@ body {
   from { opacity: 0; transform: translateX(-20px); }
   to { opacity: 1; transform: none; }
 }
+
+/* =============================================================================
+   SAYT DIZAYNI -- "Neon oqim" (egasi tanlagan, 2026-09-27)
+   Harakat uchun JS: components/shared/site-motion.tsx. Belgi: components/shared/logo-mark.tsx.
+   Bosh sahifa sarlavhasi (#home) animatsiyaga kirmaydi: u LCP elementi (tezlik).
+   ============================================================================= */
+
+/* --- Ranglar: ko'zni qiynamaydigan o'rta tonlar -------------------------------
+   Tailwind ranglari CSS o'zgaruvchi orqali olinadi, shuning uchun shu yerda qayta
+   belgilash butun saytga ta'sir qiladi. Kontrast (WCAG) AA dan yuqori:
+   qorong'i -- sarlavha 13.7:1, matn 7.4:1; yorug' -- sarlavha 13.4:1, karta matni 5:1. */
+:root:not(.dark) {
+  --color-white: #f3f5f8;       /* sahifa foni (sof oq emas) */
+  --color-slate-50: #eaeef3;
+  --color-slate-100: #e2e7ee;
+  --color-slate-600: #4a5a70;   /* matn */
+  --color-slate-500: #5b6b82;
+  --color-slate-900: #1e293b;   /* sarlavhalar */
+  --color-slate-950: #1b2536;
+}
+.dark {
+  --color-slate-950: #182232;   /* sahifa foni (deyarli qora emas) */
+  --color-slate-900: #1f2b3d;   /* kartalar */
+  --color-slate-800: #2a374b;   /* chegaralar */
+  --color-slate-700: #3a475c;
+  --color-slate-500: #8a99ae;
+  --color-slate-400: #a4b2c6;   /* ikkilamchi matn */
+  --color-slate-300: #cfd8e3;
+  --color-white: #e9eef5;       /* asosiy matn (sof oq emas) */
+}
+
+/* --- Brend: belgi + nom -------------------------------------------------------- */
+.brand { gap: .6rem; }
+.brand-mark {
+  position: relative; isolation: isolate; flex-shrink: 0;
+  width: 2.4rem; height: 2.4rem; border-radius: .7rem;
+  background: #111a28; box-shadow: inset 0 0 0 1px rgb(148 163 184 / .2);
+  transition: transform .35s ease;
+}
+.brand-mark svg { width: 74%; height: 74%; }
+/* Belgi atrofida aylanuvchi neon hoshiya */
+.brand-mark::before {
+  content: ""; position: absolute; inset: -3px; z-index: -1; border-radius: .85rem;
+  background: conic-gradient(from var(--neon-angle), #22d3ee, #3b82f6, #a78bfa, #22d3ee);
+  filter: blur(2px);
+}
+.brand-name {
+  font-size: 1.55rem; line-height: 2rem; letter-spacing: -.02em;
+  filter: drop-shadow(0 0 5px rgb(34 211 238 / .3));
+  transition: filter .35s ease;
+}
+/* Nom bo'ylab oqib o'tuvchi rang */
+.brand-tech, .brand-axis {
+  color: transparent;
+  background-image: linear-gradient(90deg, #1e293b 0%, #1e293b 30%, #06b6d4 45%, #3b82f6 55%, #8b5cf6 65%, #1e293b 80%, #1e293b 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text; background-clip: text;
+}
+/* Qorong'i rejimda va har doim to'q footer'da -- oq asosli */
+.dark .brand-tech, .dark .brand-axis,
+footer .brand-tech, footer .brand-axis {
+  background-image: linear-gradient(90deg, #e9eef5 0%, #e9eef5 30%, #22d3ee 45%, #60a5fa 55%, #a78bfa 65%, #e9eef5 80%, #e9eef5 100%);
+}
+.brand:hover .brand-name { filter: drop-shadow(0 0 10px rgb(34 211 238 / .6)); }
+.brand:hover .brand-mark { transform: rotate(-8deg) scale(1.08); }
+@property --neon-angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
+/* --- Menyu: pastga aylantirganda yashirinadi, yuqoriga -- neon chiziq bilan qaytadi --- */
+.site-nav { transition: transform .35s ease, box-shadow .35s ease; }
+html[data-scroll="down"][data-scrolled="true"] .site-nav:not(.menu-open):not(:focus-within) { transform: translateY(-100%); }
+html[data-scrolled="true"] .site-nav { box-shadow: 0 1px 0 rgb(34 211 238 / .45), 0 10px 28px -14px rgb(59 130 246 / .5); }
+
+/* --- Tepadagi aylantirish chizig'i --- */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; z-index: 200;
+  width: 100%; height: 3px; pointer-events: none;
+  transform-origin: 0 50%; transform: scaleX(var(--scroll-progress, 0));
+  background: linear-gradient(90deg, #22d3ee, #3b82f6, #a78bfa);
+  box-shadow: 0 0 8px rgb(34 211 238 / .55);
+}
+
+/* --- Bosganda neon to'lqin --- */
+.click-fx {
+  position: fixed; z-index: 250; pointer-events: none; translate: -50% -50%;
+  width: 16px; height: 16px; border-radius: 9999px;
+  border: 2px solid #22d3ee; background: rgb(34 211 238 / .12);
+  box-shadow: 0 0 10px rgb(34 211 238 / .7);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .brand-tech, .brand-axis { animation: brand-flow 6s linear infinite; }
+  .brand-mark::before { animation: neon-spin 5s linear infinite; }
+  .brand-mark { animation: mark-breathe 3.2s ease-in-out infinite; }
+  .click-fx { animation: site-ripple .65s ease-out forwards; }
+}
+/* Kartalar ekranga kirganda (pastga ham, yuqoriga ham -- aylantirish bilan birga).
+   Qo'llamaydigan brauzerda kartalar oddiy, animatsiyasiz ko'rinadi. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    main .grid > * {
+      animation: site-rise linear both;
+      animation-duration: auto;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+    main #home .grid > * { animation: none; }
+  }
+}
+@keyframes brand-flow { from { background-position: 100% 0; } to { background-position: -50% 0; } }
+@keyframes neon-spin { to { --neon-angle: 360deg; } }
+@keyframes mark-breathe { 0%, 100% { box-shadow: inset 0 0 0 1px rgb(148 163 184 / .2), 0 4px 12px -2px rgb(59 130 246 / .25); } 50% { box-shadow: inset 0 0 0 1px rgb(148 163 184 / .2), 0 4px 22px 2px rgb(34 211 238 / .5); } }
+@keyframes site-rise { from { opacity: 0; transform: translateY(32px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes site-ripple { from { transform: scale(1); opacity: 1; } to { transform: scale(9); opacity: 0; } }

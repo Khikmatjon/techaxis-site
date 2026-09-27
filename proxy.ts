@@ -13,7 +13,9 @@ export async function proxy(req: NextRequest) {
     pathname.startsWith('/_next') || 
     pathname.includes('.') || 
     pathname.startsWith('/api') ||
-    pathname === '/favicon.ico'
+    pathname === '/favicon.ico' ||
+    // Next.js ikonka yo'li (app/apple-icon.tsx) -- nuqtasiz, til prefiksisiz
+    pathname.startsWith('/apple-icon')
   ) {
     return NextResponse.next()
   }
