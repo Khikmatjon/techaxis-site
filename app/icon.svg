@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke-linejoin="round">
+  <!-- TechAxis belgisi (izometrik kub): brauzer tabidagi favicon. Shakl: components/shared/logo-mark.tsx -->
+  <defs>
+    <linearGradient id="o" x1="5" y1="4" x2="27" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="#111a28"/>
+  <g transform="translate(16 16) scale(.9) translate(-16 -16)">
+    <path d="M16 4 26.4 10 16 16 5.6 10Z" fill="#22d3ee" fill-opacity=".45"/>
+    <path d="M5.6 10 16 16v12L5.6 22Z" fill="#60a5fa" fill-opacity=".35"/>
+    <path d="M26.4 10 16 16v12l10.4-6Z" fill="#a78bfa" fill-opacity=".3"/>
+    <path d="M16 4 26.4 10v12L16 28 5.6 22V10Z" stroke="url(#o)" stroke-width="2.4"/>
+    <path d="M5.6 10 16 16l10.4-6M16 16v12" stroke="#e2e8f0" stroke-opacity=".8" stroke-width="1.5"/>
+    <circle cx="16" cy="16" r="2" fill="#22d3ee"/>
+  </g>
+</svg>

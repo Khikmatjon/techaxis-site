@@ -1,7 +1,6 @@
 // Google va Yandex uchun structured data (JSON-LD, schema.org).
 // Qoida: faqat saytdagi haqiqiy qiymatlar. Reyting/sharh (aggregateRating, review)
-// qo'shilmaydi -- haqiqiy sharhlar yo'q. Logo haqiqiy logo fayli tayyor bo'lgach
-// qo'shiladi (KEYIN-TOLDIRING: ORGANIZATION ga logo: "https://www.techaxis.uz/...").
+// qo'shilmaydi -- haqiqiy sharhlar yo'q.
 
 import { SITE_ADDRESS, SITE_EMAIL, SITE_PHONE, SITE_SOCIAL } from "@/config/site";
 import type { Course } from "@/lib/courses";
@@ -23,6 +22,9 @@ export function organizationLd(locale: string) {
     name: "TechAxis",
     alternateName: "TechAxis Group",
     url: SITE_URL,
+    // Belgi (izometrik kub) 180x180 PNG -- app/apple-icon.tsx
+    logo: `${SITE_URL}/apple-icon`,
+    image: `${SITE_URL}/apple-icon`,
     email: SITE_EMAIL,
     telephone: SITE_PHONE.tel,
     address: {

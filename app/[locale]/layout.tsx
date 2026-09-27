@@ -6,6 +6,7 @@ import Navbar from "@/components/shared/navbar"; // Default import, qavssiz!
 import { Footer } from '@/components/shared/footer';  
 import { ThemeProvider } from "@/components/theme-provider";
 import { AnnouncementBar } from '@/components/shared/announcement-bar';
+import { SiteMotion } from '@/components/shared/site-motion';
 import { Locale, locales } from '@/lib/i18n';
 import { defaultMetadata } from '@/lib/seo';
 import { SEARCH_VERIFICATION } from '@/config/site';
@@ -64,6 +65,7 @@ export default async function LocaleLayout({
             {children}
           </main>
           <Footer dict={dict} locale={locale} />
+          <SiteMotion />
         </ThemeProvider>
       </body>
     </html>
