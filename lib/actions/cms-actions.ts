@@ -15,6 +15,7 @@ function refreshPublicCoursePages(courseId?: string) {
     revalidatePath(`/${locale}/training`);
     if (courseId) revalidatePath(`/${locale}/courses/${courseId}`);
   }
+  revalidatePath("/sitemap.xml");
 }
 
 // Server Actions for the Admin CMS read path.

@@ -34,15 +34,16 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
   // Muqova bo'lmasa, saytning umumiy ulashish kartasi (app/[locale]/opengraph-image.tsx).
   const image = post.coverImage || `/${locale}/opengraph-image`;
+  const alternates = alternatesFor(locale, `/blog/${slug}`);
   return {
     title: `${post.title} | TechAxis`,
     description: post.excerpt,
-    alternates: alternatesFor(locale, `/blog/${slug}`),
+    alternates,
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: "article",
-      url: `https://www.techaxis.uz/${locale}/blog/${slug}`,
+      url: alternates.canonical as string,
       images: [image],
     },
     twitter: { card: "summary_large_image", title: post.title, description: post.excerpt, images: [image] },

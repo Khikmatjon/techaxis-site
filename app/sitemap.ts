@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import { locales } from '@/lib/i18n';
 import { listPublishedPosts } from '@/lib/blog-store';
 import { getCourses } from '@/lib/courses-db';
+import { isTranslated } from '@/lib/seo';
 
 // Soatiga bir marta yangilanadi (blog va kurslar admin panelda o'zgarganda ham revalidatePath bor).
 export const revalidate = 3600;
@@ -23,12 +24,14 @@ const ROUTES: { path: string; changeFrequency: 'daily' | 'weekly' | 'monthly'; p
   { path: '/terms', changeFrequency: 'monthly', priority: 0.3 },
 ];
 
-// Bitta sahifa uch tilda: har til uchun alohida yozuv, har birida uch til
-// muqobili va x-default (o'zbekcha) ko'rsatiladi (lib/seo.ts -> alternatesFor bilan bir xil).
-function allLocales(
+// Sitemap'ga faqat asosiy (canonical) manzillar kiradi -- lib/seo.ts -> alternatesFor bilan bir xil:
+// - uch tilga tarjima qilingan sahifa: uch yozuv, har birida uch til muqobili va x-default (uz);
+// - tarjima qilinmagan sahifa: faqat /uz (ru/en versiyasi uning nusxasi, canonical -> /uz).
+function entriesFor(
   path: string,
   extra: Omit<MetadataRoute.Sitemap[number], 'url' | 'alternates'>,
 ): MetadataRoute.Sitemap {
+  if (!isTranslated(path)) return [{ url: `${baseUrl}/uz${path}`, ...extra }];
   const languages = {
     uz: `${baseUrl}/uz${path}`,
     ru: `${baseUrl}/ru${path}`,
@@ -43,20 +46,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [posts, courses] = await Promise.all([listPublishedPosts(), getCourses()]);
 
   // lastmod faqat haqiqiy sana bo'lsa qo'yiladi: kurs -- kurs/modul/darsning oxirgi
-  // o'zgarishi, maqola -- e'lon qilingan sana. Statik sahifalarda aniq sana yo'q, shuning
-  // uchun "hozir" deb yozilmaydi (Google bunday ishonchsiz sanani e'tiborsiz qoldiradi).
+  // o'zgarishi, maqola -- oxirgi tahrir (bo'lmasa e'lon qilingan sana). Statik sahifalarda
+  // aniq sana yo'q, shuning uchun "hozir" deb yozilmaydi (Google bunday sanaga ishonmaydi).
   return [
-    ...ROUTES.flatMap(({ path, ...extra }) => allLocales(path, extra)),
+    ...ROUTES.flatMap(({ path, ...extra }) => entriesFor(path, extra)),
     ...courses.flatMap((course) =>
-      allLocales(`/courses/${course.id}`, {
+      entriesFor(`/courses/${course.id}`, {
         ...(course.updatedAt ? { lastModified: new Date(course.updatedAt) } : {}),
         changeFrequency: 'monthly',
         priority: 0.9,
       }),
     ),
     ...posts.flatMap((post) =>
-      allLocales(`/blog/${post.slug}`, {
-        lastModified: new Date(post.publishedAt),
+      entriesFor(`/blog/${post.slug}`, {
+        lastModified: new Date(post.updatedAt ?? post.publishedAt),
         changeFrequency: 'monthly',
         priority: 0.7,
       }),

@@ -208,3 +208,14 @@ export const SEO = {
 } satisfies Record<string, SeoSahifa>;
 
 export type SeoKey = keyof typeof SEO;
+
+// =============================================================================
+// ASOSIY MATNI RUS VA INGLIZ TILIGA TO'LIQ TARJIMA QILINGAN SAHIFALAR
+// =============================================================================
+// Faqat shu sahifalar Google'ga uch tildagi versiya sifatida ko'rsatiladi (hreflang)
+// va sitemap'ga uch tilda kiradi. Ro'yxatda yo'q sahifaning /ru va /en versiyasida
+// asosiy matn hali o'zbekcha -- ular /uz versiyaning nusxasi hisoblanadi (canonical ->
+// /uz) va sitemap'ga faqat /uz kiradi.
+// Sahifani uch tilga tarjima qilgach, uning manzilini shu ro'yxatga qo'shing
+// ("" = bosh sahifa). Tekshirish: node scripts/check-meta.mjs
+export const TARJIMA_QILINGAN: readonly string[] = ["", "/privacy", "/terms"];
