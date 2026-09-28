@@ -87,9 +87,10 @@ export default async function CatiaPage({ params }: { params: Promise<{ locale: 
                   </li>
                 ))}
               </ul>
-              <button className="w-full py-4 rounded-2xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors">
-                Kotirovka So'rash
-              </button>
+              {/* So'rov bosh sahifadagi aloqa formasi orqali */}
+              <a href={`/${locale}#contact`} className="block text-center w-full py-4 rounded-2xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors">
+                Kotirovka So&apos;rash
+              </a>
             </div>
           ))}
         </div>

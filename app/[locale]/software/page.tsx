@@ -91,9 +91,9 @@ export default async function SoftwarePage({ params }: { params: Promise<{ local
                   <a href={`/${locale}#contact`} className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
                     Litsenziya sotib olish
                   </a>
-                  <button className="flex items-center gap-2 px-8 py-4 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold rounded-full border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
-                    Trial versiya <Download className="w-4 h-4" />
-                  </button>
+                  <a href={`/${locale}#contact`} className="flex items-center gap-2 px-8 py-4 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold rounded-full border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+                    Sinov versiyasi bo&apos;yicha so&apos;rov <Download className="w-4 h-4" />
+                  </a>
                 </div>
               </div>
 
