@@ -146,7 +146,9 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
                   id="reg-password"
                   type={showPassword ? "text" : "password"}
                   required
-                  placeholder="••••••••"
+                  minLength={8}
+                  autoComplete="new-password"
+                  placeholder="Kamida 8 ta belgi"
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
                   className="w-full bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 rounded-xl pl-10 pr-12 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
@@ -184,6 +186,8 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
                   id="reg-password2"
                   type={showPassword ? "text" : "password"}
                   required
+                  minLength={8}
+                  autoComplete="new-password"
                   placeholder="••••••••"
                   value={form.confirm}
                   onChange={(e) => setForm({ ...form, confirm: e.target.value })}

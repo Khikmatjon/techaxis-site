@@ -32,10 +32,18 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
       return;
     }
 
+    // ?callback=/uz/checkout/... -- kirishdan oldin ochilgan sahifaga qaytarish (proxy.ts qo'yadi).
+    // Faqat saytning o'z sahifasi qabul qilinadi ("//boshqa-sayt" kabi tashqi manzil emas).
+    const callback = new URLSearchParams(window.location.search).get("callback");
+    const safeCallback =
+      callback && callback.startsWith(`/${locale}/`) && !callback.startsWith("//") && !callback.includes("\\")
+        ? callback
+        : null;
+
     if (result.role === "admin") {
-      router.push(`/${locale}/admin`);
+      router.push(safeCallback ?? `/${locale}/admin`);
     } else {
-      router.push(`/${locale}/dashboard`);
+      router.push(safeCallback ?? `/${locale}/dashboard`);
     }
     router.refresh(); // Navbar'ni yangilash uchun
   }

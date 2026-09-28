@@ -27,23 +27,32 @@ export async function proxy(req: NextRequest) {
   
   const currentLocale = localeFromPath || defaultLocale;
 
-  // 3. XIMMATLI QISM: AVTORIZATSIYA VA XAVFSIZLIK
-  const protectedRoutes = ["/dashboard", "/admin", "/profile"];
-  const isProtectedRoute = protectedRoutes.some(route => pathname.includes(route));
+  // 3. AVTORIZATSIYA: faqat kirgan foydalanuvchilar uchun bo'limlar.
+  // Til prefiksidan keyingi BIRINCHI segment tekshiriladi (/uz/admin/... -> "admin").
+  // Avval pathname.includes("/admin") edi -- /uz/blog/admin-... kabi maqola ham login so'rardi.
+  const rest = localeFromPath ? pathname.slice(localeFromPath.length + 1) : pathname;
+  const section = rest.split('/')[1] ?? '';
+  const isAdminSection = section === 'admin' || section === 'admin-cms';
+  // checkout ham shu yerda: kirmagan foydalanuvchi sahifada 500 xato ko'rmasdan, darhol
+  // login'ga (keyin shu sahifaga qaytish manzili bilan) yuboriladi.
+  const isProtectedRoute = isAdminSection || section === 'dashboard' || section === 'checkout';
 
   if (isProtectedRoute) {
+    const loginUrl = new URL(`/${currentLocale}/login`, req.url);
+    if (section === 'checkout') loginUrl.searchParams.set('callback', `/${currentLocale}${rest}`);
+
     if (!cookie) {
-      return NextResponse.redirect(new URL(`/${currentLocale}/login`, req.url));
+      return NextResponse.redirect(loginUrl);
     }
-    
+
     try {
       const session = await decrypt(cookie);
-      // Admin sahifasida rolni tekshirish
-      if (pathname.includes("/admin") && session?.user?.role !== "admin") {
+      // Admin bo'limida rolni tekshirish
+      if (isAdminSection && session?.user?.role !== "admin") {
          return NextResponse.redirect(new URL(`/${currentLocale}/dashboard`, req.url));
       }
     } catch (e) {
-      return NextResponse.redirect(new URL(`/${currentLocale}/login`, req.url));
+      return NextResponse.redirect(loginUrl);
     }
   }
 
