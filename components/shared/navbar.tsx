@@ -17,6 +17,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
   const [settingsLoading, setSettingsLoading] = useState(false);
   
   const pathname = usePathname();
@@ -58,11 +59,13 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
     setSettingsLoading(true);
     
     const formData = new FormData();
+    formData.append("currentPassword", currentPassword);
     formData.append("newEmail", newEmail);
     formData.append("newPassword", newPassword);
-    
+
     const res = await updateUserCredentialsAction(formData);
     setSettingsLoading(false);
+    setCurrentPassword("");
     
     if (res.error) {
       alert("Xatolik: " + res.error);
@@ -401,34 +404,53 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
 
           <form onSubmit={handleUpdateCredentials} className="space-y-4">
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label htmlFor="settings-current-password" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                Joriy parol
+              </label>
+              <input
+                id="settings-current-password"
+                type="password"
+                required
+                autoComplete="current-password"
+                value={currentPassword}
+                onChange={e => setCurrentPassword(e.target.value)}
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl px-4 py-2.5 focus:border-blue-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label htmlFor="settings-new-email" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Yangi Email (Login)
               </label>
               <input
-                type="text"
+                id="settings-new-email"
+                type="email"
                 required
+                autoComplete="email"
                 value={newEmail}
                 onChange={e => setNewEmail(e.target.value)}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl px-4 py-2.5 focus:border-blue-500 focus:outline-none"
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label htmlFor="settings-new-password" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Yangi Parol
               </label>
               <input
+                id="settings-new-password"
                 type="password"
                 required
-                placeholder="Yangi parol (masalan: admin_h2)"
+                minLength={8}
+                autoComplete="new-password"
+                placeholder="Kamida 8 ta belgi"
                 value={newPassword}
                 onChange={e => setNewPassword(e.target.value)}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl px-4 py-2.5 focus:border-blue-500 focus:outline-none"
               />
             </div>
 
-            <button 
+            <button
               type="submit"
-              disabled={settingsLoading || (!newEmail || !newPassword)}
+              disabled={settingsLoading || (!currentPassword || !newEmail || !newPassword)}
               className="w-full mt-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center disabled:opacity-50"
             >
               {settingsLoading ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : "Saqlash"}

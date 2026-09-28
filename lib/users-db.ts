@@ -17,11 +17,12 @@ export interface PaymentRequest {
   receiptUrl?: string | null;
 }
 
+// Brauzerga yuboriladigan foydalanuvchi ma'lumoti. Parol xeshi (hash) bu yerda YO'Q va
+// hech qachon brauzerga yuborilmaydi -- serverda lib/actions/*.ts dagi USER_PUBLIC_SELECT.
 export interface UserDB {
   id: string;
   name: string;
   email: string;
-  hash: string;
   role: string | "student" | "admin";
   enrolledCourses: string[];
   pendingPayments: string[];

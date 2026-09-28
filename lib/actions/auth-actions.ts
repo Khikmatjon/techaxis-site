@@ -7,6 +7,10 @@ import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
 import { checkRateLimit, resetRateLimit } from "@/lib/rate-limit";
 
+const MIN_PASSWORD = 8;
+// Oddiy tekshiruv: bitta @, oldi-orqasida bo'sh joysiz matn va nuqtali domen.
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export async function loginAction(formData: FormData) {
   try {
     const emailRaw = formData.get("email") as string;
@@ -84,8 +88,11 @@ export async function registerAction(formData: FormData) {
     }
 
     const email = emailRaw.trim().toLowerCase();
+    if (!EMAIL_RE.test(email)) return { error: "Email noto'g'ri kiritilgan" };
+    if (name.trim().length < 2 || name.length > 80) return { error: "Ismni to'g'ri kiriting" };
+    if (password.length < MIN_PASSWORD) return { error: `Parol kamida ${MIN_PASSWORD} ta belgidan iborat bo'lsin` };
 
-    console.log("REGISTER_ATTEMPT:", { name, email });
+    console.log("REGISTER_ATTEMPT:", { email });
 
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
@@ -152,14 +159,24 @@ export async function updateUserCredentialsAction(formData: FormData) {
     const session = await get_session();
     if (!session) return { error: "Sessiya yaroqsiz" };
 
+    const currentPassword = formData.get("currentPassword") as string;
     const newEmailRaw = formData.get("newEmail") as string;
     const newPassword = formData.get("newPassword") as string;
 
-    if (!newEmailRaw || !newPassword) {
+    if (!currentPassword || !newEmailRaw || !newPassword) {
       return { error: "Barcha maydonlarni to'ldiring" };
     }
 
     const newEmail = newEmailRaw.trim().toLowerCase();
+    if (!EMAIL_RE.test(newEmail)) return { error: "Email noto'g'ri kiritilgan" };
+    if (newPassword.length < MIN_PASSWORD) return { error: `Yangi parol kamida ${MIN_PASSWORD} ta belgidan iborat bo'lsin` };
+
+    // Joriy parol shart: ochiq qolgan kompyuterda yoki o'g'irlangan sessiya bilan
+    // boshqa odam email va parolni almashtirib, akkauntni egallab olmasin.
+    const me = await prisma.user.findUnique({ where: { id: session.user.id }, select: { hash: true } });
+    if (!me || !(await bcrypt.compare(currentPassword, me.hash))) {
+      return { error: "Joriy parol noto'g'ri" };
+    }
 
     // Check if new email is taken by another user
     const existing = await prisma.user.findUnique({ where: { email: newEmail } });
