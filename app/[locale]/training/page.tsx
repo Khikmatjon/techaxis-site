@@ -87,9 +87,10 @@ export default async function TrainingPage({ params }: { params: Promise<{ local
                 Biz ta'lim muassasalari va zavodlar uchun maxsus o'quv dasturlarini taqdim etamiz. 
                 Guruh bo'lib o'qish va dasturlarni o'rnatishda yordam beramiz.
               </p>
-              <button className="bg-white text-blue-600 px-10 py-4 rounded-2xl font-bold shadow-xl hover:bg-blue-50 transition-colors">
-                Hamkorlik taklifini yuklab olish (PDF)
-              </button>
+              {/* Hamkorlik taklifi PDF'i hali yo'q -- so'rov aloqa formasi orqali */}
+              <a href={`/${locale}#contact`} className="inline-block bg-white text-blue-600 px-10 py-4 rounded-2xl font-bold shadow-xl hover:bg-blue-50 transition-colors">
+                Hamkorlik bo&apos;yicha bog&apos;lanish
+              </a>
             </div>
           </div>
           {/* Decorative Circle */}

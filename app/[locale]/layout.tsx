@@ -7,7 +7,8 @@ import { Footer } from '@/components/shared/footer';
 import { ThemeProvider } from "@/components/theme-provider";
 import { AnnouncementBar } from '@/components/shared/announcement-bar';
 import { SiteMotion } from '@/components/shared/site-motion';
-import { Locale, locales } from '@/lib/i18n';
+import { notFound } from 'next/navigation';
+import { Locale, locales, isLocale } from '@/lib/i18n';
 import { defaultMetadata } from '@/lib/seo';
 import { SEARCH_VERIFICATION } from '@/config/site';
 
@@ -52,6 +53,9 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>; 
 }) {
   const { locale } = await params;
+  // Birinchi segment til bo'lmasa (masalan /x.html yoki /yoq-fayl.txt) -- 404.
+  // Avval bunday manzil bosh sahifani 200 bilan ko'rsatardi (Google uchun "soft 404").
+  if (!isLocale(locale)) notFound();
   const dict = await getDictionary(locale as Locale);
 
   return (

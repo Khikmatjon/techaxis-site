@@ -94,9 +94,10 @@ export default async function SolidworksPage({ params }: { params: Promise<{ loc
                   </li>
                 ))}
               </ul>
-              <button className={`w-full py-4 rounded-2xl font-bold transition-all ${offer.recommended ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200'}`}>
+              {/* Onlayn sotuv yo'q -- so'rov bosh sahifadagi aloqa formasi orqali */}
+              <a href={`/${locale}#contact`} className={`block text-center w-full py-4 rounded-2xl font-bold transition-all ${offer.recommended ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200'}`}>
                 {offer.cta}
-              </button>
+              </a>
             </div>
           ))}
         </div>

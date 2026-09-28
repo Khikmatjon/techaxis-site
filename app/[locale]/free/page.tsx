@@ -45,15 +45,15 @@ export default function FreeResourcesPage({ params }: { params: { locale: string
             </h1>
             
             <p className="text-lg text-slate-400 leading-relaxed">
-              Dunyodagi eng qimmat injenerlar ro'yxatiga kirish uchun sirlar tayyorladik. Bu qollanma yordamida qanday qilib qiyosiy xatolardan qochish va to'g'ri tizim orqali rivojlanishni o'rganasiz.
+              3D modellashtirishni endi boshlayotganlar uchun bepul qo&apos;llanma: qaysi dasturdan boshlash va birinchi qadamlarni qanday qo&apos;yish kerak.
             </p>
 
+            {/* KEYIN-TOLDIRING: qo'llanma (o'zbekcha PDF) tayyor bo'lgach, bu ro'yxatni uning
+                haqiqiy bo'limlariga moslang. Qo'llanmada bo'lmagan narsani va'da qilmang. */}
             <ul className="space-y-4 pt-4">
                {[
                  "SolidWorks va CATIA asosiy farqlari",
-                 "Tez ish topish uchun kerak bo'ladigan eng muhim Asoslar",
-                 "CAD daromadini oshirish sirlari",
-                 "Eksklyuziv bepul 3D modellar arxivi"
+                 "3D modellashtirishni o'rganishdagi ilk qadamlar",
                ].map((item, i) => (
                  <li key={i} className="flex items-start gap-3">
                     <CheckCircle className="w-6 h-6 text-emerald-500 shrink-0 mt-0.5" />
