@@ -3,6 +3,8 @@
 import { prisma } from "@/lib/prisma";
 import { get_session } from "@/lib/session";
 import { sendEmail } from "@/lib/email";
+import { USER_PUBLIC_SELECT } from "@/lib/user-select";
+import { escapeHtml } from "@/lib/escape-html";
 
 import { unstable_noStore as noStore } from "next/cache";
 
@@ -13,7 +15,7 @@ export async function getAdminUsersAction() {
 
   const users = await prisma.user.findMany({
     where: { role: "student" },
-    include: { payments: true },
+    select: USER_PUBLIC_SELECT, // parol xeshlarisiz -- admin panelga ham kerak emas
     orderBy: { createdAt: "desc" },
   });
 
@@ -90,8 +92,8 @@ export async function sendEmailToUserAction(userId: string, subject: string, mes
 
   const html = `
     <div style="font-family: system-ui, sans-serif; max-width: 480px; margin: 0 auto;">
-      <p>Assalomu alaykum, ${user.name}!</p>
-      <div style="white-space: pre-wrap; line-height: 1.6;">${message}</div>
+      <p>Assalomu alaykum, ${escapeHtml(user.name)}!</p>
+      <div style="white-space: pre-wrap; line-height: 1.6;">${escapeHtml(message)}</div>
       <p style="color:#999; font-size:12px; margin-top:24px;">TechAxis Group</p>
     </div>
   `;

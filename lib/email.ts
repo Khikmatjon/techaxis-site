@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { escapeHtml } from "@/lib/escape-html";
 
 // Zoho Mail (info@techaxis.uz) orqali email yuborish. Kalitlar Vercel
 // muhit o'zgaruvchilaridan keladi (hech qachon kodga yozilmaydi):
@@ -59,19 +60,20 @@ export async function sendEnrollmentNotificationEmail(data: {
   if (!NOTIFY_EMAIL) return;
 
   const statusLabel = data.status === "completed" ? "✅ To'langan" : "⏳ Tasdiq kutilmoqda";
+  const e = escapeHtml; // foydalanuvchi kiritgan ma'lumot HTML sifatida tozalanadi
   const html = `
     <div style="font-family: system-ui, sans-serif; max-width: 480px; margin: 0 auto;">
       <h2 style="color:#0084FF;">🆕 Yangi kurs yozilishi</h2>
       <table style="width:100%; border-collapse: collapse; font-size: 14px;">
-        <tr><td style="padding:6px 0; color:#666;">O'quvchi</td><td style="padding:6px 0; font-weight:bold;">${data.userName}</td></tr>
-        <tr><td style="padding:6px 0; color:#666;">Email</td><td style="padding:6px 0;">${data.userEmail}</td></tr>
-        <tr><td style="padding:6px 0; color:#666;">Kurs</td><td style="padding:6px 0; font-weight:bold;">${data.courseTitle}</td></tr>
-        <tr><td style="padding:6px 0; color:#666;">Tarif</td><td style="padding:6px 0;">${data.plan}</td></tr>
-        <tr><td style="padding:6px 0; color:#666;">Summa</td><td style="padding:6px 0;">${data.amount}</td></tr>
-        <tr><td style="padding:6px 0; color:#666;">Usul</td><td style="padding:6px 0;">${data.method}</td></tr>
+        <tr><td style="padding:6px 0; color:#666;">O'quvchi</td><td style="padding:6px 0; font-weight:bold;">${e(data.userName)}</td></tr>
+        <tr><td style="padding:6px 0; color:#666;">Email</td><td style="padding:6px 0;">${e(data.userEmail)}</td></tr>
+        <tr><td style="padding:6px 0; color:#666;">Kurs</td><td style="padding:6px 0; font-weight:bold;">${e(data.courseTitle)}</td></tr>
+        <tr><td style="padding:6px 0; color:#666;">Tarif</td><td style="padding:6px 0;">${e(data.plan)}</td></tr>
+        <tr><td style="padding:6px 0; color:#666;">Summa</td><td style="padding:6px 0;">${e(data.amount)}</td></tr>
+        <tr><td style="padding:6px 0; color:#666;">Usul</td><td style="padding:6px 0;">${e(data.method)}</td></tr>
         <tr><td style="padding:6px 0; color:#666;">Holat</td><td style="padding:6px 0;">${statusLabel}</td></tr>
       </table>
-      ${data.receiptUrl ? `<p><a href="${data.receiptUrl}">Chekni ko'rish</a></p>` : ""}
+      ${data.receiptUrl ? `<p><a href="${e(data.receiptUrl)}">Chekni ko'rish</a></p>` : ""}
       <p style="color:#999; font-size:12px; margin-top:16px;">${new Date().toLocaleString("uz-UZ")}</p>
     </div>
   `;

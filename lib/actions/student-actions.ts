@@ -2,9 +2,20 @@
 
 import { prisma } from "@/lib/prisma";
 import { get_session } from "@/lib/session";
-import { sendPaymentNotification } from "./send-telegram";
+import { sendPaymentNotification } from "@/lib/telegram";
 import { sendEnrollmentNotificationEmail } from "../email";
 import { getCourseById } from "../courses-db";
+import { USER_PUBLIC_SELECT } from "../user-select";
+
+// Hozircha yagona to'lov usuli -- karta orqali o'tkazma (chek yuklanadi, admin tasdiqlaydi).
+const ALLOWED_METHODS = ["transfer"];
+const RECEIPT_TYPES: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+  "application/pdf": "pdf",
+};
+const MAX_RECEIPT_BYTES = 5 * 1024 * 1024;
 
 export async function getStudentDashboardAction() {
   const session = await get_session();
@@ -12,7 +23,7 @@ export async function getStudentDashboardAction() {
 
   const user = await prisma.user.findUnique({
     where: { id: session.user.id },
-    include: { payments: true },
+    select: USER_PUBLIC_SELECT, // parol xeshisiz
   });
 
   if (!user) throw new Error("User not found");
@@ -29,10 +40,21 @@ export async function requestPaymentAction(
   const session = await get_session();
   if (!session) throw new Error("Unauthorized");
 
+  // Brauzerdan kelgan qiymatlarga ishonilmaydi -- har biri serverda, bazaga
+  // murojaatdan oldin tekshiriladi.
+  if (!ALLOWED_METHODS.includes(method)) throw new Error("Bu to'lov usuli hozircha mavjud emas");
+  if (typeof plan !== "string" || !plan.trim() || plan.length > 40) throw new Error("Tarif noto'g'ri");
+  if (!Number.isFinite(amount) || amount <= 0 || amount > 100000) throw new Error("Summa noto'g'ri");
+
   const user = await prisma.user.findUnique({ where: { id: session.user.id } });
   if (!user) throw new Error("User not found");
+  if (!(await getCourseById(courseId))) throw new Error("Kurs topilmadi");
+  if (user.enrolledCourses.includes(courseId)) throw new Error("Bu kurs sizda allaqachon ochiq");
 
-  const status = method === "visa" ? "completed" : "pending";
+  // Onlayn to'lov tizimi yo'q: har qanday to'lov chek yuklanib, admin tasdiqlaguncha
+  // "pending" turadi. (Avval method === "visa" bo'lsa kurs darhol, pulsiz ochilardi --
+  // usul brauzerdan kelgani uchun buni istalgan foydalanuvchi qilishi mumkin edi.)
+  const status = "pending";
 
   // To'lov yaratish
   const payment = await prisma.payment.create({
@@ -46,21 +68,12 @@ export async function requestPaymentAction(
     },
   });
 
-  // Kursni ulash (visa bo'lsa darhol, boshqalarda pending)
-  if (status === "completed") {
-    if (!user.enrolledCourses.includes(courseId)) {
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { enrolledCourses: { push: courseId } },
-      });
-    }
-  } else {
-    if (!user.pendingPayments.includes(courseId) && !user.enrolledCourses.includes(courseId)) {
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { pendingPayments: { push: courseId } },
-      });
-    }
+  // Kurs admin to'lovni tasdiqlaganda ochiladi (admin-actions -> assignCourseAction).
+  if (!user.pendingPayments.includes(courseId)) {
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { pendingPayments: { push: courseId } },
+    });
   }
 
   // Telegram va email xabarnoma
@@ -90,11 +103,23 @@ export async function submitPaymentProofAction(formData: FormData) {
   const session = await get_session();
   if (!session) throw new Error("Unauthorized");
 
+  // To'lov shu foydalanuvchiniki bo'lishi shart (boshqa odamning to'loviga chek
+  // qo'yib bo'lmasin).
+  const own = await prisma.payment.findUnique({ where: { id: paymentId }, select: { userId: true } });
+  if (!own || own.userId !== session.user.id) throw new Error("Unauthorized");
+
+  // Chek: faqat rasm yoki PDF, 5 MB gacha. Kengaytma fayl nomidan emas, turidan olinadi.
+  if (receiptFile && receiptFile.size > 0) {
+    const ext = RECEIPT_TYPES[receiptFile.type];
+    if (!ext) throw new Error("Chek rasm (JPG, PNG, WEBP) yoki PDF bo'lishi kerak");
+    if (receiptFile.size > MAX_RECEIPT_BYTES) throw new Error("Chek hajmi 5 MB dan oshmasin");
+  }
+
   let receiptUrl = "";
 
   if (receiptFile && receiptFile.size > 0) {
     try {
-      const ext = receiptFile.name.split('.').pop() || 'jpg';
+      const ext = RECEIPT_TYPES[receiptFile.type];
       const fileName = `receipt-${paymentId}-${Date.now()}.${ext}`;
       
       const arrayBuffer = await receiptFile.arrayBuffer();
