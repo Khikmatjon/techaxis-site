@@ -2,7 +2,7 @@
 // teglarini tekshiradi:
 // - title 60, description 155 belgidan oshmasin, bo'sh bo'lmasin;
 // - bir xil title yoki description ikki sahifada takrorlanmasin (tilni hisobga olib);
-// - /login, /register, /checkout "noindex" bo'lsin;
+// - /login, /register "noindex" bo'lsin (/checkout faqat kirganlar uchun -- proxy login'ga yuboradi);
 // - har sahifada og:image va twitter:card = summary_large_image bo'lsin;
 // - canonical/hreflang content/seo.ts dagi TARJIMA_QILINGAN ro'yxatiga mos bo'lsin:
 //   tarjima qilingan sahifa -> canonical o'zi, hreflang uz/ru/en/x-default;
@@ -18,7 +18,7 @@ const LOCALES = ["uz", "ru", "en"];
 const PAGES = [
   "", "/software", "/software/solidworks", "/software/catia", "/training", "/courses",
   "/courses/solidworks-basics", "/courses/catia-v5", "/courses/3d-modeling", "/courses/plm-systems",
-  "/blog", "/free", "/privacy", "/terms", "/login", "/register", "/checkout/catia-v5",
+  "/blog", "/free", "/privacy", "/terms", "/login", "/register",
 ];
 const SITE = "https://www.techaxis.uz";
 // Tarjima qilingan sahifalar ro'yxati content/seo.ts dan o'qiladi (ikki joyda saqlanmasin).
@@ -27,7 +27,7 @@ const TRANSLATED = new Set(
   [...(seoSrc.match(/TARJIMA_QILINGAN[^=]*=\s*\[([^\]]*)\]/)?.[1] ?? "").matchAll(/"([^"]*)"/g)].map((m) => m[1]),
 );
 if (!TRANSLATED.has("")) throw new Error("content/seo.ts dan TARJIMA_QILINGAN o'qilmadi");
-const NOINDEX = new Set(["/login", "/register", "/checkout/catia-v5"]);
+const NOINDEX = new Set(["/login", "/register"]);
 
 const decode = (s) =>
   s.replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">");

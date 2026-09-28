@@ -89,10 +89,11 @@ export const About = ({ dict, stats: siteStats }: { dict: any; stats: Stats }) =
             )}
 
             <div className="pt-4">
-              <button className="group flex items-center gap-3 bg-[#0084FF] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl active:scale-95">
+              {/* Portfolio sahifasi hali yo'q (21-25-kunlar) -- hozircha bosh sahifadagi loyihalar bo'limiga */}
+              <a href="#projects" className="group inline-flex items-center gap-3 bg-[#0084FF] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl active:scale-95">
                 <span>{dict?.projects?.view_all || "View Portfolio"}</span>
                 <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </button>
+              </a>
             </div>
           </div>
         </div>

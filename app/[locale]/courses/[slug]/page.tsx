@@ -287,7 +287,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
            <div className="relative z-10 max-w-3xl mx-auto space-y-8">
               <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight">Hoziroq boshlang va professionalga aylaning</h2>
-              <p className="text-blue-100 text-lg opacity-80">TechAxis bilan xalqaro muhandislik olamiga ilk qadamingizni qat'iy qo'ying va xalqaro bozorda mutaxassis sifatida qadrlaning.</p>
+              <p className="text-blue-100 text-lg opacity-80">Kursga yoziling va o&apos;z tezligingizda, amaliy loyihalar orqali o&apos;rganishni boshlang.</p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
                  <Link href={`/${locale}/checkout/${course.id}`} className="inline-block bg-white text-blue-700 font-black py-5 px-12 rounded-2xl text-xl hover:scale-105 transition-transform shadow-2xl">
                      Ro'yxatdan o'tish

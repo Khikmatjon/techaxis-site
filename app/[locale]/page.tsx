@@ -47,7 +47,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <span>{dict?.hero?.badge}</span>
             </div>
 
-            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight">
+            <h1 className="text-[2.6rem] sm:text-5xl lg:text-6xl xl:text-7xl font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight">
               {dict?.hero?.title?.split(' ').slice(0, 2).join(' ')}{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">
                 {dict?.hero?.title?.split(' ').slice(2).join(' ')}
@@ -59,12 +59,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <button className="bg-[#0084FF] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 w-full sm:w-auto text-center">
+              <a href="#services" className="inline-block bg-[#0084FF] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 w-full sm:w-auto text-center">
                 {dict?.hero?.cta_primary || "Xizmatlar bilan tanishish"}
-              </button>
-              <button className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 px-8 py-4 rounded-full font-bold transition-all shadow-sm w-full sm:w-auto text-center">
+              </a>
+              <a href="#contact" className="inline-block bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 px-8 py-4 rounded-full font-bold transition-all shadow-sm w-full sm:w-auto text-center">
                 {dict?.hero?.cta_secondary || "Bepul konsultatsiya"}
-              </button>
+              </a>
             </div>
 
             {stats.clients != null && (
