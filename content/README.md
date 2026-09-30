@@ -43,7 +43,6 @@ Qaysi kalitlar borligi `.env.example` faylida yozilgan (qiymatlarsiz).
 ## 4. Hali hal qilinmagan ishlar
 
 - **Yuridik shaxs** — rasmiylashgach `config/site.ts` ga yozing.
-- **To'lov kartasi** — `config/site.ts` dagi raqamni tekshiring (`...1111 1111` namuna raqamga o'xshaydi).
 - **Kompaniya ijtimoiy tarmoqlari** — ochilgach `config/site.ts` dagi havolalarni almashtiring.
 - **Pulni qaytarish shartlari** — `content/foydalanish-shartlari.ts`.
 - **Da'volar qoidasi:** saytga kompaniya nomlari (mijoz yoki "falon kompaniya ishlatadi"),

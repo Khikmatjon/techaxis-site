@@ -39,10 +39,9 @@ export const SITE_SOCIAL = {
 } as const;
 
 // To'lov uchun karta (to'lov sahifasida va o'quvchi kabinetida ko'rsatiladi).
-// KEYIN-TOLDIRING: raqamni TEKSHIRING — "...1111 1111" namuna raqamga o'xshaydi.
-// O'quvchilar pulni aynan shu kartaga o'tkazadi.
+// O'quvchilar pulni aynan shu kartaga o'tkazadi (raqamni egasi 2026-09-30 da tasdiqlagan).
 export const PAYMENT_CARD = {
-  number: "9860 4545 1111 1111", // bo'sh joylar bilan yozing, nusxalashda o'zi olib tashlanadi
+  number: "9860 1266 0213 2238", // bo'sh joylar bilan yozing, nusxalashda o'zi olib tashlanadi
   holder: "Meliqo'ziyev Xikmatjon",
 } as const;
 
