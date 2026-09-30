@@ -18,17 +18,17 @@ export const JONLI_KURS = {
   // KEYIN-TOLDIRING: aniq sana ma'lum bo'lgach, masalan "2026-yil 12-oktabr".
   aniqSana: null as string | null,
 
-  // KEYIN-TOLDIRING: kurs narxi (bitta narx), masalan "600 000 so'm".
-  narx: null as string | null,
+  // Kurs narxi (bitta narx, birinchi darsdan keyin to'lanadi).
+  narx: "990 000 so'm" as string | null,
 
-  // KEYIN-TOLDIRING: jadval va davomiyligi, masalan "Haftada 3 marta, 19:00–20:30, 8 hafta".
-  jadval: null as string | null,
+  // KEYIN-TOLDIRING: dars vaqti va kurs davomiyligini qo'shing, masalan "Haftada 3 marta, 19:00–20:30, 8 hafta".
+  jadval: "Haftada 3 marta" as string | null,
 
-  // KEYIN-TOLDIRING: guruhdagi joylar soni, masalan 12. null bo'lsa ko'rinmaydi.
-  joylar: null as number | null,
+  // Guruhdagi joylar soni. null bo'lsa ko'rinmaydi.
+  joylar: 5 as number | null,
 
-  // KEYIN-TOLDIRING: darslar qayerda o'tadi, masalan "Zoom" yoki "Google Meet".
-  platforma: null as string | null,
+  // Darslar qayerda o'tadi.
+  platforma: "Zoom" as string | null,
 
   oqituvchi: {
     ism: "Hikmatjon Meliqo'ziyev",
