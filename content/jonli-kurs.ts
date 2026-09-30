@@ -49,3 +49,6 @@ export const JONLI_KURS = {
     { mavzu: "Texnik chizma (Drawing)", tafsilot: "Ko'rinishlar, o'lchamlar va annotatsiyalar" },
   ],
 } as const;
+
+// Formadagi "SOLIDWORKS bilan tajribangiz" variantlari (server ham shu ro'yxat bilan tekshiradi).
+export const DARAJALAR = ["Endi boshlayman", "Biroz bilaman", "Ishda ishlataman"] as const;

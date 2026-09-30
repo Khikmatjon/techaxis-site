@@ -111,3 +111,21 @@ model SiteStats {
   rating    Float?
   updatedAt DateTime @updatedAt
 }
+
+// Jonli kursga arizalar (/uz/solidworks-jonli-kurs formasi). Ariza Telegram'ga ham
+// yuboriladi; bu jadval -- admin panelda ro'yxat va holatni kuzatish uchun.
+// status: "yangi" | "boglanildi" | "sinov_darsi" | "tolandi" | "rad_etdi"
+model LiveApplication {
+  id        String   @id @default(uuid())
+  name      String
+  phone     String
+  telegram  String?
+  level     String
+  group     String
+  status    String   @default("yangi")
+  note      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([createdAt])
+}

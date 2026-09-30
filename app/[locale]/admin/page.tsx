@@ -14,12 +14,14 @@ import { UserDB } from "@/lib/users-db";
 import CourseManager from "@/components/admin/course-manager";
 import BlogManager from "@/components/admin/blog-manager";
 import StatsManager from "@/components/admin/stats-manager";
+import LiveApplicationsManager from "@/components/admin/live-applications-manager";
 import { Avatar } from "@/components/shared/avatar";
 
-type Tab = "students" | "content" | "blog" | "stats";
+type Tab = "students" | "live" | "content" | "blog" | "stats";
 
 const TABS: { id: Tab; label: string; description: string }[] = [
   { id: "students", label: "O'quvchilar va to'lovlar", description: "O'quvchilarga kurslarni biriktirish va to'lovlarni tasdiqlash" },
+  { id: "live", label: "Jonli kurs", description: "SOLIDWORKS jonli kursiga arizalar: holat, izoh va Excel'ga yuklab olish" },
   { id: "content", label: "Kurslar mazmuni", description: "Kurs narxi, modullar va darslarni boshqarish — saytda darhol yangilanadi" },
   { id: "blog", label: "Blog va yangiliklar", description: "Haftalik faktlar, maqolalar, yangiliklar va ishlarimizni yozish va nashr qilish" },
   { id: "stats", label: "Statistika", description: "Bosh sahifadagi raqamlar (mijozlar, hamkorlar, loyihalar) — saytda darhol yangilanadi" },
@@ -388,6 +390,8 @@ function AdminContent() {
             </button>
           ))}
         </div>
+
+        {tab === "live" && <LiveApplicationsManager />}
 
         {tab === "content" && <CourseManager />}
 

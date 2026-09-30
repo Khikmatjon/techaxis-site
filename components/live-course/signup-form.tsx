@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { Send, CheckCircle2 } from "lucide-react";
-import { sendToTelegram } from "@/lib/actions/send-telegram";
+import { submitLiveApplicationAction } from "@/lib/actions/live-course-actions";
+import { DARAJALAR } from "@/content/jonli-kurs";
 import { SITE_SOCIAL } from "@/config/site";
 
-// Jonli kursga ariza: Telegram'ga (bosh sahifadagi aloqa formasi bilan bir xil bot) yuboriladi.
-const LEVELS = ["Endi boshlayman", "Biroz bilaman", "Ishda ishlataman"];
+// Jonli kursga ariza: Telegram'ga yuboriladi va admin paneldagi "Jonli kurs" ro'yxatiga yoziladi.
 
 export function LiveCourseSignupForm({ group }: { group: string }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -15,22 +15,15 @@ export function LiveCourseSignupForm({ group }: { group: string }) {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("loading");
-    const form = new FormData(e.currentTarget);
-    const telegram = String(form.get("telegram") ?? "").trim();
-    const level = String(form.get("level") ?? "");
-
-    const data = new FormData();
-    data.append("name", String(form.get("name") ?? ""));
-    data.append("phone", String(form.get("phone") ?? ""));
-    data.append("service", `SOLIDWORKS jonli kurs (${group})`);
-    data.append("message", `Daraja: ${level}${telegram ? `\nTelegram: ${telegram}` : ""}`);
+    const data = new FormData(e.currentTarget);
+    data.set("group", group);
 
     try {
-      const res = await sendToTelegram(data);
+      const res = await submitLiveApplicationAction(data);
       if (res.success) {
         setStatus("success");
       } else {
-        setError(res.error || "Ariza yuborilmadi");
+        setError(res.error);
         setStatus("error");
       }
     } catch {
@@ -72,10 +65,13 @@ export function LiveCourseSignupForm({ group }: { group: string }) {
       </div>
       <div>
         <label htmlFor="live-level" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">SOLIDWORKS bilan tajribangiz</label>
-        <select id="live-level" name="level" className={`${input} cursor-pointer`} defaultValue={LEVELS[0]}>
-          {LEVELS.map((l) => <option key={l} value={l}>{l}</option>)}
+        <select id="live-level" name="level" className={`${input} cursor-pointer`} defaultValue={DARAJALAR[0]}>
+          {DARAJALAR.map((l) => <option key={l} value={l}>{l}</option>)}
         </select>
       </div>
+
+      {/* Bot tuzog'i: odam ko'rmaydi va to'ldirmaydi (server to'ldirilgan arizani saqlamaydi) */}
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] w-px h-px opacity-0" />
 
       <button
         type="submit"
