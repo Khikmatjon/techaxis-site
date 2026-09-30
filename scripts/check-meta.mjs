@@ -18,7 +18,7 @@ const LOCALES = ["uz", "ru", "en"];
 const PAGES = [
   "", "/software", "/software/solidworks", "/software/catia", "/training", "/courses",
   "/courses/solidworks-basics", "/courses/catia-v5", "/courses/3d-modeling", "/courses/plm-systems",
-  "/blog", "/free", "/privacy", "/terms", "/login", "/register",
+  "/blog", "/free", "/solidworks-jonli-kurs", "/privacy", "/terms", "/login", "/register",
 ];
 const SITE = "https://www.techaxis.uz";
 // Tarjima qilingan sahifalar ro'yxati content/seo.ts dan o'qiladi (ikki joyda saqlanmasin).

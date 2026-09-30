@@ -62,7 +62,7 @@ export default async function LocaleLayout({
     <html lang={locale} className={sora.variable} suppressHydrationWarning>
       <body className="antialiased font-display bg-white dark:bg-slate-950">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <AnnouncementBar dict={dict} />
+          <AnnouncementBar dict={dict} locale={locale} />
           <Navbar dict={dict} locale={locale} />
           {/* pt-20 qo'shildi, Hero Navbar tagida qolmasligi uchun */}
           <main className="min-h-screen">
