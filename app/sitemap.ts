@@ -20,6 +20,7 @@ const ROUTES: { path: string; changeFrequency: 'daily' | 'weekly' | 'monthly'; p
   { path: '/software/catia', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/blog', changeFrequency: 'daily', priority: 0.8 },
   { path: '/free', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/solidworks-jonli-kurs', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/privacy', changeFrequency: 'monthly', priority: 0.3 },
   { path: '/terms', changeFrequency: 'monthly', priority: 0.3 },
 ];

@@ -1,8 +1,10 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 
-export const AnnouncementBar = ({ dict }: { dict: any }) => {
+// Yozuv matni: locales/*.json -> "announcement"; bosilganda jonli kurs sahifasiga olib boradi.
+export const AnnouncementBar = ({ dict, locale }: { dict: any; locale: string }) => {
   if (!dict?.announcement) return null;
 
   return (
@@ -11,9 +13,9 @@ export const AnnouncementBar = ({ dict }: { dict: any }) => {
       <div className="absolute inset-0 bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.1),transparent)] bg-[length:200%_100%] animate-shine"></div>
       
       <div className="max-w-7xl mx-auto flex items-center justify-center relative z-10">
-        <p className="text-sm md:text-[13px] font-bold text-white tracking-wide text-center">
+        <Link href={`/${locale}/solidworks-jonli-kurs`} className="text-sm md:text-[13px] font-bold text-white tracking-wide text-center hover:underline underline-offset-4">
           {dict.announcement}
-        </p>
+        </Link>
       </div>
 
       <style jsx>{`
