@@ -27,11 +27,17 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
   const [paymentId, setPaymentId] = useState<string | null>(null);
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [sessionLoading, setSessionLoading] = useState(true);
+  // Kurs allaqachon ochiq bo'lsa to'lov emas, kursga havola ko'rsatiladi; to'lov
+  // tekshirilayotgan bo'lsa -- ogohlantirish.
+  const [enrolled, setEnrolled] = useState(false);
+  const [pending, setPending] = useState(false);
 
   useEffect(() => {
     async function checkAuth() {
       try {
-        await getStudentDashboardAction();
+        const me = await getStudentDashboardAction();
+        setEnrolled(me.enrolledCourses.includes(courseId));
+        setPending(me.pendingPayments.includes(courseId));
         setSessionLoading(false);
       } catch (e) {
         router.push(`/${locale}/login?callback=/${locale}/checkout/${courseId}`);
@@ -52,6 +58,19 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
   );
 
   if (!course) return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Kurs topilmadi</div>;
+
+  if (enrolled) return (
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
+      <div className="max-w-md w-full text-center space-y-6 bg-slate-900 border border-slate-800 rounded-3xl p-10">
+        <CheckCircle2 className="w-14 h-14 text-emerald-400 mx-auto" />
+        <h1 className="text-2xl font-black text-white">Bu kurs sizda ochiq</h1>
+        <p className="text-slate-400">&laquo;{course.title}&raquo; kursi uchun qayta to&apos;lash shart emas.</p>
+        <Link href={`/${locale}/dashboard/${courseId}`} className="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-2">
+          Kursga o&apos;tish <ArrowRight className="w-5 h-5" />
+        </Link>
+      </div>
+    </div>
+  );
 
   // KEYIN-TOLDIRING: tarif narxlari (Starter/Pro/Mentor) shu yerda qo'lda yozilgan va
   // admin paneldagi kurs narxiga bog'lanmagan. Rejadagi 16-kun (narx va tariflar)
@@ -85,7 +104,12 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
     setLoading(true);
     try {
       const res = await requestPaymentAction(courseId, selectedPlan.name, selectedPlan.price, method!);
-      setPaymentId(res.paymentId || "");
+      if (!res.success) {
+        alert(res.error);
+        setLoading(false);
+        return;
+      }
+      setPaymentId(res.paymentId);
       
       // Simulyatsiya: Bir oz kutamiz
       setTimeout(() => {
@@ -105,7 +129,11 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
       const formData = new FormData();
       formData.append("paymentId", paymentId!);
       formData.append("receiptFile", receiptFile);
-      await submitPaymentProofAction(formData);
+      const res = await submitPaymentProofAction(formData);
+      if (!res.success) {
+        alert(res.error);
+        return;
+      }
       setStep(4);
     } catch (e: any) {
       alert("Yuklashda xatolik yuz berdi. Iltimos qaytadan urinib ko'ring yoki rasm hajmini kichraytiring.");
@@ -133,6 +161,17 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
               ))}
            </div>
         </div>
+
+        {pending && step < 4 && (
+          <div className="mb-8 flex items-start gap-3 rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-200">
+            <Info className="w-5 h-5 shrink-0 mt-0.5" />
+            <p>
+              Bu kurs uchun to&apos;lovingiz tekshirilmoqda. Admin chekni tasdiqlagach, kurs{" "}
+              <Link href={`/${locale}/dashboard`} className="underline font-bold">kabinetingizda</Link> ochiladi.
+              Qayta to&apos;lash shart emas.
+            </p>
+          </div>
+        )}
 
         <AnimatePresence mode="wait">
           {/* STEP 1: PLAN SELECTION */}

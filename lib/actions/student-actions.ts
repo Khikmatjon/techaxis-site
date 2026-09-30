@@ -37,18 +37,23 @@ export async function requestPaymentAction(
   amount: number,
   method: string
 ) {
+  // Xatolar `throw` bilan emas, `{ success: false, error }` bilan qaytariladi: production'da
+  // Next.js server action'dan otilgan xato matnini brauzerga bermaydi, o'quvchi faqat
+  // "Xatolik yuz berdi" ni ko'radi va nima qilishni bilmaydi.
+  const fail = (error: string) => ({ success: false as const, error });
+
   const session = await get_session();
-  if (!session) throw new Error("Unauthorized");
+  if (!session) return fail("Avval saytga kiring");
 
   const user = await prisma.user.findUnique({ where: { id: session.user.id } });
-  if (!user) throw new Error("User not found");
+  if (!user) return fail("Avval saytga kiring");
 
   // Brauzerdan kelgan qiymatlarga ishonilmaydi -- har biri serverda tekshiriladi.
-  if (!ALLOWED_METHODS.includes(method)) throw new Error("Bu to'lov usuli hozircha mavjud emas");
-  if (typeof plan !== "string" || !plan.trim() || plan.length > 40) throw new Error("Tarif noto'g'ri");
-  if (!Number.isFinite(amount) || amount <= 0 || amount > 100000) throw new Error("Summa noto'g'ri");
-  if (!(await getCourseById(courseId))) throw new Error("Kurs topilmadi");
-  if (user.enrolledCourses.includes(courseId)) throw new Error("Bu kurs sizda allaqachon ochiq");
+  if (!ALLOWED_METHODS.includes(method)) return fail("Bu to'lov usuli hozircha mavjud emas");
+  if (typeof plan !== "string" || !plan.trim() || plan.length > 40) return fail("Tarif noto'g'ri");
+  if (!Number.isFinite(amount) || amount <= 0 || amount > 100000) return fail("Summa noto'g'ri");
+  if (!(await getCourseById(courseId))) return fail("Kurs topilmadi");
+  if (user.enrolledCourses.includes(courseId)) return fail("Bu kurs sizda allaqachon ochiq");
 
   // Onlayn to'lov tizimi yo'q: har qanday to'lov chek yuklanib, admin tasdiqlaguncha
   // "pending" turadi. (Avval method === "visa" bo'lsa kurs darhol, pulsiz ochilardi --
@@ -91,7 +96,7 @@ export async function requestPaymentAction(
     sendEnrollmentNotificationEmail(notifyData),
   ]);
 
-  return { success: true, paymentId: payment.id };
+  return { success: true as const, paymentId: payment.id };
 }
 
 import { supabase } from "@/lib/supabase";
@@ -99,19 +104,22 @@ import { supabase } from "@/lib/supabase";
 export async function submitPaymentProofAction(formData: FormData) {
   const paymentId = formData.get("paymentId") as string;
   const receiptFile = formData.get("receiptFile") as File;
+  // requestPaymentAction dagi kabi: xato matni o'quvchiga yetishi uchun qaytariladi.
+  const fail = (error: string) => ({ success: false as const, error });
+
   const session = await get_session();
-  if (!session) throw new Error("Unauthorized");
+  if (!session) return fail("Avval saytga kiring");
 
   // To'lov shu foydalanuvchiniki bo'lishi shart (boshqa odamning to'loviga chek
   // qo'yib bo'lmasin).
   const own = await prisma.payment.findUnique({ where: { id: paymentId }, select: { userId: true } });
-  if (!own || own.userId !== session.user.id) throw new Error("Unauthorized");
+  if (!own || own.userId !== session.user.id) return fail("To'lov topilmadi");
 
   // Chek: faqat rasm yoki PDF, 5 MB gacha. Kengaytma fayl nomidan emas, turidan olinadi.
   if (receiptFile && receiptFile.size > 0) {
     const ext = RECEIPT_TYPES[receiptFile.type];
-    if (!ext) throw new Error("Chek rasm (JPG, PNG, WEBP) yoki PDF bo'lishi kerak");
-    if (receiptFile.size > MAX_RECEIPT_BYTES) throw new Error("Chek hajmi 5 MB dan oshmasin");
+    if (!ext) return fail("Chek rasm (JPG, PNG, WEBP) yoki PDF bo'lishi kerak");
+    if (receiptFile.size > MAX_RECEIPT_BYTES) return fail("Chek hajmi 5 MB dan oshmasin");
   }
 
   let receiptUrl = "";
@@ -163,5 +171,5 @@ export async function submitPaymentProofAction(formData: FormData) {
     sendEnrollmentNotificationEmail(notifyData),
   ]);
 
-  return { success: true };
+  return { success: true as const };
 }
