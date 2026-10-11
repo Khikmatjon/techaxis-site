@@ -74,10 +74,12 @@ const LEVEL: Record<Loc, Record<string, string>> = {
   en: { "Boshlang'ich": "beginner", "O'rta": "intermediate", Yuqori: "advanced" },
 };
 
+// "24 soat" -> ", 24 soat" (tilga mos). Soatda yozilmagan bo'lsa (masalan "12–14 dars") --
+// bo'sh: dars soni tavsifda baribir bor, takrorlanmasin.
 function hours(duration: string, loc: Loc): string {
   const n = duration.match(/(\d+)\s*soat/)?.[1];
-  if (!n) return duration;
-  return loc === "ru" ? `${n} ч` : loc === "en" ? `${n} hours` : `${n} soat`;
+  if (!n) return "";
+  return ", " + (loc === "ru" ? `${n} ч` : loc === "en" ? `${n} hours` : `${n} soat`);
 }
 
 export function courseMetadata(course: Course, locale: string): Metadata {
@@ -88,15 +90,15 @@ export function courseMetadata(course: Course, locale: string): Metadata {
   const text = {
     uz: {
       title: `${course.title} — onlayn kurs | TechAxis`,
-      description: `${course.title}: ${lessons} ta dars, ${h}, ${level} daraja. TechAxis o'quv markazining onlayn kursi.`,
+      description: `${course.title}: ${lessons} ta dars${h}, ${level} daraja. TechAxis o'quv markazining onlayn kursi.`,
     },
     ru: {
       title: `${course.title} — онлайн-курс | TechAxis`,
-      description: `${course.title}: уроков — ${lessons}, ${h}, уровень — ${level}. Онлайн-курс учебного центра TechAxis.`,
+      description: `${course.title}: уроков — ${lessons}${h}, уровень — ${level}. Онлайн-курс учебного центра TechAxis.`,
     },
     en: {
       title: `${course.title} — course | TechAxis`,
-      description: `${course.title}: ${lessons} lessons, ${h}, ${level} level. An online course from the TechAxis training center.`,
+      description: `${course.title}: ${lessons} lessons${h}, ${level} level. An online course from the TechAxis training center.`,
     },
   }[loc];
   const meta = build(loc, `/courses/${course.id}`, text.title, text.description);
