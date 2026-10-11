@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CalendarDays, Video, Wallet, Users, Clock, Layers, BadgeCheck, CheckCircle2, ArrowRight, Target } from "lucide-react";
+import { CalendarDays, Video, Wallet, Users, Clock, Layers, BadgeCheck, CheckCircle2, ArrowRight, Target, UserCheck, HelpCircle } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbLd, crumb } from "@/lib/structured-data";
@@ -44,9 +44,9 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
           <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white leading-tight">
             SOLIDWORKS <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">jonli onlayn kursi</span>
           </h1>
-          <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-            {K.davomiylik}: noldan CSWA va CSWP imtihonlariga tayyorgarlikkacha. Darslarni {K.oqituvchi.ism} o&apos;zi
-            jonli olib boradi, savollaringizga dars davomida javob olasiz. Birinchi dars bepul — yoqsa, keyin to&apos;laysiz.
+          <p className="text-xl text-slate-700 dark:text-slate-300 leading-relaxed font-medium">{K.taklif}</p>
+          <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+            Darslarni {K.oqituvchi.ism} (CSWA, CSWP) o&apos;zi olib boradi. Birinchi dars bepul — yoqsa, keyin to&apos;laysiz.
           </p>
           <a href="#yozilish" className="inline-flex items-center gap-2 bg-[#0084FF] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg transition-colors">
             Joy band qilish <ArrowRight className="w-5 h-5" />
@@ -64,6 +64,39 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
               </div>
             </div>
           ))}
+        </section>
+
+        {/* Kimlar uchun */}
+        <section className="space-y-6">
+          <h2 className="text-3xl font-black text-slate-900 dark:text-white">Bu kurs kimlar uchun</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {K.kimlarUchun.map((k) => (
+              <div key={k.nomi} className="rounded-3xl border border-slate-100 dark:border-slate-800 p-6">
+                <UserCheck className="w-6 h-6 text-cyan-500 mb-3" />
+                <div className="font-bold text-slate-900 dark:text-white">{k.nomi}</div>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">{k.izoh}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Darslar qanday o'tadi */}
+        <section className="space-y-6">
+          <div className="space-y-2">
+            <h2 className="text-3xl font-black text-slate-900 dark:text-white">Darslar qanday o&apos;tadi</h2>
+            <p className="text-slate-600 dark:text-slate-400">Har bir darsning maqsadi bitta: siz uni o&apos;zingiz qila oladigan bo&apos;lib chiqasiz.</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {K.darsFormati.map((d, i) => (
+              <div key={d.nomi} className="flex gap-4 rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 p-6">
+                <span className="w-9 h-9 shrink-0 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white font-black flex items-center justify-center">{i + 1}</span>
+                <div>
+                  <div className="font-bold text-slate-900 dark:text-white">{d.nomi}</div>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{d.izoh}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* O'qituvchi */}
@@ -154,6 +187,21 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
               rasmiy va bepul (faqat Windows).
             </span>
           </p>
+        </section>
+
+        {/* Ko'p so'raladigan savollar */}
+        <section className="space-y-6 max-w-3xl mx-auto w-full">
+          <h2 className="text-3xl font-black text-slate-900 dark:text-white text-center">Ko&apos;p so&apos;raladigan savollar</h2>
+          <div className="space-y-3">
+            {K.savollar.map((s) => (
+              <div key={s.q} className="rounded-3xl border border-slate-100 dark:border-slate-800 p-6">
+                <div className="flex items-start gap-3 font-bold text-slate-900 dark:text-white">
+                  <HelpCircle className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" /> {s.q}
+                </div>
+                <p className="text-slate-600 dark:text-slate-400 mt-2 pl-8">{s.a}</p>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* Ariza */}

@@ -41,6 +41,38 @@ export const JONLI_KURS = {
     tekshirishHavolasi: null as string | null,
   },
 
+  // Sahifa boshidagi qisqa taklif (e'londagi havoladan kelgan odam birinchi o'qiydigan matn).
+  taklif:
+    "4 hafta ichida SOLIDWORKS'da detal, yig'ma va texnik chizmani mustaqil yasashni o'rganasiz va " +
+    "xalqaro CSWA hamda CSWP imtihonlariga tayyorlanasiz. Video emas — jonli darslar, kichik guruh " +
+    "va har bir savolga o'sha zahoti javob.",
+
+  kimlarUchun: [
+    { nomi: "Talabalar", izoh: "Muhandislik yo'nalishida o'qiysiz va SOLIDWORKS'ni amalda, tartib bilan o'rganmoqchisiz." },
+    { nomi: "Yosh muhandislar va konstruktorlar", izoh: "Ishda tezroq va to'g'riroq model, yig'ma va chizma qilishni xohlaysiz." },
+    { nomi: "Boshqa dasturdan o'tayotganlar", izoh: "AutoCAD yoki boshqa CAD'da ishlagansiz, endi 3D parametrik modellashtirishga o'tasiz." },
+    { nomi: "Sertifikat olmoqchi bo'lganlar", izoh: "CSWA va CSWP — SOLIDWORKS'ning rasmiy sertifikatlari; rezyumeda bilimingizni tasdiqlaydi." },
+  ],
+
+  // Darslar qanday o'tadi (darslar rejasi hujjatiga mos).
+  darsFormati: [
+    { nomi: "Jonli Zoom darsi", izoh: "Ekranimda ko'rsataman, siz o'sha zahoti takrorlaysiz va savol berasiz." },
+    { nomi: "Aniq tuzilish", izoh: "Har dars 1,5–2 soat: takrorlash, yangi mavzu, keyin amaliyot." },
+    { nomi: "Kichik guruh", izoh: "Guruhda atigi 5 kishi — har bir o'quvchining ishi ko'rib chiqiladi." },
+    { nomi: "Uy vazifasi", izoh: "Har darsdan keyin amaliy topshiriq, keyingi dars uni takrorlash bilan boshlanadi." },
+    { nomi: "Haftalik mini-test", izoh: "Har hafta oxirida imtihon uslubida, vaqtga qarshi mashq." },
+    { nomi: "Yakuniy loyiha", izoh: "Kurs oxirida o'z mexanizmingiz: detallar, yig'ma, chizmalar va BOM." },
+  ],
+
+  savollar: [
+    // Javoblar egasining so'zlari asosida (2026-10-11).
+    { q: "SOLIDWORKS'ni umuman bilmasam bo'ladimi?", a: "Ha, bo'ladi — noldan birga o'rganamiz. Birinchi darsda dasturni o'rnatib, interfeys bilan tanishamiz." },
+    { q: "Qanday kompyuter kerak?", a: "SOLIDWORKS'ni bemalol ko'tara oladigan kompyuter. Dastur faqat Windows'da ishlaydi." },
+    { q: "Dasturni qayerdan olaman?", a: "Rasmiy saytdan birga yuklab olamiz. Talabalar uchun SOLIDWORKS Design Standard for Students rasmiy va bepul." },
+    { q: "To'lov qanday?", a: "Birinchi dars bepul. Format yoqsa, keyin karta orqali, Click yoki bank o'tkazmasi bilan to'laysiz." },
+    { q: "CSWA va CSWP sertifikatini kim beradi?", a: "Rasmiy SOLIDWORKS (Dassault Systèmes). Imtihon solidworks.com orqali topshiriladi, kurs esa aynan shu imtihon mavzulari bo'yicha tayyorlaydi." },
+  ],
+
   // Kurs oxirida o'quvchi nimaga erishadi.
   natijalar: [
     "CSWA va CSWP imtihonlariga tayyorgarlik — dastur rasmiy imtihon mavzulari asosida tuzilgan",
