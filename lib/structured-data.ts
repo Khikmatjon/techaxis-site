@@ -70,13 +70,24 @@ export const CRUMB = {
 export const crumb = (key: keyof typeof CRUMB, locale: string) => CRUMB[key][asLoc(locale)];
 
 // "24 soat" -> "PT24H" (ISO 8601). Soat topilmasa undefined.
-function workload(duration: string): string | undefined {
+function workload(duration: string, lessons: { duration: string }[] = []): string | undefined {
   const h = duration.match(/(\d+)\s*soat/)?.[1];
-  return h ? `PT${h}H` : undefined;
+  if (h) return `PT${h}H`;
+  // "Davomiyligi" soatda yozilmagan bo'lsa (masalan "12–14 dars"), darslar vaqtining
+  // yig'indisi ("8:45" yoki "1:02:30") olinadi -- Google CourseInstance uchun kerak.
+  let sec = 0;
+  for (const l of lessons) {
+    const parts = l.duration.split(":").map(Number);
+    if (parts.some((n) => !Number.isFinite(n))) continue;
+    sec += parts.reduce((acc, n) => acc * 60 + n, 0);
+  }
+  if (!sec) return undefined;
+  const mins = Math.round(sec / 60);
+  return `PT${Math.floor(mins / 60)}H${mins % 60 ? `${mins % 60}M` : ""}`;
 }
 
 export function courseLd(course: Course) {
-  const hours = workload(course.duration);
+  const hours = workload(course.duration, course.modules.flatMap((m) => m.lessons));
   return {
     "@context": "https://schema.org",
     "@type": "Course",
