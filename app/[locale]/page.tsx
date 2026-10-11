@@ -86,8 +86,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070"
                 alt="Industrial CAD Design"
                 fill
-                preload
-                fetchPriority="high"
+                // Oldindan yuklanmaydi (preload/high yo'q): telefonda rasm birinchi ekrandan pastda,
+                // eng katta element -- sarlavha; rasm uning CSS va shrifti bilan tarmoqda raqobatlashardi.
+                loading="eager"
                 sizes="(min-width: 1024px) 45vw, 100vw"
                 className="object-cover"
               />

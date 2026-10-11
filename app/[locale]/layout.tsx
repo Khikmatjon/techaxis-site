@@ -15,7 +15,10 @@ import { SEARCH_VERIFICATION } from '@/config/site';
 // Shrift build paytida yuklab olinib saytning o'zidan beriladi: Google'ga alohida
 // so'rov yo'q va sahifa chizilishi shriftni kutib to'xtab qolmaydi.
 const sora = Sora({
-  subsets: ['latin', 'latin-ext'],
+  // Faqat "latin": o'zbek (lotin), ingliz matni va oʻ/gʻ belgisi shu faylda. "latin-ext"
+  // (ā, ş ...) saytda ishlatilmaydi, lekin u ham oldindan yuklanib, telefonda bosh sahifa
+  // sarlavhasining chizilishini kechiktirardi.
+  subsets: ['latin'],
   weight: ['400', '600', '700'],
   display: 'swap',
   variable: '--font-sora',
