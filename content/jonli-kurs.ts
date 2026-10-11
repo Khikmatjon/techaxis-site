@@ -65,11 +65,12 @@ export const JONLI_KURS = {
   ],
 
   savollar: [
-    { q: "SOLIDWORKS'ni umuman bilmasam bo'ladimi?", a: "Ha. Kurs noldan boshlanadi: birinchi darsda dasturni o'rnatib, interfeys bilan tanishamiz." },
-    { q: "Qanday kompyuter kerak?", a: "Windows kompyuter. SOLIDWORKS faqat Windows'da ishlaydi." },
-    { q: "Dasturni qayerdan olaman?", a: "Talabalar uchun SOLIDWORKS Design Standard for Students rasmiy va bepul. O'rnatishni birinchi darsda ko'rsataman." },
-    { q: "To'lov qanday?", a: "Birinchi dars bepul. Format yoqsa, keyin kurs narxini karta orqali to'laysiz." },
-    { q: "CSWA va CSWP sertifikatini kim beradi?", a: "Imtihonlarni SOLIDWORKS rasmiy ravishda o'tkazadi; o'quvchi imtihonni solidworks.com orqali o'zi topshiradi. Kurs aynan shu imtihon mavzulari bo'yicha tayyorlaydi." },
+    // Javoblar egasining so'zlari asosida (2026-10-11).
+    { q: "SOLIDWORKS'ni umuman bilmasam bo'ladimi?", a: "Ha, bo'ladi — noldan birga o'rganamiz. Birinchi darsda dasturni o'rnatib, interfeys bilan tanishamiz." },
+    { q: "Qanday kompyuter kerak?", a: "SOLIDWORKS'ni bemalol ko'tara oladigan kompyuter. Dastur faqat Windows'da ishlaydi." },
+    { q: "Dasturni qayerdan olaman?", a: "Rasmiy saytdan birga yuklab olamiz. Talabalar uchun SOLIDWORKS Design Standard for Students rasmiy va bepul." },
+    { q: "To'lov qanday?", a: "Birinchi dars bepul. Format yoqsa, keyin karta orqali, Click yoki bank o'tkazmasi bilan to'laysiz." },
+    { q: "CSWA va CSWP sertifikatini kim beradi?", a: "Rasmiy SOLIDWORKS (Dassault Systèmes). Imtihon solidworks.com orqali topshiriladi, kurs esa aynan shu imtihon mavzulari bo'yicha tayyorlaydi." },
   ],
 
   // Kurs oxirida o'quvchi nimaga erishadi.
