@@ -72,8 +72,8 @@ export const COURSES: Course[] = [
   {
     id: "solidworks-basics",
     title: "SOLIDWORKS Asoslari",
-    subtitle: "G'oyadan Haqiqatgacha: 0 dan professionalgacha",
-    description: "SolidWorks — bu shunchaki chizma chizish emas, bu g'oyani virtual borliqda jonlantirishdir. Siz xayolingizdagi buyumni chizasiz, uni kuchlanishga sinaysiz va 3D printerda chiqarasiz.",
+    subtitle: "Noldan boshlab: eskiz, 3D detal, yig'ma va texnik chizma",
+    description: "SOLIDWORKS'ni noldan o'rganasiz: 2D eskiz, 3D detal, harakatlanuvchi yig'ma va ishlab chiqarish uchun texnik chizma. Kurs oxirida yakuniy loyiha — to'liq texnik hujjat tayyorlaysiz.",
     price: 99,
     priceUZS: 1260000,
     thumbnail: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800",
@@ -85,41 +85,41 @@ export const COURSES: Course[] = [
     rating: 4.8,
     tags: ["SOLIDWORKS", "3D", "CAD", "Chizmachilik"],
     marketing: {
-      whyTitle: "Nega aynan SolidWorks?",
-      whyDesc: "Odamlarni va sanoatni o'ziga jalb qiluvchi eng ilg'or muhandislik vositasi.",
+      whyTitle: "Nega SOLIDWORKS?",
+      whyDesc: "Mashinasozlik va mahsulot dizaynida keng tarqalgan 3D CAD dasturi: detal, yig'ma va texnik chizma bitta muhitda.",
       benefits: [
-        { title: "G'oyadan Haqiqatgacha", desc: "Bu shunchaki detal chizish emas, balki virtual 3D olamda jonlantirish." },
         { title: "Keng tarqalgan", desc: "Mashinasozlik va mahsulot dizaynida eng ko'p ishlatiladigan 3D CAD dasturlaridan biri." },
-        { title: "Universal vosita", desc: "Zargarlikdan tortib to avtomobilsozlik va robototexnikagacha barcha joyda qo'llaniladi." }
+        { title: "Parametrik model", desc: "O'lchamni o'zgartirsangiz, detal, yig'ma va chizma birga yangilanadi." },
+        { title: "Butun jarayon bitta dasturda", desc: "Eskizdan detalga, detaldan yig'maga va ishlab chiqarish chizmasigacha." }
       ],
-      capabilitiesTitle: "SolidWorks yordamida nimalar qila olasiz?",
+      capabilitiesTitle: "Kursda nimalarni o'rganasiz",
       capabilities: [
-        { title: "3D Modellashtirish", desc: "Eng murakkab va detalizatsiya talab qiluvchi buyumlarni noldan chizish." },
-        { title: "Assambleya (Yig'ish)", desc: "Minglab detallardan iborat dvigatel yoki zavod liniyasini yig'ish va xatoliklarni topish." },
-        { title: "Simulyatsiya", desc: "Detal sinib ketadimi? Isib ketadimi? Hali pometall qilinganiga qadar kompyuterda aniqlash." },
-        { title: "Real Render", desc: "Maxsulotingizni rasmga olingandek haqiqiy holatga aylantirib mijozlarga reklama qilish." }
+        { title: "2D eskiz", desc: "Chiziq, aylana, spline; bog'lanishlar (relations) va Smart Dimension bilan to'liq aniqlangan eskiz." },
+        { title: "3D detal", desc: "Extrude, Revolve, Fillet, Chamfer, Shell, Pattern va Mirror bilan detal yasash." },
+        { title: "Yig'ma", desc: "Detallarni Mates bilan yig'ish, harakatlanuvchi mexanizm, to'qnashuvni tekshirish va BOM." },
+        { title: "Texnik chizma", desc: "Ko'rinishlar, o'lchamlar, dopusklar va annotatsiyalar bilan ishlab chiqarish chizmasi." }
       ],
-      stepsTitle: "Kurs dasturi (Syllabus)",
+      stepsTitle: "Kurs dasturi",
       steps: [
-        { step: "1", title: "Poydevor (2D va 3D asoslari)", points: ["Interfeys bilan tanishuv", "Sketching (To'g'ri chiziq, aylana, o'lchamlar)", "Features (Extrude, Revolve)"] },
-        { step: "2", title: "Murakkab shakllar", points: ["Swept va Loft buyruqlari bilan ishlash", "Teshiklar ochish (Fillet, Chamfer)", "Massivlar (Pattern) bilan ishlash"] },
-        { step: "3", title: "Assambleya va Mexanika", points: ["Detallarni birlashtirish (Mates)", "Harakatlanuvchi mexanizmlar asosi", "To'qnashuvlarni (Interference) aniqlash"] },
-        { step: "4", title: "Professional chiqish", points: ["Xalqaro chizmalar (GOST/ISO)", "Photoview 360 va Visualize", "Katta Yakuniy loyiha (Portfolio)"] }
+        { step: "1", title: "Kirish va eskiz", points: ["Interfeys, sozlamalar va shablonlar", "Eskiz, bog'lanishlar va o'lchamlar", "Eskiz amaliyoti: detal chizish"] },
+        { step: "2", title: "3D modellashtirish", points: ["Extrude va Revolve", "Fillet, Chamfer va Shell", "Pattern va Mirror, murakkab model amaliyoti"] },
+        { step: "3", title: "Yig'ma", points: ["Yig'ma yaratish va Mates", "Harakatlanuvchi mexanizmlar", "Interference Detection va BOM"] },
+        { step: "4", title: "Texnik chizma va yakuniy loyiha", points: ["Chizma ko'rinishlari", "O'lchamlar va annotatsiyalar", "Yakuniy loyiha: to'liq texnik hujjat"] }
       ],
       outcomes: [
-        "SolidWorks'da istalgan shakldagi uyni emas, murakkab mexanizmlarni vizual jonlantirasiz",
-        "Ishlab chiqarish (zavod) uchun tayyor texnik chizmangiz (Blueprint) o'z qo'lingizda bo'ladi",
-        "Hali ishlab chiqarilmagan buyumlarni sinish va chidamlilikka test qilishni o'rganasiz"
+        "Eskizdan boshlab 3D detal yasay olasiz",
+        "Detallardan harakatlanuvchi yig'ma tuzib, to'qnashuvlarni tekshirasiz",
+        "Ishlab chiqarish uchun o'lchamli texnik chizma va BOM tayyorlaysiz"
       ],
       pricing: [
         { name: "Starter", price: "Asosiy", desc: "0 dan boshlovchilar uchun", features: ["Asosiy (Poydevor) qism videolari", "Dastur instalyatsiyasiga yordam", "2 ta kichik loyiha chizish", "Sertifikat (Asosiy bosqich)"], cta: "Sotib Olish", best: false },
-        { name: "Pro", price: "$99", desc: "Muhandislik cho'qqisi (Amaliyot)", features: ["To'liq gapirot videodarsliklar", "Murakkab Assambleya tahlili", "Render va Visualizatsiya bonus", "Premium sertifikat", "Ish izlash bo'yicha ko'rsatma"], cta: "Eng ma'quli", best: true },
+        { name: "Pro", price: "$99", desc: "Muhandislik cho'qqisi (Amaliyot)", features: ["To'liq videodarslar", "Murakkab Assambleya tahlili", "Render va Visualizatsiya bonus", "Premium sertifikat", "Ish izlash bo'yicha ko'rsatma"], cta: "Eng ma'quli", best: true },
         { name: "Mentor", price: "VIP", desc: "Jonli yordam", features: ["Barcha Pro imkoniyatlar", "Kurs davomida 1:1 Jonli dars (zoom)", "Uy vazifalar tahlili va nazorat", "Kafolatlangan Portfolio (5+ detal)", "Karyera konsultatsiyasi"], cta: "Band Qilish", best: false }
       ],
       faq: [
-        { q: "SolidWorks ni o'rganish qiyin emasmi?", a: "Yo'q! Biz dasturni 0 dan boshlab hatto o'rta maktab o'quvchisi ham tushuna oladigan sodda 'odam tili'da, murakkab chizmalarni o'rgatuvchi metodika bilan ishlaganmiz." },
-        { q: "Mening Noutbukim ushbu dasturni ko'taradimi?", a: "SolidWorks (ayniqsa eskiroq versiyalari) maxsus o'yin qotadigan kompyuter talab qilmaydi. Kursimizdagi qismlarda noutbuklar tanlovi ham bor." },
-        { q: "Darsdan tashqari qotib qolsam kimga murojaat qilaman?", a: "Pro tarifdagi foydalanuvchilar maxsus guruhlarga kiritiladi, Mentor tarifida bo'lsa to'g'ridan-to'g'ri bog'lanish va qo'llab-quvvatlash kafolatlangan." }
+        { q: "SOLIDWORKS'ni o'rganish qiyinmi?", a: "Kurs noldan boshlanadi: avval interfeys va eskiz, keyin 3D, yig'ma va chizma. Oldindan CAD tajribasi shart emas." },
+        { q: "Kompyuterimga qanday talablar bor?", a: "SOLIDWORKS faqat Windows'da ishlaydi. Aniq talablar rasmiy solidworks.com saytidagi System Requirements sahifasida." },
+        { q: "Dasturni qayerdan olaman?", a: "Talabalar uchun SOLIDWORKS Design Standard for Students rasmiy va bepul: solidworks.com/product/students." }
       ]
     },
     modules: [
@@ -147,7 +147,7 @@ export const COURSES: Course[] = [
         title: "3D Modellashtirish",
         lessons: [
           { id: "sw-l8", title: "Extrude va Revolve", duration: "20:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "2D eskizdan 3D model yaratishning asosiy ikki usuli: Extrude (cho'zish) va Revolve (aylantirish) buyruqlarini o'rganamiz. Har bir buyruqning parametrlarini batafsil ko'ramiz." },
-          { id: "sw-l9", title: "Fillet, Chamfer va Shell", duration: "16:30", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Modelni chiroyli va ishlab chiqarishga tayyor qilish uchun burchaklarni yumshlatish (Fillet), kesish (Chamfer) va qobiq yaratish (Shell) buyruqlarini o'rganamiz." },
+          { id: "sw-l9", title: "Fillet, Chamfer va Shell", duration: "16:30", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Modelni chiroyli va ishlab chiqarishga tayyor qilish uchun burchaklarni yumshatish (Fillet), kesish (Chamfer) va qobiq yaratish (Shell) buyruqlarini o'rganamiz." },
           { id: "sw-l10", title: "Pattern va Mirror", duration: "19:15", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Bir xil elementlarni ko'paytirish uchun Linear Pattern, Circular Pattern va Mirror funksiyalarini o'rganamiz. Bu buyruqlar loyihalash vaqtini sezilarli qisqartiradi." },
           { id: "sw-l11", title: "Murakkab 3D model: Amaliyot", duration: "35:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Haqiqiy muhandislik detalini (flanets yoki bracket) noldan yaratamiz. Barcha 3D modellashtirish texnikalarini kompleks loyihada birgalikda qo'llaymiz." },
         ]
@@ -175,8 +175,8 @@ export const COURSES: Course[] = [
   {
     id: "catia-v5",
     title: "CATIA V5 Professional",
-    subtitle: "Zamondosh Sanoat Dizayni",
-    description: "CATIA — aviatsiya, avtomobilsozlik va sanoat uskunalarini loyihalashda ishlatiladigan Dassault Systèmes dasturi.",
+    subtitle: "Sketcher, Part Design, yig'ma va texnik chizma",
+    description: "CATIA V5 — Dassault Systèmes dasturi, aviatsiya va avtomobilsozlikda keng qo'llaniladi. Kursda Sketcher, Part Design, Assembly Design, DMU Kinematics va Drafting workbench'larini amaliy loyihalar bilan o'rganasiz.",
     price: 149,
     priceUZS: 1890000,
     thumbnail: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800",
@@ -189,39 +189,39 @@ export const COURSES: Course[] = [
     tags: ["CATIA", "CAD", "Aviatsiya", "Avtomobil"],
     marketing: {
       whyTitle: "Nega CATIA V5?",
-      whyDesc: "Bu oddiygina mexanizmlar emas, balki butun boshli ishlab chiqarish zavodlari tanlagan ulkan masshtab.",
+      whyDesc: "Dassault Systèmes dasturi: aviatsiya va avtomobilsozlikda murakkab detallar va katta yig'malar uchun ishlatiladi.",
       benefits: [
         { title: "Aviatsiya va avtomobilsozlik", desc: "CATIA aynan shu sohalarda murakkab yuzalar va katta yig'malar uchun ishlatiladi." },
-        { title: "Super Qamrov", desc: "Bu orqali siz avtomobil kuzovidan tortib eng ichki dvigatel detallarini Surface Modeling bilan qilasiz." },
-        { title: "Zavod va Integratsiya", desc: "Bu PLM tizimning bir qismi hisoblanib, ko'plab xoldinglar xodimlari bitta faylda bir xil ishlaydi." }
+        { title: "Workbench tizimi", desc: "Har bir ish turi — eskiz, detal, yig'ma, chizma — o'z workbench'ida: tartibli va kuchli muhit." },
+        { title: "Kinematika", desc: "DMU Kinematics bilan mexanizm harakatini kompyuterda tekshirish." }
       ],
-      capabilitiesTitle: "CATIA yordamida mo'jizalar",
+      capabilitiesTitle: "Kursda nimalarni o'rganasiz",
       capabilities: [
-        { title: "Avtomobil Sirti (GSD)", desc: "Generative Shape Design yordamida dizaynerlarning sketchlarini matematik to'g'ri kuzovga aylantirish." },
-        { title: "Product Assembly", desc: "Nafaqat mexanika, balki ulardagi elektr o'tkazgichlari (Wiring) va trubkalar tartibini ham ko'rish." },
-        { title: "Kinetika va Analiz", desc: "Har bir detalning aerodinamik xossalarini joyida o'rganish." },
-        { title: "Massiv Yig'ma", desc: "Yirik zavodlardagi kabi minglab detallardan iborat yig'mani kompyuterda boshqarish." }
+        { title: "Sketcher", desc: "2D profillar, geometrik va o'lcham cheklovlari bilan to'liq aniqlangan eskiz." },
+        { title: "Part Design", desc: "Pad, Pocket, Shaft, Fillet, Chamfer, Draft, Pattern va Mirror bilan 3D detal." },
+        { title: "Assembly Design va DMU", desc: "Constraints bilan yig'ish, Bottom-Up va Top-Down yondashuv, DMU Kinematics." },
+        { title: "Drafting", desc: "3D modeldan ko'rinishlari tartiblangan texnik chizma." }
       ],
-      stepsTitle: "Kurs bosqichlari (CATIA Syllabus)",
+      stepsTitle: "Kurs dasturi",
       steps: [
-        { step: "1", title: "Asosiy muhit", points: ["CATIA interfeysi mentalligi", "Sketcher asoslari va limitlari", "Part Design logikasi"] },
-        { step: "2", title: "Parametrik Modellashtirish", points: ["GSD (Generative Shape Design)", "Murakkab formalar yuzalar asosi", "Boolean operatsiyalari amaliyoti"] },
-        { step: "3", title: "Product Structure (Assembly)", points: ["Yig'malarda pastdan-tepaga yondashuv", "Kinematik (mexanik) cheklovlar", "O'zaro bog'liqliklar tahlili"] },
-        { step: "4", title: "Bozorga chiqqan dizayn", points: ["Sanoat chizma formalari", "DMU (Digital Mock-Up) bilan tekshiruv", "Diplom ishi: Fuzelaj yig'ish."] }
+        { step: "1", title: "Kirish va Sketcher", points: ["Interfeys va Workbench tushunchasi", "Sketcher: shakllar va cheklovlar"] },
+        { step: "2", title: "Part Design", points: ["Pad, Pocket va Shaft", "Fillet, Chamfer va Draft", "Pattern, Mirror va real detal amaliyoti"] },
+        { step: "3", title: "Assembly Design", points: ["Yig'ma va Constraints", "Top-Down va Bottom-Up yondashuv", "DMU Kinematics: mexanizm harakati"] },
+        { step: "4", title: "Drafting va yakuniy loyiha", points: ["Chizma va ko'rinishlar", "Yakuniy loyiha: detal, yig'ma va chizma"] }
       ],
       outcomes: [
-        "CATIA muhitida GSD arxitekturasida silliq dizayn (Kuzov, fuzelaj) yig'a olasiz",
-        "Zavod muhandislik jamoasida boshqa muhandislar bilan bitta loyihada ishlay olasiz",
-        "Katta yig'malar bilan dastur qotib qolmasdan ishlash usullarini bilasiz"
+        "CATIA V5 da eskizdan 3D detal yasaysiz",
+        "Yig'ma tuzib, mexanizm harakatini DMU Kinematics'da tekshirasiz",
+        "Detal va yig'ma uchun texnik chizma tayyorlaysiz"
       ],
       pricing: [
-        { name: "Starter", price: "$49", desc: "Boshlang'ich imkonyat", features: ["CATIA vizual kurslari (Part Design)", "Standart muhandislik amaliyoti", "Guruhda muhokama"], cta: "O'qish", best: false },
+        { name: "Starter", price: "$49", desc: "Boshlang'ich imkoniyat", features: ["CATIA vizual kurslari (Part Design)", "Standart muhandislik amaliyoti", "Guruhda muhokama"], cta: "O'qish", best: false },
         { name: "Pro", price: "$149", desc: "Avtomobilsozlik Sirlari", features: ["Surfacing (GSD) va DMU maxsus qism", "Premium Telegram Yordamchi bot", "Portfolio (Eksklyuziv loyihalar)", "Certificate of Excellence"], cta: "Sotib Olish", best: true },
-        { name: "Mentor", price: "Business", desc: "B2B / Shahsiy mentoring", features: ["Zavod va ishlab chiqaruvchi xodimlari", "Muhandislik to'g'irlashlari konsultatsiyasi", "Sanoat sirlari asosidagi Master Class"], cta: "Bog'lanish", best: false }
+        { name: "Mentor", price: "Business", desc: "B2B / Shaxsiy mentoring", features: ["Zavod va ishlab chiqaruvchi xodimlari", "Muhandislik to'g'irlashlari konsultatsiyasi", "Sanoat sirlari asosidagi Master Class"], cta: "Bog'lanish", best: false }
       ],
       faq: [
-        { q: "Men oldin faqat AutoCAD ko'rganman, CATIA eplaymanmi?", a: "Ha! Fikrlash 3D formatga o'tgan zahoti, muhandislik logikasi hisobiga u to'liq moslashib boradi." },
-        { q: "Kompyuterim ancha kuchli bo'lishi kerakmi?", a: "Surface processing va Katta assemblylar uchun ha! Kamida 16GB RAM, o'rtacha kuchli CPU hamda yaxshi video karta (nVIDIA) kutiladi." }
+        { q: "Oldin faqat AutoCAD'da ishlaganman. CATIA'ni o'rgana olamanmi?", a: "Ha. Kurs CATIA interfeysidan boshlanadi; AutoCAD'dagi chizma tajribasi eskiz bosqichida yordam beradi." },
+        { q: "Kompyuterim kuchli bo'lishi kerakmi?", a: "CATIA V5 Windows'da ishlaydi; katta yig'malar uchun kuchliroq kompyuter kerak bo'ladi. Aniq talablar Dassault Systèmes rasmiy sahifasida." }
       ]
     },
     modules: [
@@ -239,7 +239,7 @@ export const COURSES: Course[] = [
         title: "Part Design",
         lessons: [
           { id: "cat-l4", title: "Pad, Pocket va Shaft", duration: "22:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Part Design'ning asosiy buyruqlari: Pad (qo'shish), Pocket (kesish) va Shaft (aylantirish) yordamida 3D modellar yaratamiz." },
-          { id: "cat-l5", title: "Fillet, Chamfer va Draft", duration: "16:20", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Detallarni ishlab chiqarishga tayyor qilish: Fillet burchaklarni yumshlatadi, Chamfer qiyshiq kesim hosil qiladi, Draft qolipdan chiqarish uchun burchak beradi." },
+          { id: "cat-l5", title: "Fillet, Chamfer va Draft", duration: "16:20", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Detallarni ishlab chiqarishga tayyor qilish: Fillet burchaklarni yumshatadi, Chamfer qiyshiq kesim hosil qiladi, Draft qolipdan chiqarish uchun burchak beradi." },
           { id: "cat-l6", title: "Pattern va Mirror funksiyalari", duration: "14:50", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Rectangular Pattern, Circular Pattern va Mirror funksiyalari yordamida takroriy elementlarni samarali modellashtirish usullarini o'rganamiz." },
           { id: "cat-l7", title: "Part Design amaliyoti: Real detal", duration: "38:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Avtomobil yoki aerokosmik sohada ishlatiladigan real detalning CATIA V5 da modelini yaratamiz. Barcha o'rganilgan buyruqlarni kompleks loyihada qo'llaymiz." },
         ]
@@ -250,7 +250,7 @@ export const COURSES: Course[] = [
         lessons: [
           { id: "cat-l8", title: "Assembly yaratish va Constraints", duration: "26:15", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "CATIA Assembly Design Workbench'ini o'rganamiz. Coincidence, Contact va Offset Constraints yordamida detallarni to'g'ri joylashtirish usullarini ko'ramiz." },
           { id: "cat-l9", title: "Top-Down va Bottom-Up yondashuv", duration: "20:30", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Yig'mani loyihalashning ikki asosiy metodologiyasi: Bottom-Up (tayyor detallarni yig'ish) va Top-Down (yig'ma ichida yangi detal yaratish) farqlarini tushuntiramiz." },
-          { id: "cat-l10", title: "DMU Kinematics: Mexanizm harakati", duration: "30:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Digital Mock-Up Kinematics yordamida yig'mandagi mexanizm harakatini simulyatsiya qilamiz. Joints va commands bilan harakatlanuvchi tizimlar tahlilini o'rganamiz." },
+          { id: "cat-l10", title: "DMU Kinematics: Mexanizm harakati", duration: "30:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Digital Mock-Up Kinematics yordamida yig'madagi mexanizm harakatini simulyatsiya qilamiz. Joints va commands bilan harakatlanuvchi tizimlar tahlilini o'rganamiz." },
         ]
       },
       {
@@ -266,8 +266,8 @@ export const COURSES: Course[] = [
   {
     id: "3d-modeling",
     title: "3D Modellashtirish va Tahlil (FEA)",
-    subtitle: "Raqamli Egizak: Ishlab chiqarishdan oldingi sinov sirlari",
-    description: "Detallingiz og'irlik ostida nechchi soaniyadan so'ng sinishini bilasizmi? Issiqlikka qanday dosh beradi? O'z mahsulotini bozorda 'Uyatda' qoldirmoqchi bo'lmagan muhandisning siri — Simulyatsiya (FEA).",
+    subtitle: "Detalni ishlab chiqarishdan oldin kompyuterda sinash",
+    description: "Detal yuklama va issiqlikka qanday chidashini kompyuterda tekshirishni o'rganasiz: mesh, chegara shartlari, statik va termal tahlil, natijalarni talqin qilish va topologik optimizatsiya.",
     price: 79,
     priceUZS: 1000000,
     thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=800",
@@ -279,31 +279,31 @@ export const COURSES: Course[] = [
     rating: 4.7,
     tags: ["FEA", "Simulyatsiya", "ANSYS", "Mustahkamlik"],
     marketing: {
-      whyTitle: "Niyatingiz — Sifatmi?",
-      whyDesc: "Millionlab zararlar ko'pincha bittagina kichkina detal materialining chidamsizligidan kelib chiqadi. Siz buni kompyuterda sinaysiz.",
+      whyTitle: "Nega FEA?",
+      whyDesc: "Detal yuklamaga chidashini prototip yasashdan oldin kompyuterda tekshirish — vaqt va materialni tejaydi.",
       benefits: [
-        { title: "Zararni Yo'qotish", desc: "Haqiqiy prototip yasab sindirishdan oldin detalni kompyuterda tekshiring." },
-        { title: "Optimal Material", desc: "Metalning og'irini ishlatmay, keraksiz qismini qirqib tashlab zavod materialini qutqaring (Optimisation)." },
-        { title: "ANSYS va SolidWorks", desc: "Ikki yirik tizimda yagona haqiqatni isbotlash sirlari." },
-        { title: "Ekspert Muhandis", desc: "Quruvchi ustadan farq qiladigan yagona jihati - siz Ilmiy Tahlilchisiz!" }
+        { title: "Prototipdan oldin sinash", desc: "Detalni yasab sindirishdan oldin uni kompyuterda tekshirasiz." },
+        { title: "Material tejash", desc: "Topologik optimizatsiya bilan keraksiz materialni olib tashlab, mustahkamlikni saqlaysiz." },
+        { title: "Raqam bilan asoslash", desc: "Kuchlanish, deformatsiya va xavfsizlik koeffitsiyenti — qaror raqamlarga tayanadi." }
       ],
-      capabilitiesTitle: "FEA Tahlili yordamida",
+      capabilitiesTitle: "Kursda nimalarni o'rganasiz",
       capabilities: [
-        { title: "Linear Static Analysis", desc: "Kema motorining qotirmasi oddiy og'irlikda qiyshayib ketmaydimi?" },
-        { title: "Thermal Analysis", desc: "Issiqlik tarqalishi tufayli elektron plata erib ketmasligini isbotlash." },
-        { title: "Fluid Dynamics (CFD)", desc: "Mahsulotning suyuqlik ostida (yoki shamolda) qanday 'Oqim' chizig'iga munosabat bildirishini aniqlash." },
-        { title: "Durability & Fatigue", desc: "Detal 1 yil chidaydimi yoki 10 yilmi? (Toliqish xossalari)." }
+        { title: "Statik tahlil", desc: "Yuklama ostidagi kuchlanish, deformatsiya va xavfsizlik koeffitsiyenti." },
+        { title: "Termal tahlil", desc: "Issiqlik o'tkazuvchanlik va issiqlikdan kengayish." },
+        { title: "Mesh va konvergentsiya", desc: "Mesh sifati natija aniqligiga qanday ta'sir qilishini tekshirish." },
+        { title: "Topologik optimizatsiya", desc: "Mustahkamlikni saqlagan holda material sarfini kamaytirish." }
       ],
-      stepsTitle: "Kurs Modullari",
+      stepsTitle: "Kurs dasturi",
       steps: [
-        { step: "1", title: "Asos - Raqamli Muhandislik", points: ["FEA tamoyillari (O'qlar, nodlar, elementlar)", "Boundary Conditions (Chegara shartlari) o'rnatish"] },
-        { step: "2", title: "Mesh va Materiallar", points: ["To'g'ri 'Meshing' tamoyili tahlil tezligi kaliti sifatida", "Stress/Strain (Kuchlanish/Deformatsiya) analiz grafikalari"] },
-        { step: "3", title: "ANSYS Integratsiyasi", points: ["Statik Strukural analiz qilish tartibi", "Turli yuklamalarda detal harakatlari"] },
-        { step: "4", title: "Amaliy Hisobot", points: ["Zavod uchun Ilmiy hisobot (Reports) yozish", "Optimallashtirish algoritmlari va yakun."] }
+        { step: "1", title: "FEA asoslari", points: ["Element, tugun va mesh", "Material xossalari va chegara shartlari"] },
+        { step: "2", title: "Statik va termal tahlil", points: ["Static Structural Analysis", "Thermal Analysis"] },
+        { step: "3", title: "Natijalar", points: ["Mesh sifati va konvergentsiya", "Natijalarni talqin qilish va hisobot"] },
+        { step: "4", title: "Amaliy loyihalar", points: ["Topologik optimizatsiya", "Yakuniy loyiha: to'liq tahlil hisoboti"] }
       ],
       outcomes: [
-        "Detalingiz yuklamaga chidashini hisob-kitob bilan asoslay olasiz",
-        "Material tanlash va sarfini (Topologik optimizatsiya) mukammallashtirasiz"
+        "Detal yuklamaga chidashini hisob-kitob bilan asoslay olasiz",
+        "Mesh va chegara shartlarini to'g'ri qo'yib, natijani tekshira olasiz",
+        "Topologik optimizatsiya bilan material sarfini kamaytirasiz"
       ],
       pricing: [
         { name: "FEA Starter", price: "$39", desc: "Tahlilni noldan o'rganish", features: ["Asosiy metodikalar", "Oddiy statik simulyatsiyalar", "Loyihalar kutubxonasi"], cta: "Olish", best: false },
@@ -311,7 +311,7 @@ export const COURSES: Course[] = [
         { name: "Corporate", price: "$$$", desc: "Zavod yechimlari", features: ["Ishlab chiqarish bilan to'g'ridan to'g'ri integratsiya", "Korxona xodimlarini ommaviy tekshirish bazasi"], cta: "Bog'lanish", best: false }
       ],
       faq: [
-        { q: "Fizika modellarini qancha chuqur bilish kerak?", a: "Eng muhim fizika qoidalari (Nyuton yondashuvi, Mexanika)ni kurs davomida tushuntiramiz. Oliy fizika shart emas — dastur uni hisoblaydi!" }
+        { q: "Fizika va matematikani qancha chuqur bilish kerak?", a: "Kerakli mexanika tushunchalari (kuchlanish, deformatsiya, material xossalari) kurs davomida tushuntiriladi. Hisobni dastur bajaradi." }
       ]
     },
     modules: [
@@ -347,8 +347,8 @@ export const COURSES: Course[] = [
   {
     id: "plm-systems",
     title: "PLM Tizimlar (3DEXPERIENCE)",
-    subtitle: "Zavodni onlayn platformaga ko'chirish san'ati",
-    description: "PLM (Product Lifecycle Management) tasavvur qiling — mahsulot g'oyadan boshlab, zavoddan chiqib utillizatsiya qilingunigacha bitta ulkan ekotizimda boshqariladi.",
+    subtitle: "Muhandislik ma'lumotlarini bitta platformada boshqarish",
+    description: "PLM (Product Lifecycle Management) — mahsulot ma'lumotlarini g'oyadan ishlab chiqarishgacha bitta tizimda boshqarish. Kursda 3DEXPERIENCE platformasida jamoaviy ishlash, versiyalar, BOM va o'zgarishlarni boshqarishni o'rganasiz.",
     price: 89,
     priceUZS: 1130000,
     thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
@@ -360,39 +360,40 @@ export const COURSES: Course[] = [
     rating: 4.6,
     tags: ["PLM", "PDM", "3DEXPERIENCE", "Boshqaruv"],
     marketing: {
-      whyTitle: "PLM asrining oltin kaliti",
+      whyTitle: "Nega PLM?",
       whyDesc: "PDM/PLM tizimlari kompaniyaning barcha muhandislik ma'lumotlarini bir joyda boshqarish imkonini beradi.",
       benefits: [
-        { title: "Zavod Digitalizatsiyasi", desc: "Raqamli egizak modelida butun boshli zavod ma'lumotlarni yagona tizimda boshqarish." },
-        { title: "Menejer Muhandislar", desc: "Bosh muhandis sifatida jamoalarni bulutli platformalarda koordinatsiya qilasiz." },
-        { title: "Vaqt qadrida", desc: "Fayllarning dublikatlari yo'qoladi, xatolar soni kamayadi, hujjat almashinuvi silliqlashadi." },
-        { title: "Dassault Systèmes Tizimi", desc: "3DEXPERIENCE platformasida CATIA, SOLIDWORKS, ENOVIA va boshqa dasturlar bir joyda ishlaydi." }
+        { title: "Yagona ma'lumot manbai", desc: "Fayllar dublikati yo'qoladi, hamma bir xil — oxirgi — versiya bilan ishlaydi." },
+        { title: "Jamoaviy ishlash", desc: "Bir loyihada bir nechta muhandis rollar va ruxsatlar bilan ishlaydi." },
+        { title: "O'zgarishlar nazorati", desc: "Versiya, reviziya va o'zgartirish so'rovlari (ECO) tartibli boshqariladi." },
+        { title: "Dassault Systèmes tizimi", desc: "3DEXPERIENCE platformasida CATIA, SOLIDWORKS, ENOVIA va boshqa dasturlar bir joyda ishlaydi." }
       ],
-      capabilitiesTitle: "PLM kursda nimani qila olasiz?",
+      capabilitiesTitle: "Kursda nimalarni o'rganasiz",
       capabilities: [
-        { title: "Collaborative Space", desc: "Uch-to'rt muhandis qanday qilib bir vaqtda bitta mashinada dizayn yo'qotmasdan ishlashini sirlari." },
-        { title: "Version Control", desc: "Dizayn yoqmadimi? Istalgan payt qariyb qulab tushgan loyihangiz eski variantiga qayting." },
-        { title: "Bill of Materials (BOM)", desc: "Mahsulot qancha va qay tarzda vujudga kelishini ishlab chiqarish hisobotida (excel larsiz) bilish." },
-        { title: "Workflow Management", desc: "Ishni texnologga, dizaynerga qanday ruxsatlar bilan platforma orqali rasmiy uzatish algoritmlari." }
+        { title: "Collaborative Space", desc: "Jamoa uchun ish maydoni, rollar va ruxsatlarni sozlash." },
+        { title: "Versiya va reviziya", desc: "Dizayn o'zgarishlari tarixi va kerak bo'lsa oldingi versiyaga qaytish." },
+        { title: "BOM boshqaruvi", desc: "ENOVIA'da Bill of Materials: Engineering BOM va Manufacturing BOM farqi." },
+        { title: "Workflow va o'zgarishlar", desc: "O'zgartirish so'rovi (ECO) va tasdiqlash zanjirini platformada sozlash." }
       ],
-      stepsTitle: "Kurs Modullari (PLM Yondashuvi)",
+      stepsTitle: "Kurs dasturi",
       steps: [
-        { step: "1", title: "PLM tushunchasi va Muqaddima", points: ["PLM vs PDM", "Dassault Systemes mahsuloti: 3DEXPERIENCE interfeysi"] },
-        { step: "2", title: "Collaboration va Teamwork", points: ["Cloud da ishlash strategiyalari", "Revision & Iteration control tamoyili"] },
-        { step: "3", title: "Katta ma'lumot tahlili", points: ["ENOVIA applikatsiyasi bilan ishlash", "BOM (Bill Of Material) boshqaruvi va arxitektura"] },
-        { step: "4", title: "Loyiha amaliyoti", points: ["O'z kompaniya muhitingizni onlayn imitatsiya qilish", "Ishlatiladigan rollarni belgilash sirlari"] }
+        { step: "1", title: "PLM asoslari", points: ["PLM va PDM farqi", "3DEXPERIENCE interfeysi va Compass"] },
+        { step: "2", title: "Jamoaviy ishlash", points: ["Collaborative Space va rollar", "Versiya va reviziya boshqaruvi"] },
+        { step: "3", title: "BOM va o'zgarishlar", points: ["ENOVIA: BOM boshqaruvi", "Workflow va Change Management"] },
+        { step: "4", title: "Amaliyot", points: ["Virtual kompaniya muhitini sozlash", "Yakuniy loyiha: PLM joriy etish rejasi"] }
       ],
       outcomes: [
-        "Jamoaviy muhandislik bo'limini mukammal boshqarish konsepti shakllanadi",
-        "Siz shunchaki SAP, 1C tizimlari kabi lekin faqat muhandislarga xos PLM larni joriy qila olasiz"
+        "Kichik jamoa uchun 3DEXPERIENCE muhitini sozlay olasiz",
+        "Versiyalar, BOM va o'zgarishlarni platformada boshqarasiz",
+        "Kompaniya uchun PLM joriy etish rejasini tuza olasiz"
       ],
       pricing: [
         { name: "Concept", price: "$49", desc: "Tushuncha", features: ["Barcha asosiy videolar", "Platforma demo ishlash logikasi", "Asosiy sertifikat"], cta: "Sotib Olish", best: false },
-        { name: "Integrator", price: "$89", desc: "Menejer", features: ["To'liq ENOVIA amaliyotlari", "3DEXPERIENCE doirasida real Keyslar", "Premium qo'llab quvvatlash"], cta: "Saylash", best: true },
+        { name: "Integrator", price: "$89", desc: "Menejer", features: ["To'liq ENOVIA amaliyotlari", "3DEXPERIENCE doirasida real Keyslar", "Premium qo'llab quvvatlash"], cta: "Tanlash", best: true },
         { name: "Enterprise", price: "$$$", desc: "Jamoa", features: ["Kompaniyangiz uchun PLM integratsiyasi buyurtmasi", "Xodimlaringizni onlayn o'qitish"], cta: "Ariza", best: false }
       ],
       faq: [
-        { q: "Menga o'zi bu kerak bo'ladimi?", a: "Agar siz yakka o'zingiz chizib ishlasangiz, unchalik emas. Lekin 2 dan ortiq kishi bo'lib katta loyihaga kirsangiz, bu havo kabi muhim!" }
+        { q: "Bu kurs menga kerakmi?", a: "Yakka o'zingiz ishlasangiz, PLM kamroq kerak. Ikki va undan ko'p kishi bitta loyihada ishlasa, ma'lumot va o'zgarishlarni boshqarish uchun muhim." }
       ]
     },
     modules: [
@@ -401,7 +402,7 @@ export const COURSES: Course[] = [
         title: "PLM Asoslari",
         lessons: [
           { id: "plm-l1", title: "PLM nima? PDM vs PLM farqi", duration: "12:00", isFree: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Product Lifecycle Management (PLM) va Product Data Management (PDM) tizimlarini taqqoslaymiz. Mahsulot hayoti davri boshqaruvining zamonaviy yondashuvlarini ko'ramiz." },
-          { id: "plm-l2", title: "Dassault Systèmes va 3DEXPERIENCE platformasi", duration: "15:20", isFree: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Dassault Systèmes kompaniyasi va ularning 3DEXPERIENCE platformasini tanishtirish. CATIA, ENOVIA, SIMULIA, DELMIA kabi applikatsiyalar bir ekotizimda qanday ishlashini tushunamiz." },
+          { id: "plm-l2", title: "Dassault Systèmes va 3DEXPERIENCE platformasi", duration: "15:20", isFree: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Dassault Systèmes kompaniyasi va ularning 3DEXPERIENCE platformasini tanishtirish. CATIA, ENOVIA, SIMULIA, DELMIA kabi ilovalar bir ekotizimda qanday ishlashini tushunamiz." },
           { id: "plm-m3", title: "3DEXPERIENCE interfeysi va Compass", duration: "14:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "3DEXPERIENCE platformasining Compass navigatsiyasi va asosiy widget'larini o'rganamiz. Bulutli muhitda ishlashning afzalliklari va xavfsizlik yondashuvlarini ko'ramiz." },
         ]
       },
@@ -411,7 +412,7 @@ export const COURSES: Course[] = [
         lessons: [
           { id: "plm-l4", title: "Collaborative Space va jamoa boshqaruvi", duration: "22:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Bir vaqtda bir nechta muhandis bitta loyihada ishlashi uchun Collaborative Space ni sozlaymiz. Ruxsatlar (roles), resurslarni taqsimlash va sinxronizatsiyani o'rganamiz." },
           { id: "plm-l5", title: "Version Control va Revision management", duration: "19:30", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Dizayn o'zgarishlarini kuzatish: version (versiya) va revision (tahrirlash) tizimini o'rganamiz. Eski versiyaga qaytish va o'zgarishlar tarixini ko'rish usullarini ko'ramiz." },
-          { id: "plm-l6", title: "ENOVIA: BOM boshqaruvi", duration: "25:45", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "ENOVIA applikatsiyasida Bill of Materials (BOM) yaratish va boshqarishni o'rganamiz. Engineering BOM va Manufacturing BOM o'rtasidagi farqni tushuntiramiz." },
+          { id: "plm-l6", title: "ENOVIA: BOM boshqaruvi", duration: "25:45", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "ENOVIA ilovasida Bill of Materials (BOM) yaratish va boshqarishni o'rganamiz. Engineering BOM va Manufacturing BOM o'rtasidagi farqni tushuntiramiz." },
           { id: "plm-l7", title: "Workflow va Change Management", duration: "21:00", isFree: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", text: "Dizayn o'zgarishlari (ECO — Engineering Change Order) jarayonini rasmiylashtirish. Tasdiqlash zanjiri (approval workflow) ni platformada qanday sozlash mumkinligini ko'ramiz." },
         ]
       },

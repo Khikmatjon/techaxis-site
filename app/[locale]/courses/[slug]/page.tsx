@@ -63,7 +63,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
               <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full text-blue-400 text-xs font-bold uppercase tracking-widest">
-                <Sparkles className="w-4 h-4" /> Professional Muhandislik Ta'limi
+                <Sparkles className="w-4 h-4" /> Onlayn video kurs
               </div>
               
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[1.1]">
@@ -111,21 +111,21 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
                 <div className="space-y-4 pt-12">
                    <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
                       <Layout className="w-8 h-8 text-cyan-400" />
-                      <div className="font-bold text-lg">Industrial Design</div>
+                      <div className="font-bold text-lg">{marketing.capabilities[0]?.title}</div>
                    </div>
                    <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
                       <Database className="w-8 h-8 text-blue-400" />
-                      <div className="font-bold text-lg">Engineering Base</div>
+                      <div className="font-bold text-lg">{marketing.capabilities[1]?.title}</div>
                    </div>
                 </div>
                 <div className="space-y-4">
                    <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
                       <Terminal className="w-8 h-8 text-purple-400" />
-                      <div className="font-bold text-lg">Pro Simulation</div>
+                      <div className="font-bold text-lg">{marketing.capabilities[2]?.title}</div>
                    </div>
                    <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
                       <ShieldCheck className="w-8 h-8 text-emerald-400" />
-                      <div className="font-bold text-lg">Global Standards</div>
+                      <div className="font-bold text-lg">{marketing.capabilities[3]?.title}</div>
                    </div>
                 </div>
              </div>
@@ -153,7 +153,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         <section className="space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
             <h2 className="text-3xl sm:text-4xl font-black text-white">{marketing.capabilitiesTitle}</h2>
-            <p className="text-slate-400">Marketingdan haqiqatgacha bo'lgan barcha imkoniyatlar</p>
+            <p className="text-slate-400">Darslarda o'tiladigan asosiy mavzular</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
              {marketing.capabilities.map((item, i) => (
@@ -172,7 +172,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         <section className="space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
             <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">{marketing.stepsTitle}</h2>
-            <p className="text-slate-400">Professional o'quv rejasiga asoslangan bosqichlar ("Oddiy detaldan — murakkab loyihagacha")</p>
+            <p className="text-slate-400">Kurs modullari va ulardagi darslar</p>
           </div>
           
           <div className="grid lg:grid-cols-4 gap-4 relative">
@@ -214,9 +214,9 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
               <h2 className="text-3xl font-black text-white">Nima uchun TechAxis?</h2>
               <div className="grid gap-6">
                  {[
-                   { t: "Standart chizmalar", d: "Chizmalar GOST va ISO standartlari asosida tayyorlanadi." },
-                   { t: "Real amaliyot", d: "Nazariya juda kam, asosan muhandislik masalalari ustida ishlanadi." },
-                   { t: "Portfolio", d: "Kurs davomida portfolio uchun o'z loyihalaringizni tayyorlaysiz." }
+                   { t: "O'zbek tilida", d: "Darslar o'zbek tilida, dastur atamalari inglizcha ham beriladi." },
+                   { t: "Amaliy darslar", d: "Har modulda o'rganilganlarni amaliy mashqda qo'llaysiz." },
+                   { t: "Yakuniy loyiha", d: "Kurs oxirida o'z loyihangizni tayyorlaysiz." }
                  ].map((item, i) => (
                    <div key={i} className="flex gap-4">
                       <div className="w-10 h-10 bg-cyan-500/10 rounded-xl flex items-center justify-center shrink-0 border border-cyan-500/20">
@@ -235,8 +235,8 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         {/* H2: Narx va tariflar */}
         <section className="space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-black text-white">Jozibali Tariflar</h2>
-            <p className="text-slate-400">Sizga eng mos keladigan rejani tanlang va karyerangizni yangi bosqichga olib chiqing</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-white">Tariflar</h2>
+            <p className="text-slate-400">O'zingizga mos tarifni tanlang</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -286,7 +286,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         <section className="bg-gradient-to-br from-cyan-600 to-blue-700 rounded-[3.5rem] p-12 lg:p-20 text-center relative overflow-hidden">
            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
            <div className="relative z-10 max-w-3xl mx-auto space-y-8">
-              <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight">Hoziroq boshlang va professionalga aylaning</h2>
+              <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight">Hoziroq boshlang</h2>
               <p className="text-blue-100 text-lg opacity-80">Kursga yoziling va o&apos;z tezligingizda, amaliy loyihalar orqali o&apos;rganishni boshlang.</p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
                  <Link href={`/${locale}/checkout/${course.id}`} className="inline-block bg-white text-blue-700 font-black py-5 px-12 rounded-2xl text-xl hover:scale-105 transition-transform shadow-2xl">
