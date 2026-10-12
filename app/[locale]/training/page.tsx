@@ -31,7 +31,7 @@ export default async function TrainingPage({ params }: { params: Promise<{ local
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">
-            <h1 className="text-5xl font-bold mb-6 font-display">Professional Muhandislik Kurslari</h1>
+            <h1 className="text-5xl font-bold mb-6 font-display">Professional muhandislik kurslari</h1>
             <p className="text-slate-600 dark:text-slate-400 text-lg">
               SOLIDWORKS va CATIA dasturlarini noldan, amaliy loyihalar orqali o'rganing.
             </p>
@@ -82,7 +82,7 @@ export default async function TrainingPage({ params }: { params: Promise<{ local
         <div className="bg-blue-600 rounded-[50px] p-12 text-white relative overflow-hidden">
           <div className="relative z-10 max-w-3xl">
             <div>
-              <h2 className="text-4xl font-bold mb-6">Universitetlar va Korxonalar uchun</h2>
+              <h2 className="text-4xl font-bold mb-6">Universitetlar va korxonalar uchun</h2>
               <p className="text-blue-100 text-lg mb-8 leading-relaxed">
                 Biz ta'lim muassasalari va zavodlar uchun maxsus o'quv dasturlarini taqdim etamiz. 
                 Guruh bo'lib o'qish va dasturlarni o'rnatishda yordam beramiz.

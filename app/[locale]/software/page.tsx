@@ -21,7 +21,7 @@ export default async function SoftwarePage({ params }: { params: Promise<{ local
     {
       id: "solidworks",
       name: "SOLIDWORKS",
-      description: "Sanoat standarti darajasidagi 3D CAD dasturiy ta'minoti. Mashinasozlik va injiniring sohasida eng ko'p ishlatiladigan dasturlardan biri.",
+      description: "Sanoat standarti darajasidagi 3D CAD dasturiy ta'minoti. Mashinasozlik va muhandislik sohasida eng ko'p ishlatiladigan dasturlardan biri.",
       features: ["3D Part & Assembly", "Simulation (FEA/CFD)", "PDM (Data Management)", "CAM Integration"],
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070",
       color: "from-red-500 to-red-700",
@@ -30,7 +30,7 @@ export default async function SoftwarePage({ params }: { params: Promise<{ local
     {
       id: "catia",
       name: "CATIA",
-      description: "Dassault Systèmes kompaniyasining eng ilg'or muhandislik yechimi. Aviatsiya, avtomobilsozlik va murakkab tizimlar uchun mo'ljallangan.",
+      description: "Dassault Systèmes kompaniyasining professional muhandislik yechimi. Aviatsiya, avtomobilsozlik va murakkab tizimlar uchun mo'ljallangan.",
       features: ["Advanced Surface Design", "Systems Engineering", "Sheetmetal Design", "Composites"],
       image: "https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&q=80&w=1974",
       color: "from-blue-600 to-blue-800",
@@ -55,7 +55,7 @@ export default async function SoftwarePage({ params }: { params: Promise<{ local
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20 space-y-6">
           <h1 className="text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-            Dasturiy <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">Ta'minotlar</span>
+            Dasturiy <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">ta'minot</span>
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 font-medium">
             SOLIDWORKS, CATIA va 3DEXPERIENCE bo'yicha litsenziya tanlash, o'rnatish va ishlashni o'rganishda yordam beramiz.

@@ -34,15 +34,15 @@ export default async function CoursesCatalog({ params }: { params: Promise<{ loc
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
            <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">
-             <Layers className="w-4 h-4" /> {dict?.navbar?.training || "To'liq Ta'lim"}
+             <Layers className="w-4 h-4" /> {dict?.navbar?.training || "Ta'lim"}
            </div>
            
            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6">
-             Professional <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">Kurslar Katalogi</span>
+             Professional <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">kurslar katalogi</span>
            </h1>
            
            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-             O'zingizga mos bo'lgan xalqaro muhandislik dasturini tanlang va yirik korporatsiyalarda ishlash baxtiga muyassar bo'ling!
+             O'zingizga mos kursni tanlang va SOLIDWORKS yoki CATIA dasturini noldan, amaliy loyihalar orqali o'rganing.
            </p>
         </div>
       </section>

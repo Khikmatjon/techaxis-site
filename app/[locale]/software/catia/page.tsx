@@ -26,12 +26,12 @@ const catiaOffers = [
     period: "taxminan / yil",
     desc: "Murakkab tizimlar va mexatronik loyihalar uchun professional yechim.",
     features: [
-      "Engineering Excellence barcha imkoniyatlari",
-      "Systems Architecture Modeling",
-      "Dynamic Systems Simulation",
-      "Electrical & Fluid Systems Design",
-      "Requirement Management",
-      "Expert Technical Support"
+      "Engineering Excellence paketining barcha imkoniyatlari",
+      "Tizim arxitekturasini modellashtirish",
+      "Dinamik tizimlar simulyatsiyasi",
+      "Elektr va gidravlik tizimlarni loyihalash",
+      "Talablarni boshqarish (Requirements)",
+      "Texnik qo'llab-quvvatlash"
     ],
     color: "blue",
     recommended: true
@@ -42,12 +42,12 @@ const catiaOffers = [
     period: "taxminan / yil",
     desc: "Avtomobilsozlik va aerokosmik sanoat uchun Class-A yuzalar va vizualizatsiya.",
     features: [
-      "Systems Engineering barcha imkoniyatlari",
+      "Systems Engineering paketining barcha imkoniyatlari",
       "ICEM Surf Professional (Class-A surfaces)",
       "Human Builder (Ergonomika)",
-      "Virtual Reality Integration",
-      "High-End Real-time Rendering",
-      "Dedicated Account Manager"
+      "Virtual reallik (VR) bilan ishlash",
+      "Real vaqtda yuqori sifatli rendering",
+      "Shaxsiy menejer"
     ],
     color: "blue"
   }
@@ -69,7 +69,7 @@ export default async function CatiaPage({ params }: { params: Promise<{ locale: 
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-4 font-display text-blue-600">CATIA V6 & 3DEXPERIENCE</h1>
-          <p className="text-slate-500 max-w-2xl mx-auto uppercase tracking-widest text-sm">Engineering & Creative Excellence</p>
+          <p className="text-slate-500 max-w-2xl mx-auto uppercase tracking-widest text-sm">Muhandislik va dizayn paketlari</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -89,7 +89,7 @@ export default async function CatiaPage({ params }: { params: Promise<{ locale: 
               </ul>
               {/* So'rov bosh sahifadagi aloqa formasi orqali */}
               <a href={`/${locale}#contact`} className="block text-center w-full py-4 rounded-2xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors">
-                Kotirovka So&apos;rash
+                Narxini so&apos;rash
               </a>
             </div>
           ))}

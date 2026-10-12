@@ -142,17 +142,17 @@ export const SEO = {
     uz: {
       title: "Bepul qo'llanma: 3D modellashtirishni boshlash | TechAxis",
       description:
-        "3D modellashtirishni o'rganishni boshlovchilar uchun bepul qo'llanma: SolidWorks va CATIA farqlari va birinchi qadamlar.",
+        "3D modellashtirishni o'rganishni boshlovchilar uchun bepul qo'llanma: SOLIDWORKS va CATIA farqlari va birinchi qadamlar.",
     },
     ru: {
       title: "Бесплатное руководство по 3D-моделированию | TechAxis",
       description:
-        "Бесплатное руководство для начинающих изучать 3D-моделирование: различия SolidWorks и CATIA и первые шаги.",
+        "Бесплатное руководство для начинающих изучать 3D-моделирование: различия SOLIDWORKS и CATIA и первые шаги.",
     },
     en: {
       title: "Free guide: getting started with 3D modeling | TechAxis",
       description:
-        "A free guide for 3D modeling beginners: how SolidWorks and CATIA differ and the first steps to take.",
+        "A free guide for 3D modeling beginners: how SOLIDWORKS and CATIA differ and the first steps to take.",
     },
   },
   jonliKurs: {

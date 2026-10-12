@@ -60,7 +60,8 @@ export const About = ({ dict, stats: siteStats }: { dict: any; stats: Stats }) =
 
             <div className="space-y-6">
               <p className="text-lg lg:text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                <span className="text-[#0084FF] font-black">TechAxis Group</span> — {dict?.about?.desc_1}
+                {/* desc_1 nom bilan boshlanadi -- nom rangli yoziladi, matndan esa olib tashlanadi (ikki marta chiqmasin) */}
+                <span className="text-[#0084FF] font-black">TechAxis Group</span> {dict?.about?.desc_1?.replace(/^TechAxis Group\s*—?\s*/, '')}
               </p>
               <p className="text-slate-500 dark:text-slate-500 leading-relaxed">
                 {dict?.about?.desc_2}
