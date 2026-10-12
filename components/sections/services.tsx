@@ -7,42 +7,42 @@ import Link from 'next/link';
 export const Services = ({ dict }: { dict: any }) => {
   const services = [
     {
-      title: dict?.services?.software_sales || "Dasturiy Ta'minot Savdosi",
+      title: dict?.services?.software_sales || "Dasturiy ta'minot savdosi",
       desc: dict?.services?.software_sales_desc || "SOLIDWORKS, CATIA va 3DEXPERIENCE litsenziyalari bo'yicha maslahat va yordam.",
       icon: <Settings className="w-8 h-8 text-blue-600" />,
       color: "bg-blue-50",
       href: "/software"
     },
     {
-      title: dict?.services?.design || "Mexanik Dizayn",
+      title: dict?.services?.design || "Mexanik dizayn",
       desc: dict?.services?.design_desc || "Yuqori aniqlikdagi 3D modellashtirish va texnik chizmalar.",
       icon: <Ruler className="w-8 h-8 text-emerald-600" />,
       color: "bg-emerald-50",
       href: "#contact"
     },
     {
-      title: dict?.services?.training || "Korporativ Ta'lim",
-      desc: dict?.services?.training_desc || "Xalqaro standartlar bo'yicha xodimlarni o'qitish va sertifikatlash.",
+      title: dict?.services?.training || "Korporativ ta'lim",
+      desc: dict?.services?.training_desc || "Xalqaro standartlar bo'yicha xodimlarni o'qitish va CSWA/CSWP imtihonlariga tayyorlash.",
       icon: <GraduationCap className="w-8 h-8 text-red-600" />,
       color: "bg-red-50",
       href: "/training"
     },
     {
-      title: dict?.services?.plm || "PLM Tizimlari",
+      title: dict?.services?.plm || "PLM tizimlari",
       desc: dict?.services?.plm_desc || "Mahsulot hayotiy siklini boshqarish tizimlarini joriy qilish.",
       icon: <Cloud className="w-8 h-8 text-indigo-600" />,
       color: "bg-indigo-50",
       href: "/software"
     },
     {
-      title: dict?.services?.analysis || "Simulyatsiya va Tahlil",
+      title: dict?.services?.analysis || "Simulyatsiya va tahlil",
       desc: dict?.services?.analysis_desc || "Mustahkamlik va termal tahlillarni raqamli tekshirish.",
       icon: <BarChart3 className="w-8 h-8 text-amber-600" />,
       color: "bg-amber-50",
       href: "#contact"
     },
     {
-      title: dict?.services?.consulting || "Texnik Konsalting",
+      title: dict?.services?.consulting || "Texnik konsalting",
       desc: dict?.services?.consulting_desc || "Ishlab chiqarishni raqamlashtirish bo'yicha maslahatlar.",
       icon: <Cpu className="w-8 h-8 text-cyan-600" />,
       color: "bg-cyan-50",

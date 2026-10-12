@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 const TEXT = {
   heading1: "Muhandislik va CAD",
-  heading2: "Bilimlar Bazasi",
+  heading2: "bilimlar bazasi",
   intro:
     "SOLIDWORKS, CATIA va 3DEXPERIENCE haqida haftalik faktlar, maqolalar, yangiliklar va bizning ishlarimiz. Ma'lumotlar rasmiy manbalarga tayanadi.",
   all: "Hammasi",

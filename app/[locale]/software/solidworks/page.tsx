@@ -48,7 +48,7 @@ const swOffers = [
     features: [
       "Professional ichidagi barcha imkoniyatlar",
       "Elektr kabellari va simlar bog'lamlarini loyihalash",
-      "Quvurlar va truboprovodlarni loyihalash (Routing)",
+      "Quvurlar va quvur tarmoqlarini loyihalash (Routing)",
       "Chiziqli statik tahlil (FEA)",
       "Vaqtga asoslangan harakat tahlili (Motion)",
       "Murakkab yuzalarni tekislikka yoyish (Surface Flattening)",

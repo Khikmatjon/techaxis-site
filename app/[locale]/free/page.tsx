@@ -20,7 +20,7 @@ export default function FreeResourcesPage({ params }: { params: { locale: string
     formData.append("email", form.contact); // Kontakt sifatida email/telefon ketaveradi
     formData.append("phone", "Ko'rsatilmadi");
     formData.append("service", "Free Resource Download");
-    formData.append("message", "🎁 BEPUL MATERIAL SO'ROVI (PDF Yoki 3D Model axtarmoqda)");
+    formData.append("message", "🎁 BEPUL MATERIAL SO'ROVI (PDF yoki 3D model qidirmoqda)");
     
     await sendToTelegram(formData);
     
@@ -37,11 +37,11 @@ export default function FreeResourcesPage({ params }: { params: { locale: string
           {/* Chap: Ma'lumot va Taklif qismi */}
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest">
-              <FileDown className="w-4 h-4" /> Bepul Yuklab Olish (Lead Magnet)
+              <FileDown className="w-4 h-4" /> Bepul yuklab olish
             </div>
             
             <h1 className="text-4xl sm:text-5xl font-black text-white leading-tight">
-              3D Modellashtirishni o'rganish uchun ilk <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500">Qadamlar Qo'llanmasi</span>
+              3D modellashtirishni o'rganish uchun ilk <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500">qadamlar qo'llanmasi</span>
             </h1>
             
             <p className="text-lg text-slate-400 leading-relaxed">
@@ -52,7 +52,7 @@ export default function FreeResourcesPage({ params }: { params: { locale: string
                 haqiqiy bo'limlariga moslang. Qo'llanmada bo'lmagan narsani va'da qilmang. */}
             <ul className="space-y-4 pt-4">
                {[
-                 "SolidWorks va CATIA asosiy farqlari",
+                 "SOLIDWORKS va CATIA asosiy farqlari",
                  "3D modellashtirishni o'rganishdagi ilk qadamlar",
                ].map((item, i) => (
                  <li key={i} className="flex items-start gap-3">
@@ -73,9 +73,9 @@ export default function FreeResourcesPage({ params }: { params: { locale: string
                   <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-emerald-500/20">
                     <Zap className="w-7 h-7 text-white" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white mb-2">Qo'llanmani Olish</h2>
+                  <h2 className="text-2xl font-bold text-white mb-2">Qo'llanmani olish</h2>
                   <p className="text-slate-400 text-sm">
-                    Mail yoki Telefon raqamingizni kiriting, materialni senga yuboramiz.
+                    Email yoki telefon raqamingizni kiriting, materialni sizga yuboramiz.
                   </p>
                 </div>
 
@@ -84,7 +84,7 @@ export default function FreeResourcesPage({ params }: { params: { locale: string
                     <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto" />
                     <h3 className="text-xl font-bold text-white">So'rov yuborildi!</h3>
                     <p className="text-slate-400 text-sm">
-                      Mutaxassislarimiz tez orada materialni siz belgilagan havola ustida taqdim etadi. Bunga qadar maqolalarimizni o'qib turing.
+                      Mutaxassislarimiz tez orada materialni siz qoldirgan email yoki telefon raqamiga yuboradi. Bunga qadar maqolalarimizni o'qib turing.
                     </p>
                     <Link href={`/${params.locale}/blog`} className="inline-block mt-4 bg-slate-800 hover:bg-slate-700 text-white font-semibold py-2.5 px-6 rounded-xl transition-colors">
                         Blogga o'tish
@@ -105,7 +105,7 @@ export default function FreeResourcesPage({ params }: { params: { locale: string
                       />
                     </div>
                     <div>
-                      <label htmlFor="free-contact" className="text-sm font-semibold text-slate-300 block mb-1.5">Telefon yoki Email</label>
+                      <label htmlFor="free-contact" className="text-sm font-semibold text-slate-300 block mb-1.5">Telefon yoki email</label>
                       <input
                   id="free-contact"
                         required
@@ -125,7 +125,7 @@ export default function FreeResourcesPage({ params }: { params: { locale: string
                       {loading ? (
                         <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                       ) : (
-                        <>Qo'llanmani Yuboring <Send className="w-5 h-5" /></>
+                        <>Qo'llanmani yuboring <Send className="w-5 h-5" /></>
                       )}
                     </button>
                   </form>

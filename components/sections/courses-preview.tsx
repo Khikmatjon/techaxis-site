@@ -14,7 +14,7 @@ export const CoursesPreview = ({ dict, locale, courses }: { dict: any, locale: s
             <Zap className="w-4 h-4" /> {dict?.navbar?.training || "Ta'lim"}
           </div>
           <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white">
-            Professional <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">Muhandislik Kurslari</span>
+            Professional <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">muhandislik kurslari</span>
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg">
             Sanoat standartlari asosida tayyorlangan, amaliy loyihalarga boy o'quv dasturlarimiz bilan tanishing.
