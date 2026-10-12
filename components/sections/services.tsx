@@ -4,14 +4,14 @@ import React from 'react';
 import { Settings, Cpu, GraduationCap, Cloud, Ruler, BarChart3, ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
-export const Services = ({ dict }: { dict: any }) => {
+export const Services = ({ dict, locale }: { dict: any; locale: string }) => {
   const services = [
     {
       title: dict?.services?.software_sales || "Dasturiy ta'minot savdosi",
       desc: dict?.services?.software_sales_desc || "SOLIDWORKS, CATIA va 3DEXPERIENCE litsenziyalari bo'yicha maslahat va yordam.",
       icon: <Settings className="w-8 h-8 text-blue-600" />,
       color: "bg-blue-50",
-      href: "/software"
+      href: `/${locale}/software`
     },
     {
       title: dict?.services?.design || "Mexanik dizayn",
@@ -25,14 +25,14 @@ export const Services = ({ dict }: { dict: any }) => {
       desc: dict?.services?.training_desc || "Xalqaro standartlar bo'yicha xodimlarni o'qitish va CSWA/CSWP imtihonlariga tayyorlash.",
       icon: <GraduationCap className="w-8 h-8 text-red-600" />,
       color: "bg-red-50",
-      href: "/training"
+      href: `/${locale}/training`
     },
     {
       title: dict?.services?.plm || "PLM tizimlari",
       desc: dict?.services?.plm_desc || "Mahsulot hayotiy siklini boshqarish tizimlarini joriy qilish.",
       icon: <Cloud className="w-8 h-8 text-indigo-600" />,
       color: "bg-indigo-50",
-      href: "/software"
+      href: `/${locale}/software`
     },
     {
       title: dict?.services?.analysis || "Simulyatsiya va tahlil",

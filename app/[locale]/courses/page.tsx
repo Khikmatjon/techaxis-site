@@ -8,6 +8,29 @@ import { getCourses } from "@/lib/courses-db";
 import { pageMetadata } from "@/lib/seo";
 import { getDictionary } from "@/lib/dictionary";
 import { Locale } from "@/lib/i18n";
+import { pick, formatNumber } from "@/lib/locale-text";
+import { localizeCourse, levelLabel } from "@/lib/course-i18n";
+
+const T = {
+  uz: {
+    badge: "Ta'lim",
+    h1a: "Professional", h1b: "kurslar katalogi",
+    intro: "O'zingizga mos kursni tanlang va SOLIDWORKS yoki CATIA dasturini noldan, amaliy loyihalar orqali o'rganing.",
+    lessons: "dars", price: "Kurs narxi",
+  },
+  ru: {
+    badge: "Обучение",
+    h1a: "Каталог", h1b: "профессиональных курсов",
+    intro: "Выберите подходящий курс и изучите SOLIDWORKS или CATIA с нуля на практических проектах. Курсы проходят на узбекском языке.",
+    lessons: "уроков", price: "Стоимость курса",
+  },
+  en: {
+    badge: "Training",
+    h1a: "Professional", h1b: "course catalog",
+    intro: "Choose the course that suits you and learn SOLIDWORKS or CATIA from scratch through hands-on projects. Courses are taught in Uzbek.",
+    lessons: "lessons", price: "Course price",
+  },
+};
 
 // Bazadan o'qiladi: soatiga bir marta yangilanadi, admin panelda saqlanganda esa darhol
 // (revalidatePath). Oraliqda sahifa CDN keshidan tez beriladi.
@@ -21,7 +44,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function CoursesCatalog({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict = await getDictionary(locale as Locale);
-  const courses = await getCourses();
+  const courses = (await getCourses()).map((c) => localizeCourse(c, locale));
+  const t = pick(T, locale);
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 font-sans">
@@ -34,15 +58,15 @@ export default async function CoursesCatalog({ params }: { params: Promise<{ loc
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
            <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">
-             <Layers className="w-4 h-4" /> {dict?.navbar?.training || "Ta'lim"}
+             <Layers className="w-4 h-4" /> {dict?.navbar?.training || t.badge}
            </div>
            
            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6">
-             Professional <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">kurslar katalogi</span>
+             {t.h1a} <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">{t.h1b}</span>
            </h1>
            
            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-             O'zingizga mos kursni tanlang va SOLIDWORKS yoki CATIA dasturini noldan, amaliy loyihalar orqali o'rganing.
+             {t.intro}
            </p>
         </div>
       </section>
@@ -70,7 +94,7 @@ export default async function CoursesCatalog({ params }: { params: Promise<{ loc
                        </Link>
                     </div>
                     <div className="absolute top-4 left-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] items-center flex font-black uppercase text-blue-600 dark:text-cyan-400 shadow-md">
-                      {course.level}
+                      {levelLabel(course.level, locale)}
                     </div>
                   </div>
 
@@ -93,13 +117,13 @@ export default async function CoursesCatalog({ params }: { params: Promise<{ loc
 
                     <div className="flex flex-wrap gap-4 text-xs font-semibold text-slate-600 dark:text-slate-300">
                        <span className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg"><Clock className="w-4 h-4 text-emerald-500" /> {course.duration}</span>
-                       <span className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg"><BookOpen className="w-4 h-4 text-purple-500" /> {course.modules.reduce((acc, m) => acc + m.lessons.length, 0)} {locale === 'uz' ? 'dars' : 'lessons'}</span>
+                       <span className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg"><BookOpen className="w-4 h-4 text-purple-500" /> {course.modules.reduce((acc, m) => acc + m.lessons.length, 0)} {t.lessons}</span>
                     </div>
 
                     <div className="pt-6 mt-auto border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                       <div>
-                        <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{locale === 'uz' ? 'Kurs narxi' : 'Course price'}</div>
-                        <div className="text-[1.3rem] font-black text-slate-900 dark:text-white">{course.priceUZS.toLocaleString()} UZS</div>
+                        <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{t.price}</div>
+                        <div className="text-[1.3rem] font-black text-slate-900 dark:text-white">{formatNumber(course.priceUZS, locale)} UZS</div>
                       </div>
                       <Link href={`/${locale}/courses/${course.id}`} aria-label={course.title} className="inline-block bg-slate-100 dark:bg-slate-800 hover:bg-blue-600 dark:hover:bg-blue-600 hover:text-white text-slate-900 dark:text-white p-3.5 rounded-2xl transition-all shadow-sm group-hover:-translate-x-1">
                           <ArrowRight className="w-5 h-5" />

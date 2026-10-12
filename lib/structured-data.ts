@@ -86,15 +86,18 @@ function workload(duration: string, lessons: { duration: string }[] = []): strin
   return `PT${Math.floor(mins / 60)}H${mins % 60 ? `${mins % 60}M` : ""}`;
 }
 
-export function courseLd(course: Course) {
+// course -- joriy tilga o'girilgan (lib/course-i18n.ts). Sahifa manzili shu tilda, lekin
+// darslar o'zbek tilida o'tiladi -- inLanguage shuni bildiradi.
+export function courseLd(course: Course, locale: string) {
   const hours = workload(course.duration, course.modules.flatMap((m) => m.lessons));
+  const url = `${SITE_URL}/${asLoc(locale)}/courses/${course.id}`;
   return {
     "@context": "https://schema.org",
     "@type": "Course",
-    "@id": `${SITE_URL}/uz/courses/${course.id}#course`,
+    "@id": `${url}#course`,
     name: course.title,
     description: course.description,
-    url: `${SITE_URL}/uz/courses/${course.id}`,
+    url,
     inLanguage: "uz",
     provider: { "@type": "EducationalOrganization", name: "TechAxis", url: SITE_URL, ...ORG_REF },
     ...(course.thumbnail ? { image: course.thumbnail } : {}),
@@ -104,7 +107,7 @@ export function courseLd(course: Course) {
       category: "Paid",
       price: course.priceUZS,
       priceCurrency: "UZS",
-      url: `${SITE_URL}/uz/courses/${course.id}`,
+      url,
     },
     hasCourseInstance: {
       "@type": "CourseInstance",

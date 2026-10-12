@@ -5,9 +5,27 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { loginAction } from "@/lib/actions/auth-actions";
 import { Eye, EyeOff, Mail, Lock, Zap, ArrowRight } from "lucide-react";
+import { pick } from "@/lib/locale-text";
+import { trXato } from "@/lib/action-messages";
+
+const T = {
+  uz: {
+    welcome: "Xush kelibsiz!", intro: "Hisobingizga kiring", emailPh: "Email yoki login", password: "Parol",
+    hide: "Parolni yashirish", show: "Parolni ko'rsatish", submit: "Kirish", noAccount: "Hisob yo'qmi?", register: "Ro'yxatdan o'ting",
+  },
+  ru: {
+    welcome: "Добро пожаловать!", intro: "Войдите в свой аккаунт", emailPh: "Email или логин", password: "Пароль",
+    hide: "Скрыть пароль", show: "Показать пароль", submit: "Войти", noAccount: "Нет аккаунта?", register: "Зарегистрируйтесь",
+  },
+  en: {
+    welcome: "Welcome back!", intro: "Sign in to your account", emailPh: "Email or login", password: "Password",
+    hide: "Hide password", show: "Show password", submit: "Sign in", noAccount: "No account yet?", register: "Sign up",
+  },
+};
 
 export default function LoginPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = use(params);
+  const t = pick(T, locale);
   const router = useRouter();
   const [form, setForm] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +46,7 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
     setLoading(false);
 
     if (result.error) {
-      setError(result.error);
+      setError(trXato(result.error, locale));
       return;
     }
 
@@ -70,8 +88,8 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
               </span>
             </div>
           </Link>
-          <h1 className="text-3xl font-black text-white mb-2">Xush kelibsiz!</h1>
-          <p className="text-slate-400">Hisobingizga kiring</p>
+          <h1 className="text-3xl font-black text-white mb-2">{t.welcome}</h1>
+          <p className="text-slate-400">{t.intro}</p>
         </div>
 
         {/* Karta */}
@@ -92,7 +110,7 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
                   id="login-email"
                   type="text"
                   required
-                  placeholder="Email yoki Login"
+                  placeholder={t.emailPh}
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   className="w-full bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
@@ -101,7 +119,7 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="login-password" className="text-sm font-semibold text-slate-300">Parol</label>
+              <label htmlFor="login-password" className="text-sm font-semibold text-slate-300">{t.password}</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
@@ -116,7 +134,7 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? "Parolni yashirish" : "Parolni ko'rsatish"}
+                  aria-label={showPassword ? t.hide : t.show}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -133,16 +151,16 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
               ) : (
                 <>
-                  Kirish <ArrowRight className="w-5 h-5" />
+                  {t.submit} <ArrowRight className="w-5 h-5" />
                 </>
               )}
             </button>
           </form>
 
           <p className="mt-8 text-center text-slate-500 text-sm">
-            Hisob yo'qmi?{" "}
+            {t.noAccount}{" "}
             <Link href={`/${locale}/register`} className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
-              Ro'yxatdan o'ting
+              {t.register}
             </Link>
           </p>
         </div>

@@ -8,7 +8,7 @@
 import { escapeHtml } from "@/lib/escape-html";
 import { sendTelegramHtml, telegramConfigured } from "@/lib/telegram";
 
-const LIMITS = { name: 100, email: 150, phone: 40, service: 100, message: 2000 } as const;
+const LIMITS = { name: 100, email: 150, phone: 40, service: 100, message: 2000, lang: 2 } as const;
 
 function field(formData: FormData, key: keyof typeof LIMITS): string {
   return String(formData.get(key) ?? "").trim().slice(0, LIMITS[key]);
@@ -24,6 +24,8 @@ export async function sendToTelegram(formData: FormData) {
   const phone = field(formData, "phone");
   const service = field(formData, "service");
   const message = field(formData, "message");
+  // So'rov qaysi tildagi sahifadan kelgani (javobni shu tilda yozish uchun).
+  const lang = ["uz", "ru", "en"].includes(field(formData, "lang")) ? field(formData, "lang") : "";
 
   if (!name || (!email && !phone)) {
     return { success: false, error: "Ism va aloqa ma'lumotini kiriting" };
@@ -37,7 +39,8 @@ export async function sendToTelegram(formData: FormData) {
 📞 <b>Tel:</b> ${e(phone)}
 📧 <b>Email:</b> ${e(email)}
 🛠 <b>Xizmat:</b> ${e(service)}
-📝 <b>Xabar:</b> ${e(message)}
+📝 <b>Xabar:</b> ${e(message)}${lang ? `
+🌐 <b>Sayt tili:</b> ${lang.toUpperCase()}` : ""}
 
 📅 <b>Vaqt:</b> ${new Date().toLocaleString("uz-UZ")}
   `;

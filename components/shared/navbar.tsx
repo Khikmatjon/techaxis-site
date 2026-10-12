@@ -9,6 +9,29 @@ import { LanguageSwitcher } from "./language-switcher";
 import { Avatar } from "./avatar";
 import { logoutAction, updateUserCredentialsAction, getCurrentUserAction } from '@/lib/actions/auth-actions';
 import { useTheme } from "next-themes";
+import { pick } from "@/lib/locale-text";
+import { trXato } from "@/lib/action-messages";
+
+const T = {
+  uz: {
+    error: "Xatolik: ", saved: "Muvaffaqiyatli o'zgartirildi! Iltimos, yangi ma'lumotlar bilan qaytadan kiring.",
+    light: "Yorug' rejim", dark: "Qorong'i rejim", contact: "Aloqa", signedIn: "Tizimga kirgansiz", settings: "Sozlamalar",
+    menuClose: "Menyuni yopish", menuOpen: "Menyuni ochish", close: "Yopish", settingsDesc: "Email yoki parolni tahrirlash",
+    currentPassword: "Joriy parol", newEmail: "Yangi email (login)", newPassword: "Yangi parol", min8: "Kamida 8 ta belgi", save: "Saqlash",
+  },
+  ru: {
+    error: "Ошибка: ", saved: "Данные изменены! Пожалуйста, войдите снова с новыми данными.",
+    light: "Светлая тема", dark: "Тёмная тема", contact: "Контакты", signedIn: "Вы вошли", settings: "Настройки",
+    menuClose: "Закрыть меню", menuOpen: "Открыть меню", close: "Закрыть", settingsDesc: "Изменить email или пароль",
+    currentPassword: "Текущий пароль", newEmail: "Новый email (логин)", newPassword: "Новый пароль", min8: "Не менее 8 символов", save: "Сохранить",
+  },
+  en: {
+    error: "Error: ", saved: "Changes saved! Please sign in again with your new details.",
+    light: "Light mode", dark: "Dark mode", contact: "Contact", signedIn: "Signed in as", settings: "Settings",
+    menuClose: "Close menu", menuOpen: "Open menu", close: "Close", settingsDesc: "Change your email or password",
+    currentPassword: "Current password", newEmail: "New email (login)", newPassword: "New password", min8: "At least 8 characters", save: "Save",
+  },
+};
 
 const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +53,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
   // bo'lmasa pathdan olinadi (usePathname() bu komponentda SSR paytida
   // ba'zan bo'sh qaytishi kuzatildi, shuning uchun prop ustuvor).
   const locale = localeProp || pathname.split("/")[1] || "uz";
+  const t = pick(T, locale);
 
   useEffect(() => {
     setMounted(true);
@@ -68,9 +92,9 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
     setCurrentPassword("");
     
     if (res.error) {
-      alert("Xatolik: " + res.error);
+      alert(t.error + trXato(res.error, locale));
     } else {
-      alert("Muvaffaqiyatli o'zgartirildi! Iltimos yangi ma'lumotlar bilan qaytadan kiring.");
+      alert(t.saved);
       setSettingsOpen(false);
       setUser(null);
       setUserMenuOpen(false);
@@ -83,7 +107,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
     return (
       <button 
         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-        aria-label={theme === 'dark' ? "Yorug' rejim" : "Qorong'i rejim"}
+        aria-label={theme === 'dark' ? t.light : t.dark}
         className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
       >
         {theme === 'dark' ? <Sun className="w-5 h-5 text-yellow-500" /> : <Moon className="w-5 h-5 text-slate-600" />}
@@ -132,7 +156,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
       ]
     },
     {
-      title: dict?.navbar?.contact || "Aloqa",
+      title: dict?.navbar?.contact || t.contact,
       href: `/${locale}/#contact`,
       items: []
     }
@@ -222,7 +246,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
                 {userMenuOpen && (
                   <div className="absolute right-0 top-full mt-2 w-52 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl z-50 overflow-hidden">
                     <div className="p-3 border-b border-slate-100 dark:border-slate-800">
-                      <p className="text-xs text-slate-400 font-medium">Tizimga kirgansiz</p>
+                      <p className="text-xs text-slate-400 font-medium">{t.signedIn}</p>
                       <p className="text-slate-800 dark:text-white font-semibold text-sm truncate">{user.name || user.email}</p>
                       <p className="text-slate-400 text-xs truncate">{user.email}</p>
                     </div>
@@ -262,7 +286,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
                         className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
                       >
                         <Settings className="w-4 h-4 text-slate-500" />
-                        Sozlamalar
+                        {t.settings}
                       </button>
 
                       <div className="border-t border-slate-100 dark:border-slate-800 pt-1 mt-1">
@@ -312,7 +336,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
             )}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              aria-label={isOpen ? "Menyuni yopish" : "Menyuni ochish"}
+              aria-label={isOpen ? t.menuClose : t.menuOpen}
               aria-expanded={isOpen}
               className="text-slate-600 dark:text-slate-300 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             >
@@ -392,20 +416,20 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl w-full max-w-sm shadow-2xl relative">
           <button 
             onClick={() => setSettingsOpen(false)}
-            aria-label="Yopish"
+            aria-label={t.close}
             className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
           <div className="mb-6">
-            <h2 className="text-xl font-bold dark:text-white">Sozlamalar</h2>
-            <p className="text-sm text-slate-500 mt-1">Emaili yoki parolni tahrirlash</p>
+            <h2 className="text-xl font-bold dark:text-white">{t.settings}</h2>
+            <p className="text-sm text-slate-500 mt-1">{t.settingsDesc}</p>
           </div>
 
           <form onSubmit={handleUpdateCredentials} className="space-y-4">
             <div>
               <label htmlFor="settings-current-password" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Joriy parol
+                {t.currentPassword}
               </label>
               <input
                 id="settings-current-password"
@@ -419,7 +443,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
             </div>
             <div>
               <label htmlFor="settings-new-email" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Yangi Email (Login)
+                {t.newEmail}
               </label>
               <input
                 id="settings-new-email"
@@ -433,7 +457,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
             </div>
             <div>
               <label htmlFor="settings-new-password" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Yangi Parol
+                {t.newPassword}
               </label>
               <input
                 id="settings-new-password"
@@ -441,7 +465,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
                 required
                 minLength={8}
                 autoComplete="new-password"
-                placeholder="Kamida 8 ta belgi"
+                placeholder={t.min8}
                 value={newPassword}
                 onChange={e => setNewPassword(e.target.value)}
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl px-4 py-2.5 focus:border-blue-500 focus:outline-none"
@@ -453,7 +477,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
               disabled={settingsLoading || (!currentPassword || !newEmail || !newPassword)}
               className="w-full mt-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center disabled:opacity-50"
             >
-              {settingsLoading ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : "Saqlash"}
+              {settingsLoading ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : t.save}
             </button>
           </form>
         </div>

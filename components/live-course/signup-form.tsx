@@ -4,11 +4,40 @@ import { useState } from "react";
 import { Send, CheckCircle2 } from "lucide-react";
 import { submitLiveApplicationAction } from "@/lib/actions/live-course-actions";
 import { DARAJALAR } from "@/content/jonli-kurs";
+import { DARAJA_NOMLARI } from "@/content/jonli-kurs-tarjima";
 import { SITE_SOCIAL } from "@/config/site";
+import { asLoc, pick } from "@/lib/locale-text";
+import { trXato } from "@/lib/action-messages";
 
 // Jonli kursga ariza: Telegram'ga yuboriladi va admin paneldagi "Jonli kurs" ro'yxatiga yoziladi.
 
-export function LiveCourseSignupForm({ group }: { group: string }) {
+const T = {
+  uz: {
+    done: "Arizangiz qabul qilindi",
+    doneText: "Tez orada siz bilan bog'lanib, birinchi dars sanasi va SOLIDWORKS'ni o'rnatish bo'yicha ma'lumot beramiz.",
+    name: "Ismingiz", namePh: "Ism va familiya", phone: "Telefon raqamingiz", optional: "(ixtiyoriy)",
+    level: "SOLIDWORKS bilan tajribangiz", submit: "Joy band qilish",
+    retry: "Qaytadan urining yoki", viaTg: "Telegram orqali", after: " yozing.",
+  },
+  ru: {
+    done: "Заявка принята",
+    doneText: "Мы скоро свяжемся с вами и сообщим дату первого урока, а также как установить SOLIDWORKS.",
+    name: "Ваше имя", namePh: "Имя и фамилия", phone: "Номер телефона", optional: "(необязательно)",
+    level: "Ваш опыт работы в SOLIDWORKS", submit: "Забронировать место",
+    retry: "Попробуйте ещё раз или", viaTg: "напишите нам в Telegram", after: ".",
+  },
+  en: {
+    done: "Your application has been received",
+    doneText: "We will contact you soon with the date of the first lesson and how to install SOLIDWORKS.",
+    name: "Your name", namePh: "First and last name", phone: "Phone number", optional: "(optional)",
+    level: "Your SOLIDWORKS experience", submit: "Reserve a seat",
+    retry: "Please try again or", viaTg: "message us on Telegram", after: ".",
+  },
+};
+
+export function LiveCourseSignupForm({ group, locale }: { group: string; locale: string }) {
+  const t = pick(T, locale);
+  const loc = asLoc(locale);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [error, setError] = useState("");
 
@@ -17,17 +46,18 @@ export function LiveCourseSignupForm({ group }: { group: string }) {
     setStatus("loading");
     const data = new FormData(e.currentTarget);
     data.set("group", group);
+    data.set("lang", loc);
 
     try {
       const res = await submitLiveApplicationAction(data);
       if (res.success) {
         setStatus("success");
       } else {
-        setError(res.error);
+        setError(trXato(res.error, locale));
         setStatus("error");
       }
     } catch {
-      setError("Ariza yuborilmadi");
+      setError(trXato("Ariza yuborilmadi", locale));
       setStatus("error");
     }
   }
@@ -36,9 +66,9 @@ export function LiveCourseSignupForm({ group }: { group: string }) {
     return (
       <div className="text-center space-y-4 py-6">
         <CheckCircle2 className="w-14 h-14 text-emerald-500 mx-auto" />
-        <h3 className="text-xl font-black text-slate-900 dark:text-white">Arizangiz qabul qilindi</h3>
+        <h3 className="text-xl font-black text-slate-900 dark:text-white">{t.done}</h3>
         <p className="text-slate-600 dark:text-slate-400">
-          Tez orada siz bilan bog&apos;lanib, birinchi dars sanasi va SOLIDWORKS&apos;ni o&apos;rnatish bo&apos;yicha ma&apos;lumot beramiz.
+          {t.doneText}
         </p>
       </div>
     );
@@ -50,23 +80,23 @@ export function LiveCourseSignupForm({ group }: { group: string }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="live-name" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Ismingiz</label>
-        <input id="live-name" name="name" required maxLength={100} autoComplete="name" className={input} placeholder="Ism va familiya" />
+        <label htmlFor="live-name" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">{t.name}</label>
+        <input id="live-name" name="name" required maxLength={100} autoComplete="name" className={input} placeholder={t.namePh} />
       </div>
       <div>
-        <label htmlFor="live-phone" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Telefon raqamingiz</label>
+        <label htmlFor="live-phone" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">{t.phone}</label>
         <input id="live-phone" name="phone" required type="tel" maxLength={40} autoComplete="tel" className={input} placeholder="+998 90 123 45 67" />
       </div>
       <div>
         <label htmlFor="live-telegram" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-          Telegram <span className="font-normal text-slate-500">(ixtiyoriy)</span>
+          Telegram <span className="font-normal text-slate-500">{t.optional}</span>
         </label>
         <input id="live-telegram" name="telegram" maxLength={60} className={input} placeholder="@username" />
       </div>
       <div>
-        <label htmlFor="live-level" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">SOLIDWORKS bilan tajribangiz</label>
+        <label htmlFor="live-level" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">{t.level}</label>
         <select id="live-level" name="level" className={`${input} cursor-pointer`} defaultValue={DARAJALAR[0]}>
-          {DARAJALAR.map((l) => <option key={l} value={l}>{l}</option>)}
+          {DARAJALAR.map((l) => <option key={l} value={l}>{loc === "uz" ? l : DARAJA_NOMLARI[l][loc]}</option>)}
         </select>
       </div>
 
@@ -81,14 +111,14 @@ export function LiveCourseSignupForm({ group }: { group: string }) {
         {status === "loading" ? (
           <span className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
         ) : (
-          <>Joy band qilish <Send className="w-4 h-4" /></>
+          <>{t.submit} <Send className="w-4 h-4" /></>
         )}
       </button>
 
       {status === "error" && (
         <p className="text-center text-sm font-bold text-red-500">
-          {error}. Qaytadan urining yoki{" "}
-          <a href={SITE_SOCIAL.telegramBot} target="_blank" rel="noopener noreferrer" className="underline">Telegram orqali</a> yozing.
+          {error}. {t.retry}{" "}
+          <a href={SITE_SOCIAL.telegramBot} target="_blank" rel="noopener noreferrer" className="underline">{t.viaTg}</a>{t.after}
         </p>
       )}
     </form>

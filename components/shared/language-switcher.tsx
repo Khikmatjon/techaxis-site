@@ -34,7 +34,7 @@ export const LanguageSwitcher = () => {
       <button 
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors p-1"
-        aria-label="Change language"
+        aria-label={({ uz: "Tilni o'zgartirish", ru: "Сменить язык", en: "Change language" } as Record<string, string>)[currentLocale] ?? "Change language"}
       >
         <Globe className="w-5 h-5" />
       </button>

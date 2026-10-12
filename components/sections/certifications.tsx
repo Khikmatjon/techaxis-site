@@ -1,31 +1,67 @@
 import React from 'react';
 import { Award, ExternalLink, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { pick } from '@/lib/locale-text';
 
-export const Certifications = ({ dict }: { dict: any }) => {
+const T = {
+  uz: {
+    swTitle: "SOLIDWORKS sertifikatlari",
+    swDesc: "SOLIDWORKS mutaxassisi ekanligingizni tasdiqlovchi rasmiy sertifikatlar.",
+    swSteps: ["CSWA (asosiy) darajaga tayyorgarlik", "CSWP (professional): murakkab detallar", "Amaliy testlar va simulyatsiyalar"],
+    catiaTitle: "CATIA sertifikatlari",
+    catiaDesc: "Dassault Systèmes tomonidan taqdim etiladigan CATIA rasmiy sertifikatlari.",
+    catiaSteps: ["V5 / 3DEXPERIENCE asoslari", "Yuzaki modellashtirish (Surface Design)", "Imtihon talablari bilan tanishish"],
+    kicker: "Xalqaro sertifikatlar",
+    title: "Rasmiy sertifikatlarga tayyorgarlik",
+    intro: "Kurslarimizda sanoat sertifikatlari imtihonlarida so'raladigan asosiy mavzular o'tiladi. Imtihon talablarini rasmiy sahifalardan tekshiring.",
+    steps: "Tayyorgarlik bosqichlari:",
+    link: "Rasmiy ma'lumot (veb-sayt)",
+  },
+  ru: {
+    swTitle: "Сертификаты SOLIDWORKS",
+    swDesc: "Официальные сертификаты, подтверждающие, что вы специалист по SOLIDWORKS.",
+    swSteps: ["Подготовка к уровню CSWA (базовый)", "CSWP (профессиональный): сложные детали", "Практические тесты и симуляции"],
+    catiaTitle: "Сертификаты CATIA",
+    catiaDesc: "Официальные сертификаты CATIA от Dassault Systèmes.",
+    catiaSteps: ["Основы V5 / 3DEXPERIENCE", "Моделирование поверхностей (Surface Design)", "Знакомство с требованиями экзамена"],
+    kicker: "Международные сертификаты",
+    title: "Подготовка к официальным сертификатам",
+    intro: "На наших курсах проходят основные темы, которые спрашивают на экзаменах отраслевых сертификатов. Требования к экзамену проверяйте на официальных страницах.",
+    steps: "Этапы подготовки:",
+    link: "Официальная информация (сайт)",
+  },
+  en: {
+    swTitle: "SOLIDWORKS certifications",
+    swDesc: "Official certifications that confirm you are a SOLIDWORKS professional.",
+    swSteps: ["Preparation for the CSWA (associate) level", "CSWP (professional): complex parts", "Practice tests and simulations"],
+    catiaTitle: "CATIA certifications",
+    catiaDesc: "Official CATIA certifications from Dassault Systèmes.",
+    catiaSteps: ["V5 / 3DEXPERIENCE fundamentals", "Surface modeling (Surface Design)", "Getting to know the exam requirements"],
+    kicker: "International certifications",
+    title: "Preparing for official certifications",
+    intro: "Our courses cover the core topics asked in industry certification exams. Check the exam requirements on the official pages.",
+    steps: "Preparation steps:",
+    link: "Official information (website)",
+  },
+};
+
+export const Certifications = ({ dict, locale }: { dict: any; locale: string }) => {
+  const t = pick(T, locale);
   const certifications = [
     {
-      title: "SOLIDWORKS Sertifikatlari",
+      title: t.swTitle,
       level: "CSWA, CSWP",
-      desc: "SOLIDWORKS mutaxassisi ekanligingizni tasdiqlovchi rasmiy sertifikatlar.",
-      steps: [
-        "CSWA (Asosiy) darajaga tayyorgarlik",
-        "CSWP (Professional) murakkab detallar",
-        "Amaliy testlar va simulyatsiyalar"
-      ],
+      desc: t.swDesc,
+      steps: t.swSteps,
       link: "https://www.solidworks.com/certifications",
       color: "from-red-500 to-red-600",
       bgLight: "bg-red-50 dark:bg-red-900/10",
       iconColor: "text-red-600"
     },
     {
-      title: "CATIA Sertifikatlari",
+      title: t.catiaTitle,
       level: "Part Design, Assembly",
-      desc: "Dassault Systèmes tomonidan taqdim etiladigan CATIA rasmiy sertifikatlari.",
-      steps: [
-        "V5 / 3DEXPERIENCE asoslari",
-        "Yuzaki modellashtirish (Surface Design)",
-        "Imtihon talablari bilan tanishish"
-      ],
+      desc: t.catiaDesc,
+      steps: t.catiaSteps,
       link: "https://www.3ds.com/training/certification",
       color: "from-blue-500 to-blue-700",
       bgLight: "bg-blue-50 dark:bg-blue-900/10",
@@ -40,13 +76,13 @@ export const Certifications = ({ dict }: { dict: any }) => {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <h2 className="text-sm font-black text-cyan-500 uppercase tracking-widest">
-            Xalqaro Sertifikatlar
+            {t.kicker}
           </h2>
           <h3 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">
-            Rasmiy sertifikatlarga tayyorgarlik
+            {t.title}
           </h3>
           <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
-            Kurslarimizda sanoat sertifikatlari imtihonlarida so'raladigan asosiy mavzular o'tiladi. Imtihon talablarini rasmiy sahifalardan tekshiring.
+            {t.intro}
           </p>
         </div>
 
@@ -80,7 +116,7 @@ export const Certifications = ({ dict }: { dict: any }) => {
                   </p>
 
                   <div className="pt-4 space-y-3 border-t border-slate-200 dark:border-slate-800">
-                    <p className="font-semibold text-slate-900 dark:text-white text-sm uppercase tracking-wider mb-2">Tayyorgarlik bosqichlari:</p>
+                    <p className="font-semibold text-slate-900 dark:text-white text-sm uppercase tracking-wider mb-2">{t.steps}</p>
                     {cert.steps.map((step, i) => (
                       <div key={i} className="flex items-center gap-3 text-slate-600 dark:text-slate-300">
                         <CheckCircle2 className={`w-5 h-5 ${cert.iconColor}`} />
@@ -96,7 +132,7 @@ export const Certifications = ({ dict }: { dict: any }) => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-sm font-bold bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 px-6 py-3 rounded-xl hover:shadow-md transition-shadow"
                     >
-                      <span>Rasmiy ma'lumot (Veb-sayt)</span>
+                      <span>{t.link}</span>
                       <ExternalLink className="w-4 h-4 text-slate-400" />
                     </a>
                   </div>

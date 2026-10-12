@@ -57,8 +57,8 @@ export const Footer = ({ dict, locale }: { dict: any; locale: string }) => {
               <li><Link href={`/${locale}/#services`} className="hover:text-blue-400 transition-colors">{f?.services || "Xizmatlar"}</Link></li>
               <li><Link href={`/${locale}/#about`} className="hover:text-blue-400 transition-colors">{f?.about || "Biz haqimizda"}</Link></li>
               <li><Link href={`/${locale}/#projects`} className="hover:text-blue-400 transition-colors">{f?.projects || "Loyihalar"}</Link></li>
-              <li><Link href="/software/solidworks" className="hover:text-blue-400 transition-colors">SOLIDWORKS</Link></li>
-              <li><Link href="/software/catia" className="hover:text-blue-400 transition-colors">CATIA</Link></li>
+              <li><Link href={`/${locale}/software/solidworks`} className="hover:text-blue-400 transition-colors">SOLIDWORKS</Link></li>
+              <li><Link href={`/${locale}/software/catia`} className="hover:text-blue-400 transition-colors">CATIA</Link></li>
             </ul>
           </div>
 

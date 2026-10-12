@@ -5,6 +5,8 @@ import { Metadata } from "next";
 import { getCourseById, getCourses } from "@/lib/courses-db";
 import { locales } from "@/lib/i18n";
 import { courseMetadata } from "@/lib/seo";
+import { pick } from "@/lib/locale-text";
+import { localizeCourse } from "@/lib/course-i18n";
 import Link from "next/link";
 import Image from "next/image";
 import { 
@@ -12,6 +14,48 @@ import {
   HelpCircle, Sparkles, Layout, Database, Terminal, ShieldCheck,
   Zap, Target, Briefcase, BookOpen, Layers
 } from "lucide-react";
+
+const T = {
+  uz: {
+    badge: "Onlayn video kurs", inUzbek: "", duration: "Davomiyligi", enroll: "Ro'yxatdan o'tish", imgAlt: "kurs",
+    topics: "Darslarda o'tiladigan asosiy mavzular", modules: "Kurs modullari va ulardagi darslar",
+    outcomes: "Kurs natijasida nima olasiz?", why: "Nima uchun TechAxis?",
+    whyItems: [
+      { t: "O'zbek tilida", d: "Darslar o'zbek tilida, dastur atamalari inglizcha ham beriladi." },
+      { t: "Amaliy darslar", d: "Har modulda o'rganilganlarni amaliy mashqda qo'llaysiz." },
+      { t: "Yakuniy loyiha", d: "Kurs oxirida o'z loyihangizni tayyorlaysiz." },
+    ],
+    plans: "Tariflar", plansIntro: "O'zingizga mos tarifni tanlang", best: "Eng optimali",
+    faq: "Eng ko'p so'raladigan savollar", start: "Hoziroq boshlang",
+    startText: "Kursga yoziling va o'z tezligingizda, amaliy loyihalar orqali o'rganishni boshlang.",
+  },
+  ru: {
+    badge: "Онлайн-видеокурс", inUzbek: "Уроки на узбекском языке", duration: "Длительность", enroll: "Записаться", imgAlt: "курс",
+    topics: "Основные темы уроков", modules: "Модули курса и уроки в них",
+    outcomes: "Что вы получите по итогам курса?", why: "Почему TechAxis?",
+    whyItems: [
+      { t: "На узбекском языке", d: "Уроки ведутся на узбекском, термины программы даются и на английском." },
+      { t: "Практические уроки", d: "В каждом модуле вы применяете изученное в практическом упражнении." },
+      { t: "Итоговый проект", d: "В конце курса вы готовите собственный проект." },
+    ],
+    plans: "Тарифы", plansIntro: "Выберите подходящий тариф", best: "Оптимальный выбор",
+    faq: "Частые вопросы", start: "Начните прямо сейчас",
+    startText: "Запишитесь на курс и учитесь в своём темпе на практических проектах.",
+  },
+  en: {
+    badge: "Online video course", inUzbek: "Lessons are taught in Uzbek", duration: "Duration", enroll: "Enroll", imgAlt: "course",
+    topics: "The main topics of the lessons", modules: "Course modules and their lessons",
+    outcomes: "What you will gain from the course", why: "Why TechAxis?",
+    whyItems: [
+      { t: "In Uzbek", d: "Lessons are taught in Uzbek; software terms are also given in English." },
+      { t: "Hands-on lessons", d: "In every module you apply what you have learned in a practical exercise." },
+      { t: "Final project", d: "At the end of the course you prepare your own project." },
+    ],
+    plans: "Plans", plansIntro: "Choose the plan that suits you", best: "Best value",
+    faq: "Frequently asked questions", start: "Start now",
+    startText: "Enroll in the course and learn at your own pace through hands-on projects.",
+  },
+};
 
 // Bazadan o'qiladi: soatiga bir marta yangilanadi, admin panelda saqlanganda esa darhol
 // (revalidatePath). Oraliqda sahifa CDN keshidan tez beriladi.
@@ -29,17 +73,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug, locale } = await params;
   const course = await getCourseById(slug);
   if (!course) return {};
-  return courseMetadata(course, locale);
+  return courseMetadata(localizeCourse(course, locale), locale);
 }
 
 export default async function CourseLandingPage({ params }: { params: Promise<{ slug: string, locale: string }> }) {
   const { slug, locale: paramLocale } = await params;
-  const course = await getCourseById(slug);
+  const found = await getCourseById(slug);
   const locale = paramLocale || "uz";
   
-  if (!course) {
+  if (!found) {
     notFound();
   }
+  const course = localizeCourse(found, locale);
+  const t = pick(T, locale);
 
   // Barcha marketing copywriting matnlari course.marketing ichidan avtomatik keladi!
   const { marketing } = course;
@@ -47,7 +93,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200">
       <JsonLd data={[
-        courseLd(course),
+        courseLd(course, locale),
         breadcrumbLd(locale, [
           { name: crumb("courses", locale), path: "/courses" },
           { name: course.title, path: `/courses/${course.id}` },
@@ -63,7 +109,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
               <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full text-blue-400 text-xs font-bold uppercase tracking-widest">
-                <Sparkles className="w-4 h-4" /> Onlayn video kurs
+                <Sparkles className="w-4 h-4" /> {t.badge}{t.inUzbek && ` · ${t.inUzbek}`}
               </div>
               
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[1.1]">
@@ -79,14 +125,14 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
                     <Clock className="w-5 h-5 text-emerald-500" />
                     <div>
                       <div className="text-white font-bold">{course.duration}</div>
-                      <div className="text-slate-500 text-[10px] uppercase font-bold">Davomiyligi</div>
+                      <div className="text-slate-500 text-[10px] uppercase font-bold">{t.duration}</div>
                     </div>
                  </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link href={`/${locale}/checkout/${course.id}`} className="flex-1 sm:flex-none w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-black py-5 px-10 rounded-2xl text-lg flex items-center justify-center gap-2 transition-all shadow-xl shadow-blue-500/25 hover:-translate-y-1">
-                    Ro‘yxatdan o‘tish <ChevronRight className="w-5 h-5" />
+                    {t.enroll} <ChevronRight className="w-5 h-5" />
                   </Link>
               </div>
             </div>
@@ -94,7 +140,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
             <div className="relative group">
               <div className="absolute inset-0 bg-blue-500/20 rounded-[2.5rem] blur-3xl transform rotate-6 scale-95 transition-transform group-hover:rotate-3"></div>
               <div className="relative bg-slate-900 border border-slate-800 p-3 rounded-[2.5rem] shadow-2xl overflow-hidden flex items-center justify-center">
-                 <Image src={course.thumbnail} alt={`${course.title} kurs`} width={800} height={533} preload fetchPriority="high" sizes="(min-width: 1024px) 45vw, 100vw" className="w-full h-auto object-cover rounded-[2rem]" />
+                 <Image src={course.thumbnail} alt={`${course.title} ${t.imgAlt}`} width={800} height={533} preload fetchPriority="high" sizes="(min-width: 1024px) 45vw, 100vw" className="w-full h-auto object-cover rounded-[2rem]" />
               </div>
             </div>
           </div>
@@ -153,7 +199,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         <section className="space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
             <h2 className="text-3xl sm:text-4xl font-black text-white">{marketing.capabilitiesTitle}</h2>
-            <p className="text-slate-400">Darslarda o'tiladigan asosiy mavzular</p>
+            <p className="text-slate-400">{t.topics}</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
              {marketing.capabilities.map((item, i) => (
@@ -172,7 +218,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         <section className="space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
             <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">{marketing.stepsTitle}</h2>
-            <p className="text-slate-400">Kurs modullari va ulardagi darslar</p>
+            <p className="text-slate-400">{t.modules}</p>
           </div>
           
           <div className="grid lg:grid-cols-4 gap-4 relative">
@@ -199,7 +245,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         {/* H2: Natija va Nega TechAxis */}
         <div className="grid lg:grid-cols-2 gap-8">
            <section className="bg-blue-600 rounded-[3rem] p-10 lg:p-14 text-white space-y-8">
-              <h2 className="text-3xl font-black">Kurs natijasida nima olasiz?</h2>
+              <h2 className="text-3xl font-black">{t.outcomes}</h2>
               <ul className="space-y-6">
                  {marketing.outcomes.map((item, i) => (
                    <li key={i} className="flex items-start gap-4">
@@ -211,13 +257,9 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
            </section>
            
            <section className="bg-slate-900 border border-slate-800 rounded-[3rem] p-10 lg:p-14 space-y-8">
-              <h2 className="text-3xl font-black text-white">Nima uchun TechAxis?</h2>
+              <h2 className="text-3xl font-black text-white">{t.why}</h2>
               <div className="grid gap-6">
-                 {[
-                   { t: "O'zbek tilida", d: "Darslar o'zbek tilida, dastur atamalari inglizcha ham beriladi." },
-                   { t: "Amaliy darslar", d: "Har modulda o'rganilganlarni amaliy mashqda qo'llaysiz." },
-                   { t: "Yakuniy loyiha", d: "Kurs oxirida o'z loyihangizni tayyorlaysiz." }
-                 ].map((item, i) => (
+                 {t.whyItems.map((item, i) => (
                    <div key={i} className="flex gap-4">
                       <div className="w-10 h-10 bg-cyan-500/10 rounded-xl flex items-center justify-center shrink-0 border border-cyan-500/20">
                          <Zap className="w-5 h-5 text-cyan-400" />
@@ -235,14 +277,14 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         {/* H2: Narx va tariflar */}
         <section className="space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-black text-white">Tariflar</h2>
-            <p className="text-slate-400">O'zingizga mos tarifni tanlang</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-white">{t.plans}</h2>
+            <p className="text-slate-400">{t.plansIntro}</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
              {marketing.pricing.map((plan, i) => (
                <div key={i} className={`relative p-10 rounded-[2.5rem] border ${plan.best ? 'bg-slate-900 border-blue-500 shadow-2xl shadow-blue-500/10' : 'bg-slate-950 border-slate-800'} flex flex-col`}>
-                  {plan.best && <div className="absolute top-0 right-10 -translate-y-1/2 bg-blue-600 text-white text-xs font-black px-4 py-1.5 rounded-full uppercase">Eng optimali</div>}
+                  {plan.best && <div className="absolute top-0 right-10 -translate-y-1/2 bg-blue-600 text-white text-xs font-black px-4 py-1.5 rounded-full uppercase">{t.best}</div>}
                   <div className="mb-8">
                      <h3 className="text-slate-400 font-bold mb-2 uppercase tracking-wide">{plan.name}</h3>
                      <div className="text-5xl font-black text-white mb-2">{plan.price}</div>
@@ -267,7 +309,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         <section className="max-w-4xl mx-auto space-y-12">
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-black text-white flex items-center justify-center gap-3 uppercase">
-              <HelpCircle className="w-8 h-8 text-blue-500" /> Eng ko'p so'raladigan savollar
+              <HelpCircle className="w-8 h-8 text-blue-500" /> {t.faq}
             </h2>
           </div>
           <div className="grid gap-4">
@@ -286,11 +328,11 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         <section className="bg-gradient-to-br from-cyan-600 to-blue-700 rounded-[3.5rem] p-12 lg:p-20 text-center relative overflow-hidden">
            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
            <div className="relative z-10 max-w-3xl mx-auto space-y-8">
-              <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight">Hoziroq boshlang</h2>
-              <p className="text-blue-100 text-lg opacity-80">Kursga yoziling va o&apos;z tezligingizda, amaliy loyihalar orqali o&apos;rganishni boshlang.</p>
+              <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight">{t.start}</h2>
+              <p className="text-blue-100 text-lg opacity-80">{t.startText}</p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
                  <Link href={`/${locale}/checkout/${course.id}`} className="inline-block bg-white text-blue-700 font-black py-5 px-12 rounded-2xl text-xl hover:scale-105 transition-transform shadow-2xl">
-                     Ro'yxatdan o'tish
+                     {t.enroll}
                    </Link>
               </div>
            </div>

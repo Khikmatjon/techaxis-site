@@ -113,7 +113,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* 3. OTHER SECTIONS */}
       <section id="services">
-        <Services dict={dict} />
+        <Services dict={dict} locale={locale} />
       </section>
 
       <section id="about">
@@ -121,7 +121,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       <section id="projects">
-        <Projects dict={dict} />
+        <Projects dict={dict} locale={locale} />
       </section>
 
       <section id="contact">
