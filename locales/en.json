@@ -1,5 +1,5 @@
 {
-  "announcement": "🎓 Enrolment is open for a live online SOLIDWORKS course (in Uzbek) — starts 20 October, first lesson free. Details →",
+  "announcement": "🎓 Enrolment is open for a live online SOLIDWORKS course (in Uzbek) — starts 20 October, 16 lessons, first lesson free. Details →",
   "navbar": {
     "software": "Software",
     "training": "Training",
@@ -10,7 +10,7 @@
     "subscriptions": "Subscriptions",
     "courses": "Courses",
     "certificates": "Certificates",
-    "login": "Login",
+    "login": "Log In",
     "register": "Register",
     "history": "Company History",
     "experience": "Experience",
@@ -35,7 +35,7 @@
   "hero": {
     "badge": "SOLIDWORKS & CATIA engineering center",
     "title": "Advanced CAD & Engineering Solutions in Uzbekistan",
-    "subtitle": "World-class industrial software solutions (SOLIDWORKS, CATIA), professional training courses from scratch, and premier engineering consulting for enterprises.",
+    "subtitle": "World-class industrial software solutions (SOLIDWORKS, CATIA), professional training courses from scratch, and engineering consulting for enterprises.",
     "cta_primary": "Explore Services",
     "cta_secondary": "Free Consultation",
     "trust_text": "industrial enterprises trust us",
@@ -50,13 +50,13 @@
     "design": "Mechanical Design",
     "design_desc": "High-precision 3D modeling and technical drawings.",
     "training": "Corporate Training",
-    "training_desc": "Personnel training and certification based on international standards.",
+    "training_desc": "Staff training to international standards and preparation for the CSWA/CSWP exams.",
     "plm": "PLM Systems",
     "plm_desc": "Implementation of Product Lifecycle Management systems.",
     "analysis": "Simulation & Analysis",
     "analysis_desc": "Digital validation of structural strength and thermal analysis.",
     "consulting": "Technical Consulting",
-    "consulting_desc": "Expert advice on production digitalization and engineering optimization.",
+    "consulting_desc": "Advice on digitalizing production.",
     "request_cta": "Send a request"
   },
   "projects": {
@@ -66,11 +66,11 @@
     "view_all": "View Full Portfolio",
     "updating_title": "Project portfolio being updated...",
     "updating_desc": "We are currently working on adding our best engineering practices and industrial projects to the portfolio. Until then, you can explore our Training Center courses.",
-    "cta_training": "Jump to Training"
+    "cta_training": "Go to Training"
   },
   "about": {
-    "title": "About Company",
-    "subtitle": "Engineering & Innovation Center",
+    "title": "About the Company",
+    "subtitle": "Engineering & Expertise Center",
     "exp_label": "Project Experience",
     "partners_label": "Partner Companies",
     "standards_label": "Industry Standards",
@@ -79,7 +79,7 @@
   },
   "seo": {
     "title": "TechAxis Group - Advanced CAD & Engineering Solutions in Uzbekistan",
-    "description": "World-class industrial software solutions (SOLIDWORKS, CATIA), professional training courses, and premier engineering consulting.",
+    "description": "World-class industrial software solutions (SOLIDWORKS, CATIA), professional training courses, and engineering consulting.",
     "keywords": "SOLIDWORKS Uzbekistan, CATIA, engineering services, CAD design, SOLIDWORKS courses, engineering training center"
   },
   "footer": {
