@@ -27,6 +27,8 @@ const TRANSLATED = new Set(
   [...(seoSrc.match(/TARJIMA_QILINGAN[^=]*=\s*\[([^\]]*)\]/)?.[1] ?? "").matchAll(/"([^"]*)"/g)].map((m) => m[1]),
 );
 if (!TRANSLATED.has("")) throw new Error("content/seo.ts dan TARJIMA_QILINGAN o'qilmadi");
+// lib/seo.ts -> isTranslated bilan bir xil: kurs sahifalari ham uch tilda.
+const isTranslated = (p) => TRANSLATED.has(p) || /^\/courses\/[^/]+$/.test(p);
 const NOINDEX = new Set(["/login", "/register"]);
 
 const decode = (s) =>
@@ -66,7 +68,7 @@ for (const loc of LOCALES) {
     if (!NOINDEX.has(p) && /noindex/.test(robots)) problems.push(`${path}: noindex bo'lmasligi kerak`);
     if (!ogImage) problems.push(`${path}: og:image yo'q`);
     if (card !== "summary_large_image") problems.push(`${path}: twitter:card = ${card}`);
-    if (TRANSLATED.has(p)) {
+    if (isTranslated(p)) {
       if (canonical !== SITE + path) problems.push(`${path}: canonical = ${canonical}`);
       const want = { uz: `${SITE}/uz${p}`, ru: `${SITE}/ru${p}`, en: `${SITE}/en${p}`, "x-default": `${SITE}/uz${p}` };
       for (const [lang, url] of Object.entries(want)) {

@@ -13,16 +13,18 @@ const NOINDEX: ReadonlySet<SeoKey> = new Set<SeoKey>(["login", "register", "chec
 
 const asLocale = (locale: string): Loc => (locale in OG_LOCALE ? (locale as Loc) : "uz");
 
-export const isTranslated = (path: string) => TARJIMA_QILINGAN.includes(path);
+// Kurs sahifalari ham uch tilda (kurs matni: content/kurslar-tarjima.ts). Blog maqolasi esa
+// faqat tarjimasi bo'lsa -- buni chaqiruvchi alohida beradi (alternatesFor -> translated).
+export const isTranslated = (path: string) => TARJIMA_QILINGAN.includes(path) || /^\/courses\/[^/]+$/.test(path);
 
 // Sahifaning asosiy manzili (canonical) va til versiyalari (hreflang). path "" yoki "/...".
 // - Tarjima qilingan sahifa (content/seo.ts -> TARJIMA_QILINGAN): har til o'zini canonical
 //   qiladi, hreflang uz/ru/en va x-default (= uz: sayt asosiy tili, "/" ham /uz ga boradi).
 // - Tarjima qilinmagan sahifa: /ru va /en da asosiy matn o'zbekcha, ya'ni /uz ning nusxasi --
 //   canonical /uz ga, hreflang yo'q (Google'ga "bu ruscha sahifa" deb noto'g'ri aytilmaydi).
-export function alternatesFor(locale: string, path: string): NonNullable<Metadata["alternates"]> {
+export function alternatesFor(locale: string, path: string, translated = isTranslated(path)): NonNullable<Metadata["alternates"]> {
   const url = (l: Loc) => `${SITE_URL}/${l}${path}`;
-  if (!isTranslated(path)) return { canonical: url("uz") };
+  if (!translated) return { canonical: url("uz") };
   return {
     canonical: url(asLocale(locale)),
     languages: { uz: url("uz"), ru: url("ru"), en: url("en"), "x-default": url("uz") },

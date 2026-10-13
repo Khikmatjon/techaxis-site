@@ -3,6 +3,7 @@ import { locales } from '@/lib/i18n';
 import { listPublishedPosts } from '@/lib/blog-store';
 import { getCourses } from '@/lib/courses-db';
 import { isTranslated } from '@/lib/seo';
+import { localizePost } from '@/lib/blog-i18n';
 
 // Soatiga bir marta yangilanadi (blog va kurslar admin panelda o'zgarganda ham revalidatePath bor).
 export const revalidate = 3600;
@@ -31,8 +32,9 @@ const ROUTES: { path: string; changeFrequency: 'daily' | 'weekly' | 'monthly'; p
 function entriesFor(
   path: string,
   extra: Omit<MetadataRoute.Sitemap[number], 'url' | 'alternates'>,
+  translated = isTranslated(path),
 ): MetadataRoute.Sitemap {
-  if (!isTranslated(path)) return [{ url: `${baseUrl}/uz${path}`, ...extra }];
+  if (!translated) return [{ url: `${baseUrl}/uz${path}`, ...extra }];
   const languages = {
     uz: `${baseUrl}/uz${path}`,
     ru: `${baseUrl}/ru${path}`,
@@ -59,11 +61,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }),
     ),
     ...posts.flatMap((post) =>
-      entriesFor(`/blog/${post.slug}`, {
-        lastModified: new Date(post.updatedAt ?? post.publishedAt),
-        changeFrequency: 'monthly',
-        priority: 0.7,
-      }),
+      entriesFor(
+        `/blog/${post.slug}`,
+        {
+          lastModified: new Date(post.updatedAt ?? post.publishedAt),
+          changeFrequency: 'monthly',
+          priority: 0.7,
+        },
+        // Maqolaning ru/en tarjimasi bo'lsagina uch tilda (content/blog-tarjima.ts)
+        localizePost(post, 'ru').translated,
+      ),
     ),
   ];
 }

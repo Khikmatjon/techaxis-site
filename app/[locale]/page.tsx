@@ -84,7 +84,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <div className="relative z-10 w-full aspect-square rounded-[40px] overflow-hidden bg-slate-100 dark:bg-slate-800 border-8 border-white dark:border-slate-900 shadow-2xl">
               <Image
                 src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070"
-                alt="Industrial CAD Design"
+                alt={({ uz: "Sanoat CAD loyihalash", ru: "Промышленное CAD-проектирование", en: "Industrial CAD design" } as Record<string, string>)[locale] ?? "Sanoat CAD loyihalash"}
                 fill
                 // Oldindan yuklanmaydi (preload/high yo'q): telefonda rasm birinchi ekrandan pastda,
                 // eng katta element -- sarlavha; rasm uning CSS va shrifti bilan tarmoqda raqobatlashardi.
@@ -117,7 +117,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       <section id="about">
-        <About dict={dict} stats={stats} />
+        <About dict={dict} stats={stats} locale={locale} />
       </section>
 
       <section id="projects">

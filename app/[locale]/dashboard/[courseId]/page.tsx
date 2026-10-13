@@ -14,11 +14,38 @@ import { getStudentDashboardAction } from "@/lib/actions/student-actions";
 import { logoutAction } from "@/lib/actions/auth-actions";
 import { Avatar } from "@/components/shared/avatar";
 import { UserDB } from "@/lib/users-db";
+import { pick, formatNumber } from "@/lib/locale-text";
+import { localizeCourse } from "@/lib/course-i18n";
+
+const T = {
+  uz: {
+    open: "✅ Ochiq", locked: "🔒 Qulflangan", lessons: "dars", progress: "Jarayon",
+    congrats: "Tabriklaymiz! Siz sertifikat olishga haqlisiz.", program: "Kurs dasturi", modules: "modul",
+    free: "Bepul", image: "Rasm", teacher: "O'qituvchi", author: "TechAxis muallifi", tags: "Yo'nalishlar",
+    or: "yoki", buy: "Sotib olish →", enrolled: "Siz bu kursga yozilgansiz!", access: "Barcha darslarga kirish imkoniyatingiz bor.",
+    inUzbek: "",
+  },
+  ru: {
+    open: "✅ Открыт", locked: "🔒 Закрыт", lessons: "уроков", progress: "Прогресс",
+    congrats: "Поздравляем! Вы можете получить сертификат.", program: "Программа курса", modules: "модулей",
+    free: "Бесплатно", image: "Изображение", teacher: "Преподаватель", author: "Автор TechAxis", tags: "Направления",
+    or: "или", buy: "Купить →", enrolled: "Вы записаны на этот курс!", access: "У вас есть доступ ко всем урокам.",
+    inUzbek: "Уроки на узбекском языке.",
+  },
+  en: {
+    open: "✅ Open", locked: "🔒 Locked", lessons: "lessons", progress: "Progress",
+    congrats: "Congratulations! You are eligible for a certificate.", program: "Course program", modules: "modules",
+    free: "Free", image: "Image", teacher: "Instructor", author: "TechAxis author", tags: "Topics",
+    or: "or", buy: "Buy →", enrolled: "You are enrolled in this course!", access: "You have access to all lessons.",
+    inUzbek: "Lessons are taught in Uzbek.",
+  },
+};
 
 
 function CourseContent({ courseId }: { courseId: string }) {
   const params = useParams();
   const locale = (params?.locale as string) || "uz";
+  const t = pick(T, locale);
   const router = useRouter();
   const [user, setUser] = useState<UserDB | null>(null);
   const [course, setCourse] = useState<Course | null>(null);
@@ -39,7 +66,7 @@ function CourseContent({ courseId }: { courseId: string }) {
     loadData();
     getCourseByIdAction(courseId).then((c) => {
       if (!c) { router.push(`/${locale}/dashboard`); return; }
-      setCourse(c);
+      setCourse(localizeCourse(c, locale));
       if (c.modules.length > 0) setOpenModules(new Set([c.modules[0].id]));
     });
   }, [courseId, locale, router]);
@@ -119,7 +146,7 @@ function CourseContent({ courseId }: { courseId: string }) {
                   <div className={`inline-flex text-xs font-semibold px-2.5 py-1 rounded-full mb-2 ${
                     isEnrolled ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "bg-red-500/20 text-red-400 border border-red-500/30"
                   }`}>
-                    {isEnrolled ? "✅ Ochiq" : "🔒 Qulflangan"}
+                    {isEnrolled ? t.open : t.locked}
                   </div>
                   <h1 className="text-2xl font-black text-white">{course.title}</h1>
                   <p className="text-slate-300 text-sm mt-1">{course.subtitle}</p>
@@ -129,16 +156,16 @@ function CourseContent({ courseId }: { courseId: string }) {
               <div className="p-6">
                 <p className="text-slate-400 text-sm leading-relaxed mb-5">{course.description}</p>
                 <div className="flex flex-wrap gap-4 text-sm text-slate-400 mb-5">
-                  <span className="flex items-center gap-1.5"><BookOpen className="w-4 h-4 text-purple-400" /> {totalLessons} dars</span>
+                  <span className="flex items-center gap-1.5"><BookOpen className="w-4 h-4 text-purple-400" /> {totalLessons} {t.lessons}</span>
                   <span className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-emerald-400" /> {course.duration}</span>
                 </div>
 
                 {isEnrolled && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-slate-400">Jarayon</span>
+                      <span className="text-slate-400">{t.progress}</span>
                       <span className={`font-bold ${isCompleted ? "text-emerald-400" : "text-white"}`}>
-                        {totalDone}/{totalLessons} dars ({progressPercent}%)
+                        {totalDone}/{totalLessons} {t.lessons} ({progressPercent}%)
                       </span>
                     </div>
                     <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
@@ -150,7 +177,7 @@ function CourseContent({ courseId }: { courseId: string }) {
                     {isCompleted && (
                       <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 mt-3">
                         <Trophy className="w-5 h-5 text-yellow-400 shrink-0" />
-                        <p className="text-emerald-400 text-sm font-bold">Tabriklaymiz! Siz sertifikat olishga haqliisiz.</p>
+                        <p className="text-emerald-400 text-sm font-bold">{t.congrats}</p>
                       </div>
                     )}
                   </div>
@@ -161,8 +188,8 @@ function CourseContent({ courseId }: { courseId: string }) {
             {/* Modullar */}
             <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
               <div className="p-5 border-b border-slate-800">
-                <h2 className="text-lg font-bold text-white">Kurs dasturi</h2>
-                <p className="text-slate-400 text-sm">{course.modules.length} modul • {totalLessons} dars</p>
+                <h2 className="text-lg font-bold text-white">{t.program}</h2>
+                <p className="text-slate-400 text-sm">{course.modules.length} {t.modules} • {totalLessons} {t.lessons}{t.inUzbek && ` • ${t.inUzbek}`}</p>
               </div>
 
               <div className="divide-y divide-slate-800">
@@ -178,7 +205,7 @@ function CourseContent({ courseId }: { courseId: string }) {
                           <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${modDone === mod.lessons.length && mod.lessons.length > 0 ? "bg-emerald-500/20 text-emerald-400" : "bg-blue-500/20 text-blue-400"}`}>{mi + 1}</div>
                           <div>
                             <div className="text-white font-semibold text-sm">{mod.title}</div>
-                            <div className="text-slate-500 text-xs">{modDone}/{mod.lessons.length} dars</div>
+                            <div className="text-slate-500 text-xs">{modDone}/{mod.lessons.length} {t.lessons}</div>
                           </div>
                         </div>
                         <ChevronLeft className={`w-4 h-4 text-slate-500 transition-transform ${openModules.has(mod.id) ? "-rotate-90" : ""}`} />
@@ -197,13 +224,13 @@ function CourseContent({ courseId }: { courseId: string }) {
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-center gap-2">
                                     <span className={`text-sm font-medium truncate ${isDone ? "text-emerald-400" : "text-slate-300"}`}>{lesson.title}</span>
-                                    {lesson.isFree && <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-semibold shrink-0">Bepul</span>}
+                                    {lesson.isFree && <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-semibold shrink-0">{t.free}</span>}
                                   </div>
                                   <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
                                     <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{lesson.duration}</span>
                                     {lesson.videoUrl && <span className="flex items-center gap-1"><Play className="w-3 h-3" />Video</span>}
                                     {lesson.pdfUrl && <span className="flex items-center gap-1"><FileText className="w-3 h-3" />PDF</span>}
-                                    {lesson.images && lesson.images.length > 0 && <span className="flex items-center gap-1"><ImageIcon className="w-3 h-3" />Rasm</span>}
+                                    {lesson.images && lesson.images.length > 0 && <span className="flex items-center gap-1"><ImageIcon className="w-3 h-3" />{t.image}</span>}
                                   </div>
                                 </div>
                                 {canAccess ? (
@@ -230,18 +257,18 @@ function CourseContent({ courseId }: { courseId: string }) {
           {/* O'ng: Instruktur + Taglar */}
           <div className="space-y-5">
             <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
-              <h3 className="text-white font-bold mb-4">O'qituvchi</h3>
+              <h3 className="text-white font-bold mb-4">{t.teacher}</h3>
               <div className="flex items-center gap-3">
                 <Avatar name={course.instructor} className="w-12 h-12 rounded-full border-2 border-slate-700" />
                 <div>
                   <div className="text-white font-semibold">{course.instructor}</div>
-                  <div className="text-slate-400 text-sm">TechAxis Muallifi</div>
+                  <div className="text-slate-400 text-sm">{t.author}</div>
                 </div>
               </div>
             </div>
 
             <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
-              <h3 className="text-white font-bold mb-4">Yo'nalishlar</h3>
+              <h3 className="text-white font-bold mb-4">{t.tags}</h3>
               <div className="flex flex-wrap gap-2">
                 {course.tags.map((tag) => (
                   <span key={tag} className="bg-slate-800 text-slate-300 text-xs font-semibold px-3 py-1.5 rounded-lg">{tag}</span>
@@ -251,10 +278,10 @@ function CourseContent({ courseId }: { courseId: string }) {
 
             {!isEnrolled && (
               <div className="bg-gradient-to-br from-blue-600/20 to-cyan-500/10 border border-blue-500/30 rounded-2xl p-5">
-                <div className="text-3xl font-black text-white mb-1">{course.priceUZS.toLocaleString()} UZS</div>
-                <div className="text-slate-400 text-sm mb-4">yoki ${course.price}</div>
+                <div className="text-3xl font-black text-white mb-1">{formatNumber(course.priceUZS, locale)} UZS</div>
+                <div className="text-slate-400 text-sm mb-4">{t.or} ${course.price}</div>
                 <Link href={`/${locale}/dashboard`} className="block text-center w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold py-3 rounded-xl hover:opacity-90 transition-all">
-                    Sotib olish →
+                    {t.buy}
                   </Link>
               </div>
             )}
@@ -262,8 +289,8 @@ function CourseContent({ courseId }: { courseId: string }) {
             {isEnrolled && (
               <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-5">
                 <CheckCircle className="w-8 h-8 text-emerald-500 mb-2" />
-                <p className="text-emerald-400 font-bold">Siz bu kursga yozilgansiz!</p>
-                <p className="text-slate-400 text-sm mt-1">Barcha darslarga kirish imkoniyatingiz bor.</p>
+                <p className="text-emerald-400 font-bold">{t.enrolled}</p>
+                <p className="text-slate-400 text-sm mt-1">{t.access}</p>
               </div>
             )}
           </div>

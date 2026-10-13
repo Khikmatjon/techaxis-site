@@ -18,6 +18,31 @@ function walk(dir) {
 }
 walk(join(ROOT, "app")); walk(join(ROOT, "components"));
 files.push(join(ROOT, "locales/uz.json"), join(ROOT, "lib/courses.ts"), ...readdirSync(join(ROOT, "content")).map((f) => join(ROOT, "content", f)));
+// Tarjima fayllari: ichidagi o'zbekcha matn asl manbadan (baza, lib/actions) aynan ko'chirilgan,
+// qolgani ruscha/inglizcha -- o'zbekcha tekshiruvga kirmaydi (ular scripts/check-i18n.mjs da).
+const TARJIMA_FAYLLARI = /kurslar-tarjima|blog-tarjima|jonli-kurs-tarjima|action-messages/;
+const tekshiriladi = files.filter((f) => !TARJIMA_FAYLLARI.test(f));
+
+// Sahifalardagi uch tilli matn: { uz: {...}, ru: {...}, en: {...} } -- ru/en bloklarini tashlab o'tamiz.
+// Qaytaradi: har qator uchun "bu qator ru/en blok ichida" belgisi va qatordagi inline ru/en qiymatlarsiz matn.
+function uzQatorlar(lines) {
+  let depth = 0; // ru/en blok ichidagi qavslar chuqurligi (0 = blok tashqarisida)
+  return lines.map((raw) => {
+    if (depth > 0) {
+      for (const ch of raw) { if ("{[(".includes(ch)) depth++; else if ("}])".includes(ch)) depth--; }
+      if (depth < 0) depth = 0;
+      return null;
+    }
+    const m = raw.match(/^\s*(ru|en):\s*([{[(])/);
+    if (m) {
+      depth = 0;
+      for (const ch of raw.slice(raw.indexOf(m[2]))) { if ("{[(".includes(ch)) depth++; else if ("}])".includes(ch)) depth--; }
+      return null;
+    }
+    // bir qatordagi ru/en qiymatlari: ru: "...", en: `...`, ru: (n) => `...`
+    return raw.replace(/\b(ru|en):\s*(\([^)]*\)\s*=>\s*)?("([^"\\]|\\.)*"|`([^`\\]|\\.)*`)/g, "");
+  });
+}
 
 // Tutuq belgisi kerak bo'lgan keng tarqalgan o'zaklar (o', g', ma', ta' ...) -- belgisiz yozilganini qidiramiz.
 const NEED_APOS = [
@@ -33,9 +58,10 @@ const TERMS = /Interference|Collision|Smart Dimensions|Geometric|Thermal|Static 
 const problems = [];
 const add = (file, line, kind, text) => problems.push({ file: relative(ROOT, file), line, kind, text: text.trim().slice(0, 140) });
 
-for (const file of files) {
-  const src = readFileSync(file, "utf8").split(/\r?\n/);
+for (const file of tekshiriladi) {
+  const src = uzQatorlar(readFileSync(file, "utf8").split(/\r?\n/));
   src.forEach((raw, i) => {
+    if (raw === null) return; // ru/en blok ichida
     if (/^\s*(\/\/|\*|\/\*|import )/.test(raw)) return; // izoh va importlar
     // faqat matn bo'laklari: qo'shtirnoqdagi satrlar va JSX matni
     const chunks = [...raw.matchAll(/"([^"\n]{3,})"|`([^`\n]{3,})`|>([^<>{}\n]{3,})</g)].map((m) => m[1] || m[2] || m[3]);

@@ -3,7 +3,9 @@ import Image from "next/image";
 import { Users, Award, ArrowUpRight } from 'lucide-react';
 import type { Stats } from '@/lib/stats';
 
-export const About = ({ dict, stats: siteStats }: { dict: any; stats: Stats }) => {
+const IMG_ALT: Record<string, string> = { uz: "Muhandislik ta'limi", ru: "Инженерное обучение", en: "Engineering training" };
+
+export const About = ({ dict, stats: siteStats, locale }: { dict: any; stats: Stats; locale: string }) => {
   // Qiymat bazada null bo'lsa (admin panelda hali to'ldirilmagan), mos
   // statistika ko'rinmaydi (tasdiqlanmagan raqam saytda turmasin).
   const stats = [
@@ -35,7 +37,7 @@ export const About = ({ dict, stats: siteStats }: { dict: any; stats: Stats }) =
             >
               <Image
                 src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=2070"
-                alt="Engineering Training"
+                alt={IMG_ALT[locale] ?? IMG_ALT.uz}
                 width={800}
                 height={1000}
                 sizes="(min-width: 1024px) 45vw, 100vw"

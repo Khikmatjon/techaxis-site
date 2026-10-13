@@ -106,47 +106,59 @@ for (const [page, entry] of Object.entries(SEO)) {
   }
 }
 
-// 4) (ixtiyoriy) Jonli sahifalar: /ru va /en'da o'zbekcha qolgan matn ulushi
+// 4) (ixtiyoriy) Jonli sahifalar: /ru va /en'da o'zbekcha qolgan matn. Manzil berilsa, sitemap'dagi
+// barcha sahifalar (kurslar, maqolalar) + kirish/ro'yxatdan o'tish tekshiriladi. Tarjima qilingan
+// sahifada (canonical = o'zi) birorta o'zbekcha bo'lak qolsa -- XATO. Tarjimasi yo'q maqola
+// (canonical -> /uz, "faqat o'zbek tilida" yozuvi bilan) -- OGOH.
 const BASE = process.argv[2]?.replace(/\/$/, "");
 const pageReport = [];
+// Tarjima qilinmaydigan atoqli otlar (o'qituvchi ismi)
+const NOMLAR = /Hikmatjon Meliqo'ziyev/g;
 if (BASE) {
-  const paths = ["", "/software", "/software/solidworks", "/software/catia", "/training", "/courses", "/blog", "/free", "/solidworks-jonli-kurs", "/privacy", "/terms", "/login", "/register"];
-  // Sahifaning ko'rinadigan matn bo'laklari (skript/stil, navbar va footer'siz)
+  const paths = new Set(["", "/software", "/software/solidworks", "/software/catia", "/training", "/courses", "/blog", "/free", "/solidworks-jonli-kurs", "/privacy", "/terms", "/login", "/register"]);
+  const sm = await fetch(`${BASE}/sitemap.xml`).then((r) => r.text()).catch(() => "");
+  for (const m of sm.matchAll(/<loc>https?:\/\/[^/]+\/uz([^<]*)<\/loc>/g)) paths.add(m[1]);
+  // Sahifaning ko'rinadigan matni: bo'laklar + alt/aria-label/placeholder/title atributlari (skript va stilsiz)
   const segments = async (url) => {
     const res = await fetch(url, { redirect: "manual" });
     if (res.status !== 200) return { status: res.status };
     const html = await res.text();
     const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1]?.replace(/^https?:\/\/[^/]+/, "") ?? "-";
-    const body = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, " ").replace(/<header[\s\S]*?<\/header>|<footer[\s\S]*?<\/footer>|<nav[\s\S]*?<\/nav>/g, " ");
-    const main = body.match(/<main[\s\S]*<\/main>/)?.[0] ?? body;
-    const segs = main.split(/<[^>]+>/).map((s) => s.replace(/&#x27;|&apos;|&#39;/g, "'").replace(/&amp;/g, "&").replace(/&[a-z#0-9]+;/g, " ").replace(/\s+/g, " ").trim()).filter((s) => /\p{L}{3,}/u.test(s));
+    const body = (html.match(/<body[\s\S]*<\/body>/)?.[0] ?? html).replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<template[\s\S]*?<\/template>/g, " ");
+    const clean = (s) => s.replace(/&#x27;|&apos;|&#39;/g, "'").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&[a-z#0-9]+;/g, " ").replace(/\s+/g, " ").trim();
+    const attrs = [...body.matchAll(/\s(?:alt|aria-label|placeholder|title)="([^"]*)"/g)].map((m) => m[1]);
+    const segs = [...body.split(/<[^>]+>/), ...attrs].map(clean).filter((s) => /\p{L}{3,}/u.test(s));
     return { status: 200, canonical, segs };
   };
+  const isUz = (s, l) => {
+    const t = s.replace(NOMLAR, "");
+    // ruscha matnda faqat lotin bo'laklarini tekshiramiz (kirill so'zlari o'zbekcha emas)
+    return UZ.test(l === "ru" ? t.replace(/[^\x00-\x7F'ʻ’]+/g, " ") : t) && !(l === "ru" && CYR.test(t) && !/\b[a-z]*[og]['ʻ’][a-z]+/i.test(t));
+  };
+  let checked = 0;
   for (const l of ["ru", "en"]) {
-    for (const p of paths) {
+    for (const p of [...paths].sort()) {
       const page = await segments(`${BASE}/${l}${p}`);
-      if (page.status !== 200) { pageReport.push([`/${l}${p}`, `HTTP ${page.status}`]); continue; }
+      checked++;
+      if (page.status !== 200) { err(`/${l}${p}`, `HTTP ${page.status}`); continue; }
       if (page.canonical !== `/${l}${p}`) {
-        // Tarjimasi yo'q sahifa: canonical /uz'ga ko'rsatadi (9-kun qarori) -- matn /uz bilan qanchalik bir xil
-        const uz = await segments(`${BASE}/uz${p}`);
-        const uzSet = new Set(uz.segs ?? []);
-        const same = page.segs.filter((s) => uzSet.has(s)).length;
-        pageReport.push([`/${l}${p}`, `tarjima yo'q: canonical ${page.canonical}, matnning ${Math.round((same / Math.max(1, page.segs.length)) * 100)}% /uz bilan bir xil`]);
+        if (p.startsWith("/blog/")) warn(`/${l}${p}`, "maqola tarjimasi yo'q (o'zbekcha ko'rsatiladi, canonical -> /uz) -- content/blog-tarjima.ts");
+        else err(`/${l}${p}`, `tarjima qilinmagan: canonical ${page.canonical}`);
         continue;
       }
-      // Tarjima qilingan sahifa: ichida qolgan o'zbekcha bo'laklarni ko'rsatamiz
-      const left = [...new Set(page.segs.filter((s) => UZ.test(l === "ru" ? s.replace(/[^\x00-\x7F'ʻ’]+/g, " ") : s) && !(l === "ru" && CYR.test(s))))];
-      pageReport.push([`/${l}${p}`, left.length ? `tarjima qilingan, lekin ${left.length} ta o'zbekcha bo'lak qolgan:` : "tarjima qilingan, o'zbekcha bo'lak yo'q"]);
-      for (const s of left.slice(0, 25)) pageReport.push(["", `   · ${s.slice(0, 110)}`]);
+      const left = [...new Set(page.segs.filter((s) => isUz(s, l)))];
+      for (const s of left) err(`/${l}${p}`, `o'zbekcha matn qolgan: ${s.slice(0, 110)}`);
+      pageReport.push([`/${l}${p}`, left.length ? `${left.length} ta o'zbekcha bo'lak` : "ok"]);
     }
   }
+  pageReport.push(["", `jami ${checked} sahifa tekshirildi`]);
 }
 
 if (errors.length) { console.log(`\n== XATO (${errors.length})`); errors.forEach((e) => console.log("  " + e)); }
 if (warns.length) { console.log(`\n== OGOHLANTIRISH (${warns.length})`); warns.forEach((w) => console.log("  " + w)); }
 if (unused.length) console.log(`\n== MA'LUMOT: saytda ishlatilmagan kalitlar (${unused.length}) -- o'chirsa bo'ladi\n  ${unused.join(", ")}`);
 if (pageReport.length) {
-  console.log(`\n== /ru va /en sahifalarida o'zbekcha matn (${BASE})`);
+  console.log(`\n== /ru va /en sahifalari (${BASE})`);
   for (const [path, note] of pageReport) console.log(`  ${path.padEnd(28)} ${note}`);
 }
 console.log(`\nKalitlar: uz ${dicts.uz.size}, ru ${dicts.ru.size}, en ${dicts.en.size}; kodda ishlatilgan ${used.size}; seo.ts sahifalari ${Object.keys(SEO).length}.`);

@@ -12,12 +12,39 @@ import {
 } from "lucide-react";
 import { getStudentDashboardAction } from "@/lib/actions/student-actions";
 import { logoutAction } from "@/lib/actions/auth-actions";
+import { pick } from "@/lib/locale-text";
+import { localizeCourse } from "@/lib/course-i18n";
 import { UserDB } from "@/lib/users-db";
 
+
+const T = {
+  uz: {
+    text: "Matn", images: "Rasmlar", lessons: "dars", prev: "Oldingi dars", next: "Keyingi dars", free: "Bepul", open: "Ochiq",
+    lockedTitle: "Bu dars qulflangan", lockedText: "Bu darsni ko'rish uchun kursni sotib olishingiz kerak.", buyCourse: "Kursni sotib olish →",
+    lessonText: "Dars matni", pdfText: "Dars materiallari PDF formatida tayyorlangan", pdfDownload: "PDF yuklab olish",
+    lessonImages: "Dars rasmlari", image: "Rasm", done: "Tugallandi ✓", markDone: "Dars tugadi ✓", nextLesson: "KEYINGI DARS",
+    nextBtn: "Keyingisi", locked: "Qulflangan", inUzbek: "",
+  },
+  ru: {
+    text: "Текст", images: "Изображения", lessons: "уроков", prev: "Предыдущий урок", next: "Следующий урок", free: "Бесплатно", open: "Открыт",
+    lockedTitle: "Этот урок закрыт", lockedText: "Чтобы посмотреть этот урок, нужно купить курс.", buyCourse: "Купить курс →",
+    lessonText: "Текст урока", pdfText: "Материалы урока в формате PDF", pdfDownload: "Скачать PDF",
+    lessonImages: "Изображения урока", image: "Изображение", done: "Пройден ✓", markDone: "Урок пройден ✓", nextLesson: "СЛЕДУЮЩИЙ УРОК",
+    nextBtn: "Далее", locked: "Закрыт", inUzbek: "Урок проводится на узбекском языке.",
+  },
+  en: {
+    text: "Text", images: "Images", lessons: "lessons", prev: "Previous lesson", next: "Next lesson", free: "Free", open: "Open",
+    lockedTitle: "This lesson is locked", lockedText: "To watch this lesson, you need to buy the course.", buyCourse: "Buy the course →",
+    lessonText: "Lesson text", pdfText: "Lesson materials in PDF format", pdfDownload: "Download PDF",
+    lessonImages: "Lesson images", image: "Image", done: "Completed ✓", markDone: "Mark as done ✓", nextLesson: "NEXT LESSON",
+    nextBtn: "Next", locked: "Locked", inUzbek: "This lesson is taught in Uzbek.",
+  },
+};
 
 function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: string }) {
   const params = useParams();
   const locale = (params?.locale as string) || "uz";
+  const t = pick(T, locale);
   const router = useRouter();
   const [user, setUser] = useState<UserDB | null>(null);
   const [course, setCourse] = useState<Course | null>(null);
@@ -40,8 +67,11 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
 
     getLessonByIdAction(courseId, lessonId).then((result) => {
       if (!result) { router.push(`/${locale}/dashboard`); return; }
-      setLesson(result.lesson);
-      setCourse(result.course);
+      // Kurs va dars nomlari joriy tilda; dars matni va videosi o'zbekcha qoladi
+      const localized = localizeCourse(result.course, locale);
+      const localizedLesson = localized.modules.flatMap((m) => m.lessons).find((l) => l.id === result.lesson.id);
+      setLesson(localizedLesson ? { ...result.lesson, title: localizedLesson.title } : result.lesson);
+      setCourse(localized);
 
       if (result.lesson.videoUrl) setActiveTab("video");
       else if (result.lesson.text) setActiveTab("text");
@@ -91,9 +121,9 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
 
   const tabs = [
     { key: "video" as const, label: "Video", icon: Play, show: !!lesson.videoUrl },
-    { key: "text" as const, label: "Matn", icon: BookOpen, show: !!lesson.text },
+    { key: "text" as const, label: t.text, icon: BookOpen, show: !!lesson.text },
     { key: "pdf" as const, label: "PDF", icon: FileText, show: !!lesson.pdfUrl },
-    { key: "images" as const, label: "Rasmlar", icon: ImageIcon, show: !!(lesson.images && lesson.images.length > 0) },
+    { key: "images" as const, label: t.images, icon: ImageIcon, show: !!(lesson.images && lesson.images.length > 0) },
   ].filter((t) => t.show);
 
   return (
@@ -119,7 +149,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
           <div className="flex items-center gap-3 shrink-0">
             {/* Progress */}
             <div className="hidden sm:flex flex-col items-end gap-1">
-              <span className="text-slate-400 text-xs font-mono">{totalDone}/{totalLessons} dars</span>
+              <span className="text-slate-400 text-xs font-mono">{totalDone}/{totalLessons} {t.lessons}</span>
               <div className="w-24 h-1.5 bg-slate-800 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full transition-all duration-300"
@@ -130,7 +160,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
             {/* Nav */}
             <div className="flex items-center gap-1">
               <Link href={prevLesson ? `/${locale}/dashboard/${courseId}/${prevLesson.id}` : "#"}>
-                <button disabled={!prevLesson} aria-label="Oldingi dars" className="w-8 h-8 bg-slate-800 hover:bg-slate-700 rounded-lg flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                <button disabled={!prevLesson} aria-label={t.prev} className="w-8 h-8 bg-slate-800 hover:bg-slate-700 rounded-lg flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
                   <ChevronLeft className="w-4 h-4 text-slate-300" />
                 </button>
               </Link>
@@ -138,7 +168,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
                 {currentIndex + 1}/{allLessons.length}
               </span>
               <Link href={nextLesson && nextCanAccess ? `/${locale}/dashboard/${courseId}/${nextLesson.id}` : "#"}>
-                <button disabled={!nextLesson || !nextCanAccess} aria-label="Keyingi dars" className="w-8 h-8 bg-slate-800 hover:bg-slate-700 rounded-lg flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                <button disabled={!nextLesson || !nextCanAccess} aria-label={t.next} className="w-8 h-8 bg-slate-800 hover:bg-slate-700 rounded-lg flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
                   <ChevronRight className="w-4 h-4 text-slate-300" />
                 </button>
               </Link>
@@ -158,15 +188,16 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
           <div>
             <div className="flex items-center gap-2 mb-2">
               {lesson.isFree && (
-                <span className="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-1 rounded-full font-semibold">Bepul</span>
+                <span className="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-1 rounded-full font-semibold">{t.free}</span>
               )}
               {canAccess && (
                 <span className="text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2.5 py-1 rounded-full font-semibold flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3" /> Ochiq
+                  <CheckCircle className="w-3 h-3" /> {t.open}
                 </span>
               )}
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-white">{lesson.title}</h1>
+            {t.inUzbek && <p className="text-sm text-amber-400 mt-1">{t.inUzbek}</p>}
             <div className="flex items-center gap-3 mt-2 text-sm text-slate-400">
               <span className="flex items-center gap-1"><Clock className="w-4 h-4" />{lesson.duration}</span>
               {tabs.map((t) => (
@@ -185,12 +216,12 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
             <div className="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center mx-auto">
               <Lock className="w-8 h-8 text-slate-600" />
             </div>
-            <h2 className="text-xl font-bold text-white">Bu dars qulflangan</h2>
+            <h2 className="text-xl font-bold text-white">{t.lockedTitle}</h2>
             <p className="text-slate-400 max-w-sm mx-auto">
-              Bu darsni ko'rish uchun kursni sotib olishingiz kerak.
+              {t.lockedText}
             </p>
             <Link href={`/${locale}/dashboard`} className="inline-block bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold px-6 py-3 rounded-xl hover:opacity-90 transition-all">
-                Kursni sotib olish →
+                {t.buyCourse}
               </Link>
           </div>
         ) : (
@@ -232,7 +263,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
                 {lesson.text && (
                   <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
                     <h3 className="text-base font-bold text-white mb-3 flex items-center gap-2">
-                      <BookOpen className="w-4 h-4 text-blue-400" /> Dars matni
+                      <BookOpen className="w-4 h-4 text-blue-400" /> {t.lessonText}
                     </h3>
                     <p className="text-slate-300 leading-relaxed text-sm">{lesson.text}</p>
                   </div>
@@ -244,7 +275,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
             {activeTab === "text" && lesson.text && (
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8">
                 <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                  <BookOpen className="w-5 h-5 text-blue-400" /> Dars matni
+                  <BookOpen className="w-5 h-5 text-blue-400" /> {t.lessonText}
                 </h3>
                 <div className="prose prose-invert max-w-none">
                   <p className="text-slate-300 leading-relaxed text-base">{lesson.text}</p>
@@ -259,9 +290,9 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
                   <FileText className="w-8 h-8 text-red-400" />
                 </div>
                 <h3 className="text-lg font-bold text-white">{lesson.title} — PDF</h3>
-                <p className="text-slate-400 text-sm">Dars materiallari PDF formatida tayyorlangan</p>
+                <p className="text-slate-400 text-sm">{t.pdfText}</p>
                 <a href={lesson.pdfUrl} download className="inline-flex items-center gap-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 font-bold px-6 py-3 rounded-xl transition-all">
-                  <Download className="w-4 h-4" /> PDF Yuklab olish
+                  <Download className="w-4 h-4" /> {t.pdfDownload}
                 </a>
               </div>
             )}
@@ -270,11 +301,11 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
             {activeTab === "images" && lesson.images && lesson.images.length > 0 && (
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <ImageIcon className="w-5 h-5 text-purple-400" /> Dars rasmlari
+                  <ImageIcon className="w-5 h-5 text-purple-400" /> {t.lessonImages}
                 </h3>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {lesson.images.map((img, i) => (
-                     <img key={i} src={img} alt={`Rasm ${i + 1}`} loading="lazy" decoding="async" className="w-full rounded-xl border border-slate-700 object-cover" />
+                     <img key={i} src={img} alt={`${t.image} ${i + 1}`} loading="lazy" decoding="async" className="w-full rounded-xl border border-slate-700 object-cover" />
                   ))}
                 </div>
               </div>
@@ -292,7 +323,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
                 }`}
               >
                 <CheckCircle className="w-5 h-5" />
-                {isDone ? "Tugallandi ✓" : "Dars tugadi ✓"}
+                {isDone ? t.done : t.markDone}
               </button>
             </div>
 
@@ -300,7 +331,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
             {nextLesson && (
               <div className={`border rounded-2xl p-5 flex items-center justify-between gap-4 ${nextCanAccess ? "bg-slate-900 border-slate-800" : "bg-slate-900/50 border-slate-800/50 opacity-60"}`}>
                 <div>
-                  <p className="text-xs text-slate-500 font-semibold mb-1">KEYINGI DARS</p>
+                  <p className="text-xs text-slate-500 font-semibold mb-1">{t.nextLesson}</p>
                   <p className="text-white font-bold">{nextLesson.title}</p>
                   <p className="text-slate-400 text-sm flex items-center gap-1 mt-0.5">
                     <Clock className="w-3.5 h-3.5" />{nextLesson.duration}
@@ -308,12 +339,12 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
                 </div>
                 {nextCanAccess ? (
                   <Link href={`/${locale}/dashboard/${courseId}/${nextLesson.id}`} className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-5 py-2.5 rounded-xl transition-all flex items-center gap-2 shrink-0">
-                      Keyingisi <ChevronRight className="w-4 h-4" />
+                      {t.nextBtn} <ChevronRight className="w-4 h-4" />
                     </Link>
                 ) : (
                   <div className="flex items-center gap-2 text-slate-500 shrink-0">
                     <Lock className="w-4 h-4" />
-                    <span className="text-sm font-medium">Qulflangan</span>
+                    <span className="text-sm font-medium">{t.locked}</span>
                   </div>
                 )}
               </div>

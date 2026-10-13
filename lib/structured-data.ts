@@ -117,8 +117,9 @@ export function courseLd(course: Course, locale: string) {
   };
 }
 
+// post -- sahifada ko'rsatilgan tildagi matn; locale -- shu matnning tili (tarjimasi bo'lmasa "uz").
 export function blogPostingLd(post: BlogPost, locale: string) {
-  const url = `${SITE_URL}/uz/blog/${post.slug}`;
+  const url = `${SITE_URL}/${asLoc(locale)}/blog/${post.slug}`;
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -126,7 +127,7 @@ export function blogPostingLd(post: BlogPost, locale: string) {
     description: post.excerpt,
     datePublished: post.publishedAt,
     dateModified: post.updatedAt ?? post.publishedAt,
-    inLanguage: "uz",
+    inLanguage: asLoc(locale),
     mainEntityOfPage: url,
     url,
     image: post.coverImage || `${SITE_URL}/${asLoc(locale)}/opengraph-image`,
