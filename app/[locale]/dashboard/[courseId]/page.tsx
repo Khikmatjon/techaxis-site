@@ -8,10 +8,9 @@ import { Course, Module, getTotalLessons } from "@/lib/courses";
 import { getCourseByIdAction } from "@/lib/actions/courses-actions";
 import {
   Play, Lock, FileText, Image as ImageIcon, ChevronLeft, Clock, BookOpen,
-  CheckCircle, LogOut, Zap, Trophy
+  CheckCircle, Trophy
 } from "lucide-react";
 import { getStudentDashboardAction } from "@/lib/actions/student-actions";
-import { logoutAction } from "@/lib/actions/auth-actions";
 import { Avatar } from "@/components/shared/avatar";
 import { UserDB } from "@/lib/users-db";
 import { pick, formatNumber } from "@/lib/locale-text";
@@ -23,21 +22,21 @@ const T = {
     congrats: "Tabriklaymiz! Siz sertifikat olishga haqlisiz.", program: "Kurs dasturi", modules: "modul",
     free: "Bepul", image: "Rasm", teacher: "O'qituvchi", author: "TechAxis muallifi", tags: "Yo'nalishlar",
     or: "yoki", buy: "Sotib olish →", enrolled: "Siz bu kursga yozilgansiz!", access: "Barcha darslarga kirish imkoniyatingiz bor.",
-    inUzbek: "",
+    inUzbek: "", backToDashboard: "Kabinetga qaytish",
   },
   ru: {
     open: "✅ Открыт", locked: "🔒 Закрыт", lessons: "уроков", progress: "Прогресс",
     congrats: "Поздравляем! Вы можете получить сертификат.", program: "Программа курса", modules: "модулей",
     free: "Бесплатно", image: "Изображение", teacher: "Преподаватель", author: "Автор TechAxis", tags: "Направления",
     or: "или", buy: "Купить →", enrolled: "Вы записаны на этот курс!", access: "У вас есть доступ ко всем урокам.",
-    inUzbek: "Уроки на узбекском языке.",
+    inUzbek: "Уроки на узбекском языке.", backToDashboard: "Назад в кабинет",
   },
   en: {
     open: "✅ Open", locked: "🔒 Locked", lessons: "lessons", progress: "Progress",
     congrats: "Congratulations! You are eligible for a certificate.", program: "Course program", modules: "modules",
     free: "Free", image: "Image", teacher: "Instructor", author: "TechAxis author", tags: "Topics",
     or: "or", buy: "Buy →", enrolled: "You are enrolled in this course!", access: "You have access to all lessons.",
-    inUzbek: "Lessons are taught in Uzbek.",
+    inUzbek: "Lessons are taught in Uzbek.", backToDashboard: "Back to dashboard",
   },
 };
 
@@ -82,9 +81,6 @@ function CourseContent({ courseId }: { courseId: string }) {
     }
   }, [user, courseId]);
 
-  async function handleLogout() {
-    await logoutAction();
-  }
 
   function toggleModule(id: string) {
     setOpenModules((prev) => {
@@ -103,72 +99,49 @@ function CourseContent({ courseId }: { courseId: string }) {
   const isCompleted = progressPercent === 100;
 
   return (
-    <div className="dark min-h-screen bg-slate-950">
-      {/* Header */}
-      <div className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-800 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link href={`/${locale}/dashboard`} className="text-slate-400 hover:text-white transition-colors">
-              <ChevronLeft className="w-5 h-5" />
-            </Link>
-            <Link href={`/${locale}`} className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg flex items-center justify-center">
-                <Zap className="w-3.5 h-3.5 text-white" />
-              </div>
-              <span className="text-base font-black text-white hidden sm:block">Tech<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Axis</span></span>
-            </Link>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center gap-2 bg-slate-800 rounded-full px-3 py-1.5">
-              <Avatar name={user.name} className="w-6 h-6 rounded-full text-[10px]" />
-              <span className="text-slate-300 text-sm font-medium">{user.name}</span>
-            </div>
-            <button onClick={handleLogout} className="flex items-center gap-1.5 text-slate-400 hover:text-red-400 transition-colors text-sm">
-              <LogOut className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </div>
-
+    <div className="min-h-screen bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid lg:grid-cols-3 gap-8">
+        {/* Alohida sarlavha qatori yo'q (logo va Chiqish saytning menyusida) -- faqat orqaga havola */}
+        <Link href={`/${locale}/dashboard`} className="inline-flex items-center gap-1.5 mb-6 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+          <ChevronLeft className="w-4 h-4" /> {t.backToDashboard}
+        </Link>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
           {/* Chap: Kurs info + Modullar */}
           <div className="lg:col-span-2 space-y-6">
 
             {/* Kurs header */}
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+            <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
               <div className="relative h-52 overflow-hidden">
                 <Image src={course.thumbnail} alt={course.title} fill sizes="(min-width: 1024px) 66vw, 100vw" className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-slate-900 via-slate-50/50 dark:via-slate-900/50 to-transparent" />
                 <div className="absolute bottom-5 left-6 right-6">
                   <div className={`inline-flex text-xs font-semibold px-2.5 py-1 rounded-full mb-2 ${
-                    isEnrolled ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "bg-red-500/20 text-red-400 border border-red-500/30"
+                    isEnrolled ? "bg-emerald-500/20 text-emerald-800 dark:text-emerald-400 border border-emerald-500/30" : "bg-red-500/20 text-red-800 dark:text-red-400 border border-red-500/30"
                   }`}>
                     {isEnrolled ? t.open : t.locked}
                   </div>
-                  <h1 className="text-2xl font-black text-white">{course.title}</h1>
-                  <p className="text-slate-300 text-sm mt-1">{course.subtitle}</p>
+                  <h1 className="text-2xl font-black text-slate-900 dark:text-white">{course.title}</h1>
+                  <p className="text-slate-700 dark:text-slate-300 text-sm mt-1">{course.subtitle}</p>
                 </div>
               </div>
 
               <div className="p-6">
-                <p className="text-slate-400 text-sm leading-relaxed mb-5">{course.description}</p>
-                <div className="flex flex-wrap gap-4 text-sm text-slate-400 mb-5">
-                  <span className="flex items-center gap-1.5"><BookOpen className="w-4 h-4 text-purple-400" /> {totalLessons} {t.lessons}</span>
-                  <span className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-emerald-400" /> {course.duration}</span>
+                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-5">{course.description}</p>
+                <div className="flex flex-wrap gap-4 text-sm text-slate-600 dark:text-slate-400 mb-5">
+                  <span className="flex items-center gap-1.5"><BookOpen className="w-4 h-4 text-purple-700 dark:text-purple-400" /> {totalLessons} {t.lessons}</span>
+                  <span className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-emerald-700 dark:text-emerald-400" /> {course.duration}</span>
                 </div>
 
                 {isEnrolled && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-slate-400">{t.progress}</span>
-                      <span className={`font-bold ${isCompleted ? "text-emerald-400" : "text-white"}`}>
+                      <span className="text-slate-600 dark:text-slate-400">{t.progress}</span>
+                      <span className={`font-bold ${isCompleted ? "text-emerald-700 dark:text-emerald-400" : "text-slate-900 dark:text-white"}`}>
                         {totalDone}/{totalLessons} {t.lessons} ({progressPercent}%)
                       </span>
                     </div>
-                    <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div className="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full transition-all duration-500 ${isCompleted ? "bg-emerald-500" : "bg-gradient-to-r from-cyan-500 to-blue-600"}`}
                         style={{ width: `${progressPercent}%` }}
@@ -176,8 +149,8 @@ function CourseContent({ courseId }: { courseId: string }) {
                     </div>
                     {isCompleted && (
                       <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 mt-3">
-                        <Trophy className="w-5 h-5 text-yellow-400 shrink-0" />
-                        <p className="text-emerald-400 text-sm font-bold">{t.congrats}</p>
+                        <Trophy className="w-5 h-5 text-yellow-800 dark:text-yellow-400 shrink-0" />
+                        <p className="text-emerald-700 dark:text-emerald-400 text-sm font-bold">{t.congrats}</p>
                       </div>
                     )}
                   </div>
@@ -186,25 +159,25 @@ function CourseContent({ courseId }: { courseId: string }) {
             </div>
 
             {/* Modullar */}
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-              <div className="p-5 border-b border-slate-800">
-                <h2 className="text-lg font-bold text-white">{t.program}</h2>
-                <p className="text-slate-400 text-sm">{course.modules.length} {t.modules} • {totalLessons} {t.lessons}{t.inUzbek && ` • ${t.inUzbek}`}</p>
+            <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+              <div className="p-5 border-b border-slate-200 dark:border-slate-800">
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.program}</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">{course.modules.length} {t.modules} • {totalLessons} {t.lessons}{t.inUzbek && ` • ${t.inUzbek}`}</p>
               </div>
 
-              <div className="divide-y divide-slate-800">
+              <div className="divide-y divide-slate-200 dark:divide-slate-800">
                 {course.modules.map((mod: Module, mi: number) => {
                   const modDone = mod.lessons.filter(l => completedLessons.includes(l.id)).length;
                   return (
                     <div key={mod.id}>
                       <button
                         onClick={() => toggleModule(mod.id)}
-                        className="w-full flex items-center justify-between p-5 hover:bg-slate-800/50 transition-colors text-left"
+                        className="w-full flex items-center justify-between p-5 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors text-left"
                       >
                         <div className="flex items-center gap-3">
-                          <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${modDone === mod.lessons.length && mod.lessons.length > 0 ? "bg-emerald-500/20 text-emerald-400" : "bg-blue-500/20 text-blue-400"}`}>{mi + 1}</div>
+                          <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${modDone === mod.lessons.length && mod.lessons.length > 0 ? "bg-emerald-500/20 text-emerald-800 dark:text-emerald-400" : "bg-blue-500/20 text-blue-800 dark:text-blue-400"}`}>{mi + 1}</div>
                           <div>
-                            <div className="text-white font-semibold text-sm">{mod.title}</div>
+                            <div className="text-slate-900 dark:text-white font-semibold text-sm">{mod.title}</div>
                             <div className="text-slate-500 text-xs">{modDone}/{mod.lessons.length} {t.lessons}</div>
                           </div>
                         </div>
@@ -212,19 +185,19 @@ function CourseContent({ courseId }: { courseId: string }) {
                       </button>
 
                       {openModules.has(mod.id) && (
-                        <div className="border-t border-slate-800/50">
+                        <div className="border-t border-slate-200/50 dark:border-slate-800/50">
                           {mod.lessons.map((lesson, li) => {
                             const canAccess = isEnrolled || lesson.isFree;
                             const isDone = completedLessons.includes(lesson.id);
                             return (
-                              <div key={lesson.id} className={`flex items-center gap-4 px-5 py-3.5 hover:bg-slate-800/30 transition-colors ${!canAccess ? "opacity-60" : ""}`}>
-                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold ${isDone ? "bg-emerald-500/20 text-emerald-400" : "bg-slate-800 text-slate-400"}`}>
+                              <div key={lesson.id} className={`flex items-center gap-4 px-5 py-3.5 hover:bg-slate-100/30 dark:hover:bg-slate-800/30 transition-colors ${!canAccess ? "opacity-60" : ""}`}>
+                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold ${isDone ? "bg-emerald-500/20 text-emerald-800 dark:text-emerald-400" : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"}`}>
                                   {isDone ? <CheckCircle className="w-4 h-4" /> : `${mi + 1}.${li + 1}`}
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-center gap-2">
-                                    <span className={`text-sm font-medium truncate ${isDone ? "text-emerald-400" : "text-slate-300"}`}>{lesson.title}</span>
-                                    {lesson.isFree && <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-semibold shrink-0">{t.free}</span>}
+                                    <span className={`text-sm font-medium truncate ${isDone ? "text-emerald-700 dark:text-emerald-400" : "text-slate-700 dark:text-slate-300"}`}>{lesson.title}</span>
+                                    {lesson.isFree && <span className="text-xs bg-emerald-500/20 text-emerald-800 dark:text-emerald-400 px-2 py-0.5 rounded-full font-semibold shrink-0">{t.free}</span>}
                                   </div>
                                   <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
                                     <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{lesson.duration}</span>
@@ -235,11 +208,11 @@ function CourseContent({ courseId }: { courseId: string }) {
                                 </div>
                                 {canAccess ? (
                                   <Link href={`/${locale}/dashboard/${course.id}/${lesson.id}`} className={`shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isDone ? "bg-emerald-500/20 hover:bg-emerald-500/40" : "bg-blue-500/20 hover:bg-blue-500/40"}`}>
-                                      {isDone ? <CheckCircle className="w-3.5 h-3.5 text-emerald-400" /> : <Play className="w-3.5 h-3.5 text-blue-400" />}
+                                      {isDone ? <CheckCircle className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" /> : <Play className="w-3.5 h-3.5 text-blue-700 dark:text-blue-400" />}
                                     </Link>
                                 ) : (
-                                  <div className="shrink-0 w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center">
-                                    <Lock className="w-3.5 h-3.5 text-slate-600" />
+                                  <div className="shrink-0 w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center">
+                                    <Lock className="w-3.5 h-3.5 text-slate-500 dark:text-slate-600" />
                                   </div>
                                 )}
                               </div>
@@ -256,30 +229,30 @@ function CourseContent({ courseId }: { courseId: string }) {
 
           {/* O'ng: Instruktur + Taglar */}
           <div className="space-y-5">
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
-              <h3 className="text-white font-bold mb-4">{t.teacher}</h3>
+            <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5">
+              <h3 className="text-slate-900 dark:text-white font-bold mb-4">{t.teacher}</h3>
               <div className="flex items-center gap-3">
-                <Avatar name={course.instructor} className="w-12 h-12 rounded-full border-2 border-slate-700" />
+                <Avatar name={course.instructor} className="w-12 h-12 rounded-full border-2 border-slate-300 dark:border-slate-700" />
                 <div>
-                  <div className="text-white font-semibold">{course.instructor}</div>
-                  <div className="text-slate-400 text-sm">{t.author}</div>
+                  <div className="text-slate-900 dark:text-white font-semibold">{course.instructor}</div>
+                  <div className="text-slate-600 dark:text-slate-400 text-sm">{t.author}</div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
-              <h3 className="text-white font-bold mb-4">{t.tags}</h3>
+            <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5">
+              <h3 className="text-slate-900 dark:text-white font-bold mb-4">{t.tags}</h3>
               <div className="flex flex-wrap gap-2">
                 {course.tags.map((tag) => (
-                  <span key={tag} className="bg-slate-800 text-slate-300 text-xs font-semibold px-3 py-1.5 rounded-lg">{tag}</span>
+                  <span key={tag} className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold px-3 py-1.5 rounded-lg">{tag}</span>
                 ))}
               </div>
             </div>
 
             {!isEnrolled && (
               <div className="bg-gradient-to-br from-blue-600/20 to-cyan-500/10 border border-blue-500/30 rounded-2xl p-5">
-                <div className="text-3xl font-black text-white mb-1">{formatNumber(course.priceUZS, locale)} UZS</div>
-                <div className="text-slate-400 text-sm mb-4">{t.or} ${course.price}</div>
+                <div className="text-3xl font-black text-slate-900 dark:text-white mb-1">{formatNumber(course.priceUZS, locale)} UZS</div>
+                <div className="text-slate-600 dark:text-slate-400 text-sm mb-4">{t.or} ${course.price}</div>
                 <Link href={`/${locale}/dashboard`} className="block text-center w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold py-3 rounded-xl hover:opacity-90 transition-all">
                     {t.buy}
                   </Link>
@@ -288,9 +261,9 @@ function CourseContent({ courseId }: { courseId: string }) {
 
             {isEnrolled && (
               <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-5">
-                <CheckCircle className="w-8 h-8 text-emerald-500 mb-2" />
-                <p className="text-emerald-400 font-bold">{t.enrolled}</p>
-                <p className="text-slate-400 text-sm mt-1">{t.access}</p>
+                <CheckCircle className="w-8 h-8 text-emerald-700 dark:text-emerald-500 mb-2" />
+                <p className="text-emerald-700 dark:text-emerald-400 font-bold">{t.enrolled}</p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t.access}</p>
               </div>
             )}
           </div>

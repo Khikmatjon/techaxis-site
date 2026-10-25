@@ -164,7 +164,7 @@ export default async function SolidworksPage({ params }: { params: Promise<{ loc
           <h1 className="text-4xl sm:text-5xl font-bold mb-4 font-display">SOLIDWORKS Design</h1>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {swOffers.map((offer) => (
             <div key={offer.name} className={`relative p-8 rounded-[40px] border-2 ${offer.recommended ? 'border-red-500 shadow-2xl scale-105 z-10' : 'border-slate-100 dark:border-slate-800'} bg-white dark:bg-slate-900`}>
               {offer.recommended && <span className="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-500 text-white px-6 py-1 rounded-full text-sm font-bold uppercase">{t.recommended}</span>}

@@ -18,7 +18,7 @@ const FIELDS: Field[] = [
 ];
 
 const inputClass =
-  "w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all";
+  "w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all";
 
 export default function StatsManager() {
   const [values, setValues] = useState<Record<string, string>>({
@@ -64,7 +64,7 @@ export default function StatsManager() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-20 text-slate-400">
+      <div className="flex items-center justify-center py-20 text-slate-600 dark:text-slate-400">
         <Loader2 className="w-6 h-6 animate-spin" />
       </div>
     );
@@ -72,16 +72,16 @@ export default function StatsManager() {
 
   return (
     <div className="max-w-2xl">
-      <div className="flex items-start gap-3 bg-blue-500/10 border border-blue-500/30 text-blue-300 text-sm rounded-xl px-4 py-3 mb-6">
+      <div className="flex items-start gap-3 bg-blue-500/10 border border-blue-500/30 text-blue-700 dark:text-blue-300 text-sm rounded-xl px-4 py-3 mb-6">
         <Info className="w-5 h-5 shrink-0 mt-0.5" />
         <p>Maydonni bo&apos;sh qoldirsangiz, mos raqam saytda umuman ko&apos;rinmaydi (faqat rostini yozing).</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
-        <div className="grid sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {FIELDS.map((f) => (
             <div key={f.key}>
-              <label className="block text-sm font-bold text-slate-300 mb-1.5">{f.label}</label>
+              <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1.5">{f.label}</label>
               <input
                 type="number"
                 min={0}
@@ -96,7 +96,7 @@ export default function StatsManager() {
           ))}
 
           <div>
-            <label className="block text-sm font-bold text-slate-300 mb-1.5">O&apos;rtacha reyting</label>
+            <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1.5">O&apos;rtacha reyting</label>
             <input
               type="number"
               min={0}
@@ -111,7 +111,7 @@ export default function StatsManager() {
           </div>
         </div>
 
-        {error && <p className="text-sm font-bold text-red-400">{error}</p>}
+        {error && <p className="text-sm font-bold text-red-700 dark:text-red-400">{error}</p>}
 
         <div className="flex items-center gap-3 pt-2">
           <button
@@ -123,7 +123,7 @@ export default function StatsManager() {
             Saqlash
           </button>
           {saved && (
-            <span className="flex items-center gap-1.5 text-sm font-bold text-emerald-400">
+            <span className="flex items-center gap-1.5 text-sm font-bold text-emerald-700 dark:text-emerald-400">
               <CheckCircle2 className="w-4 h-4" /> Saqlandi, sayt yangilandi
             </span>
           )}

@@ -6,8 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Course, getTotalLessons } from "@/lib/courses";
 import {
-  BookOpen, Lock, Play, Clock, ChevronRight,
-  LogOut, Zap, CheckCircle, AlertCircle, X
+  BookOpen, Lock, Play, Clock, ChevronRight, Zap, CheckCircle, AlertCircle, X
 } from "lucide-react";
 import { getStudentDashboardAction } from "@/lib/actions/student-actions";
 import { getCoursesAction } from "@/lib/actions/courses-actions";
@@ -67,25 +66,25 @@ function PaymentModal({ course, locale, router, onClose }: {
   const t = pick(T, locale);
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md shadow-2xl">
-        <div className="flex items-center justify-between p-6 border-b border-slate-800">
-          <h3 className="text-lg font-bold text-white">{t.enrollTitle}</h3>
-          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
+      <div className="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl w-full max-w-md shadow-2xl">
+        <div className="flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-800">
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white">{t.enrollTitle}</h3>
+          <button onClick={onClose} className="text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <div className="p-6 space-y-5">
-          <div className="bg-slate-800 rounded-xl p-4 flex items-center gap-3">
+          <div className="bg-slate-100 dark:bg-slate-800 rounded-xl p-4 flex items-center gap-3">
             <Image src={course.thumbnail} alt={course.title} width={56} height={56} className="w-14 h-14 rounded-lg object-cover" />
             <div>
-              <p className="text-white font-semibold text-sm">{course.title}</p>
-              <p className="text-2xl font-black text-blue-400">{formatNumber(course.priceUZS, locale)} UZS</p>
+              <p className="text-slate-900 dark:text-white font-semibold text-sm">{course.title}</p>
+              <p className="text-2xl font-black text-blue-700 dark:text-blue-400">{formatNumber(course.priceUZS, locale)} UZS</p>
             </div>
           </div>
 
           <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
-            <p className="text-blue-300 text-sm">
+            <p className="text-blue-700 dark:text-blue-300 text-sm">
               <strong>{t.payMethod}</strong>{t.payText(PAYMENT_CARD.number)}
             </p>
           </div>
@@ -109,27 +108,27 @@ function CourseCard({ course, isEnrolled, isPending, locale, onBuy }: {
   const totalLessons = getTotalLessons(course);
   const t = pick(T, locale);
   const levelColors = {
-    "Boshlang'ich": "bg-emerald-500/20 text-emerald-400",
-    "O'rta": "bg-yellow-500/20 text-yellow-400",
-    "Yuqori": "bg-red-500/20 text-red-400",
+    "Boshlang'ich": "bg-emerald-500/20 text-emerald-800 dark:text-emerald-400",
+    "O'rta": "bg-yellow-500/20 text-yellow-800 dark:text-yellow-400",
+    "Yuqori": "bg-red-500/20 text-red-800 dark:text-red-400",
   };
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-black/30">
+    <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-black/30">
       {/* Rasm */}
       <div className="relative h-44 overflow-hidden">
         <Image src={course.thumbnail} alt={course.title} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-50/80 dark:from-slate-900/80 to-transparent" />
         {isEnrolled ? (
-          <div className="absolute top-3 right-3 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+          <div className="absolute top-3 right-3 bg-emerald-700 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
             <CheckCircle className="w-3.5 h-3.5" /> {t.open}
           </div>
         ) : isPending ? (
-          <div className="absolute top-3 right-3 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+          <div className="absolute top-3 right-3 bg-amber-700 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
             <Clock className="w-3.5 h-3.5" /> {t.pending}
           </div>
         ) : (
-          <div className="absolute top-3 right-3 bg-slate-800/80 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+          <div className="absolute top-3 right-3 bg-slate-100/80 dark:bg-slate-800/80 backdrop-blur-sm text-slate-900 dark:text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
             <Lock className="w-3.5 h-3.5" /> {t.locked}
           </div>
         )}
@@ -140,8 +139,8 @@ function CourseCard({ course, isEnrolled, isPending, locale, onBuy }: {
 
       {/* Kontent */}
       <div className="p-5 space-y-3">
-        <h3 className="text-white font-bold text-lg leading-snug">{course.title}</h3>
-        <p className="text-slate-400 text-sm leading-relaxed line-clamp-2">{course.subtitle}</p>
+        <h3 className="text-slate-900 dark:text-white font-bold text-lg leading-snug">{course.title}</h3>
+        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed line-clamp-2">{course.subtitle}</p>
 
         {/* Stats */}
         <div className="flex items-center gap-4 text-xs text-slate-500 font-medium">
@@ -150,22 +149,22 @@ function CourseCard({ course, isEnrolled, isPending, locale, onBuy }: {
         </div>
 
         {/* Instructor */}
-        <div className="flex items-center gap-2 pt-2 border-t border-slate-800">
+        <div className="flex items-center gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
           <Avatar name={course.instructor} className="w-7 h-7 rounded-full text-[10px]" />
-          <span className="text-slate-400 text-xs">{course.instructor}</span>
+          <span className="text-slate-600 dark:text-slate-400 text-xs">{course.instructor}</span>
         </div>
 
         {/* Tugma */}
         {isEnrolled ? (
-          <Link href={`/${locale}/dashboard/${course.id}`} className="w-full bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-400 font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2">
+          <Link href={`/${locale}/dashboard/${course.id}`} className="w-full bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-800 dark:text-emerald-400 font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2">
               <Play className="w-4 h-4" /> {t.continue} <ChevronRight className="w-4 h-4" />
             </Link>
         ) : isPending ? (
-          <button disabled className="w-full bg-amber-500/10 border border-amber-500/20 text-amber-400 font-bold py-2.5 rounded-xl cursor-not-allowed flex items-center justify-center gap-2">
+          <button disabled className="w-full bg-amber-500/10 border border-amber-500/20 text-amber-800 dark:text-amber-400 font-bold py-2.5 rounded-xl cursor-not-allowed flex items-center justify-center gap-2">
             <Clock className="w-4 h-4" /> {t.waitAdmin}
           </button>
         ) : (
-          <button onClick={onBuy} className="w-full bg-gradient-to-r from-cyan-500/20 to-blue-600/20 hover:from-cyan-500/30 hover:to-blue-600/30 border border-blue-500/30 text-blue-400 font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2">
+          <button onClick={onBuy} className="w-full bg-gradient-to-r from-cyan-500/20 to-blue-600/20 hover:from-cyan-500/30 hover:to-blue-600/30 border border-blue-500/30 text-blue-700 dark:text-blue-400 font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2">
             <Lock className="w-4 h-4" />
             {formatNumber(course.priceUZS, locale)} UZS — {t.buy}
           </button>
@@ -219,12 +218,12 @@ function DashboardContent() {
 
   if (errorMsg) {
     return (
-      <div className="dark min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-6 p-4 text-center">
+      <div className="min-h-screen bg-white dark:bg-slate-950 flex flex-col items-center justify-center gap-6 p-4 text-center">
         <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mb-2">
-          <AlertCircle className="w-8 h-8 text-red-500" />
+          <AlertCircle className="w-8 h-8 text-red-700 dark:text-red-500" />
         </div>
-        <h2 className="text-xl font-bold text-white">{t.error}</h2>
-        <p className="text-slate-400 text-sm max-w-sm">{errorMsg}</p>
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white">{t.error}</h2>
+        <p className="text-slate-600 dark:text-slate-400 text-sm max-w-sm">{errorMsg}</p>
         <button 
           onClick={loadData}
           className="mt-4 px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-medium transition-colors"
@@ -233,7 +232,7 @@ function DashboardContent() {
         </button>
         <button 
           onClick={handleLogout}
-          className="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-medium transition-colors"
+          className="px-6 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors"
         >
           {t.signOut}
         </button>
@@ -243,13 +242,13 @@ function DashboardContent() {
 
   if (!user) {
     return (
-      <div className="dark min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-6 p-4">
+      <div className="min-h-screen bg-white dark:bg-slate-950 flex flex-col items-center justify-center gap-6 p-4">
         <div className="relative">
            <div className="w-16 h-16 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
-           <Zap className="absolute inset-0 m-auto w-6 h-6 text-blue-500 animate-pulse" />
+           <Zap className="absolute inset-0 m-auto w-6 h-6 text-blue-700 dark:text-blue-500 animate-pulse" />
         </div>
         <div className="text-center space-y-2">
-           <h2 className="text-xl font-bold text-white">{t.loading}</h2>
+           <h2 className="text-xl font-bold text-slate-900 dark:text-white">{t.loading}</h2>
            <p className="text-slate-500 text-sm">{t.loadingText}</p>
         </div>
       </div>
@@ -260,10 +259,10 @@ function DashboardContent() {
   const pendingCount = user.pendingPayments?.length || 0;
 
   return (
-    <div className="dark min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-white dark:bg-slate-950">
       {/* Toast */}
       {toast && (
-        <div className="fixed top-6 right-6 z-50 bg-emerald-500 text-white px-5 py-3 rounded-xl shadow-xl font-semibold text-sm animate-fade-in">
+        <div className="fixed top-6 right-6 z-50 bg-emerald-700 text-white px-5 py-3 rounded-xl shadow-xl font-semibold text-sm animate-fade-in">
           ✅ {toast}
         </div>
       )}
@@ -278,50 +277,25 @@ function DashboardContent() {
         />
       )}
 
-      {/* Header */}
-      <div className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-800 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <Link href={`/${locale}`} className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg flex items-center justify-center">
-              <Zap className="w-4 h-4 text-white" />
-            </div>
-            <span className="text-lg font-black text-white">Tech<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Axis</span></span>
-          </Link>
-
-          <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center gap-2 bg-slate-800 rounded-full px-3 py-1.5">
-              <Avatar name={user.name} className="w-6 h-6 rounded-full text-[10px]" />
-              <span className="text-slate-300 text-sm font-medium">{user.name}</span>
-            </div>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-1.5 text-slate-400 hover:text-red-400 transition-colors text-sm font-medium"
-            >
-              <LogOut className="w-4 h-4" />
-              <span className="hidden sm:inline">{t.logout}</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
+      {/* Alohida sarlavha qatori yo'q: saytning menyusida Kabinetim, Sozlamalar va Chiqish bor. */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Salom */}
         <div className="mb-8">
-          <h1 className="text-3xl font-black text-white mb-1">
+          <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-1">
             {t.hello}, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">{user.name.split(" ")[0]}</span>! 👋
           </h1>
-          <p className="text-slate-400">{t.welcome}{t.inUzbek && ` ${t.inUzbek}`}</p>
+          <p className="text-slate-600 dark:text-slate-400">{t.welcome}{t.inUzbek && ` ${t.inUzbek}`}</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
           {[
-            { label: t.stats[0], value: enrolledCount, icon: "✅", color: "text-emerald-400" },
-            { label: t.stats[1], value: pendingCount, icon: "⏳", color: "text-amber-400" },
-            { label: t.stats[2], value: courses.length, icon: "📚", color: "text-blue-400" },
-            { label: t.stats[3], value: "0%", icon: "🏆", color: "text-purple-400" },
+            { label: t.stats[0], value: enrolledCount, icon: "✅", color: "text-emerald-700 dark:text-emerald-400" },
+            { label: t.stats[1], value: pendingCount, icon: "⏳", color: "text-amber-800 dark:text-amber-400" },
+            { label: t.stats[2], value: courses.length, icon: "📚", color: "text-blue-700 dark:text-blue-400" },
+            { label: t.stats[3], value: "0%", icon: "🏆", color: "text-purple-700 dark:text-purple-400" },
           ].map((s) => (
-            <div key={s.label} className="bg-slate-900 border border-slate-800 rounded-xl p-4">
+            <div key={s.label} className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
               <div className="text-2xl mb-1">{s.icon}</div>
               <div className={`text-2xl font-black ${s.color}`}>{s.value}</div>
               <div className="text-slate-500 text-xs font-medium mt-0.5">{s.label}</div>
@@ -331,11 +305,11 @@ function DashboardContent() {
 
         {/* Kurslar */}
         <div className="mb-6">
-          <h2 className="text-xl font-bold text-white">{t.allCourses}</h2>
-          <p className="text-slate-400 text-sm mt-1">{t.firstFree}</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">{t.allCourses}</h2>
+          <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t.firstFree}</p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
           {courses.map((course) => (
             <CourseCard
               key={course.id}

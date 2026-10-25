@@ -7,11 +7,10 @@ import { Course, Lesson, Module, getTotalLessons } from "@/lib/courses";
 import { getLessonByIdAction } from "@/lib/actions/courses-actions";
 import {
   ChevronLeft, ChevronRight, Play, FileText, Image as ImageIcon,
-  Lock, BookOpen, CheckCircle, LogOut, Zap, Clock, Download,
+  Lock, BookOpen, CheckCircle, Clock, Download,
   ChevronDown, ChevronUp
 } from "lucide-react";
 import { getStudentDashboardAction } from "@/lib/actions/student-actions";
-import { logoutAction } from "@/lib/actions/auth-actions";
 import { pick } from "@/lib/locale-text";
 import { localizeCourse } from "@/lib/course-i18n";
 import { UserDB } from "@/lib/users-db";
@@ -115,9 +114,6 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
   const totalDone = completedLessons.length;
   const progressPercent = totalLessons > 0 ? Math.round((totalDone / totalLessons) * 100) : 0;
 
-  async function handleLogout() {
-    await logoutAction();
-  }
 
   const tabs = [
     { key: "video" as const, label: "Video", icon: Play, show: !!lesson.videoUrl },
@@ -127,30 +123,26 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
   ].filter((t) => t.show);
 
   return (
-    <div className="dark min-h-screen bg-slate-950">
-      {/* Header */}
-      <div className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-800 sticky top-0 z-40">
+    <div className="min-h-screen bg-white dark:bg-slate-950">
+      {/* Dars paneli: orqaga, kurs/dars nomi, jarayon, oldingi/keyingi dars. Logo va Chiqish
+          bu yerda yo'q -- ular saytning menyusida (ikkinchi sarlavha qatori bo'lmasin). */}
+      <div className="border-b border-slate-200 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
-            <Link href={`/${locale}/dashboard/${courseId}`} className="text-slate-400 hover:text-white transition-colors shrink-0">
+            <Link href={`/${locale}/dashboard/${courseId}`} className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors shrink-0">
               <ChevronLeft className="w-5 h-5" />
-            </Link>
-            <Link href={`/${locale}`} className="flex items-center gap-2 shrink-0">
-              <div className="w-7 h-7 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg flex items-center justify-center">
-                <Zap className="w-3.5 h-3.5 text-white" />
-              </div>
             </Link>
             <div className="min-w-0 hidden sm:block">
               <p className="text-xs text-slate-500 truncate">{course.title}</p>
-              <p className="text-sm font-semibold text-white truncate">{lesson.title}</p>
+              <p className="text-sm font-semibold text-slate-900 dark:text-white truncate">{lesson.title}</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
             {/* Progress */}
             <div className="hidden sm:flex flex-col items-end gap-1">
-              <span className="text-slate-400 text-xs font-mono">{totalDone}/{totalLessons} {t.lessons}</span>
-              <div className="w-24 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <span className="text-slate-600 dark:text-slate-400 text-xs font-mono">{totalDone}/{totalLessons} {t.lessons}</span>
+              <div className="w-24 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full transition-all duration-300"
                   style={{ width: `${progressPercent}%` }}
@@ -160,22 +152,19 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
             {/* Nav */}
             <div className="flex items-center gap-1">
               <Link href={prevLesson ? `/${locale}/dashboard/${courseId}/${prevLesson.id}` : "#"}>
-                <button disabled={!prevLesson} aria-label={t.prev} className="w-8 h-8 bg-slate-800 hover:bg-slate-700 rounded-lg flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-                  <ChevronLeft className="w-4 h-4 text-slate-300" />
+                <button disabled={!prevLesson} aria-label={t.prev} className="w-8 h-8 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                  <ChevronLeft className="w-4 h-4 text-slate-700 dark:text-slate-300" />
                 </button>
               </Link>
               <span className="text-slate-500 text-xs font-mono px-2">
                 {currentIndex + 1}/{allLessons.length}
               </span>
               <Link href={nextLesson && nextCanAccess ? `/${locale}/dashboard/${courseId}/${nextLesson.id}` : "#"}>
-                <button disabled={!nextLesson || !nextCanAccess} aria-label={t.next} className="w-8 h-8 bg-slate-800 hover:bg-slate-700 rounded-lg flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-                  <ChevronRight className="w-4 h-4 text-slate-300" />
+                <button disabled={!nextLesson || !nextCanAccess} aria-label={t.next} className="w-8 h-8 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                  <ChevronRight className="w-4 h-4 text-slate-700 dark:text-slate-300" />
                 </button>
               </Link>
             </div>
-            <button onClick={handleLogout} className="text-slate-400 hover:text-red-400 transition-colors">
-              <LogOut className="w-4 h-4" />
-            </button>
           </div>
         </div>
       </div>
@@ -188,17 +177,17 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
           <div>
             <div className="flex items-center gap-2 mb-2">
               {lesson.isFree && (
-                <span className="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-1 rounded-full font-semibold">{t.free}</span>
+                <span className="text-xs bg-emerald-500/20 text-emerald-800 dark:text-emerald-400 border border-emerald-500/30 px-2.5 py-1 rounded-full font-semibold">{t.free}</span>
               )}
               {canAccess && (
-                <span className="text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2.5 py-1 rounded-full font-semibold flex items-center gap-1">
+                <span className="text-xs bg-blue-500/20 text-blue-800 dark:text-blue-400 border border-blue-500/30 px-2.5 py-1 rounded-full font-semibold flex items-center gap-1">
                   <CheckCircle className="w-3 h-3" /> {t.open}
                 </span>
               )}
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-white">{lesson.title}</h1>
-            {t.inUzbek && <p className="text-sm text-amber-400 mt-1">{t.inUzbek}</p>}
-            <div className="flex items-center gap-3 mt-2 text-sm text-slate-400">
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">{lesson.title}</h1>
+            {t.inUzbek && <p className="text-sm text-amber-800 dark:text-amber-400 mt-1">{t.inUzbek}</p>}
+            <div className="flex items-center gap-3 mt-2 text-sm text-slate-600 dark:text-slate-400">
               <span className="flex items-center gap-1"><Clock className="w-4 h-4" />{lesson.duration}</span>
               {tabs.map((t) => (
                 <span key={t.key} className="flex items-center gap-1">
@@ -212,12 +201,12 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
         {/* Asosiy kontent */}
         {!canAccess ? (
           // Qulflangan
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center space-y-4">
-            <div className="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center mx-auto">
-              <Lock className="w-8 h-8 text-slate-600" />
+          <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-12 text-center space-y-4">
+            <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto">
+              <Lock className="w-8 h-8 text-slate-500 dark:text-slate-600" />
             </div>
-            <h2 className="text-xl font-bold text-white">{t.lockedTitle}</h2>
-            <p className="text-slate-400 max-w-sm mx-auto">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">{t.lockedTitle}</h2>
+            <p className="text-slate-600 dark:text-slate-400 max-w-sm mx-auto">
               {t.lockedText}
             </p>
             <Link href={`/${locale}/dashboard`} className="inline-block bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold px-6 py-3 rounded-xl hover:opacity-90 transition-all">
@@ -228,7 +217,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
           <div className="space-y-5">
             {/* Tablar */}
             {tabs.length > 1 && (
-              <div className="flex gap-2 bg-slate-900/50 p-1.5 rounded-xl border border-slate-800 w-fit">
+              <div className="flex gap-2 bg-slate-50/50 dark:bg-slate-900/50 p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 w-fit">
                 {tabs.map((tab) => (
                   <button
                     key={tab.key}
@@ -236,7 +225,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
                       activeTab === tab.key
                         ? "bg-blue-600 text-white shadow-lg"
-                        : "text-slate-400 hover:text-white"
+                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                     }`}
                   >
                     <tab.icon className="w-4 h-4" />
@@ -249,7 +238,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
             {/* Video */}
             {activeTab === "video" && lesson.videoUrl && (
               <div className="space-y-5">
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
                   <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
                     <iframe
                       src={lesson.videoUrl}
@@ -261,11 +250,11 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
                   </div>
                 </div>
                 {lesson.text && (
-                  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-                    <h3 className="text-base font-bold text-white mb-3 flex items-center gap-2">
-                      <BookOpen className="w-4 h-4 text-blue-400" /> {t.lessonText}
+                  <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+                    <h3 className="text-base font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                      <BookOpen className="w-4 h-4 text-blue-700 dark:text-blue-400" /> {t.lessonText}
                     </h3>
-                    <p className="text-slate-300 leading-relaxed text-sm">{lesson.text}</p>
+                    <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-sm">{lesson.text}</p>
                   </div>
                 )}
               </div>
@@ -273,25 +262,25 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
 
             {/* Matn (to'g'ridan-to'g'ri tab) */}
             {activeTab === "text" && lesson.text && (
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8">
-                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                  <BookOpen className="w-5 h-5 text-blue-400" /> {t.lessonText}
+              <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-blue-700 dark:text-blue-400" /> {t.lessonText}
                 </h3>
                 <div className="prose prose-invert max-w-none">
-                  <p className="text-slate-300 leading-relaxed text-base">{lesson.text}</p>
+                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-base">{lesson.text}</p>
                 </div>
               </div>
             )}
 
             {/* PDF */}
             {activeTab === "pdf" && lesson.pdfUrl && (
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center space-y-4">
+              <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 text-center space-y-4">
                 <div className="w-16 h-16 bg-red-500/20 rounded-2xl flex items-center justify-center mx-auto">
-                  <FileText className="w-8 h-8 text-red-400" />
+                  <FileText className="w-8 h-8 text-red-700 dark:text-red-400" />
                 </div>
-                <h3 className="text-lg font-bold text-white">{lesson.title} — PDF</h3>
-                <p className="text-slate-400 text-sm">{t.pdfText}</p>
-                <a href={lesson.pdfUrl} download className="inline-flex items-center gap-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 font-bold px-6 py-3 rounded-xl transition-all">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">{lesson.title} — PDF</h3>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">{t.pdfText}</p>
+                <a href={lesson.pdfUrl} download className="inline-flex items-center gap-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-800 dark:text-red-400 font-bold px-6 py-3 rounded-xl transition-all">
                   <Download className="w-4 h-4" /> {t.pdfDownload}
                 </a>
               </div>
@@ -299,13 +288,13 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
 
             {/* Rasmlar */}
             {activeTab === "images" && lesson.images && lesson.images.length > 0 && (
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <ImageIcon className="w-5 h-5 text-purple-400" /> {t.lessonImages}
+              <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <ImageIcon className="w-5 h-5 text-purple-700 dark:text-purple-400" /> {t.lessonImages}
                 </h3>
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {lesson.images.map((img, i) => (
-                     <img key={i} src={img} alt={`${t.image} ${i + 1}`} loading="lazy" decoding="async" className="w-full rounded-xl border border-slate-700 object-cover" />
+                     <img key={i} src={img} alt={`${t.image} ${i + 1}`} loading="lazy" decoding="async" className="w-full rounded-xl border border-slate-300 dark:border-slate-700 object-cover" />
                   ))}
                 </div>
               </div>
@@ -318,7 +307,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
                 disabled={isDone}
                 className={`flex items-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-base transition-all ${
                   isDone
-                    ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 cursor-default"
+                    ? "bg-emerald-500/20 text-emerald-800 dark:text-emerald-400 border border-emerald-500/30 cursor-default"
                     : "bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:opacity-90 hover:-translate-y-0.5 shadow-lg hover:shadow-blue-500/25"
                 }`}
               >
@@ -329,11 +318,11 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
 
             {/* Keyingi dars */}
             {nextLesson && (
-              <div className={`border rounded-2xl p-5 flex items-center justify-between gap-4 ${nextCanAccess ? "bg-slate-900 border-slate-800" : "bg-slate-900/50 border-slate-800/50 opacity-60"}`}>
+              <div className={`border rounded-2xl p-5 flex items-center justify-between gap-4 ${nextCanAccess ? "bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800" : "bg-slate-50/50 dark:bg-slate-900/50 border-slate-200/50 dark:border-slate-800/50 opacity-60"}`}>
                 <div>
                   <p className="text-xs text-slate-500 font-semibold mb-1">{t.nextLesson}</p>
-                  <p className="text-white font-bold">{nextLesson.title}</p>
-                  <p className="text-slate-400 text-sm flex items-center gap-1 mt-0.5">
+                  <p className="text-slate-900 dark:text-white font-bold">{nextLesson.title}</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm flex items-center gap-1 mt-0.5">
                     <Clock className="w-3.5 h-3.5" />{nextLesson.duration}
                   </p>
                 </div>

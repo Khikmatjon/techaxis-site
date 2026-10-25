@@ -150,20 +150,20 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
   }, [courseId, locale]);
 
   if (sessionLoading || course === undefined) return (
-    <div className="dark min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white gap-4">
-      <Loader2 className="w-10 h-10 animate-spin text-blue-500" />
-      <p className="text-slate-400 font-medium">{t.loading}</p>
+    <div className="min-h-screen bg-white dark:bg-slate-950 flex flex-col items-center justify-center text-slate-900 dark:text-white gap-4">
+      <Loader2 className="w-10 h-10 animate-spin text-blue-700 dark:text-blue-500" />
+      <p className="text-slate-600 dark:text-slate-400 font-medium">{t.loading}</p>
     </div>
   );
 
-  if (!course) return <div className="dark min-h-screen bg-slate-950 flex items-center justify-center text-white">{t.notFound}</div>;
+  if (!course) return <div className="min-h-screen bg-white dark:bg-slate-950 flex items-center justify-center text-slate-900 dark:text-white">{t.notFound}</div>;
 
   if (enrolled) return (
-    <div className="dark min-h-screen bg-slate-950 flex items-center justify-center px-4">
-      <div className="max-w-md w-full text-center space-y-6 bg-slate-900 border border-slate-800 rounded-3xl p-10">
-        <CheckCircle2 className="w-14 h-14 text-emerald-400 mx-auto" />
-        <h1 className="text-2xl font-black text-white">{t.openTitle}</h1>
-        <p className="text-slate-400">{t.noRepay(course.title)}</p>
+    <div className="min-h-screen bg-white dark:bg-slate-950 flex items-center justify-center px-4">
+      <div className="max-w-md w-full text-center space-y-6 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-10">
+        <CheckCircle2 className="w-14 h-14 text-emerald-700 dark:text-emerald-400 mx-auto" />
+        <h1 className="text-2xl font-black text-slate-900 dark:text-white">{t.openTitle}</h1>
+        <p className="text-slate-600 dark:text-slate-400">{t.noRepay(course.title)}</p>
         <Link href={`/${locale}/dashboard/${courseId}`} className="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-2">
           {t.toCourse} <ArrowRight className="w-5 h-5" />
         </Link>
@@ -187,8 +187,8 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
   ]).map((p, i) => ({ ...p, ...planText[i] }));
 
   const paymentMethods = [
-    { id: "transfer", name: t.transfer, icon: Banknote, color: "text-purple-400", bg: "bg-purple-400/10" },
-    { id: "visa", name: t.visa, icon: CreditCard, color: "text-orange-400", bg: "bg-orange-400/10" }
+    { id: "transfer", name: t.transfer, icon: Banknote, color: "text-purple-700 dark:text-purple-400", bg: "bg-purple-400/10" },
+    { id: "visa", name: t.visa, icon: CreditCard, color: "text-orange-800 dark:text-orange-400", bg: "bg-orange-400/10" }
   ];
 
   async function handlePlanSelection(plan: any) {
@@ -244,26 +244,26 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
   }
 
   return (
-    <div className="dark min-h-screen bg-slate-950 text-slate-200 py-20 px-4">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 py-20 px-4">
       <div className="max-w-4xl mx-auto">
         
         {/* Header Navigation */}
         <div className="flex items-center justify-between mb-8">
            <button 
              onClick={() => step > 1 && step < 4 ? setStep(step - 1) : router.back()} 
-             className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
+             className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
            >
              <ChevronLeft className="w-5 h-5" /> {t.back}
            </button>
            <div className="flex gap-2">
               {[1, 2, 4].map(i => (
-                <div key={i} className={`h-1.5 w-8 rounded-full transition-all ${step >= i ? 'bg-blue-500' : 'bg-slate-800'}`} />
+                <div key={i} className={`h-1.5 w-8 rounded-full transition-all ${step >= i ? 'bg-blue-500' : 'bg-slate-100 dark:bg-slate-800'}`} />
               ))}
            </div>
         </div>
 
         {pending && step < 4 && (
-          <div className="mb-8 flex items-start gap-3 rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-200">
+          <div className="mb-8 flex items-start gap-3 rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-800 dark:text-amber-200">
             <Info className="w-5 h-5 shrink-0 mt-0.5" />
             <p>
               {t.pendingA}{" "}
@@ -283,32 +283,32 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
               className="space-y-8"
             >
               <div className="text-center space-y-3">
-                <h1 className="text-3xl font-black text-white">{t.choosePlan}</h1>
-                <p className="text-slate-400">{t.choosePlanText(course.title)}{t.inUzbek && ` ${t.inUzbek}`}</p>
+                <h1 className="text-3xl font-black text-slate-900 dark:text-white">{t.choosePlan}</h1>
+                <p className="text-slate-600 dark:text-slate-400">{t.choosePlanText(course.title)}{t.inUzbek && ` ${t.inUzbek}`}</p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                  {plans.map((plan) => (
                    <button 
                      key={plan.id}
                      onClick={() => handlePlanSelection(plan)}
-                     className={`relative p-8 rounded-3xl border text-left transition-all hover:scale-[1.02] ${plan.best ? 'bg-slate-900 border-blue-500/50 shadow-2xl shadow-blue-500/10' : 'bg-slate-900/50 border-slate-800'}`}
+                     className={`relative p-8 rounded-3xl border text-left transition-all hover:scale-[1.02] ${plan.best ? 'bg-slate-50 dark:bg-slate-900 border-blue-500/50 shadow-2xl shadow-blue-500/10' : 'bg-slate-50/50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800'}`}
                    >
                      {plan.best && <div className="absolute top-0 right-6 -translate-y-1/2 bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase">{t.recommended}</div>}
                      <div className="space-y-4">
                         <div>
-                          <h3 className="text-lg font-bold text-white">{plan.name}</h3>
+                          <h3 className="text-lg font-bold text-slate-900 dark:text-white">{plan.name}</h3>
                           <p className="text-xs text-slate-500">{plan.desc}</p>
                         </div>
                         <div className="flex items-baseline gap-1">
-                           <span className="text-3xl font-black text-white">${plan.price}</span>
+                           <span className="text-3xl font-black text-slate-900 dark:text-white">${plan.price}</span>
                            <span className="text-xs text-slate-500">{t.perCourse}</span>
                         </div>
-                        <div className="text-xs font-bold text-blue-400">~ {plan.priceUZS} UZS</div>
-                        <div className="space-y-2 pt-4 border-t border-slate-800">
+                        <div className="text-xs font-bold text-blue-700 dark:text-blue-400">~ {plan.priceUZS} UZS</div>
+                        <div className="space-y-2 pt-4 border-t border-slate-200 dark:border-slate-800">
                            {plan.features.map((f: string) => (
-                             <div key={f} className="flex items-center gap-2 text-xs text-slate-400">
-                               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> {f}
+                             <div key={f} className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+                               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-500" /> {f}
                              </div>
                            ))}
                         </div>
@@ -329,24 +329,24 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
               className="space-y-8"
             >
               <div className="text-center space-y-3">
-                <h1 className="text-3xl font-black text-white">{t.payMethod}</h1>
-                <div className="inline-flex items-center gap-2 bg-blue-500/10 text-blue-400 px-4 py-1.5 rounded-full text-sm font-bold border border-blue-500/20">
+                <h1 className="text-3xl font-black text-slate-900 dark:text-white">{t.payMethod}</h1>
+                <div className="inline-flex items-center gap-2 bg-blue-500/10 text-blue-700 dark:text-blue-400 px-4 py-1.5 rounded-full text-sm font-bold border border-blue-500/20">
                    {selectedPlan.name} {t.plan} — ${selectedPlan.price}
                 </div>
               </div>
 
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                  {paymentMethods.map((pm) => (
                    <button 
                      key={pm.id}
                      onClick={() => setMethod(pm.id)}
-                     className={`flex items-center gap-4 p-6 rounded-2xl border transition-all text-left ${method === pm.id ? 'bg-blue-600 border-blue-400 shadow-lg shadow-blue-600/20' : 'bg-slate-900 border-slate-800 hover:border-slate-700'}`}
+                     className={`flex items-center gap-4 p-6 rounded-2xl border transition-all text-left ${method === pm.id ? 'bg-blue-600 border-blue-400 shadow-lg shadow-blue-600/20' : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'}`}
                    >
                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${method === pm.id ? 'bg-white/20' : pm.bg}`}>
                         <pm.icon className={`w-6 h-6 ${method === pm.id ? 'text-white' : pm.color}`} />
                      </div>
                      <div>
-                        <div className={`font-bold ${method === pm.id ? 'text-white' : 'text-white'}`}>{pm.name}</div>
+                        <div className={`font-bold ${method === pm.id ? 'text-white' : 'text-slate-900 dark:text-white'}`}>{pm.name}</div>
                         <div className={`text-xs ${method === pm.id ? 'text-blue-100' : 'text-slate-500'}`}>
                            {pm.id === 'transfer' ? t.transferSub : t.fastSub}
                         </div>
@@ -379,38 +379,38 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
               animate={{ opacity: 1, scale: 1 }}
               className="space-y-8"
             >
-              <div className="bg-slate-900 border border-slate-800 rounded-[2.5rem] p-10 space-y-8">
+              <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] p-10 space-y-8">
                  <div className="text-center space-y-4">
                     <div className="w-20 h-20 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto border border-purple-500/20">
-                       <Banknote className="w-10 h-10 text-purple-400" />
+                       <Banknote className="w-10 h-10 text-purple-700 dark:text-purple-400" />
                     </div>
-                    <h2 className="text-2xl font-black text-white">{t.transferTitle}</h2>
-                    <p className="text-slate-400 text-sm max-w-sm mx-auto">{t.transferText}</p>
+                    <h2 className="text-2xl font-black text-slate-900 dark:text-white">{t.transferTitle}</h2>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm max-w-sm mx-auto">{t.transferText}</p>
                  </div>
 
                  <div className="grid gap-4 max-w-sm mx-auto">
-                    <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 flex items-center justify-between">
+                    <div className="bg-slate-100/50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-300 dark:border-slate-700 flex items-center justify-between">
                        <div>
                           <div className="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1">{t.cardNumber}</div>
-                          <div className="text-lg font-bold text-white tracking-widest">{PAYMENT_CARD.number}</div>
-                          <div className="text-xs text-slate-400 mt-1">{PAYMENT_CARD.holder}</div>
+                          <div className="text-lg font-bold text-slate-900 dark:text-white tracking-widest">{PAYMENT_CARD.number}</div>
+                          <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">{PAYMENT_CARD.holder}</div>
                        </div>
-                       <button onClick={() => navigator.clipboard.writeText(PAYMENT_CARD.number.replace(/\s/g, ""))} className="bg-slate-700 hover:bg-slate-600 p-2 rounded-lg text-xs transition-colors">{t.copy}</button>
+                       <button onClick={() => navigator.clipboard.writeText(PAYMENT_CARD.number.replace(/\s/g, ""))} className="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 p-2 rounded-lg text-xs transition-colors">{t.copy}</button>
                     </div>
                     <div className="flex items-center justify-between px-2">
-                       <span className="text-slate-400 text-sm">{t.amount}</span>
-                       <span className="text-white font-black text-lg">{selectedPlan.priceUZS} UZS</span>
+                       <span className="text-slate-600 dark:text-slate-400 text-sm">{t.amount}</span>
+                       <span className="text-slate-900 dark:text-white font-black text-lg">{selectedPlan.priceUZS} UZS</span>
                     </div>
                  </div>
 
                   <div className="space-y-4 pt-4">
-                    <label className="block text-sm font-bold text-slate-400">{t.receipt}</label>
-                    <div className="relative border border-slate-800 rounded-xl overflow-hidden bg-slate-950 focus-within:border-blue-500 transition-all">
+                    <label className="block text-sm font-bold text-slate-600 dark:text-slate-400">{t.receipt}</label>
+                    <div className="relative border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden bg-white dark:bg-slate-950 focus-within:border-blue-500 transition-all">
                       <input 
                         type="file" 
                         accept="image/png, image/jpeg, image/jpg"
                         onChange={(e) => setReceiptFile(e.target.files?.[0] || null)}
-                        className="w-full text-slate-400 file:mr-4 file:py-4 file:px-6 file:border-0 file:text-sm file:font-bold file:bg-blue-600 file:text-white hover:file:cursor-pointer hover:file:bg-blue-500 cursor-pointer"
+                        className="w-full text-slate-600 dark:text-slate-400 file:mr-4 file:py-4 file:px-6 file:border-0 file:text-sm file:font-bold file:bg-blue-600 file:text-white hover:file:cursor-pointer hover:file:bg-blue-500 cursor-pointer"
                       />
                     </div>
                     <p className="text-[10px] text-slate-500 italic flex items-center gap-2">
@@ -445,13 +445,13 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
               </div>
 
               <div className="space-y-4">
-                <h1 className="text-4xl font-black text-white">{t.congrats}</h1>
+                <h1 className="text-4xl font-black text-slate-900 dark:text-white">{t.congrats}</h1>
                 {method === 'visa' ? (
-                  <p className="text-slate-400 max-w-sm mx-auto text-lg leading-relaxed">
+                  <p className="text-slate-600 dark:text-slate-400 max-w-sm mx-auto text-lg leading-relaxed">
                     {t.paidVisa}
                   </p>
                 ) : (
-                  <p className="text-slate-400 max-w-sm mx-auto text-lg leading-relaxed">
+                  <p className="text-slate-600 dark:text-slate-400 max-w-sm mx-auto text-lg leading-relaxed">
                     {t.paidTransfer}
                   </p>
                 )}
@@ -461,7 +461,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
                  <Link href={`/${locale}/dashboard`} className="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-4 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2">
                      {t.toDashboard} <ArrowRight className="w-5 h-5" />
                    </Link>
-                 <Link href={`/${locale}`} className="block text-center w-full py-4 text-slate-500 hover:text-white transition-colors font-bold">
+                 <Link href={`/${locale}`} className="block text-center w-full py-4 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors font-bold">
                       {t.toHome}
                     </Link>
               </div>

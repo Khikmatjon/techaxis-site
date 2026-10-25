@@ -87,7 +87,7 @@ export const Certifications = ({ dict, locale }: { dict: any; locale: string }) 
         </div>
 
         {/* Cards */}
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {certifications.map((cert, index) => (
             <div
               key={index}

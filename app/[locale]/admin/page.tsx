@@ -54,13 +54,13 @@ function EmailModal({ user, onClose }: { user: UserDB; onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onClick={onClose}>
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md shadow-2xl" onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between p-5 border-b border-slate-800">
+      <div className="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl w-full max-w-md shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between p-5 border-b border-slate-200 dark:border-slate-800">
           <div>
-            <h3 className="text-white font-bold flex items-center gap-2"><Mail className="w-4 h-4 text-blue-400" /> Email yozish</h3>
+            <h3 className="text-slate-900 dark:text-white font-bold flex items-center gap-2"><Mail className="w-4 h-4 text-blue-700 dark:text-blue-400" /> Email yozish</h3>
             <p className="text-slate-500 text-xs mt-0.5">{user.name} · {user.email}</p>
           </div>
-          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
+          <button onClick={onClose} className="text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -70,17 +70,17 @@ function EmailModal({ user, onClose }: { user: UserDB; onClose: () => void }) {
             placeholder="Mavzu"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+            className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500"
           />
           <textarea
             placeholder="Xabar matni"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             rows={6}
-            className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 resize-none"
+            className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 resize-none"
           />
           {result && (
-            <p className={`text-sm font-bold ${result.ok ? "text-emerald-400" : "text-red-400"}`}>{result.text}</p>
+            <p className={`text-sm font-bold ${result.ok ? "text-emerald-700 dark:text-emerald-400" : "text-red-700 dark:text-red-400"}`}>{result.text}</p>
           )}
           <button
             onClick={handleSend}
@@ -121,18 +121,18 @@ function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId
   }
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-slate-700 transition-all">
+    <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all">
       <div
         className="flex items-center gap-4 p-4 cursor-pointer select-none"
         onClick={() => setOpen(!open)}
       >
-        <Avatar name={user.name} className="w-10 h-10 rounded-full border-2 border-slate-700 text-sm" />
+        <Avatar name={user.name} className="w-10 h-10 rounded-full border-2 border-slate-300 dark:border-slate-700 text-sm" />
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <p className="text-white font-semibold text-sm truncate">{user.name}</p>
+            <p className="text-slate-900 dark:text-white font-semibold text-sm truncate">{user.name}</p>
             {user.pendingPayments && user.pendingPayments.length > 0 && (
-              <span className="bg-amber-500/20 text-amber-400 text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shrink-0">
+              <span className="bg-amber-500/20 text-amber-800 dark:text-amber-400 text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shrink-0">
                 <AlertTriangle className="w-3 h-3" /> {user.pendingPayments.length} kutilmoqda
               </span>
             )}
@@ -142,14 +142,14 @@ function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId
 
         <div className="flex items-center gap-3 shrink-0">
           <div className="hidden sm:flex gap-1">
-            <span className="bg-emerald-500/20 text-emerald-400 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">
+            <span className="bg-emerald-500/20 text-emerald-800 dark:text-emerald-400 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">
               <CheckCircle className="w-3 h-3" /> {user.enrolledCourses ? user.enrolledCourses.length : 0}
             </span>
           </div>
           <button
             onClick={(e) => { e.stopPropagation(); setEmailOpen(true); }}
             title="Email yozish"
-            className="text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 p-1.5 rounded-lg transition-colors"
+            className="text-slate-500 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-500/10 p-1.5 rounded-lg transition-colors"
           >
             <Mail className="w-4 h-4" />
           </button>
@@ -160,9 +160,9 @@ function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId
       {emailOpen && <EmailModal user={user} onClose={() => setEmailOpen(false)} />}
 
       {open && (
-        <div className="border-t border-slate-800 p-4 space-y-3 bg-slate-900/50">
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Kurslarni boshqarish</p>
-          <div className="grid sm:grid-cols-2 gap-3">
+        <div className="border-t border-slate-200 dark:border-slate-800 p-4 space-y-3 bg-slate-50/50 dark:bg-slate-900/50">
+          <p className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Kurslarni boshqarish</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {COURSES.map((course) => {
               const enrolled = user.enrolledCourses?.includes(course.id);
               const pending = user.pendingPayments?.includes(course.id);
@@ -177,31 +177,31 @@ function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId
                       ? "bg-emerald-500/10 border-emerald-500/20"
                       : pending
                       ? "bg-amber-500/10 border-amber-500/20"
-                      : "bg-slate-800/50 border-slate-700/50"
+                      : "bg-slate-100/50 dark:bg-slate-800/50 border-slate-300/50 dark:border-slate-700/50"
                   } ${openReceipt === course.id ? "rounded-b-none border-b-0" : ""}`}
                 >
                   <img src={course.thumbnail} alt={course.title} className="w-10 h-10 rounded-lg object-cover shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-white text-xs font-semibold truncate">{course.title}</p>
+                    <p className="text-slate-900 dark:text-white text-xs font-semibold truncate">{course.title}</p>
                     {paymentDetail && (
                       <div className="flex flex-wrap gap-1 mt-1">
-                         <span className="text-[9px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded font-bold uppercase">{paymentDetail.plan}</span>
-                         <span className="text-[9px] bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded font-bold uppercase">{paymentDetail.method}</span>
+                         <span className="text-[9px] bg-blue-500/20 text-blue-800 dark:text-blue-400 px-1.5 py-0.5 rounded font-bold uppercase">{paymentDetail.plan}</span>
+                         <span className="text-[9px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded font-bold uppercase">{paymentDetail.method}</span>
                       </div>
                     )}
                   </div>
                   {enrolled ? (
-                    <span className="text-emerald-400 shrink-0">
+                    <span className="text-emerald-700 dark:text-emerald-400 shrink-0">
                       <CheckCircle className="w-5 h-5" />
                     </span>
                   ) : isSuccess ? (
-                    <span className="text-emerald-400 text-xs font-bold shrink-0">✅ Berildi</span>
+                    <span className="text-emerald-700 dark:text-emerald-400 text-xs font-bold shrink-0">✅ Berildi</span>
                   ) : (
                     <div className="flex flex-col gap-1 items-end">
                       {paymentDetail?.receiptUrl && (
                         <button
                           onClick={() => setOpenReceipt(openReceipt === course.id ? null : course.id)}
-                          className="text-[10px] text-blue-400 hover:text-blue-300 flex items-center gap-1 font-bold"
+                          className="text-[10px] text-blue-700 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1 font-bold"
                         >
                           📎 Chek
                         </button>
@@ -212,8 +212,8 @@ function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId
                           disabled={assigning === course.id}
                           className={`shrink-0 text-xs font-bold px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1 ${
                             pending
-                              ? "bg-amber-500/30 hover:bg-amber-500/50 text-amber-300 border border-amber-500/30"
-                              : "bg-blue-500/20 hover:bg-blue-500/40 text-blue-400 border border-blue-500/20"
+                              ? "bg-amber-500/30 hover:bg-amber-500/50 text-amber-800 dark:text-amber-300 border border-amber-500/30"
+                              : "bg-blue-500/20 hover:bg-blue-500/40 text-blue-800 dark:text-blue-400 border border-blue-500/20"
                           }`}
                         >
                           {assigning === course.id ? (
@@ -228,7 +228,7 @@ function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId
                           <button
                             onClick={() => handleReject(course.id)}
                             disabled={rejecting === course.id}
-                            className="shrink-0 text-xs font-bold px-2 py-1.5 rounded-lg transition-all flex items-center gap-1 bg-red-500/20 hover:bg-red-500/40 text-red-400 border border-red-500/20"
+                            className="shrink-0 text-xs font-bold px-2 py-1.5 rounded-lg transition-all flex items-center gap-1 bg-red-500/20 hover:bg-red-500/40 text-red-800 dark:text-red-400 border border-red-500/20"
                           >
                             {rejecting === course.id ? (
                               <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
@@ -242,11 +242,11 @@ function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId
                   )}
                 </div>
                 {openReceipt === course.id && paymentDetail?.receiptUrl && (
-                  <div className="bg-slate-800/70 border border-amber-500/20 border-t-0 rounded-b-xl p-3">
+                  <div className="bg-slate-100/70 dark:bg-slate-800/70 border border-amber-500/20 border-t-0 rounded-b-xl p-3">
                     <img
                       src={paymentDetail.receiptUrl}
                       alt="To'lov cheki"
-                      className="w-full max-h-64 object-contain rounded-lg border border-slate-700"
+                      className="w-full max-h-64 object-contain rounded-lg border border-slate-300 dark:border-slate-700"
                     />
                   </div>
                 )}
@@ -320,27 +320,27 @@ function AdminContent() {
   const totalPending = users.reduce((s, u) => s + u.pendingPayments.length, 0);
 
   return (
-    <div className="admin-shell dark min-h-screen bg-slate-950">
+    <div className="admin-shell min-h-screen bg-white dark:bg-slate-950">
       {/* Alohida sarlavha qatori yo'q: saytning menyusi (navbar) shu yerda ham turadi va unda
           Admin panel, Sozlamalar (email/parol) va Chiqish bor -- logo ikki marta chiqmasin. */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* Sarlavha */}
         <div>
-          <h1 className="text-3xl font-black text-white mb-1">
+          <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-1">
             Admin <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">Paneli</span>
           </h1>
-          <p className="text-slate-400">{TABS.find((t) => t.id === tab)?.description}</p>
+          <p className="text-slate-600 dark:text-slate-400">{TABS.find((t) => t.id === tab)?.description}</p>
         </div>
 
         {/* Tablar */}
-        <div className="flex gap-1 border-b border-slate-800 overflow-x-auto" role="tablist">
+        <div className="flex gap-1 border-b border-slate-200 dark:border-slate-800 overflow-x-auto" role="tablist">
           {TABS.map((t) => (
             <button
               key={t.id}
               role="tab"
               aria-selected={tab === t.id}
               onClick={() => selectTab(t.id)}
-              className={`px-5 py-3 text-sm font-bold transition-colors border-b-2 -mb-px whitespace-nowrap ${tab === t.id ? "text-white border-cyan-500" : "text-slate-400 border-transparent hover:text-slate-200"}`}
+              className={`px-5 py-3 text-sm font-bold transition-colors border-b-2 -mb-px whitespace-nowrap ${tab === t.id ? "text-slate-900 dark:text-white border-cyan-500" : "text-slate-600 dark:text-slate-400 border-transparent hover:text-slate-800 dark:hover:text-slate-200"}`}
             >
               {t.label}
             </button>
@@ -358,11 +358,11 @@ function AdminContent() {
         {tab === "students" && (
         <div className="space-y-8">
         {loadError && (
-          <div className="flex flex-wrap items-center justify-between gap-4 bg-amber-500/10 border border-amber-500/30 text-amber-200 rounded-xl p-4 text-sm">
+          <div className="flex flex-wrap items-center justify-between gap-4 bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 rounded-xl p-4 text-sm">
             <span>{LOAD_ERROR_TEXT}</span>
             <button
               onClick={loadData}
-              className="text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-100 border border-amber-500/40 rounded-lg px-3 py-2 transition-colors"
+              className="text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-900 dark:text-amber-100 border border-amber-500/40 rounded-lg px-3 py-2 transition-colors"
             >
               {RETRY_TEXT}
             </button>
@@ -371,10 +371,10 @@ function AdminContent() {
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
-            { label: "Jami o'quvchilar", value: users.length, icon: Users, color: "text-blue-400", bg: "bg-blue-500/10 border-blue-500/20" },
-            { label: "Berilgan kurslar", value: totalEnrolled, icon: BookOpen, color: "text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/20" },
-            { label: "Kutilayotgan", value: totalPending, icon: Clock, color: "text-amber-400", bg: "bg-amber-500/10 border-amber-500/20" },
-            { label: "Jami kurslar", value: COURSES.length, icon: Award, color: "text-purple-400", bg: "bg-purple-500/10 border-purple-500/20" },
+            { label: "Jami o'quvchilar", value: users.length, icon: Users, color: "text-blue-700 dark:text-blue-400", bg: "bg-blue-500/10 border-blue-500/20" },
+            { label: "Berilgan kurslar", value: totalEnrolled, icon: BookOpen, color: "text-emerald-700 dark:text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/20" },
+            { label: "Kutilayotgan", value: totalPending, icon: Clock, color: "text-amber-800 dark:text-amber-400", bg: "bg-amber-500/10 border-amber-500/20" },
+            { label: "Jami kurslar", value: COURSES.length, icon: Award, color: "text-purple-700 dark:text-purple-400", bg: "bg-purple-500/10 border-purple-500/20" },
           ].map((s) => (
             <div key={s.label} className={`border rounded-xl p-4 ${s.bg}`}>
               <s.icon className={`w-6 h-6 ${s.color} mb-2`} />
@@ -387,11 +387,11 @@ function AdminContent() {
         {/* Kutilayotgan to'lovlar */}
         {totalPending > 0 && (
           <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-5">
-            <div className="flex items-center gap-2 text-amber-400 font-bold mb-3">
+            <div className="flex items-center gap-2 text-amber-800 dark:text-amber-400 font-bold mb-3">
               <AlertTriangle className="w-5 h-5" />
               {totalPending} ta to'lov tasdiqlash kutmoqda
             </div>
-            <p className="text-slate-400 text-sm">
+            <p className="text-slate-600 dark:text-slate-400 text-sm">
               Quyidagi foydalanuvchilarni oching → kerakli kursning "Tasdiqlash" tugmasini bosing
             </p>
           </div>
@@ -400,7 +400,7 @@ function AdminContent() {
         {/* Qidiruv + O'quvchilar */}
         <div className="space-y-4">
           <div className="flex items-center justify-between gap-4">
-            <h2 className="text-xl font-bold text-white">O'quvchilar ({filtered.length})</h2>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">O'quvchilar ({filtered.length})</h2>
             <div className="relative w-full max-w-xs">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
               <input
@@ -408,12 +408,12 @@ function AdminContent() {
                 placeholder="Qidirish..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 text-white placeholder-slate-500 rounded-xl pl-9 pr-9 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 rounded-xl pl-9 pr-9 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
               />
               {search && (
                 <button
                   onClick={() => setSearch("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -437,22 +437,22 @@ function AdminContent() {
 
         {/* Kurslar jadvali */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-white">Kurslar statistikasi</h2>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Kurslar statistikasi</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {COURSES.map((course) => {
               const enrolledCount = users.filter((u) => u.enrolledCourses.includes(course.id)).length;
               const pendingCount = users.filter((u) => u.pendingPayments.includes(course.id)).length;
               return (
-                <div key={course.id} className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center gap-4">
+                <div key={course.id} className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex items-center gap-4">
                   <img src={course.thumbnail} alt={course.title} className="w-12 h-12 rounded-xl object-cover shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-white font-semibold text-sm truncate">{course.title}</p>
+                    <p className="text-slate-900 dark:text-white font-semibold text-sm truncate">{course.title}</p>
                     <p className="text-slate-500 text-xs">{course.priceUZS.toLocaleString()} UZS</p>
                   </div>
                   <div className="flex flex-col items-end gap-1 shrink-0">
-                    <span className="text-xs text-emerald-400 font-bold">{enrolledCount} ochiq</span>
+                    <span className="text-xs text-emerald-700 dark:text-emerald-400 font-bold">{enrolledCount} ochiq</span>
                     {pendingCount > 0 && (
-                      <span className="text-xs text-amber-400 font-bold">{pendingCount} kutmoqda</span>
+                      <span className="text-xs text-amber-800 dark:text-amber-400 font-bold">{pendingCount} kutmoqda</span>
                     )}
                   </div>
                 </div>
@@ -470,7 +470,7 @@ function AdminContent() {
 export default function AdminPage() {
   // useSearchParams (?tab=...) uchun Suspense kerak
   return (
-    <Suspense fallback={<div className="admin-shell dark min-h-screen bg-slate-950" />}>
+    <Suspense fallback={<div className="admin-shell min-h-screen bg-white dark:bg-slate-950" />}>
       <AdminContent />
     </Suspense>
   );

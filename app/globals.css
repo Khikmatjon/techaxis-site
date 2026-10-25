@@ -172,10 +172,11 @@ body {
    yordamchi yozuvlar (sana, "Kurs narxi", "Telefon" va h.k.) 4.7:1. Asosiy tugmalar
    ko'k #006FD6 (avval #0084FF -- oq yozuv bilan 3,4:1 edi, endi 4,5:1).
 
-   Doim to'q bo'limlar (footer, admin panel, kabinet, kurs, login va h.k.) ildizida
-   "dark" klassi turadi: yorug' rejimda ham ular qorong'i rejimdagi ranglar bilan
-   chiqadi. Busiz yorug' rejimning to'qroq kulrang matni to'q fonda xira ko'rinardi
-   (2,8:1). Yangi doim to'q bo'lim qo'shsangiz, unga ham "dark" yozing. */
+   Barcha sahifalar tanlangan rejimga yuradi: har bir rang yorug' + "dark:" jufti bilan
+   yoziladi (masalan "bg-white dark:bg-slate-950", "text-slate-900 dark:text-white").
+   Faqat footer ataylab doim to'q: uning ildizida "dark" klassi turadi -- shunda u
+   yorug' rejimda ham qorong'i rejim ranglari bilan chiqadi (kulrang matn xira bo'lmaydi).
+   Yangi doim to'q bo'lim kerak bo'lsa, unga ham "dark" yozing. */
 :root:not(.dark) {
   --color-white: #f3f5f8;       /* sahifa foni (sof oq emas) */
   --color-slate-50: #eaeef3;

@@ -91,7 +91,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
   const { marketing } = course;
 
   return (
-    <div className="dark min-h-screen bg-slate-950 text-slate-200">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200">
       <JsonLd data={[
         courseLd(course, locale),
         breadcrumbLd(locale, [
@@ -106,25 +106,25 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
-              <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full text-blue-400 text-xs font-bold uppercase tracking-widest">
+              <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full text-blue-700 dark:text-blue-400 text-xs font-bold uppercase tracking-widest">
                 <Sparkles className="w-4 h-4" /> {t.badge}{t.inUzbek && ` · ${t.inUzbek}`}
               </div>
               
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[1.1]">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-slate-900 dark:text-white leading-[1.1]">
                 {course.title}: <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 text-3xl sm:text-4xl lg:text-5xl">{course.subtitle}</span>
               </h1>
               
-              <p className="text-xl text-slate-400 leading-relaxed max-w-xl">
+              <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
                 {course.description}
               </p>
 
               <div className="flex flex-wrap gap-4 pt-2">
-                 <div className="flex items-center gap-2 bg-slate-900/50 backdrop-blur-sm border border-slate-800 px-5 py-3 rounded-2xl">
-                    <Clock className="w-5 h-5 text-emerald-500" />
+                 <div className="flex items-center gap-2 bg-slate-50/50 dark:bg-slate-900/50 backdrop-blur-sm border border-slate-200 dark:border-slate-800 px-5 py-3 rounded-2xl">
+                    <Clock className="w-5 h-5 text-emerald-700 dark:text-emerald-500" />
                     <div>
-                      <div className="text-white font-bold">{course.duration}</div>
+                      <div className="text-slate-900 dark:text-white font-bold">{course.duration}</div>
                       <div className="text-slate-500 text-[10px] uppercase font-bold">{t.duration}</div>
                     </div>
                  </div>
@@ -139,7 +139,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
 
             <div className="relative group">
               <div className="absolute inset-0 bg-blue-500/20 rounded-[2.5rem] blur-3xl transform rotate-6 scale-95 transition-transform group-hover:rotate-3"></div>
-              <div className="relative bg-slate-900 border border-slate-800 p-3 rounded-[2.5rem] shadow-2xl overflow-hidden flex items-center justify-center">
+              <div className="relative bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 rounded-[2.5rem] shadow-2xl overflow-hidden flex items-center justify-center">
                  <Image src={course.thumbnail} alt={`${course.title} ${t.imgAlt}`} width={800} height={533} preload fetchPriority="high" sizes="(min-width: 1024px) 45vw, 100vw" className="w-full h-auto object-cover rounded-[2rem]" />
               </div>
             </div>
@@ -151,43 +151,43 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32 py-20 font-sans">
         
         {/* H2: Nega AYNAN SHU DASTUR? (Marketing Benefits) */}
-        <section className="grid lg:grid-cols-2 gap-16 items-center">
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative">
              <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-4 pt-12">
-                   <div className="bg-slate-900 border border-slate-800 p-4 sm:p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
-                      <Layout className="w-8 h-8 text-cyan-400" />
+                   <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
+                      <Layout className="w-8 h-8 text-cyan-700 dark:text-cyan-400" />
                       <div className="font-bold text-sm sm:text-lg [overflow-wrap:anywhere]">{marketing.capabilities[0]?.title}</div>
                    </div>
-                   <div className="bg-slate-900 border border-slate-800 p-4 sm:p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
-                      <Database className="w-8 h-8 text-blue-400" />
+                   <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
+                      <Database className="w-8 h-8 text-blue-700 dark:text-blue-400" />
                       <div className="font-bold text-sm sm:text-lg [overflow-wrap:anywhere]">{marketing.capabilities[1]?.title}</div>
                    </div>
                 </div>
                 <div className="space-y-4">
-                   <div className="bg-slate-900 border border-slate-800 p-4 sm:p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
-                      <Terminal className="w-8 h-8 text-purple-400" />
+                   <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
+                      <Terminal className="w-8 h-8 text-purple-700 dark:text-purple-400" />
                       <div className="font-bold text-sm sm:text-lg [overflow-wrap:anywhere]">{marketing.capabilities[2]?.title}</div>
                    </div>
-                   <div className="bg-slate-900 border border-slate-800 p-4 sm:p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
-                      <ShieldCheck className="w-8 h-8 text-emerald-400" />
+                   <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
+                      <ShieldCheck className="w-8 h-8 text-emerald-700 dark:text-emerald-400" />
                       <div className="font-bold text-sm sm:text-lg [overflow-wrap:anywhere]">{marketing.capabilities[3]?.title}</div>
                    </div>
                 </div>
              </div>
           </div>
           <div className="space-y-6">
-            <h2 className="text-3xl sm:text-4xl font-black text-white">{marketing.whyTitle}</h2>
-            <p className="text-slate-400 text-lg leading-relaxed">
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">{marketing.whyTitle}</h2>
+            <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
               {marketing.whyDesc}
             </p>
             <div className="space-y-4 pt-4">
                {marketing.benefits.map((item, i) => (
-                 <div key={i} className="flex flex-col sm:flex-row sm:items-start gap-4 bg-slate-900/50 p-5 rounded-2xl border border-slate-800">
-                    <div className="w-10 h-10 shrink-0 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-400 font-bold">✓</div>
+                 <div key={i} className="flex flex-col sm:flex-row sm:items-start gap-4 bg-slate-50/50 dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="w-10 h-10 shrink-0 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-800 dark:text-blue-400 font-bold">✓</div>
                     <div>
-                      <h4 className="text-white font-bold text-lg">{item.title}</h4>
-                      <p className="text-slate-400 text-sm mt-1">{item.desc}</p>
+                      <h4 className="text-slate-900 dark:text-white font-bold text-lg">{item.title}</h4>
+                      <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">{item.desc}</p>
                     </div>
                  </div>
                ))}
@@ -198,16 +198,16 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         {/* H2: CAPABILITIES (Ushbu dastur orqali nimalar qila olasiz) */}
         <section className="space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-black text-white">{marketing.capabilitiesTitle}</h2>
-            <p className="text-slate-400">{t.topics}</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">{marketing.capabilitiesTitle}</h2>
+            <p className="text-slate-600 dark:text-slate-400">{t.topics}</p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
              {marketing.capabilities.map((item, i) => (
-               <div key={i} className="bg-slate-950 p-8 rounded-3xl border border-slate-800 hover:border-blue-500/50 transition-all group">
-                  <div className="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                     <Layers className="w-7 h-7 text-blue-400" />
+               <div key={i} className="bg-white dark:bg-slate-950 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 transition-all group">
+                  <div className="w-14 h-14 bg-slate-50 dark:bg-slate-900 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                     <Layers className="w-7 h-7 text-blue-700 dark:text-blue-400" />
                   </div>
-                  <h3 className="text-white font-bold text-lg mb-2">{item.title}</h3>
+                  <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-2">{item.title}</h3>
                   <p className="text-slate-500 text-sm">{item.desc}</p>
                </div>
              ))}
@@ -217,21 +217,21 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         {/* H2: Kurs dasturi (SYLLABUS Step-by-step) */}
         <section className="space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">{marketing.stepsTitle}</h2>
-            <p className="text-slate-400">{t.modules}</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{marketing.stepsTitle}</h2>
+            <p className="text-slate-600 dark:text-slate-400">{t.modules}</p>
           </div>
           
-          <div className="grid lg:grid-cols-4 gap-4 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 relative">
              <div className="hidden lg:block absolute top-[60px] left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent z-0"></div>
              
              {marketing.steps.map((item, i) => (
                <div key={i} className="relative z-10 flex flex-col items-center text-center space-y-6">
-                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-black shadow-lg shadow-blue-500/20 ring-4 ring-slate-950">
+                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-black shadow-lg shadow-blue-500/20 ring-4 ring-white dark:ring-slate-950">
                     {item.step}
                   </div>
-                  <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full h-full flex flex-col">
-                    <h3 className="text-xl font-bold text-white mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">{item.title}</h3>
-                    <ul className="space-y-2 text-sm text-slate-400">
+                  <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl w-full h-full flex flex-col">
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">{item.title}</h3>
+                    <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
                        {item.points.map((p, j) => (
                          <li key={j}>• {p}</li>
                        ))}
@@ -243,7 +243,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         </section>
 
         {/* H2: Natija va Nega TechAxis */}
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
            <section className="bg-blue-600 rounded-[3rem] p-10 lg:p-14 text-white space-y-8">
               <h2 className="text-3xl font-black">{t.outcomes}</h2>
               <ul className="space-y-6">
@@ -256,17 +256,17 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
               </ul>
            </section>
            
-           <section className="bg-slate-900 border border-slate-800 rounded-[3rem] p-10 lg:p-14 space-y-8">
-              <h2 className="text-3xl font-black text-white">{t.why}</h2>
+           <section className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[3rem] p-10 lg:p-14 space-y-8">
+              <h2 className="text-3xl font-black text-slate-900 dark:text-white">{t.why}</h2>
               <div className="grid gap-6">
                  {t.whyItems.map((item, i) => (
                    <div key={i} className="flex gap-4">
                       <div className="w-10 h-10 bg-cyan-500/10 rounded-xl flex items-center justify-center shrink-0 border border-cyan-500/20">
-                         <Zap className="w-5 h-5 text-cyan-400" />
+                         <Zap className="w-5 h-5 text-cyan-700 dark:text-cyan-400" />
                       </div>
                       <div>
-                        <h4 className="text-white font-bold">{item.t}</h4>
-                        <p className="text-slate-400 text-sm">{item.d}</p>
+                        <h4 className="text-slate-900 dark:text-white font-bold">{item.t}</h4>
+                        <p className="text-slate-600 dark:text-slate-400 text-sm">{item.d}</p>
                       </div>
                    </div>
                  ))}
@@ -277,27 +277,27 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         {/* H2: Narx va tariflar */}
         <section className="space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-black text-white">{t.plans}</h2>
-            <p className="text-slate-400">{t.plansIntro}</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">{t.plans}</h2>
+            <p className="text-slate-600 dark:text-slate-400">{t.plansIntro}</p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
              {marketing.pricing.map((plan, i) => (
-               <div key={i} className={`relative p-10 rounded-[2.5rem] border ${plan.best ? 'bg-slate-900 border-blue-500 shadow-2xl shadow-blue-500/10' : 'bg-slate-950 border-slate-800'} flex flex-col`}>
+               <div key={i} className={`relative p-10 rounded-[2.5rem] border ${plan.best ? 'bg-slate-50 dark:bg-slate-900 border-blue-500 shadow-2xl shadow-blue-500/10' : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800'} flex flex-col`}>
                   {plan.best && <div className="absolute top-0 right-10 -translate-y-1/2 bg-blue-600 text-white text-xs font-black px-4 py-1.5 rounded-full uppercase">{t.best}</div>}
                   <div className="mb-8">
-                     <h3 className="text-slate-400 font-bold mb-2 uppercase tracking-wide">{plan.name}</h3>
-                     <div className="text-5xl font-black text-white mb-2">{plan.price}</div>
+                     <h3 className="text-slate-600 dark:text-slate-400 font-bold mb-2 uppercase tracking-wide">{plan.name}</h3>
+                     <div className="text-5xl font-black text-slate-900 dark:text-white mb-2">{plan.price}</div>
                      <p className="text-slate-500 text-sm">{plan.desc}</p>
                   </div>
                   <ul className="space-y-4 mb-10 flex-1">
                      {plan.features.map((f, j) => (
-                       <li key={j} className="flex items-center gap-3 text-sm text-slate-300">
-                          <CheckCircle className="w-4 h-4 text-emerald-500" /> {f}
+                       <li key={j} className="flex items-center gap-3 text-sm text-slate-700 dark:text-slate-300">
+                          <CheckCircle className="w-4 h-4 text-emerald-700 dark:text-emerald-500" /> {f}
                        </li>
                      ))}
                   </ul>
-                  <Link href={`/${locale}/checkout/${course.id}`} className={`block text-center w-full py-4 rounded-2xl font-bold transition-all ${plan.best ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg' : 'bg-slate-800 hover:bg-slate-700 text-white'}`}>
+                  <Link href={`/${locale}/checkout/${course.id}`} className={`block text-center w-full py-4 rounded-2xl font-bold transition-all ${plan.best ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg' : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white'}`}>
                       {plan.cta}
                     </Link>
                </div>
@@ -308,17 +308,17 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
         {/* FAQ SECTION */}
         <section className="max-w-4xl mx-auto space-y-12">
           <div className="text-center space-y-4">
-            <h2 className="text-3xl font-black text-white flex items-center justify-center gap-3 uppercase">
-              <HelpCircle className="w-8 h-8 text-blue-500" /> {t.faq}
+            <h2 className="text-3xl font-black text-slate-900 dark:text-white flex items-center justify-center gap-3 uppercase">
+              <HelpCircle className="w-8 h-8 text-blue-700 dark:text-blue-500" /> {t.faq}
             </h2>
           </div>
           <div className="grid gap-4">
              {marketing.faq.map((faq, i) => (
-               <div key={i} className="bg-slate-900/50 border border-slate-800 p-6 sm:p-8 rounded-3xl group transition-all hover:bg-slate-900">
-                  <h4 className="text-white font-bold text-lg mb-3 flex items-center justify-between">
+               <div key={i} className="bg-slate-50/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 rounded-3xl group transition-all hover:bg-slate-50 dark:hover:bg-slate-900">
+                  <h4 className="text-slate-900 dark:text-white font-bold text-lg mb-3 flex items-center justify-between">
                     {faq.q}
                   </h4>
-                  <p className="text-slate-400 leading-relaxed [overflow-wrap:anywhere]">{faq.a}</p>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed [overflow-wrap:anywhere]">{faq.a}</p>
                </div>
              ))}
           </div>

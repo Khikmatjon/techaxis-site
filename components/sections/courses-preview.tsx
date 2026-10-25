@@ -54,7 +54,7 @@ export const CoursesPreview = ({ dict, locale, courses }: { dict: any, locale: s
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {courses.slice(0, 3).map((c) => localizeCourse(c, locale)).map((course) => (
             <div key={course.id} className="group bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all hover:-translate-y-2 flex flex-col">
               <div className="relative h-56 overflow-hidden">

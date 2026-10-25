@@ -90,7 +90,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const TEXT = pick(T, locale);
 
   return (
-    <div className="dark min-h-screen bg-slate-950 pt-24 pb-16">
+    <div className="min-h-screen bg-white dark:bg-slate-950 pt-24 pb-16">
       <JsonLd data={[
         blogPostingLd(post, post.translated ? locale : "uz"),
         breadcrumbLd(locale, [
@@ -102,7 +102,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {/* Orqaga qaytish */}
         <Link
           href={`/${locale}/blog`}
-          className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors font-medium mb-10"
+          className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-medium mb-10"
         >
           <ChevronLeft className="w-5 h-5" /> {TEXT.back}
         </Link>
@@ -113,7 +113,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {postTypeName(post.type, locale).label}
           </span>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-6">{post.title}</h1>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white leading-tight mb-6">{post.title}</h1>
 
           <div className="flex items-center gap-6 text-slate-500 text-sm font-medium">
             <span className="flex items-center gap-2">
@@ -127,7 +127,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* Muqova rasm (ixtiyoriy) */}
         {post.coverImage && (
-          <div className="rounded-3xl overflow-hidden mb-10 border border-slate-800">
+          <div className="rounded-3xl overflow-hidden mb-10 border border-slate-200 dark:border-slate-800">
             <PostImage
               eager
               src={post.coverImage}
@@ -139,14 +139,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         )}
 
         {!post.translated && TEXT.uzOnly && (
-          <p className="mb-8 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-5 py-3 text-sm font-medium text-amber-700 dark:text-amber-300">
+          <p className="mb-8 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-5 py-3 text-sm font-medium text-amber-800 dark:text-amber-300">
             {TEXT.uzOnly}
           </p>
         )}
 
         {/* Matn */}
         <article lang={post.translated ? locale : "uz"}>
-          <p className="text-xl text-slate-200 leading-relaxed font-medium mb-10 border-l-4 border-blue-500 pl-6">
+          <p className="text-xl text-slate-800 dark:text-slate-200 leading-relaxed font-medium mb-10 border-l-4 border-blue-500 pl-6">
             {post.excerpt}
           </p>
           <PostContent content={post.content} className="text-lg" />
@@ -154,8 +154,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* Kurslarga yo'naltirish */}
         <div className="mt-16 bg-gradient-to-br from-blue-600/20 to-cyan-500/10 border border-blue-500/30 rounded-3xl p-8 sm:p-10 text-center flex flex-col items-center justify-center space-y-6">
-          <h3 className="text-2xl font-bold text-white">{TEXT.ctaTitle}</h3>
-          <p className="text-slate-400">{TEXT.ctaText}</p>
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-white">{TEXT.ctaTitle}</h3>
+          <p className="text-slate-600 dark:text-slate-400">{TEXT.ctaText}</p>
           <Link
             href={`/${locale}/courses`}
             className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3 px-8 rounded-xl transition-all hover:shadow-lg shadow-blue-500/25"

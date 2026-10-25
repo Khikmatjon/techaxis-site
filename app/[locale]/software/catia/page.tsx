@@ -156,7 +156,7 @@ export default async function CatiaPage({ params }: { params: Promise<{ locale: 
           <p className="text-slate-500 max-w-2xl mx-auto uppercase tracking-widest text-sm">{t.subtitle}</p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {catiaOffers.map((offer) => (
             <div key={offer.name} className={`relative p-8 rounded-[40px] bg-white dark:bg-slate-900 border-2 ${offer.recommended ? 'border-blue-600 shadow-2xl' : 'border-transparent shadow-md'}`}>
               <h3 className="text-2xl font-bold mb-2">{offer.name}</h3>
