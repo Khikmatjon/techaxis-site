@@ -7,6 +7,43 @@ import Image from "next/image";
 import { getDictionary } from "@/lib/dictionary";
 import { Locale } from "@/lib/i18n";
 import { ArrowUpRight, CheckCircle2, Download } from 'lucide-react';
+import { pick } from "@/lib/locale-text";
+
+const T = {
+  uz: {
+    sw: "Sanoat standarti darajasidagi 3D CAD dasturiy ta'minoti. Mashinasozlik va muhandislik sohasida eng ko'p ishlatiladigan dasturlardan biri.",
+    swF: ["3D detal va yig'ma (Part & Assembly)", "Simulation (FEA/CFD)", "PDM (ma'lumotlarni boshqarish)", "CAM bilan integratsiya"],
+    catia: "Dassault Systèmes kompaniyasining professional muhandislik yechimi. Aviatsiya, avtomobilsozlik va murakkab tizimlar uchun mo'ljallangan.",
+    catiaF: ["Murakkab yuzalar (Surface Design)", "Systems Engineering", "Listli metall (Sheetmetal Design)", "Kompozitlar"],
+    x: "Bulutli platforma orqali jamoaviy ishlash va PLM (Mahsulot hayotiy siklini boshqarish) imkoniyatlari.",
+    xF: ["Bulutda jamoaviy ishlash", "Loyihalarni boshqarish", "ENOVIA bilan integratsiya", "DELMIA Simulation"],
+    h1a: "Dasturiy", h1b: "ta'minot",
+    intro: "SOLIDWORKS, CATIA va 3DEXPERIENCE bo'yicha litsenziya tanlash, o'rnatish va ishlashni o'rganishda yordam beramiz.",
+    buy: "Litsenziya sotib olish", trial: "Sinov versiyasi bo'yicha so'rov",
+  },
+  ru: {
+    sw: "3D CAD-программа промышленного уровня. Одна из самых используемых программ в машиностроении и инженерии.",
+    swF: ["3D-детали и сборки (Part & Assembly)", "Simulation (FEA/CFD)", "PDM (управление данными)", "Интеграция с CAM"],
+    catia: "Профессиональное инженерное решение компании Dassault Systèmes. Предназначено для авиации, автомобилестроения и сложных систем.",
+    catiaF: ["Сложные поверхности (Surface Design)", "Systems Engineering", "Листовой металл (Sheetmetal Design)", "Композиты"],
+    x: "Командная работа через облачную платформу и возможности PLM (управление жизненным циклом изделия).",
+    xF: ["Облачная совместная работа", "Управление проектами", "Интеграция с ENOVIA", "DELMIA Simulation"],
+    h1a: "Программное", h1b: "обеспечение",
+    intro: "Поможем выбрать лицензию SOLIDWORKS, CATIA и 3DEXPERIENCE, установить программу и научиться в ней работать.",
+    buy: "Купить лицензию", trial: "Запросить пробную версию",
+  },
+  en: {
+    sw: "Industry-standard 3D CAD software. One of the most widely used programs in mechanical engineering.",
+    swF: ["3D parts and assemblies", "Simulation (FEA/CFD)", "PDM (data management)", "CAM integration"],
+    catia: "A professional engineering solution from Dassault Systèmes, designed for aviation, the automotive industry and complex systems.",
+    catiaF: ["Advanced Surface Design", "Systems Engineering", "Sheetmetal Design", "Composites"],
+    x: "Teamwork on a cloud platform and PLM (product lifecycle management) capabilities.",
+    xF: ["Cloud collaboration", "Project management", "ENOVIA integration", "DELMIA Simulation"],
+    h1a: "Engineering", h1b: "software",
+    intro: "We help you choose a SOLIDWORKS, CATIA or 3DEXPERIENCE license, install it and learn to work with it.",
+    buy: "Buy a license", trial: "Request a trial version",
+  },
+};
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -15,14 +52,15 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function SoftwarePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+  const t = pick(T, locale);
   const dict: any = await getDictionary(locale as Locale);
 
   const softwareList = [
     {
       id: "solidworks",
       name: "SOLIDWORKS",
-      description: "Sanoat standarti darajasidagi 3D CAD dasturiy ta'minoti. Mashinasozlik va muhandislik sohasida eng ko'p ishlatiladigan dasturlardan biri.",
-      features: ["3D Part & Assembly", "Simulation (FEA/CFD)", "PDM (Data Management)", "CAM Integration"],
+      description: t.sw,
+      features: t.swF,
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070",
       color: "from-red-500 to-red-700",
       bgLight: "bg-red-50 dark:bg-red-900/10"
@@ -30,8 +68,8 @@ export default async function SoftwarePage({ params }: { params: Promise<{ local
     {
       id: "catia",
       name: "CATIA",
-      description: "Dassault Systèmes kompaniyasining professional muhandislik yechimi. Aviatsiya, avtomobilsozlik va murakkab tizimlar uchun mo'ljallangan.",
-      features: ["Advanced Surface Design", "Systems Engineering", "Sheetmetal Design", "Composites"],
+      description: t.catia,
+      features: t.catiaF,
       image: "https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&q=80&w=1974",
       color: "from-blue-600 to-blue-800",
       bgLight: "bg-blue-50 dark:bg-blue-900/10"
@@ -39,8 +77,8 @@ export default async function SoftwarePage({ params }: { params: Promise<{ local
     {
       id: "3dexperience",
       name: "3DEXPERIENCE",
-      description: "Bulutli platforma orqali jamoaviy ishlash va PLM (Mahsulot hayotiy siklini boshqarish) imkoniyatlari.",
-      features: ["Cloud Collaboration", "Project Management", "ENOVIA Integration", "DELMIA Simulation"],
+      description: t.x,
+      features: t.xF,
       image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2070",
       color: "from-cyan-500 to-blue-600",
       bgLight: "bg-cyan-50 dark:bg-cyan-900/10"
@@ -55,10 +93,10 @@ export default async function SoftwarePage({ params }: { params: Promise<{ local
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20 space-y-6">
           <h1 className="text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-            Dasturiy <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">ta'minot</span>
+            {t.h1a} <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">{t.h1b}</span>
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 font-medium">
-            SOLIDWORKS, CATIA va 3DEXPERIENCE bo'yicha litsenziya tanlash, o'rnatish va ishlashni o'rganishda yordam beramiz.
+            {t.intro}
           </p>
         </div>
 
@@ -89,10 +127,10 @@ export default async function SoftwarePage({ params }: { params: Promise<{ local
 
                 <div className="flex flex-wrap gap-4 pt-4">
                   <a href={`/${locale}#contact`} className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
-                    Litsenziya sotib olish
+                    {t.buy}
                   </a>
                   <a href={`/${locale}#contact`} className="flex items-center gap-2 px-8 py-4 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold rounded-full border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
-                    Sinov versiyasi bo&apos;yicha so&apos;rov <Download className="w-4 h-4" />
+                    {t.trial} <Download className="w-4 h-4" />
                   </a>
                 </div>
               </div>

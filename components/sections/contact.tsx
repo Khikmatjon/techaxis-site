@@ -13,6 +13,7 @@ export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
     setStatus("loading");
 
     const formData = new FormData(e.currentTarget);
+    formData.set("lang", locale);
     const result = await sendToTelegram(formData);
 
     if (result.success) {

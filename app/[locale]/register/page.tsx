@@ -5,9 +5,33 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { registerAction } from "@/lib/actions/auth-actions";
 import { Eye, EyeOff, Mail, Lock, User, Zap, ArrowRight, CheckCircle2 } from "lucide-react";
+import { pick } from "@/lib/locale-text";
+import { trXato } from "@/lib/action-messages";
+
+const T = {
+  uz: {
+    weak: "Juda zaif", medium: "O'rtacha", strong: "Kuchli", mismatch: "Parollar mos kelmadi", tooShort: "Parol kamida 8 ta belgi bo'lishi kerak",
+    title: "Hisob yarating", intro: "Kurslarimizga kirish uchun ro'yxatdan o'ting", name: "Ism va familiya", namePh: "Alisher Karimov",
+    password: "Parol", min8: "Kamida 8 ta belgi", hide: "Parolni yashirish", show: "Parolni ko'rsatish", confirm: "Parolni tasdiqlang",
+    submit: "Ro'yxatdan o'tish", haveAccount: "Allaqachon hisobingiz bormi?", login: "Kirish",
+  },
+  ru: {
+    weak: "Очень слабый", medium: "Средний", strong: "Надёжный", mismatch: "Пароли не совпадают", tooShort: "Пароль должен содержать не менее 8 символов",
+    title: "Создайте аккаунт", intro: "Зарегистрируйтесь, чтобы получить доступ к курсам", name: "Имя и фамилия", namePh: "Алишер Каримов",
+    password: "Пароль", min8: "Не менее 8 символов", hide: "Скрыть пароль", show: "Показать пароль", confirm: "Подтвердите пароль",
+    submit: "Зарегистрироваться", haveAccount: "Уже есть аккаунт?", login: "Войти",
+  },
+  en: {
+    weak: "Very weak", medium: "Medium", strong: "Strong", mismatch: "Passwords do not match", tooShort: "The password must be at least 8 characters long",
+    title: "Create an account", intro: "Sign up to get access to our courses", name: "First and last name", namePh: "Alex Johnson",
+    password: "Password", min8: "At least 8 characters", hide: "Hide password", show: "Show password", confirm: "Confirm password",
+    submit: "Sign up", haveAccount: "Already have an account?", login: "Sign in",
+  },
+};
 
 export default function RegisterPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = use(params);
+  const t = pick(T, locale);
   const router = useRouter();
   const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
   const [agreed, setAgreed] = useState(false);
@@ -31,18 +55,19 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
   })();
 
   const strengthColors = ["", "bg-red-500", "bg-yellow-500", "bg-emerald-500"];
-  const strengthLabels = ["", "Juda zaif", "O'rtacha", "Kuchli"];
+  const strengthLabels = ["", t.weak, t.medium, t.strong];
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
 
     if (form.password !== form.confirm) {
-      setError("Parollar mos kelmadi");
+      setError(t.mismatch);
       return;
     }
-    if (form.password.length < 4) {
-      setError("Parol kamida 4 ta belgi bo'lishi kerak");
+    // Server ham kamida 8 belgi talab qiladi (lib/actions/auth-actions.ts -> MIN_PASSWORD)
+    if (form.password.length < 8) {
+      setError(t.tooShort);
       return;
     }
     if (!agreed) {
@@ -61,7 +86,7 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
     setLoading(false);
 
     if (result.error) {
-      setError(result.error);
+      setError(trXato(result.error, locale));
       return;
     }
 
@@ -90,8 +115,8 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
               </span>
             </div>
           </Link>
-          <h1 className="text-3xl font-black text-white mb-2">Hisob yarating</h1>
-          <p className="text-slate-400">Kurslarimizga kirish uchun ro'yxatdan o'ting</p>
+          <h1 className="text-3xl font-black text-white mb-2">{t.title}</h1>
+          <p className="text-slate-400">{t.intro}</p>
         </div>
 
         <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-2xl p-8 shadow-2xl">
@@ -105,14 +130,14 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
 
             {/* Ism */}
             <div className="space-y-1.5">
-              <label htmlFor="reg-name" className="text-sm font-semibold text-slate-300">Ism Familiya</label>
+              <label htmlFor="reg-name" className="text-sm font-semibold text-slate-300">{t.name}</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
                   id="reg-name"
                   type="text"
                   required
-                  placeholder="Alisher Karimov"
+                  placeholder={t.namePh}
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   className="w-full bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
@@ -139,7 +164,7 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
 
             {/* Parol */}
             <div className="space-y-1.5">
-              <label htmlFor="reg-password" className="text-sm font-semibold text-slate-300">Parol</label>
+              <label htmlFor="reg-password" className="text-sm font-semibold text-slate-300">{t.password}</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
@@ -148,7 +173,7 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
                   required
                   minLength={8}
                   autoComplete="new-password"
-                  placeholder="Kamida 8 ta belgi"
+                  placeholder={t.min8}
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
                   className="w-full bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 rounded-xl pl-10 pr-12 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
@@ -156,7 +181,7 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? "Parolni yashirish" : "Parolni ko'rsatish"}
+                  aria-label={showPassword ? t.hide : t.show}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -179,7 +204,7 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
 
             {/* Tasdiqlash */}
             <div className="space-y-1.5">
-              <label htmlFor="reg-password2" className="text-sm font-semibold text-slate-300">Parolni tasdiqlang</label>
+              <label htmlFor="reg-password2" className="text-sm font-semibold text-slate-300">{t.confirm}</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
@@ -230,16 +255,16 @@ export default function RegisterPage({ params }: { params: Promise<{ locale: str
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
               ) : (
                 <>
-                  Ro'yxatdan o'tish <ArrowRight className="w-5 h-5" />
+                  {t.submit} <ArrowRight className="w-5 h-5" />
                 </>
               )}
             </button>
           </form>
 
           <p className="mt-6 text-center text-slate-500 text-sm">
-            Allaqachon hisobingiz bormi?{" "}
+            {t.haveAccount}{" "}
             <Link href={`/${locale}/login`} className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
-              Kirish
+              {t.login}
             </Link>
           </p>
         </div>

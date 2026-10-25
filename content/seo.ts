@@ -234,5 +234,21 @@ export type SeoKey = keyof typeof SEO;
 // asosiy matn hali o'zbekcha -- ular /uz versiyaning nusxasi hisoblanadi (canonical ->
 // /uz) va sitemap'ga faqat /uz kiradi.
 // Sahifani uch tilga tarjima qilgach, uning manzilini shu ro'yxatga qo'shing
-// ("" = bosh sahifa). Tekshirish: node scripts/check-meta.mjs
-export const TARJIMA_QILINGAN: readonly string[] = ["", "/privacy", "/terms"];
+// ("" = bosh sahifa). Kurs sahifalari (/courses/...) lib/seo.ts da alohida hisoblanadi,
+// blog maqolasi -- tarjimasi bo'lsa (content/blog-tarjima.ts).
+// Tekshirish: node scripts/check-meta.mjs va node scripts/check-i18n.mjs <manzil>
+export const TARJIMA_QILINGAN: readonly string[] = [
+  "",
+  "/software",
+  "/software/solidworks",
+  "/software/catia",
+  "/training",
+  "/courses",
+  "/blog",
+  "/free",
+  "/solidworks-jonli-kurs",
+  "/privacy",
+  "/terms",
+  "/login",
+  "/register",
+];

@@ -5,8 +5,10 @@ import type { Metadata } from "next";
 import { ArrowRight, BookMarked, Calendar, Clock, Lightbulb } from "lucide-react";
 import { listPublishedPosts } from "@/lib/blog-store";
 import { pageMetadata } from "@/lib/seo";
-import { POST_TYPES, POST_TYPE_META, formatPostDate, isPostType, readMinutes, type BlogPost } from "@/lib/blog";
+import { POST_TYPES, POST_TYPE_META, formatPostDate, isPostType, postTypeName, readMinutes, type BlogPost } from "@/lib/blog";
 import { PostImage } from "@/components/blog/post-image";
+import { localizePost } from "@/lib/blog-i18n";
+import { pick } from "@/lib/locale-text";
 
 // Yozuvlar bazadan o'qiladi va admin paneldan o'zgaradi, shuning uchun sahifa har so'rovda tayyorlanadi.
 export const dynamic = "force-dynamic";
@@ -16,25 +18,58 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return pageMetadata("blog", locale, "/blog");
 }
 
-const TEXT = {
-  heading1: "Muhandislik va CAD",
-  heading2: "bilimlar bazasi",
-  intro:
-    "SOLIDWORKS, CATIA va 3DEXPERIENCE haqida haftalik faktlar, maqolalar, yangiliklar va bizning ishlarimiz. Ma'lumotlar rasmiy manbalarga tayanadi.",
-  all: "Hammasi",
-  weeklyFact: "Haftalik fakt",
-  more: "Batafsil",
-  read: "O'qish",
-  minutes: "daqiqa",
-  emptyAll: "Yozuvlar tez orada chiqadi.",
-  emptyType: "Bu turdagi yozuvlar hali yo'q.",
+const T = {
+  uz: {
+    heading1: "Muhandislik va CAD",
+    heading2: "bilimlar bazasi",
+    intro:
+      "SOLIDWORKS, CATIA va 3DEXPERIENCE haqida haftalik faktlar, maqolalar, yangiliklar va bizning ishlarimiz. Ma'lumotlar rasmiy manbalarga tayanadi.",
+    all: "Hammasi",
+    weeklyFact: "Haftalik fakt",
+    more: "Batafsil",
+    read: "O'qish",
+    minutes: "daqiqa",
+    emptyAll: "Yozuvlar tez orada chiqadi.",
+    emptyType: "Bu turdagi yozuvlar hali yo'q.",
+    uzOnly: "",
+  },
+  ru: {
+    heading1: "База знаний",
+    heading2: "по инженерии и CAD",
+    intro:
+      "Еженедельные факты, статьи, новости и наши работы о SOLIDWORKS, CATIA и 3DEXPERIENCE. Данные основаны на официальных источниках.",
+    all: "Все",
+    weeklyFact: "Факт недели",
+    more: "Подробнее",
+    read: "Читать",
+    minutes: "мин",
+    emptyAll: "Публикации скоро появятся.",
+    emptyType: "Публикаций такого типа пока нет.",
+    uzOnly: "На узбекском",
+  },
+  en: {
+    heading1: "Engineering and CAD",
+    heading2: "knowledge base",
+    intro:
+      "Weekly facts, articles, news and our work on SOLIDWORKS, CATIA and 3DEXPERIENCE. All information is based on official sources.",
+    all: "All",
+    weeklyFact: "Fact of the week",
+    more: "Read more",
+    read: "Read",
+    minutes: "min",
+    emptyAll: "Posts are coming soon.",
+    emptyType: "There are no posts of this type yet.",
+    uzOnly: "In Uzbek",
+  },
 };
 
-function PostCard({ post, locale }: { post: BlogPost; locale: string }) {
+function PostCard({ post, locale }: { post: BlogPost & { translated: boolean }; locale: string }) {
   const meta = POST_TYPE_META[post.type];
+  const TEXT = pick(T, locale);
+  const label = postTypeName(post.type, locale).label;
   const header = (
     <div className={`h-full w-full bg-gradient-to-br ${meta.gradient} flex items-end p-5`}>
-      <span className="text-3xl font-black text-white/25 leading-none">{meta.label}</span>
+      <span className="text-3xl font-black text-white/25 leading-none">{label}</span>
     </div>
   );
 
@@ -53,18 +88,19 @@ function PostCard({ post, locale }: { post: BlogPost; locale: string }) {
             header
           )}
           <span className={`absolute top-4 left-4 text-xs font-bold px-3 py-1.5 rounded-full border backdrop-blur-md ${meta.badge}`}>
-            {meta.label}
+            {label}
           </span>
         </div>
 
         <div className="p-6 flex flex-col flex-1">
           <div className="flex items-center gap-4 text-xs text-slate-400 font-medium mb-3">
             <span className="flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5" /> {formatPostDate(post.publishedAt)}
+              <Calendar className="w-3.5 h-3.5" /> {formatPostDate(post.publishedAt, locale)}
             </span>
             <span className="flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5" /> {readMinutes(post.content)} {TEXT.minutes}
             </span>
+            {!post.translated && <span className="text-amber-500">{TEXT.uzOnly}</span>}
           </div>
 
           <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">
@@ -92,7 +128,8 @@ export default async function BlogIndexPage({
   const { locale } = await params;
   const { type } = await searchParams;
 
-  const all = await listPublishedPosts();
+  const TEXT = pick(T, locale);
+  const all = (await listPublishedPosts()).map((p) => localizePost(p, locale));
   const active = isPostType(type) ? type : null;
   const visible = active ? all.filter((p) => p.type === active) : all;
   // "Haftalik fakt": eng so'nggi nashr etilgan fakt (filtrsiz ko'rinishda alohida katta blok)
@@ -136,7 +173,7 @@ export default async function BlogIndexPage({
                 href={`/${locale}/blog?type=${t}`}
                 className={`${chipBase} ${active === t ? chipOn : chipOff}`}
               >
-                {POST_TYPE_META[t].plural} ({counts[t]})
+                {postTypeName(t, locale).plural} ({counts[t]})
               </Link>
             ))}
           </div>

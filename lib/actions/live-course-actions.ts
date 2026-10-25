@@ -33,6 +33,9 @@ export async function submitLiveApplicationAction(formData: FormData) {
   const levelRaw = str(formData, "level", 40);
   const level = (DARAJALAR as readonly string[]).includes(levelRaw) ? levelRaw : DARAJALAR[0];
   const group = str(formData, "group", 40) || "1-guruh";
+  // Ariza qaysi tildagi sahifadan kelgani -- javobni shu tilda yozish uchun.
+  const langRaw = str(formData, "lang", 2);
+  const lang = ["uz", "ru", "en"].includes(langRaw) ? langRaw : "uz";
 
   if (name.length < 2) return { success: false as const, error: "Ismingizni kiriting" };
   if (phone.replace(/\D/g, "").length < 7) return { success: false as const, error: "Telefon raqamini to'liq kiriting" };
@@ -45,6 +48,7 @@ export async function submitLiveApplicationAction(formData: FormData) {
 📞 <b>Tel:</b> ${e(phone)}
 💬 <b>Telegram:</b> ${telegram ? e(telegram) : "—"}
 📊 <b>Tajriba:</b> ${e(level)}
+🌐 <b>Sayt tili:</b> ${lang.toUpperCase()}
 
 📅 ${new Date().toLocaleString("uz-UZ", { timeZone: "Asia/Tashkent" })}
   `;

@@ -54,7 +54,37 @@ export const POST_LIMITS = {
 } as const;
 
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const MONTHS = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul", "avgust", "sentabr", "oktabr", "noyabr", "dekabr"];
+const MONTHS = {
+  uz: ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul", "avgust", "sentabr", "oktabr", "noyabr", "dekabr"],
+  ru: ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+};
+
+// Sayt sahifalari uchun tur nomlari uch tilda (POST_TYPE_META o'zbekcha -- admin panel ham ishlatadi).
+const POST_TYPE_NAMES: Record<"uz" | "ru" | "en", Record<PostType, { label: string; plural: string }>> = {
+  uz: {
+    fact: { label: "Fakt", plural: "Faktlar" },
+    article: { label: "Maqola", plural: "Maqolalar" },
+    news: { label: "Yangilik", plural: "Yangiliklar" },
+    work: { label: "Ishimiz", plural: "Ishlarimiz" },
+  },
+  ru: {
+    fact: { label: "Факт", plural: "Факты" },
+    article: { label: "Статья", plural: "Статьи" },
+    news: { label: "Новость", plural: "Новости" },
+    work: { label: "Наша работа", plural: "Наши работы" },
+  },
+  en: {
+    fact: { label: "Fact", plural: "Facts" },
+    article: { label: "Article", plural: "Articles" },
+    news: { label: "News", plural: "News" },
+    work: { label: "Our work", plural: "Our work" },
+  },
+};
+
+export function postTypeName(type: PostType, locale: string = "uz") {
+  return POST_TYPE_NAMES[locale === "ru" || locale === "en" ? locale : "uz"][type];
+}
 
 export function isPostType(value: unknown): value is PostType {
   return typeof value === "string" && (POST_TYPES as readonly string[]).includes(value);
@@ -78,11 +108,12 @@ export function readMinutes(content: string): number {
   return Math.max(1, Math.ceil(words / 180));
 }
 
-// UTC bo'yicha, shunda server va brauzerda bir xil chiqadi: "20 sentabr 2026"
-export function formatPostDate(iso: string): string {
+// UTC bo'yicha, shunda server va brauzerda bir xil chiqadi: "20 sentabr 2026" / "20 сентября 2026" / "20 September 2026"
+export function formatPostDate(iso: string, locale: string = "uz"): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "";
-  return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+  const months = MONTHS[locale === "ru" || locale === "en" ? locale : "uz"];
+  return `${d.getUTCDate()} ${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
 
 export function todayDateInput(): string {
