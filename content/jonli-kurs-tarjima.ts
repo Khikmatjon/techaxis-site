@@ -9,7 +9,6 @@ import { JONLI_KURS, DARAJALAR } from "@/content/jonli-kurs";
 
 type Izohli = { nomi: string; izoh: string };
 export type JonliKursMatn = {
-  guruh: string;
   boshlanish: string | null;
   narx: string | null;
   jadval: string | null;
@@ -24,7 +23,6 @@ export type JonliKursMatn = {
 
 const TARJIMA: Record<"ru" | "en", JonliKursMatn> = {
   ru: {
-    guruh: "Группа 1",
     boshlanish: null,
     narx: "990 000 сум",
     jadval: "4 раза в неделю, каждый урок 1,5–2 часа",
@@ -106,7 +104,6 @@ const TARJIMA: Record<"ru" | "en", JonliKursMatn> = {
     ],
   },
   en: {
-    guruh: "Group 1",
     boshlanish: null,
     narx: "990,000 UZS",
     jadval: "4 times a week, 1.5–2 hours per lesson",

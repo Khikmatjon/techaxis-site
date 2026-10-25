@@ -14,6 +14,8 @@
 // =============================================================================
 
 export const JONLI_KURS = {
+  // Guruh nomi saytda ko'rsatilmaydi: faqat arizaga yoziladi (admin -> "Jonli kurs" ->
+  // "Guruh" ustuni), arizalar qaysi guruhga kelganini ajratish uchun.
   guruh: "1-guruh",
   // KEYIN-TOLDIRING: keyingi guruh boshlanish sanasi ma'lum bo'lgach yozing, masalan
   // "15-noyabr 2026" (ruscha/inglizchasini content/jonli-kurs-tarjima.ts'ga ham).

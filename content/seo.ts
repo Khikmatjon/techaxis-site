@@ -157,7 +157,7 @@ export const SEO = {
   },
   jonliKurs: {
     uz: {
-      title: "SOLIDWORKS jonli onlayn kursi — 1-guruh | TechAxis",
+      title: "SOLIDWORKS jonli onlayn kursi | TechAxis",
       description:
         "SOLIDWORKS jonli onlayn kursi: 16 dars, CSWA va CSWP imtihonlariga tayyorgarlik. Birinchi dars bepul.",
     },
