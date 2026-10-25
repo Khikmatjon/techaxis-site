@@ -6,7 +6,7 @@ import { ArrowRight } from 'lucide-react';
 
 // Yozuv matni: locales/*.json -> "announcement" (e'lon) va "announcement_cta" (tugma yozuvi).
 // Butun qator bitta havola: bosilganda jonli kurs sahifasiga olib boradi.
-export const AnnouncementBar = ({ dict, locale }: { dict: any; locale: string }) => {
+export const AnnouncementBar = ({ dict, locale }: { dict: { announcement?: string; announcement_cta?: string }; locale: string }) => {
   if (!dict?.announcement) return null;
 
   return (
