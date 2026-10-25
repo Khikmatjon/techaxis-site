@@ -154,6 +154,11 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
     ru: {
       whyTitle: "Почему SOLIDWORKS?",
       whyDesc: "Распространённая 3D CAD-программа в машиностроении и дизайне изделий: детали, сборки и технические чертежи в одной среде.",
+      audience: [
+        { title: "Начинающие с нуля", desc: "Вы ещё не работали в 3D-программах: курс начинается с интерфейса и эскиза." },
+        { title: "Студенты инженерных направлений", desc: "Хотите по порядку освоить детали, сборки и чертежи на практических упражнениях." },
+        { title: "Переходящие с AutoCAD", desc: "Хотите перейти от 2D-чертежей к параметрическому 3D-моделированию." },
+      ],
       benefits: [
         { title: "Широко используется", desc: "Одна из самых распространённых 3D CAD-программ в машиностроении и дизайне изделий." },
         { title: "Параметрическая модель", desc: "Меняете размер — деталь, сборка и чертёж обновляются вместе." },
@@ -192,6 +197,11 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
     en: {
       whyTitle: "Why SOLIDWORKS?",
       whyDesc: "A widely used 3D CAD program in mechanical engineering and product design: parts, assemblies and technical drawings in one environment.",
+      audience: [
+        { title: "Complete beginners", desc: "You have not worked in 3D software yet: the course starts with the interface and sketching." },
+        { title: "Engineering students", desc: "You want to learn parts, assemblies and drawings step by step through practical exercises." },
+        { title: "People moving from AutoCAD", desc: "You want to move from 2D drawings to parametric 3D modeling." },
+      ],
       benefits: [
         { title: "Widely used", desc: "One of the most widely used 3D CAD programs in mechanical engineering and product design." },
         { title: "Parametric model", desc: "Change a dimension and the part, assembly and drawing update together." },
@@ -232,6 +242,11 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
     ru: {
       whyTitle: "Почему CATIA V5?",
       whyDesc: "Программа Dassault Systèmes: используется в авиации и автомобилестроении для сложных деталей и больших сборок.",
+      audience: [
+        { title: "Авиация и автомобилестроение", desc: "Хотите освоить CATIA V5, которая широко используется в этих отраслях." },
+        { title: "Работающие со сложными деталями и большими сборками", desc: "Хотите освоить Part Design, Assembly Design и DMU Kinematics на практических проектах." },
+        { title: "Переходящие с AutoCAD или другой программы", desc: "Курс начинается с интерфейса CATIA; опыт черчения поможет на этапе эскиза." },
+      ],
       benefits: [
         { title: "Авиация и автомобилестроение", desc: "CATIA используется именно в этих отраслях для сложных поверхностей и больших сборок." },
         { title: "Система рабочих сред", desc: "Каждый вид работы — эскиз, деталь, сборка, чертёж — в своём workbench: упорядоченная и мощная среда." },
@@ -269,6 +284,11 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
     en: {
       whyTitle: "Why CATIA V5?",
       whyDesc: "Dassault Systèmes software used in aviation and the automotive industry for complex parts and large assemblies.",
+      audience: [
+        { title: "Aviation and automotive", desc: "You want to learn CATIA V5, which is widely used in these industries." },
+        { title: "Working with complex parts and large assemblies", desc: "You want to master Part Design, Assembly Design and DMU Kinematics on practical projects." },
+        { title: "Moving from AutoCAD or other software", desc: "The course starts with the CATIA interface; your drafting experience helps at the sketch stage." },
+      ],
       benefits: [
         { title: "Aviation and automotive", desc: "CATIA is used in exactly these industries for complex surfaces and large assemblies." },
         { title: "Workbench system", desc: "Each type of work — sketch, part, assembly, drawing — has its own workbench: an organized and powerful environment." },
@@ -308,6 +328,11 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
     ru: {
       whyTitle: "Почему FEA?",
       whyDesc: "Проверить в SOLIDWORKS Simulation, выдержит ли деталь нагрузку, ещё до изготовления прототипа — это экономит время и материал.",
+      audience: [
+        { title: "Умеющие моделировать в SOLIDWORKS", desc: "Курс проходит в SOLIDWORKS Simulation; полезно знать основы моделирования." },
+        { title: "Конструкторы и инженеры", desc: "Хотите проверять, выдержит ли деталь нагрузку и нагрев, ещё до изготовления прототипа." },
+        { title: "Студенты механических направлений", desc: "Хотите увидеть напряжения и деформации в программе на практических примерах." },
+      ],
       benefits: [
         { title: "Испытание до прототипа", desc: "Вы проверяете деталь на компьютере, а не изготавливаете и ломаете её." },
         { title: "Экономия материала", desc: "Топологическая оптимизация убирает лишний материал и сохраняет прочность." },
@@ -345,6 +370,11 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
     en: {
       whyTitle: "Why FEA?",
       whyDesc: "Checking in SOLIDWORKS Simulation whether a part will withstand the load before building a prototype saves time and material.",
+      audience: [
+        { title: "People who can model in SOLIDWORKS", desc: "The course runs in SOLIDWORKS Simulation; knowing modeling basics helps." },
+        { title: "Designers and engineers", desc: "You want to check whether a part withstands load and heat before building a prototype." },
+        { title: "Mechanical engineering students", desc: "You want to see stress and deformation in the software on practical examples." },
+      ],
       benefits: [
         { title: "Test before the prototype", desc: "You check the part on the computer instead of building it and breaking it." },
         { title: "Save material", desc: "Topology optimization removes unnecessary material while keeping the strength." },
@@ -384,6 +414,11 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
     ru: {
       whyTitle: "Почему PLM?",
       whyDesc: "Системы PDM/PLM позволяют управлять всеми инженерными данными компании в одном месте.",
+      audience: [
+        { title: "Инженеры, работающие в команде", desc: "Над одним проектом работают двое и больше, и данные нужно вести в одном месте." },
+        { title: "Отвечающие за BOM, версии и изменения", desc: "Хотите вести данные изделия от идеи до производства в одной системе." },
+        { title: "Переходящие на платформу 3DEXPERIENCE", desc: "Хотите на практике освоить командную работу на платформе." },
+      ],
       benefits: [
         { title: "Единый источник данных", desc: "Дубликаты файлов исчезают, все работают с одной — последней — версией." },
         { title: "Командная работа", desc: "Несколько инженеров работают над одним проектом с ролями и правами доступа." },
@@ -421,6 +456,11 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
     en: {
       whyTitle: "Why PLM?",
       whyDesc: "PDM/PLM systems let a company manage all of its engineering data in one place.",
+      audience: [
+        { title: "Engineers working in a team", desc: "Two or more people work on one project and the data has to be managed in one place." },
+        { title: "People responsible for BOM, versions and changes", desc: "You want to keep product data from idea to production in one system." },
+        { title: "Teams moving to 3DEXPERIENCE", desc: "You want to learn teamwork on the platform in practice." },
+      ],
       benefits: [
         { title: "Single source of truth", desc: "Duplicate files disappear and everyone works with the same, latest version." },
         { title: "Teamwork", desc: "Several engineers work on one project with roles and permissions." },

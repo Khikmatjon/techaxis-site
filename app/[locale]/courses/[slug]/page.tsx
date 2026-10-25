@@ -9,15 +9,19 @@ import { pick } from "@/lib/locale-text";
 import { localizeCourse } from "@/lib/course-i18n";
 import Link from "next/link";
 import Image from "next/image";
+import { LiteYouTube } from "@/components/course/lite-youtube";
+import { youtubeId } from "@/lib/youtube";
 import { 
   Play, CheckCircle, ChevronRight, Clock, 
   HelpCircle, Sparkles, Layout, Database, Terminal, ShieldCheck,
-  Zap, Target, Briefcase, BookOpen, Layers
+  Zap, Target, Briefcase, BookOpen, Layers, UserCheck, PlayCircle
 } from "lucide-react";
 
 const T = {
   uz: {
-    badge: "Onlayn video kurs", inUzbek: "", duration: "Davomiyligi", enroll: "Ro'yxatdan o'tish", imgAlt: "kurs",
+    badge: "Onlayn video kurs", inUzbek: "", duration: "Davomiyligi", enroll: "Kursga yozilish", imgAlt: "kurs",
+    audience: "Bu kurs kimlar uchun", freeBadge: "Bepul dars", freeTitle: "Kursdan bitta darsni bepul ko'ring",
+    freeText: "Ro'yxatdan o'tmasdan ko'rishingiz mumkin. Qolgan darslar kursga yozilgandan keyin ochiladi.", play: "Videoni ko'rish",
     topics: "Darslarda o'tiladigan asosiy mavzular", modules: "Kurs modullari va ulardagi darslar",
     outcomes: "Kurs natijasida nima olasiz?", why: "Nima uchun TechAxis?",
     whyItems: [
@@ -30,7 +34,9 @@ const T = {
     startText: "Kursga yoziling va o'z tezligingizda, amaliy loyihalar orqali o'rganishni boshlang.",
   },
   ru: {
-    badge: "Онлайн-видеокурс", inUzbek: "Уроки на узбекском языке", duration: "Длительность", enroll: "Записаться", imgAlt: "курс",
+    badge: "Онлайн-видеокурс", inUzbek: "Уроки на узбекском языке", duration: "Длительность", enroll: "Записаться на курс", imgAlt: "курс",
+    audience: "Для кого этот курс", freeBadge: "Бесплатный урок", freeTitle: "Посмотрите один урок курса бесплатно",
+    freeText: "Можно смотреть без регистрации. Остальные уроки открываются после записи на курс. Урок на узбекском языке.", play: "Смотреть видео",
     topics: "Основные темы уроков", modules: "Модули курса и уроки в них",
     outcomes: "Что вы получите по итогам курса?", why: "Почему TechAxis?",
     whyItems: [
@@ -43,7 +49,9 @@ const T = {
     startText: "Запишитесь на курс и учитесь в своём темпе на практических проектах.",
   },
   en: {
-    badge: "Online video course", inUzbek: "Lessons are taught in Uzbek", duration: "Duration", enroll: "Enroll", imgAlt: "course",
+    badge: "Online video course", inUzbek: "Lessons are taught in Uzbek", duration: "Duration", enroll: "Enroll in the course", imgAlt: "course",
+    audience: "Who this course is for", freeBadge: "Free lesson", freeTitle: "Watch one lesson of the course for free",
+    freeText: "No sign-up needed. The other lessons open after you enroll. The lesson is in Uzbek.", play: "Watch the video",
     topics: "The main topics of the lessons", modules: "Course modules and their lessons",
     outcomes: "What you will gain from the course", why: "Why TechAxis?",
     whyItems: [
@@ -89,6 +97,10 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
 
   // Barcha marketing copywriting matnlari course.marketing ichidan avtomatik keladi!
   const { marketing } = course;
+  // Bepul dars: admin panelda "Bepul" belgilangan va haqiqiy YouTube havolasi qo'yilgan
+  // birinchi dars. Bunday dars bo'lmasa bo'lim ko'rinmaydi (namuna video hisobga olinmaydi).
+  const freeLesson = course.modules.flatMap((m) => m.lessons).find((l) => l.isFree && youtubeId(l.videoUrl));
+  const freeVideoId = freeLesson ? youtubeId(freeLesson.videoUrl) : null;
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200">
@@ -150,6 +162,44 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
       {/* 🧩 SECTIONS CONTAINER */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32 py-20 font-sans">
         
+        {/* H2: Bu kurs kimlar uchun */}
+        {marketing.audience.length > 0 && (
+          <section className="space-y-8">
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white text-center">{t.audience}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {marketing.audience.map((a) => (
+                <div key={a.title} className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6">
+                  <UserCheck className="w-7 h-7 text-cyan-700 dark:text-cyan-400 mb-4" />
+                  <h3 className="font-bold text-lg text-slate-900 dark:text-white">{a.title}</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">{a.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* H2: Bepul dars (ro'yxatdan o'tmasdan ko'rish mumkin) */}
+        {freeLesson && freeVideoId && (
+          <section className="grid grid-cols-1 lg:grid-cols-5 gap-10 items-center">
+            <div className="lg:col-span-3 relative aspect-video rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-900 shadow-2xl">
+              <LiteYouTube id={freeVideoId} title={freeLesson.title} playLabel={t.play} />
+            </div>
+            <div className="lg:col-span-2 space-y-5">
+              <span className="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-emerald-800 dark:text-emerald-400">
+                <PlayCircle className="w-4 h-4" /> {t.freeBadge}
+              </span>
+              <h2 className="text-3xl font-black text-slate-900 dark:text-white">{t.freeTitle}</h2>
+              <p className="text-lg font-bold text-slate-800 dark:text-slate-200">
+                {freeLesson.title}{freeLesson.duration ? <span className="text-slate-500 font-medium"> · {freeLesson.duration}</span> : null}
+              </p>
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{t.freeText}</p>
+              <Link href={`/${locale}/checkout/${course.id}`} className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-blue-600/20 transition-all">
+                {t.enroll} <ChevronRight className="w-5 h-5" />
+              </Link>
+            </div>
+          </section>
+        )}
+
         {/* H2: Nega AYNAN SHU DASTUR? (Marketing Benefits) */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative">
