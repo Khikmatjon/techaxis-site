@@ -112,14 +112,14 @@ function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
       const key = `${keyPrefix}-${i}`;
       if (part.length > 4 && part.startsWith("**") && part.endsWith("**")) {
         return (
-          <strong key={key} className="font-semibold text-white">
+          <strong key={key} className="font-semibold text-slate-900 dark:text-white">
             {renderInline(part.slice(2, -2), key)}
           </strong>
         );
       }
       if (part.length > 2 && part.startsWith("`") && part.endsWith("`")) {
         return (
-          <code key={key} className="bg-slate-800 px-1.5 py-0.5 rounded text-[0.9em] text-cyan-300">
+          <code key={key} className="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-[0.9em] text-cyan-700 dark:text-cyan-300">
             {part.slice(1, -1)}
           </code>
         );
@@ -141,7 +141,7 @@ function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
             key={key}
             href={href}
             {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-            className="text-cyan-400 underline underline-offset-2 hover:text-cyan-300 break-words"
+            className="text-cyan-700 dark:text-cyan-400 underline underline-offset-2 hover:text-cyan-700 dark:hover:text-cyan-300 break-words"
           >
             {link[1]}
           </a>
@@ -155,25 +155,25 @@ export function PostContent({ content, className = "" }: { content: string; clas
   const blocks = parseBlocks(content);
 
   return (
-    <div className={`text-slate-300 leading-relaxed ${className}`}>
+    <div className={`text-slate-700 dark:text-slate-300 leading-relaxed ${className}`}>
       {blocks.map((block, i) => {
         const key = `b${i}`;
         switch (block.t) {
           case "h":
             if (block.level === 2)
               return (
-                <h2 key={key} className="text-2xl font-black text-white mt-10 mb-4">
+                <h2 key={key} className="text-2xl font-black text-slate-900 dark:text-white mt-10 mb-4">
                   {renderInline(block.text, key)}
                 </h2>
               );
             if (block.level === 3)
               return (
-                <h3 key={key} className="text-xl font-bold text-white mt-8 mb-3">
+                <h3 key={key} className="text-xl font-bold text-slate-900 dark:text-white mt-8 mb-3">
                   {renderInline(block.text, key)}
                 </h3>
               );
             return (
-              <h4 key={key} className="text-lg font-bold text-slate-200 mt-6 mb-2">
+              <h4 key={key} className="text-lg font-bold text-slate-800 dark:text-slate-200 mt-6 mb-2">
                 {renderInline(block.text, key)}
               </h4>
             );
@@ -201,12 +201,12 @@ export function PostContent({ content, className = "" }: { content: string; clas
             );
           case "quote":
             return (
-              <blockquote key={key} className="border-l-4 border-blue-500/60 pl-4 italic text-slate-400 mb-5">
+              <blockquote key={key} className="border-l-4 border-blue-500/60 pl-4 italic text-slate-600 dark:text-slate-400 mb-5">
                 {renderInline(block.text, key)}
               </blockquote>
             );
           case "hr":
-            return <hr key={key} className="border-slate-800 my-8" />;
+            return <hr key={key} className="border-slate-200 dark:border-slate-800 my-8" />;
         }
       })}
     </div>

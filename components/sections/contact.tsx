@@ -59,7 +59,7 @@ export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
   return (
     <section id="contact" className="py-24 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
 
           {/* L: CONTACT INFO */}
           <div className="space-y-12">
@@ -75,7 +75,7 @@ export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {contactOptions.map((item, index) => {
                 const CardWrapper: any = item.href ? 'a' : 'div';
                 const isExternal = item.href?.startsWith("http");
@@ -125,7 +125,7 @@ export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
                       placeholder={dict?.contact?.form_name}
                       className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 text-slate-900 dark:text-white focus:ring-2 ring-blue-500 outline-none transition-all placeholder:text-slate-400 font-medium"
                     />
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <input
                         name="email"
                         aria-label={dict?.contact?.form_email}

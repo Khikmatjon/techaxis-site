@@ -100,9 +100,9 @@ const T = {
 
 function Notice({ tone, children }: { tone: "info" | "warn" | "ok"; children: ReactNode }) {
   const styles = {
-    info: "bg-blue-500/10 border-blue-500/30 text-blue-200",
-    warn: "bg-amber-500/10 border-amber-500/30 text-amber-200",
-    ok: "bg-emerald-500/10 border-emerald-500/30 text-emerald-200",
+    info: "bg-blue-500/10 border-blue-500/30 text-blue-800 dark:text-blue-200",
+    warn: "bg-amber-500/10 border-amber-500/30 text-amber-800 dark:text-amber-200",
+    ok: "bg-emerald-500/10 border-emerald-500/30 text-emerald-800 dark:text-emerald-200",
   }[tone];
   const Icon = tone === "warn" ? AlertTriangle : tone === "ok" ? Database : Info;
   return (
@@ -114,7 +114,7 @@ function Notice({ tone, children }: { tone: "info" | "warn" | "ok"; children: Re
 }
 
 const inputClass =
-  "w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all";
+  "w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all";
 
 export default function BlogManager() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -283,14 +283,14 @@ export default function BlogManager() {
       {/* Sarlavha va asosiy tugmalar */}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white">{T.title}</h2>
-          <p className="text-slate-400 text-sm mt-1 max-w-2xl">{T.subtitle}</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">{T.title}</h2>
+          <p className="text-slate-600 dark:text-slate-400 text-sm mt-1 max-w-2xl">{T.subtitle}</p>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={load}
             disabled={loading}
-            className="flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl px-4 py-2.5 transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 transition-colors disabled:opacity-50"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} /> {T.refresh}
           </button>
@@ -329,9 +329,9 @@ export default function BlogManager() {
       {/* Statistika */}
       <div className="grid grid-cols-3 gap-3">
         {[
-          { label: T.total, value: counts.total, color: "text-blue-400", bg: "bg-blue-500/10 border-blue-500/20" },
-          { label: T.published, value: counts.published, color: "text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/20" },
-          { label: T.drafts, value: counts.drafts, color: "text-amber-400", bg: "bg-amber-500/10 border-amber-500/20" },
+          { label: T.total, value: counts.total, color: "text-blue-700 dark:text-blue-400", bg: "bg-blue-500/10 border-blue-500/20" },
+          { label: T.published, value: counts.published, color: "text-emerald-700 dark:text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/20" },
+          { label: T.drafts, value: counts.drafts, color: "text-amber-800 dark:text-amber-400", bg: "bg-amber-500/10 border-amber-500/20" },
         ].map((s) => (
           <div key={s.label} className={`border rounded-xl p-4 ${s.bg}`}>
             <div className={`text-2xl font-black ${s.color}`}>{s.value}</div>
@@ -361,7 +361,7 @@ export default function BlogManager() {
               className={`px-3 py-2 rounded-lg text-xs font-bold border transition-colors ${
                 typeFilter === t
                   ? "bg-blue-600 text-white border-blue-600"
-                  : "bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-500"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:border-slate-500"
               }`}
             >
               {t === "all" ? T.all : POST_TYPE_META[t].plural}
@@ -372,7 +372,7 @@ export default function BlogManager() {
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value as "all" | "published" | "draft")}
           aria-label={T.statusAll}
-          className="bg-slate-800 border border-slate-700 text-slate-200 rounded-lg px-3 py-2 text-xs font-bold focus:outline-none focus:border-blue-500"
+          className="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-lg px-3 py-2 text-xs font-bold focus:outline-none focus:border-blue-500"
         >
           <option value="all">{T.statusAll}</option>
           <option value="published">{T.published}</option>
@@ -393,14 +393,14 @@ export default function BlogManager() {
             return (
               <div
                 key={post.id}
-                className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col lg:flex-row lg:items-center gap-3 hover:border-slate-700 transition-colors"
+                className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col lg:flex-row lg:items-center gap-3 hover:border-slate-300 dark:hover:border-slate-700 transition-colors"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2 mb-1.5">
                     <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full border ${meta.badge}`}>{meta.label}</span>
                     <span
                       className={`text-[11px] font-bold px-2.5 py-1 rounded-full ${
-                        post.published ? "bg-emerald-500/15 text-emerald-400" : "bg-slate-700/60 text-slate-300"
+                        post.published ? "bg-emerald-500/15 text-emerald-800 dark:text-emerald-400" : "bg-slate-200/60 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300"
                       }`}
                     >
                       {post.published ? T.published : T.drafts}
@@ -409,7 +409,7 @@ export default function BlogManager() {
                       {formatPostDate(post.publishedAt)} · {readMinutes(post.content)} daq.
                     </span>
                   </div>
-                  <p className="text-white font-semibold text-sm">{post.title}</p>
+                  <p className="text-slate-900 dark:text-white font-semibold text-sm">{post.title}</p>
                   <p className="text-slate-500 text-xs truncate">/blog/{post.slug}</p>
                 </div>
 
@@ -419,7 +419,7 @@ export default function BlogManager() {
                       href={`/uz/blog/${post.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-xs font-bold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg px-3 py-2 transition-colors"
+                      className="flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 transition-colors"
                     >
                       <ExternalLink className="w-3.5 h-3.5" /> {T.openSite}
                     </a>
@@ -427,7 +427,7 @@ export default function BlogManager() {
                   <button
                     onClick={() => handleTogglePublish(post)}
                     disabled={readOnly || busy}
-                    className="flex items-center gap-1.5 text-xs font-bold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg px-3 py-2 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     {post.published ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                     {post.published ? T.hide : T.publish}
@@ -435,7 +435,7 @@ export default function BlogManager() {
                   <button
                     onClick={() => openEditor(post)}
                     disabled={readOnly || busy}
-                    className="flex items-center gap-1.5 text-xs font-bold text-blue-300 hover:text-blue-200 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 rounded-lg px-3 py-2 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="flex items-center gap-1.5 text-xs font-bold text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-blue-200 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 rounded-lg px-3 py-2 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     <Edit2 className="w-3.5 h-3.5" /> {T.edit}
                   </button>
@@ -444,7 +444,7 @@ export default function BlogManager() {
                     disabled={readOnly || busy}
                     aria-label={T.remove}
                     title={T.remove}
-                    className="flex items-center text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-lg p-2 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="flex items-center text-red-700 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-lg p-2 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -463,13 +463,13 @@ export default function BlogManager() {
           aria-modal="true"
           aria-label={draft.id ? T.editorEdit : T.editorNew}
         >
-          <div className="w-full max-w-3xl bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl">
-            <div className="flex items-center justify-between p-5 border-b border-slate-800">
-              <h3 className="text-lg font-bold text-white">{draft.id ? T.editorEdit : T.editorNew}</h3>
+          <div className="w-full max-w-3xl bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl shadow-2xl">
+            <div className="flex items-center justify-between p-5 border-b border-slate-200 dark:border-slate-800">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">{draft.id ? T.editorEdit : T.editorNew}</h3>
               <button
                 onClick={() => setDraft(null)}
                 aria-label={T.cancel}
-                className="text-slate-400 hover:text-white transition-colors"
+                className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -478,7 +478,7 @@ export default function BlogManager() {
             <div className="p-5 space-y-5">
               {/* Tur */}
               <div>
-                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">{T.fType}</span>
+                <span className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">{T.fType}</span>
                 <div className="flex flex-wrap gap-2">
                   {POST_TYPES.map((t) => (
                     <button
@@ -488,7 +488,7 @@ export default function BlogManager() {
                       className={`px-4 py-2 rounded-lg text-sm font-bold border transition-colors ${
                         draft.type === t
                           ? "bg-blue-600 text-white border-blue-600"
-                          : "bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-500"
+                          : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:border-slate-500"
                       }`}
                     >
                       {POST_TYPE_META[t].label}
@@ -499,7 +499,7 @@ export default function BlogManager() {
 
               {/* Sarlavha */}
               <div>
-                <label htmlFor="post-title" className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                <label htmlFor="post-title" className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
                   {T.fTitle}
                 </label>
                 <input
@@ -517,7 +517,7 @@ export default function BlogManager() {
 
               {/* Slug */}
               <div>
-                <label htmlFor="post-slug" className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                <label htmlFor="post-slug" className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
                   {T.fSlug}
                 </label>
                 <input
@@ -532,13 +532,13 @@ export default function BlogManager() {
                   className={`${inputClass} font-mono`}
                 />
                 <p className="text-xs text-slate-500 mt-1.5">
-                  /uz/blog/<span className="text-slate-300">{draft.slug || "..."}</span>
+                  /uz/blog/<span className="text-slate-700 dark:text-slate-300">{draft.slug || "..."}</span>
                 </p>
               </div>
 
               {/* Qisqa tavsif */}
               <div>
-                <label htmlFor="post-excerpt" className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                <label htmlFor="post-excerpt" className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
                   {T.fExcerpt}
                 </label>
                 <textarea
@@ -560,21 +560,21 @@ export default function BlogManager() {
               {/* Matn */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label htmlFor="post-content" className="block text-xs font-bold text-slate-400 uppercase tracking-wider">
+                  <label htmlFor="post-content" className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                     {T.fContent}
                   </label>
-                  <div className="flex rounded-lg overflow-hidden border border-slate-700 text-xs font-bold">
+                  <div className="flex rounded-lg overflow-hidden border border-slate-300 dark:border-slate-700 text-xs font-bold">
                     <button
                       type="button"
                       onClick={() => setShowPreview(false)}
-                      className={`px-3 py-1.5 ${!showPreview ? "bg-blue-600 text-white" : "bg-slate-800 text-slate-300"}`}
+                      className={`px-3 py-1.5 ${!showPreview ? "bg-blue-600 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"}`}
                     >
                       {T.editText}
                     </button>
                     <button
                       type="button"
                       onClick={() => setShowPreview(true)}
-                      className={`px-3 py-1.5 ${showPreview ? "bg-blue-600 text-white" : "bg-slate-800 text-slate-300"}`}
+                      className={`px-3 py-1.5 ${showPreview ? "bg-blue-600 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"}`}
                     >
                       {T.preview}
                     </button>
@@ -582,7 +582,7 @@ export default function BlogManager() {
                 </div>
 
                 {showPreview ? (
-                  <div className="min-h-[16rem] max-h-[28rem] overflow-y-auto bg-slate-950 border border-slate-700 rounded-xl p-5">
+                  <div className="min-h-[16rem] max-h-[28rem] overflow-y-auto bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl p-5">
                     {draft.content.trim() ? (
                       <PostContent content={draft.content} />
                     ) : (
@@ -606,23 +606,23 @@ export default function BlogManager() {
                   {draft.content.length}/{POST_LIMITS.content}
                 </p>
 
-                <details className="mt-2 text-xs text-slate-400">
-                  <summary className="cursor-pointer font-bold text-slate-300">{T.help}</summary>
+                <details className="mt-2 text-xs text-slate-600 dark:text-slate-400">
+                  <summary className="cursor-pointer font-bold text-slate-700 dark:text-slate-300">{T.help}</summary>
                   <ul className="mt-2 space-y-1 list-disc pl-5">
                     <li>
-                      <code className="text-cyan-300">## Sarlavha</code> va <code className="text-cyan-300">### Kichik sarlavha</code>
+                      <code className="text-cyan-700 dark:text-cyan-300">## Sarlavha</code> va <code className="text-cyan-700 dark:text-cyan-300">### Kichik sarlavha</code>
                     </li>
                     <li>
-                      <code className="text-cyan-300">**qalin**</code>, <code className="text-cyan-300">*qiyshiq*</code>
+                      <code className="text-cyan-700 dark:text-cyan-300">**qalin**</code>, <code className="text-cyan-700 dark:text-cyan-300">*qiyshiq*</code>
                     </li>
                     <li>
-                      Ro&apos;yxat: <code className="text-cyan-300">- band</code>, tartibli: <code className="text-cyan-300">1. band</code>
+                      Ro&apos;yxat: <code className="text-cyan-700 dark:text-cyan-300">- band</code>, tartibli: <code className="text-cyan-700 dark:text-cyan-300">1. band</code>
                     </li>
                     <li>
-                      Havola: <code className="text-cyan-300">[matn](https://manzil)</code>
+                      Havola: <code className="text-cyan-700 dark:text-cyan-300">[matn](https://manzil)</code>
                     </li>
                     <li>
-                      Iqtibos: <code className="text-cyan-300">&gt; matn</code>, chiziq: <code className="text-cyan-300">---</code>
+                      Iqtibos: <code className="text-cyan-700 dark:text-cyan-300">&gt; matn</code>, chiziq: <code className="text-cyan-700 dark:text-cyan-300">---</code>
                     </li>
                     <li>Yangi abzats uchun bo&apos;sh qator qoldiring. Faktning oxiriga manba havolasini yozing.</li>
                   </ul>
@@ -631,7 +631,7 @@ export default function BlogManager() {
 
               {/* Muqova rasm */}
               <div>
-                <label htmlFor="post-cover" className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                <label htmlFor="post-cover" className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
                   {T.fCover}
                 </label>
                 <input
@@ -649,9 +649,9 @@ export default function BlogManager() {
               </div>
 
               {/* Sana va holat */}
-              <div className="grid sm:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label htmlFor="post-date" className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                  <label htmlFor="post-date" className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
                     {T.fDate}
                   </label>
                   <input
@@ -675,21 +675,21 @@ export default function BlogManager() {
                     }}
                     className="w-5 h-5 accent-blue-600"
                   />
-                  <span className="text-sm font-bold text-slate-200">{T.fPublished}</span>
+                  <span className="text-sm font-bold text-slate-800 dark:text-slate-200">{T.fPublished}</span>
                 </label>
               </div>
 
               {formError && (
                 <div
                   role="alert"
-                  className="flex items-start gap-2 bg-red-500/10 border border-red-500/30 text-red-300 rounded-xl p-3 text-sm"
+                  className="flex items-start gap-2 bg-red-500/10 border border-red-500/30 text-red-700 dark:text-red-300 rounded-xl p-3 text-sm"
                 >
                   <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" /> {formError}
                 </div>
               )}
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 p-5 border-t border-slate-800">
+            <div className="flex flex-wrap items-center justify-between gap-3 p-5 border-t border-slate-200 dark:border-slate-800">
               <div>
                 {draft.id && (
                   <button
@@ -699,7 +699,7 @@ export default function BlogManager() {
                       if (post) handleDelete(post);
                     }}
                     disabled={saving}
-                    className="flex items-center gap-2 text-sm font-bold text-red-400 hover:text-red-300 transition-colors disabled:opacity-50"
+                    className="flex items-center gap-2 text-sm font-bold text-red-700 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors disabled:opacity-50"
                   >
                     <Trash2 className="w-4 h-4" /> {T.remove}
                   </button>
@@ -710,7 +710,7 @@ export default function BlogManager() {
                   type="button"
                   onClick={() => setDraft(null)}
                   disabled={saving}
-                  className="text-sm font-bold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl px-5 py-2.5 transition-colors disabled:opacity-50"
+                  className="text-sm font-bold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 rounded-xl px-5 py-2.5 transition-colors disabled:opacity-50"
                 >
                   {T.cancel}
                 </button>

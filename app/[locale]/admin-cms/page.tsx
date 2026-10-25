@@ -15,8 +15,8 @@ export default function AdminCmsRedirect() {
   }, [locale, router]);
 
   return (
-    <div className="dark min-h-screen bg-slate-950 flex items-center justify-center">
-      <div className="text-white text-lg">Admin panelga yo'naltirilmoqda...</div>
+    <div className="min-h-screen bg-white dark:bg-slate-950 flex items-center justify-center">
+      <div className="text-slate-900 dark:text-white text-lg">Admin panelga yo'naltirilmoqda...</div>
     </div>
   );
 }

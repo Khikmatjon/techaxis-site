@@ -116,7 +116,7 @@ export default async function SoftwarePage({ params }: { params: Promise<{ local
                    </p>
                 </div>
                 
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {software.features.map(feature => (
                     <div key={feature} className="flex items-center gap-3">
                        <CheckCircle2 className="w-5 h-5 text-blue-500" />

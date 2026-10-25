@@ -14,15 +14,15 @@ import {
 type Application = Awaited<ReturnType<typeof getLiveApplicationsAction>>[number];
 
 const STATUS_LABELS: Record<string, { label: string; color: string }> = {
-  yangi: { label: "Yangi", color: "bg-blue-500/15 text-blue-300" },
-  boglanildi: { label: "Bog'lanildi", color: "bg-amber-500/15 text-amber-300" },
-  sinov_darsi: { label: "Sinov darsida", color: "bg-violet-500/15 text-violet-300" },
-  tolandi: { label: "To'ladi", color: "bg-emerald-500/15 text-emerald-300" },
-  rad_etdi: { label: "Rad etdi", color: "bg-slate-500/15 text-slate-400" },
+  yangi: { label: "Yangi", color: "bg-blue-500/15 text-blue-800 dark:text-blue-300" },
+  boglanildi: { label: "Bog'lanildi", color: "bg-amber-500/15 text-amber-800 dark:text-amber-300" },
+  sinov_darsi: { label: "Sinov darsida", color: "bg-violet-500/15 text-violet-800 dark:text-violet-300" },
+  tolandi: { label: "To'ladi", color: "bg-emerald-500/15 text-emerald-800 dark:text-emerald-300" },
+  rad_etdi: { label: "Rad etdi", color: "bg-slate-500/15 text-slate-600 dark:text-slate-400" },
 };
 
 const inputClass =
-  "bg-slate-800 border border-slate-700 text-white placeholder-slate-500 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500";
+  "bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500";
 
 const telegramHref = (t: string) => {
   const u = t.trim().replace(/^@/, "").replace(/^https?:\/\/t\.me\//, "");
@@ -72,10 +72,10 @@ function Row({ app, onChanged }: { app: Application; onChanged: () => void }) {
   }
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-4">
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/60 p-5 space-y-4">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <div className="font-bold text-white">{app.name}</div>
+          <div className="font-bold text-slate-900 dark:text-white">{app.name}</div>
           <div className="text-xs text-slate-500 mt-0.5">
             {new Date(app.createdAt).toLocaleString("uz-UZ")} · {app.group} · {app.level}
           </div>
@@ -86,12 +86,12 @@ function Row({ app, onChanged }: { app: Application; onChanged: () => void }) {
       </div>
 
       <div className="flex flex-wrap gap-4 text-sm">
-        <a href={`tel:${app.phone.replace(/[^\d+]/g, "")}`} className="inline-flex items-center gap-1.5 text-cyan-400 hover:underline">
+        <a href={`tel:${app.phone.replace(/[^\d+]/g, "")}`} className="inline-flex items-center gap-1.5 text-cyan-700 dark:text-cyan-400 hover:underline">
           <Phone className="w-4 h-4" /> {app.phone}
         </a>
         {app.telegram && (tg
-          ? <a href={tg} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">{app.telegram}</a>
-          : <span className="text-slate-300">{app.telegram}</span>)}
+          ? <a href={tg} target="_blank" rel="noopener noreferrer" className="text-cyan-700 dark:text-cyan-400 hover:underline">{app.telegram}</a>
+          : <span className="text-slate-700 dark:text-slate-300">{app.telegram}</span>)}
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
@@ -102,11 +102,11 @@ function Row({ app, onChanged }: { app: Application; onChanged: () => void }) {
         <button onClick={save} disabled={!dirty || saving} className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-bold text-sm px-4 py-2 rounded-xl">
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} Saqlash
         </button>
-        <button onClick={remove} className="inline-flex items-center justify-center text-slate-500 hover:text-red-400 px-2" aria-label="O'chirish" title="O'chirish">
+        <button onClick={remove} className="inline-flex items-center justify-center text-slate-500 hover:text-red-700 dark:hover:text-red-400 px-2" aria-label="O'chirish" title="O'chirish">
           <Trash2 className="w-4 h-4" />
         </button>
       </div>
-      {msg && <p className="text-sm text-red-400">{msg}</p>}
+      {msg && <p className="text-sm text-red-700 dark:text-red-400">{msg}</p>}
     </div>
   );
 }
@@ -133,8 +133,8 @@ export default function LiveApplicationsManager() {
     URL.revokeObjectURL(url);
   }
 
-  if (error) return <p className="text-red-400">{error}</p>;
-  if (!apps) return <div className="flex items-center gap-2 text-slate-400"><Loader2 className="w-5 h-5 animate-spin" /> Yuklanmoqda...</div>;
+  if (error) return <p className="text-red-700 dark:text-red-400">{error}</p>;
+  if (!apps) return <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400"><Loader2 className="w-5 h-5 animate-spin" /> Yuklanmoqda...</div>;
 
   const counts = apps.reduce<Record<string, number>>((m, a) => ((m[a.status] = (m[a.status] ?? 0) + 1), m), {});
   const shown = filter === "all" ? apps : apps.filter((a) => a.status === filter);
@@ -142,21 +142,21 @@ export default function LiveApplicationsManager() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-2">
-        <button onClick={() => setFilter("all")} className={`text-sm font-bold px-3 py-1.5 rounded-full ${filter === "all" ? "bg-white text-slate-900" : "bg-slate-800 text-slate-300"}`}>
+        <button onClick={() => setFilter("all")} className={`text-sm font-bold px-3 py-1.5 rounded-full ${filter === "all" ? "bg-white text-slate-900" : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"}`}>
           Hammasi ({apps.length})
         </button>
         {Object.entries(STATUS_LABELS).map(([k, v]) => (
-          <button key={k} onClick={() => setFilter(k)} className={`text-sm font-bold px-3 py-1.5 rounded-full ${filter === k ? "bg-white text-slate-900" : "bg-slate-800 text-slate-300"}`}>
+          <button key={k} onClick={() => setFilter(k)} className={`text-sm font-bold px-3 py-1.5 rounded-full ${filter === k ? "bg-white text-slate-900" : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"}`}>
             {v.label} ({counts[k] ?? 0})
           </button>
         ))}
-        <button onClick={downloadCsv} disabled={apps.length === 0} className="ml-auto inline-flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white disabled:opacity-40">
+        <button onClick={downloadCsv} disabled={apps.length === 0} className="ml-auto inline-flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white disabled:opacity-40">
           <Download className="w-4 h-4" /> Excel (CSV)
         </button>
       </div>
 
       {shown.length === 0 ? (
-        <p className="text-slate-400">{apps.length === 0 ? "Hali ariza yo'q. Arizalar /uz/solidworks-jonli-kurs sahifasidagi formadan keladi." : "Bu holatda ariza yo'q."}</p>
+        <p className="text-slate-600 dark:text-slate-400">{apps.length === 0 ? "Hali ariza yo'q. Arizalar /uz/solidworks-jonli-kurs sahifasidagi formadan keladi." : "Bu holatda ariza yo'q."}</p>
       ) : (
         <div className="space-y-3">
           {shown.map((a) => <Row key={`${a.id}-${a.updatedAt}`} app={a} onChanged={load} />)}

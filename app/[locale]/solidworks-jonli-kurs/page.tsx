@@ -130,7 +130,7 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
         </section>
 
         {/* Asosiy ma'lumotlar */}
-        <section className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {facts.map((f) => (
             <div key={f.label} className="flex items-start gap-4 rounded-3xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-6">
               <f.icon className="w-6 h-6 text-blue-500 shrink-0 mt-0.5" />
@@ -145,7 +145,7 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
         {/* Kimlar uchun */}
         <section className="space-y-6">
           <h2 className="text-3xl font-black text-slate-900 dark:text-white">{t.who}</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {K.kimlarUchun.map((k) => (
               <div key={k.nomi} className="rounded-3xl border border-slate-100 dark:border-slate-800 p-6">
                 <UserCheck className="w-6 h-6 text-cyan-500 mb-3" />
@@ -162,7 +162,7 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
             <h2 className="text-3xl font-black text-slate-900 dark:text-white">{t.how}</h2>
             <p className="text-slate-600 dark:text-slate-400">{t.howIntro}</p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {K.darsFormati.map((d, i) => (
               <div key={d.nomi} className="flex gap-4 rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 p-6">
                 <span className="w-9 h-9 shrink-0 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white font-black flex items-center justify-center">{i + 1}</span>
@@ -176,7 +176,7 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
         </section>
 
         {/* O'qituvchi */}
-        <section className="grid lg:grid-cols-2 gap-10 items-center">
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div className="space-y-4">
             <h2 className="text-3xl font-black text-slate-900 dark:text-white">{t.teacher}</h2>
             <p className="text-xl font-bold text-slate-900 dark:text-white">{K.oqituvchi.ism}</p>
@@ -189,7 +189,7 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
               </a>
             )}
           </div>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {K.oqituvchi.sertifikatlar.map((s) => (
               <div key={s.nomi} className="rounded-3xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-6">
                 <BadgeCheck className="w-8 h-8 text-emerald-500 mb-3" />
@@ -206,7 +206,7 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
             <h2 className="text-3xl font-black text-slate-900 dark:text-white">{t.program}</h2>
             <p className="text-slate-600 dark:text-slate-400">{K.davomiylik}. {t.programIntro}</p>
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {K.dastur.map((w, wi) => (
               <div key={w.hafta} className="rounded-3xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-6 space-y-4">
                 <div>
@@ -232,7 +232,7 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
         {/* Kurs oxirida */}
         <section className="space-y-6">
           <h2 className="text-3xl font-black text-slate-900 dark:text-white">{t.results}</h2>
-          <ul className="grid md:grid-cols-2 gap-4">
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {K.natijalar.map((n) => (
               <li key={n} className="flex items-start gap-3 rounded-3xl border border-slate-100 dark:border-slate-800 p-5">
                 <Target className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
@@ -245,7 +245,7 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
         {/* Qanday ishlaydi */}
         <section className="space-y-6">
           <h2 className="text-3xl font-black text-slate-900 dark:text-white">{t.startHow}</h2>
-          <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {t.steps.map((s, i) => (
               <li key={s.title} className="rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 p-6">
                 <div className="text-sm font-black text-blue-700 dark:text-blue-400 mb-2">{t.step(i + 1)}</div>
