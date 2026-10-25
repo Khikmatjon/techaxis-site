@@ -90,7 +90,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const TEXT = pick(T, locale);
 
   return (
-    <div className="min-h-screen bg-slate-950 pt-24 pb-16">
+    <div className="dark min-h-screen bg-slate-950 pt-24 pb-16">
       <JsonLd data={[
         blogPostingLd(post, post.translated ? locale : "uz"),
         breadcrumbLd(locale, [

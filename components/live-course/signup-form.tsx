@@ -106,7 +106,7 @@ export function LiveCourseSignupForm({ group, locale }: { group: string; locale:
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full bg-[#0084FF] hover:bg-blue-600 disabled:opacity-60 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-2 transition-colors"
+        className="w-full bg-[#006FD6] hover:bg-blue-600 disabled:opacity-60 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-2 transition-colors"
       >
         {status === "loading" ? (
           <span className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />

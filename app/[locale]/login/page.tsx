@@ -67,7 +67,7 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="dark min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Orqa fon bezaklari */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl" />

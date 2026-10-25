@@ -52,7 +52,7 @@ export const About = ({ dict, stats: siteStats, locale }: { dict: any; stats: St
           {/* R: MATNLI MA'LUMOT */}
           <div className="space-y-10">
             <div className="space-y-4">
-              <h2 className="text-sm font-black text-cyan-500 uppercase tracking-widest">
+              <h2 className="text-sm font-black text-cyan-700 dark:text-cyan-500 uppercase tracking-widest">
                 {dict?.navbar?.about || "About Us"}
               </h2>
               <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight">
@@ -63,7 +63,7 @@ export const About = ({ dict, stats: siteStats, locale }: { dict: any; stats: St
             <div className="space-y-6">
               <p className="text-lg lg:text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
                 {/* desc_1 nom bilan boshlanadi -- nom rangli yoziladi, matndan esa olib tashlanadi (ikki marta chiqmasin) */}
-                <span className="text-[#0084FF] font-black">TechAxis Group</span> {dict?.about?.desc_1?.replace(/^TechAxis Group\s*—?\s*/, '')}
+                <span className="text-[#006FD6] dark:text-blue-400 font-black">TechAxis Group</span> {dict?.about?.desc_1?.replace(/^TechAxis Group\s*—?\s*/, '')}
               </p>
               <p className="text-slate-500 dark:text-slate-500 leading-relaxed">
                 {dict?.about?.desc_2}
@@ -93,7 +93,7 @@ export const About = ({ dict, stats: siteStats, locale }: { dict: any; stats: St
 
             <div className="pt-4">
               {/* Portfolio sahifasi hali yo'q (21-25-kunlar) -- hozircha bosh sahifadagi loyihalar bo'limiga */}
-              <a href="#projects" className="group inline-flex items-center gap-3 bg-[#0084FF] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl active:scale-95">
+              <a href="#projects" className="group inline-flex items-center gap-3 bg-[#006FD6] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl active:scale-95">
                 <span>{dict?.projects?.view_all || "View Portfolio"}</span>
                 <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </a>

@@ -80,7 +80,7 @@ export default async function TrainingPage({ params }: { params: Promise<{ local
                 </div>
                 <div className="p-6 flex flex-col flex-1">
                   <div className="flex justify-between items-center mb-3">
-                    <span className="text-xs font-bold uppercase tracking-widest text-blue-600">{levelLabel(course.level, locale)}</span>
+                    <span className="text-xs font-bold uppercase tracking-widest text-blue-700 dark:text-blue-400">{levelLabel(course.level, locale)}</span>
                     <span className="text-sm text-slate-500">{course.duration}</span>
                   </div>
                   <h3 className="text-lg font-bold mb-3 text-slate-900 dark:text-white">{course.title}</h3>
@@ -113,7 +113,7 @@ export default async function TrainingPage({ params }: { params: Promise<{ local
           <div className="relative z-10 max-w-3xl">
             <div>
               <h2 className="text-4xl font-bold mb-6">{t.b2bTitle}</h2>
-              <p className="text-blue-100 text-lg mb-8 leading-relaxed">
+              <p className="text-white text-lg mb-8 leading-relaxed">
                 {t.b2bText}
               </p>
               {/* Hamkorlik taklifi PDF'i hali yo'q -- so'rov aloqa formasi orqali */}

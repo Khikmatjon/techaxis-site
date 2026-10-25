@@ -219,7 +219,7 @@ function DashboardContent() {
 
   if (errorMsg) {
     return (
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-6 p-4 text-center">
+      <div className="dark min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-6 p-4 text-center">
         <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mb-2">
           <AlertCircle className="w-8 h-8 text-red-500" />
         </div>
@@ -243,7 +243,7 @@ function DashboardContent() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-6 p-4">
+      <div className="dark min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-6 p-4">
         <div className="relative">
            <div className="w-16 h-16 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
            <Zap className="absolute inset-0 m-auto w-6 h-6 text-blue-500 animate-pulse" />
@@ -260,7 +260,7 @@ function DashboardContent() {
   const pendingCount = user.pendingPayments?.length || 0;
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="dark min-h-screen bg-slate-950">
       {/* Toast */}
       {toast && (
         <div className="fixed top-6 right-6 z-50 bg-emerald-500 text-white px-5 py-3 rounded-xl shadow-xl font-semibold text-sm animate-fade-in">

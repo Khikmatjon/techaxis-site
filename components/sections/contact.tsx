@@ -64,7 +64,7 @@ export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
           {/* L: CONTACT INFO */}
           <div className="space-y-12">
             <div className="space-y-6">
-              <h2 className="text-sm font-black text-cyan-500 uppercase tracking-widest">
+              <h2 className="text-sm font-black text-cyan-700 dark:text-cyan-500 uppercase tracking-widest">
                 {dict?.navbar?.contact || "Bog'lanish"}
               </h2>
               <h3 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight">
@@ -170,7 +170,7 @@ export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
                   type="submit"
                   className={`w-full py-5 rounded-2xl font-black transition-all flex items-center justify-center space-x-3 shadow-xl active:scale-95 ${status === "success"
                       ? "bg-emerald-500 text-white"
-                      : "bg-[#0084FF] hover:bg-blue-600 text-white shadow-blue-500/20"
+                      : "bg-[#006FD6] hover:bg-blue-600 text-white shadow-blue-500/20"
                     }`}
                 >
                   {status === "loading" ? (

@@ -75,7 +75,7 @@ export const Certifications = ({ dict, locale }: { dict: any; locale: string }) 
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <h2 className="text-sm font-black text-cyan-500 uppercase tracking-widest">
+          <h2 className="text-sm font-black text-cyan-700 dark:text-cyan-500 uppercase tracking-widest">
             {t.kicker}
           </h2>
           <h3 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">

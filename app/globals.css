@@ -168,17 +168,29 @@ body {
 /* --- Ranglar: ko'zni qiynamaydigan o'rta tonlar -------------------------------
    Tailwind ranglari CSS o'zgaruvchi orqali olinadi, shuning uchun shu yerda qayta
    belgilash butun saytga ta'sir qiladi. Kontrast (WCAG) AA dan yuqori:
-   qorong'i -- sarlavha 13.7:1, matn 7.4:1; yorug' -- sarlavha 13.4:1, karta matni 5:1. */
+   qorong'i -- sarlavha 13.7:1, matn 7.4:1; yorug' -- sarlavha 13.4:1, karta matni 5:1,
+   yordamchi yozuvlar (sana, "Kurs narxi", "Telefon" va h.k.) 4.7:1. Asosiy tugmalar
+   ko'k #006FD6 (avval #0084FF -- oq yozuv bilan 3,4:1 edi, endi 4,5:1).
+
+   Doim to'q bo'limlar (footer, admin panel, kabinet, kurs, login va h.k.) ildizida
+   "dark" klassi turadi: yorug' rejimda ham ular qorong'i rejimdagi ranglar bilan
+   chiqadi. Busiz yorug' rejimning to'qroq kulrang matni to'q fonda xira ko'rinardi
+   (2,8:1). Yangi doim to'q bo'lim qo'shsangiz, unga ham "dark" yozing. */
 :root:not(.dark) {
   --color-white: #f3f5f8;       /* sahifa foni (sof oq emas) */
   --color-slate-50: #eaeef3;
   --color-slate-100: #e2e7ee;
   --color-slate-600: #4a5a70;   /* matn */
-  --color-slate-500: #5b6b82;
+  --color-slate-500: #526177;
+  --color-slate-400: #5b6b82;   /* yordamchi yozuvlar (avval #90a1b9 -- 2,4:1, xira edi) */
   --color-slate-900: #1e293b;   /* sarlavhalar */
   --color-slate-950: #1b2536;
 }
 .dark {
+  /* yorug' rejim o'zgartirgan ranglar to'q bo'limda Tailwind asliga qaytadi */
+  --color-slate-50: oklch(98.4% 0.003 247.858);
+  --color-slate-100: oklch(96.8% 0.007 247.896);
+  --color-slate-600: oklch(44.6% 0.043 257.281);
   --color-slate-950: #182232;   /* sahifa foni (deyarli qora emas) */
   --color-slate-900: #1f2b3d;   /* kartalar */
   --color-slate-800: #2a374b;   /* chegaralar */

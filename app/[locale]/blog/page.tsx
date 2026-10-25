@@ -185,12 +185,12 @@ export default async function BlogIndexPage({
             href={`/${locale}/blog/${featured.slug}`}
             className="group block mb-10 rounded-[2.5rem] border border-emerald-500/30 bg-gradient-to-br from-emerald-500/10 via-cyan-500/5 to-transparent p-8 sm:p-10 hover:border-emerald-500/60 transition-colors"
           >
-            <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 text-xs font-black uppercase tracking-widest mb-4">
+            <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400 text-xs font-black uppercase tracking-widest mb-4">
               <Lightbulb className="w-4 h-4" /> {TEXT.weeklyFact}
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-3 leading-snug">{featured.title}</h2>
             <p className="text-slate-600 dark:text-slate-400 max-w-3xl mb-5">{featured.excerpt}</p>
-            <span className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-sm">
+            <span className="inline-flex items-center gap-2 text-emerald-700 dark:text-emerald-400 font-bold text-sm">
               {TEXT.more} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
           </Link>

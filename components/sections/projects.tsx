@@ -10,7 +10,7 @@ export const Projects = ({ dict, locale }: { dict: any; locale: string }) => {
         {/* Header of Projects Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
           <div className="max-w-2xl">
-            <h2 className="text-sm font-black text-cyan-500 uppercase tracking-widest mb-4">
+            <h2 className="text-sm font-black text-cyan-700 dark:text-cyan-500 uppercase tracking-widest mb-4">
               {dict?.projects?.title || "Muvaffaqiyat hikoyalari"}
             </h2>
             <h3 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">
@@ -42,7 +42,7 @@ export const Projects = ({ dict, locale }: { dict: any; locale: string }) => {
               <div className="pt-4 flex justify-center">
                 <Link
                   href={`/${locale}/training`}
-                  className="group flex items-center gap-3 bg-[#0084FF] hover:bg-blue-600 text-white px-8 py-5 rounded-full font-black transition-all shadow-xl hover:shadow-2xl active:scale-95 cursor-pointer"
+                  className="group flex items-center gap-3 bg-[#006FD6] hover:bg-blue-600 text-white px-8 py-5 rounded-full font-black transition-all shadow-xl hover:shadow-2xl active:scale-95 cursor-pointer"
                 >
                   {dict?.projects?.cta_training}
                   <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
