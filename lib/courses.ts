@@ -31,6 +31,8 @@ export interface PricingPlan {
 export interface MarketingData {
   whyTitle: string;
   whyDesc: string;
+  // "Bu kurs kimlar uchun" bo'limi (kurs sahifasida, birinchi navbatda)
+  audience: { title: string; desc: string }[];
   benefits: { title: string; desc: string }[];
   capabilitiesTitle: string;
   capabilities: { title: string; desc: string }[];
@@ -87,6 +89,11 @@ export const COURSES: Course[] = [
     marketing: {
       whyTitle: "Nega SOLIDWORKS?",
       whyDesc: "Mashinasozlik va mahsulot dizaynida keng tarqalgan 3D CAD dasturi: detal, yig'ma va texnik chizma bitta muhitda.",
+      audience: [
+        { title: "CAD'ni noldan boshlayotganlar", desc: "Oldin 3D dasturda ishlamagansiz: kurs interfeys va eskizdan boshlanadi." },
+        { title: "Muhandislik yo'nalishi talabalari", desc: "Detal, yig'ma va texnik chizmani tartib bilan, amaliy mashqlar orqali o'rganmoqchisiz." },
+        { title: "AutoCAD'dan o'tayotganlar", desc: "2D chizmadan 3D parametrik modellashtirishga o'tmoqchisiz." },
+      ],
       benefits: [
         { title: "Keng tarqalgan", desc: "Mashinasozlik va mahsulot dizaynida eng ko'p ishlatiladigan 3D CAD dasturlaridan biri." },
         { title: "Parametrik model", desc: "O'lchamni o'zgartirsangiz, detal, yig'ma va chizma birga yangilanadi." },
@@ -190,6 +197,11 @@ export const COURSES: Course[] = [
     marketing: {
       whyTitle: "Nega CATIA V5?",
       whyDesc: "Dassault Systèmes dasturi: aviatsiya va avtomobilsozlikda murakkab detallar va katta yig'malar uchun ishlatiladi.",
+      audience: [
+        { title: "Aviatsiya va avtomobilsozlik yo'nalishidagilar", desc: "Shu sohalarda keng qo'llaniladigan CATIA V5'ni o'rganmoqchisiz." },
+        { title: "Murakkab detal va katta yig'malar bilan ishlaydiganlar", desc: "Part Design, Assembly Design va DMU Kinematics'ni amaliy loyihalarda o'zlashtirmoqchisiz." },
+        { title: "AutoCAD yoki boshqa dasturdan o'tayotganlar", desc: "Kurs CATIA interfeysidan boshlanadi; chizma tajribangiz eskiz bosqichida yordam beradi." },
+      ],
       benefits: [
         { title: "Aviatsiya va avtomobilsozlik", desc: "CATIA aynan shu sohalarda murakkab yuzalar va katta yig'malar uchun ishlatiladi." },
         { title: "Workbench tizimi", desc: "Har bir ish turi — eskiz, detal, yig'ma, chizma — o'z workbench'ida: tartibli va kuchli muhit." },
@@ -281,6 +293,11 @@ export const COURSES: Course[] = [
     marketing: {
       whyTitle: "Nega FEA?",
       whyDesc: "Detal yuklamaga chidashini prototip yasashdan oldin SOLIDWORKS Simulation'da tekshirish — vaqt va materialni tejaydi.",
+      audience: [
+        { title: "SOLIDWORKS'da model yasashni biladiganlar", desc: "Kurs SOLIDWORKS Simulation'da o'tiladi; model yasash asoslarini bilish foydali." },
+        { title: "Konstruktor va muhandislar", desc: "Detal yuklama va issiqlikka chidashini prototip yasashdan oldin tekshirmoqchisiz." },
+        { title: "Mexanika yo'nalishi talabalari", desc: "Kuchlanish va deformatsiya tushunchalarini dasturda, amaliy misollarda ko'rmoqchisiz." },
+      ],
       benefits: [
         { title: "Prototipdan oldin sinash", desc: "Detalni yasab sindirishdan oldin uni kompyuterda tekshirasiz." },
         { title: "Material tejash", desc: "Topologik optimizatsiya bilan keraksiz materialni olib tashlab, mustahkamlikni saqlaysiz." },
@@ -363,6 +380,11 @@ export const COURSES: Course[] = [
     marketing: {
       whyTitle: "Nega PLM?",
       whyDesc: "PDM/PLM tizimlari kompaniyaning barcha muhandislik ma'lumotlarini bir joyda boshqarish imkonini beradi.",
+      audience: [
+        { title: "Jamoada ishlaydigan muhandislar", desc: "Bitta loyihada ikki va undan ko'p kishi ishlaydi va ma'lumotlarni bir joyda boshqarish kerak." },
+        { title: "BOM, versiya va o'zgarishlarga javobgarlar", desc: "Mahsulot ma'lumotlarini g'oyadan ishlab chiqarishgacha bitta tizimda yuritmoqchisiz." },
+        { title: "3DEXPERIENCE platformasiga o'tayotganlar", desc: "Platformada jamoaviy ishlashni amalda o'rganmoqchisiz." },
+      ],
       benefits: [
         { title: "Yagona ma'lumot manbai", desc: "Fayllar dublikati yo'qoladi, hamma bir xil — oxirgi — versiya bilan ishlaydi." },
         { title: "Jamoaviy ishlash", desc: "Bir loyihada bir nechta muhandis rollar va ruxsatlar bilan ishlaydi." },

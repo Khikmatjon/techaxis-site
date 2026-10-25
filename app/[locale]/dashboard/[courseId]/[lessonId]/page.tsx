@@ -14,6 +14,7 @@ import { getStudentDashboardAction } from "@/lib/actions/student-actions";
 import { pick } from "@/lib/locale-text";
 import { localizeCourse } from "@/lib/course-i18n";
 import { UserDB } from "@/lib/users-db";
+import { videoEmbedSrc } from "@/lib/youtube";
 
 
 const T = {
@@ -72,7 +73,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
       setLesson(localizedLesson ? { ...result.lesson, title: localizedLesson.title } : result.lesson);
       setCourse(localized);
 
-      if (result.lesson.videoUrl) setActiveTab("video");
+      if (videoEmbedSrc(result.lesson.videoUrl)) setActiveTab("video");
       else if (result.lesson.text) setActiveTab("text");
       else if (result.lesson.pdfUrl) setActiveTab("pdf");
       else if (result.lesson.images?.length) setActiveTab("images");
@@ -114,9 +115,11 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
   const totalDone = completedLessons.length;
   const progressPercent = totalLessons > 0 ? Math.round((totalDone / totalLessons) * 100) : 0;
 
+  // Namuna video (yoki buzuq havola) bo'lsa "Video" tabi chiqmaydi -- lib/youtube.ts
+  const videoSrc = videoEmbedSrc(lesson.videoUrl);
 
   const tabs = [
-    { key: "video" as const, label: "Video", icon: Play, show: !!lesson.videoUrl },
+    { key: "video" as const, label: "Video", icon: Play, show: !!videoSrc },
     { key: "text" as const, label: t.text, icon: BookOpen, show: !!lesson.text },
     { key: "pdf" as const, label: "PDF", icon: FileText, show: !!lesson.pdfUrl },
     { key: "images" as const, label: t.images, icon: ImageIcon, show: !!(lesson.images && lesson.images.length > 0) },
@@ -236,12 +239,12 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
             )}
 
             {/* Video */}
-            {activeTab === "video" && lesson.videoUrl && (
+            {activeTab === "video" && videoSrc && (
               <div className="space-y-5">
                 <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
                   <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
                     <iframe
-                      src={lesson.videoUrl}
+                      src={videoSrc}
                       className="absolute inset-0 w-full h-full"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen

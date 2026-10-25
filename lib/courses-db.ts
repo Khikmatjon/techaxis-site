@@ -23,6 +23,7 @@ const MARKETING_BY_ID = new Map(STATIC_COURSES.map((c) => [c.id, c.marketing]));
 const EMPTY_MARKETING: MarketingData = {
   whyTitle: "",
   whyDesc: "",
+  audience: [],
   benefits: [],
   capabilitiesTitle: "",
   capabilities: [],
