@@ -15,7 +15,10 @@
 
 export const JONLI_KURS = {
   guruh: "1-guruh",
-  boshlanish: "20-oktabr 2026",
+  // KEYIN-TOLDIRING: keyingi guruh boshlanish sanasi ma'lum bo'lgach yozing, masalan
+  // "15-noyabr 2026" (ruscha/inglizchasini content/jonli-kurs-tarjima.ts'ga ham).
+  // null bo'lsa sana sahifada umuman ko'rinmaydi.
+  boshlanish: null as string | null,
 
   // Kurs narxi (bitta narx, birinchi darsdan keyin to'lanadi).
   narx: "990 000 so'm" as string | null,

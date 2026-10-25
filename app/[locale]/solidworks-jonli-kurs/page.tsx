@@ -115,7 +115,7 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
         {/* Hero */}
         <section className="text-center max-w-3xl mx-auto space-y-6">
           <span className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-sm font-bold text-blue-600 dark:text-blue-400">
-            {K.guruh} · {K.boshlanish} · {t.freeFirst}
+            {[K.guruh, K.boshlanish, t.freeFirst].filter(Boolean).join(" · ")}
           </span>
           <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white leading-tight">
             {t.h1a} <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">{t.h1b}</span>
