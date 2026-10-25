@@ -39,7 +39,7 @@ const T = {
     ],
     licBefore: "Darslarda faqat rasmiy litsenziyali SOLIDWORKS ishlatiladi. Talabalar uchun", licAfter: "rasmiy va bepul (faqat Windows).",
     faq: "Ko'p so'raladigan savollar",
-    signup: (g: string) => `${g}ga yozilish`, signupIntro: "Hozir hech narsa to'lamaysiz — faqat joy band qilasiz.",
+    signup: "Kursga yozilish", signupIntro: "Hozir hech narsa to'lamaysiz — faqat joy band qilasiz.",
   },
   ru: {
     start: "Старт", format: "Формат", schedule: "Расписание", duration: "Длительность", seats: "Мест в группе", price: "Стоимость",
@@ -64,7 +64,7 @@ const T = {
     ],
     licBefore: "На уроках используется только официально лицензированный SOLIDWORKS. Для студентов", licAfter: "— официальная и бесплатная версия (только Windows).",
     faq: "Частые вопросы",
-    signup: (g: string) => `Записаться на курс (${g})`, signupIntro: "Сейчас вы ничего не платите — только бронируете место.",
+    signup: "Записаться на курс", signupIntro: "Сейчас вы ничего не платите — только бронируете место.",
   },
   en: {
     start: "Start", format: "Format", schedule: "Schedule", duration: "Duration", seats: "Seats in the group", price: "Price",
@@ -89,7 +89,7 @@ const T = {
     ],
     licBefore: "Only officially licensed SOLIDWORKS is used in the lessons. For students,", licAfter: "is official and free (Windows only).",
     faq: "Frequently asked questions",
-    signup: (g: string) => `Sign up for ${g}`, signupIntro: "You pay nothing now — you only reserve a seat.",
+    signup: "Sign up for the course", signupIntro: "You pay nothing now — you only reserve a seat.",
   },
 };
 
@@ -115,7 +115,7 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
         {/* Hero */}
         <section className="text-center max-w-3xl mx-auto space-y-6">
           <span className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-sm font-bold text-blue-600 dark:text-blue-400">
-            {K.guruh} · {K.boshlanish} · {t.freeFirst}
+            {[K.boshlanish, t.freeFirst].filter(Boolean).join(" · ")}
           </span>
           <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white leading-tight">
             {t.h1a} <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">{t.h1b}</span>
@@ -283,10 +283,10 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
         <section id="yozilish" className="scroll-mt-28 max-w-xl mx-auto w-full">
           <div className="rounded-[40px] border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl p-8 sm:p-10 space-y-6">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl font-black text-slate-900 dark:text-white">{t.signup(K.guruh)}</h2>
+              <h2 className="text-2xl font-black text-slate-900 dark:text-white">{t.signup}</h2>
               <p className="text-sm text-slate-500 dark:text-slate-400">{t.signupIntro}</p>
             </div>
-            {/* Guruh nomi admin uchun o'zbekcha yuboriladi */}
+            {/* Guruh nomi saytda ko'rinmaydi -- faqat admin paneldagi arizada turadi */}
             <LiveCourseSignupForm group={JONLI_KURS.guruh} locale={locale} />
           </div>
         </section>

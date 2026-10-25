@@ -157,19 +157,19 @@ export const SEO = {
   },
   jonliKurs: {
     uz: {
-      title: "SOLIDWORKS jonli onlayn kursi — 1-guruh | TechAxis",
+      title: "SOLIDWORKS jonli onlayn kursi | TechAxis",
       description:
-        "SOLIDWORKS jonli onlayn kursi: 16 dars, CSWA va CSWP imtihonlariga tayyorgarlik. 20-oktabrda boshlanadi, birinchi dars bepul.",
+        "SOLIDWORKS jonli onlayn kursi: 16 dars, CSWA va CSWP imtihonlariga tayyorgarlik. Birinchi dars bepul.",
     },
     ru: {
       title: "Живой онлайн-курс SOLIDWORKS на узбекском | TechAxis",
       description:
-        "Живой онлайн-курс SOLIDWORKS на узбекском: 16 уроков, подготовка к CSWA и CSWP. Старт 20 октября, первый урок бесплатно.",
+        "Живой онлайн-курс SOLIDWORKS на узбекском: 16 уроков, подготовка к CSWA и CSWP. Первый урок бесплатно.",
     },
     en: {
       title: "Live online SOLIDWORKS course in Uzbek | TechAxis",
       description:
-        "Live online SOLIDWORKS course in Uzbek: 16 lessons, CSWA and CSWP exam preparation. Starts 20 October, the first lesson is free.",
+        "Live online SOLIDWORKS course in Uzbek: 16 lessons, CSWA and CSWP exam preparation. The first lesson is free.",
     },
   },
   privacy: {
