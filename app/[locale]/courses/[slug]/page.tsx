@@ -155,23 +155,23 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
           <div className="relative">
              <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-4 pt-12">
-                   <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
+                   <div className="bg-slate-900 border border-slate-800 p-4 sm:p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
                       <Layout className="w-8 h-8 text-cyan-400" />
-                      <div className="font-bold text-lg">{marketing.capabilities[0]?.title}</div>
+                      <div className="font-bold text-sm sm:text-lg [overflow-wrap:anywhere]">{marketing.capabilities[0]?.title}</div>
                    </div>
-                   <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
+                   <div className="bg-slate-900 border border-slate-800 p-4 sm:p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
                       <Database className="w-8 h-8 text-blue-400" />
-                      <div className="font-bold text-lg">{marketing.capabilities[1]?.title}</div>
+                      <div className="font-bold text-sm sm:text-lg [overflow-wrap:anywhere]">{marketing.capabilities[1]?.title}</div>
                    </div>
                 </div>
                 <div className="space-y-4">
-                   <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
+                   <div className="bg-slate-900 border border-slate-800 p-4 sm:p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
                       <Terminal className="w-8 h-8 text-purple-400" />
-                      <div className="font-bold text-lg">{marketing.capabilities[2]?.title}</div>
+                      <div className="font-bold text-sm sm:text-lg [overflow-wrap:anywhere]">{marketing.capabilities[2]?.title}</div>
                    </div>
-                   <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
+                   <div className="bg-slate-900 border border-slate-800 p-4 sm:p-6 rounded-3xl h-40 flex flex-col justify-center gap-3">
                       <ShieldCheck className="w-8 h-8 text-emerald-400" />
-                      <div className="font-bold text-lg">{marketing.capabilities[3]?.title}</div>
+                      <div className="font-bold text-sm sm:text-lg [overflow-wrap:anywhere]">{marketing.capabilities[3]?.title}</div>
                    </div>
                 </div>
              </div>
@@ -314,11 +314,11 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
           </div>
           <div className="grid gap-4">
              {marketing.faq.map((faq, i) => (
-               <div key={i} className="bg-slate-900/50 border border-slate-800 p-8 rounded-3xl group transition-all hover:bg-slate-900">
+               <div key={i} className="bg-slate-900/50 border border-slate-800 p-6 sm:p-8 rounded-3xl group transition-all hover:bg-slate-900">
                   <h4 className="text-white font-bold text-lg mb-3 flex items-center justify-between">
                     {faq.q}
                   </h4>
-                  <p className="text-slate-400 leading-relaxed">{faq.a}</p>
+                  <p className="text-slate-400 leading-relaxed [overflow-wrap:anywhere]">{faq.a}</p>
                </div>
              ))}
           </div>

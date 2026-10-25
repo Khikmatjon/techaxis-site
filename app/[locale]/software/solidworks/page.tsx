@@ -161,7 +161,7 @@ export default async function SolidworksPage({ params }: { params: Promise<{ loc
       ])} />
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold mb-4 font-display">SOLIDWORKS Design</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold mb-4 font-display">SOLIDWORKS Design</h1>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">

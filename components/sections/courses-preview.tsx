@@ -46,7 +46,7 @@ export const CoursesPreview = ({ dict, locale, courses }: { dict: any, locale: s
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-400 text-xs font-bold uppercase tracking-widest border border-blue-500/20">
             <Zap className="w-4 h-4" /> {dict?.navbar?.training || t.badge}
           </div>
-          <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white">
+          <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white">
             {t.title1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">{t.title2}</span>
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg">

@@ -201,6 +201,11 @@ body {
   --color-white: #e9eef5;       /* asosiy matn (sof oq emas) */
 }
 
+/* --- Admin panel: ish joyi -- saytning e'lon qatori va footer'i ko'rinmaydi ---
+   Menyu (navbar) qoladi: unda Admin panel, Sozlamalar va Chiqish bor. Sahifa ildizidagi
+   "admin-shell" klassi bo'yicha (app/[locale]/admin/page.tsx). */
+body:has(.admin-shell) :is(.announcement-bar, footer) { display: none; }
+
 /* --- Brend: belgi + nom -------------------------------------------------------- */
 .brand { gap: .6rem; }
 .brand-mark {
