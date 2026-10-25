@@ -91,7 +91,7 @@ export default async function CourseLandingPage({ params }: { params: Promise<{ 
   const { marketing } = course;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200">
+    <div className="dark min-h-screen bg-slate-950 text-slate-200">
       <JsonLd data={[
         courseLd(course, locale),
         breadcrumbLd(locale, [

@@ -57,7 +57,7 @@ export default async function CoursesCatalog({ params }: { params: Promise<{ loc
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-           <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">
+           <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full text-blue-700 dark:text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">
              <Layers className="w-4 h-4" /> {dict?.navbar?.training || t.badge}
            </div>
            

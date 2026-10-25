@@ -59,7 +59,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <a href="#services" className="inline-block bg-[#0084FF] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 w-full sm:w-auto text-center">
+              <a href="#services" className="inline-block bg-[#006FD6] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 w-full sm:w-auto text-center">
                 {dict?.hero?.cta_primary || "Xizmatlar bilan tanishish"}
               </a>
               <a href="#contact" className="inline-block bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 px-8 py-4 rounded-full font-bold transition-all shadow-sm w-full sm:w-auto text-center">
@@ -99,7 +99,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 </div>
                 <div>
                    <div className="text-sm font-black text-slate-900 dark:text-white">SOLIDWORKS</div>
-                   <div className="text-xs font-semibold text-emerald-500">{dict?.hero?.expert_badge}</div>
+                   <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">{dict?.hero?.expert_badge}</div>
                 </div>
               </div>
             </div>

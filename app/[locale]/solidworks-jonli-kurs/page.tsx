@@ -124,7 +124,7 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
           <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
             {t.teacherLine(K.oqituvchi.ism)}
           </p>
-          <a href="#yozilish" className="inline-flex items-center gap-2 bg-[#0084FF] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg transition-colors">
+          <a href="#yozilish" className="inline-flex items-center gap-2 bg-[#006FD6] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg transition-colors">
             {t.reserve} <ArrowRight className="w-5 h-5" />
           </a>
         </section>
@@ -210,7 +210,7 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
             {K.dastur.map((w, wi) => (
               <div key={w.hafta} className="rounded-3xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-6 space-y-4">
                 <div>
-                  <div className="text-xs font-black uppercase tracking-widest text-blue-500">{w.hafta}</div>
+                  <div className="text-xs font-black uppercase tracking-widest text-blue-700 dark:text-blue-400">{w.hafta}</div>
                   <h3 className="text-lg font-black text-slate-900 dark:text-white mt-1">{w.nomi}</h3>
                 </div>
                 <ol className="space-y-3">
@@ -248,7 +248,7 @@ export default async function LiveCoursePage({ params }: { params: Promise<{ loc
           <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {t.steps.map((s, i) => (
               <li key={s.title} className="rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 p-6">
-                <div className="text-sm font-black text-blue-500 mb-2">{t.step(i + 1)}</div>
+                <div className="text-sm font-black text-blue-700 dark:text-blue-400 mb-2">{t.step(i + 1)}</div>
                 <div className="font-bold text-slate-900 dark:text-white">{s.title}</div>
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">{s.text}</p>
               </li>

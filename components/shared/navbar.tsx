@@ -366,7 +366,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
                   <Link
                     href={`/${locale}/dashboard`}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-xl transition-colors"
+                    className="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-xl transition-colors"
                   >
                     <LayoutDashboard className="w-4 h-4" /> {dict?.navbar?.dashboard || "Kabinetim"}
                   </Link>

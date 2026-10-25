@@ -150,16 +150,16 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
   }, [courseId, locale]);
 
   if (sessionLoading || course === undefined) return (
-    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white gap-4">
+    <div className="dark min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white gap-4">
       <Loader2 className="w-10 h-10 animate-spin text-blue-500" />
       <p className="text-slate-400 font-medium">{t.loading}</p>
     </div>
   );
 
-  if (!course) return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">{t.notFound}</div>;
+  if (!course) return <div className="dark min-h-screen bg-slate-950 flex items-center justify-center text-white">{t.notFound}</div>;
 
   if (enrolled) return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
+    <div className="dark min-h-screen bg-slate-950 flex items-center justify-center px-4">
       <div className="max-w-md w-full text-center space-y-6 bg-slate-900 border border-slate-800 rounded-3xl p-10">
         <CheckCircle2 className="w-14 h-14 text-emerald-400 mx-auto" />
         <h1 className="text-2xl font-black text-white">{t.openTitle}</h1>
@@ -244,7 +244,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ locale: str
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 py-20 px-4">
+    <div className="dark min-h-screen bg-slate-950 text-slate-200 py-20 px-4">
       <div className="max-w-4xl mx-auto">
         
         {/* Header Navigation */}

@@ -127,7 +127,7 @@ function LessonContent({ courseId, lessonId }: { courseId: string; lessonId: str
   ].filter((t) => t.show);
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="dark min-h-screen bg-slate-950">
       {/* Header */}
       <div className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-800 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
