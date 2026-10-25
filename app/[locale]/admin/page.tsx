@@ -1,15 +1,12 @@
 "use client";
 
 import { Suspense, useCallback, useEffect, useState } from "react";
-import { useParams, useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { COURSES, getCourseById, getTotalLessons } from "@/lib/courses";
 import {
-  Users, BookOpen, CheckCircle, Clock, LogOut, Zap,
-  Shield, UserCheck, ChevronRight, Search, X, Award, AlertTriangle, Mail, Send, Loader2
+  Users, BookOpen, CheckCircle, Clock, UserCheck, ChevronRight, Search, X, Award, AlertTriangle, Mail, Send, Loader2
 } from "lucide-react";
 import { getAdminUsersAction, assignCourseAction, rejectCourseAction, sendEmailToUserAction } from "@/lib/actions/admin-actions";
-import { logoutAction } from "@/lib/actions/auth-actions";
 import { UserDB } from "@/lib/users-db";
 import CourseManager from "@/components/admin/course-manager";
 import BlogManager from "@/components/admin/blog-manager";
@@ -265,10 +262,7 @@ function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId
 
 // ---- ASOSIY ADMIN PANEL ----
 function AdminContent() {
-  const params = useParams();
-  const locale = (params?.locale as string) || "uz";
   const searchParams = useSearchParams();
-  const [admin, setAdmin] = useState<any>(null);
   const [users, setUsers] = useState<UserDB[]>([]);
   const [search, setSearch] = useState("");
   const [loadError, setLoadError] = useState(false);
@@ -315,10 +309,6 @@ function AdminContent() {
     }
   }
 
-  async function handleLogout() {
-    await logoutAction();
-  }
-
   const filtered = users.filter(
     (u) =>
       u.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -330,43 +320,9 @@ function AdminContent() {
   const totalPending = users.reduce((s, u) => s + u.pendingPayments.length, 0);
 
   return (
-    <div className="dark min-h-screen bg-slate-950">
-      {/* Header */}
-      <div className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-800 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link href={`/${locale}`} className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg flex items-center justify-center">
-                <Zap className="w-4 h-4 text-white" />
-              </div>
-              <span className="text-lg font-black text-white">
-                Tech<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Axis</span>
-              </span>
-            </Link>
-            <div className="flex items-center gap-1.5 bg-purple-500/20 text-purple-400 text-xs font-bold px-3 py-1.5 rounded-full border border-purple-500/30">
-              <Shield className="w-3.5 h-3.5" />
-              Admin Panel
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            {admin && (
-              <div className="hidden sm:flex items-center gap-2 bg-slate-800 rounded-full px-3 py-1.5">
-                <Avatar name={admin.name} className="w-6 h-6 rounded-full text-[10px]" />
-                <span className="text-slate-300 text-sm font-medium">{admin.name}</span>
-              </div>
-            )}
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-1.5 text-slate-400 hover:text-red-400 transition-colors text-sm font-medium"
-            >
-              <LogOut className="w-4 h-4" />
-              <span className="hidden sm:inline">Chiqish</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
+    <div className="admin-shell dark min-h-screen bg-slate-950">
+      {/* Alohida sarlavha qatori yo'q: saytning menyusi (navbar) shu yerda ham turadi va unda
+          Admin panel, Sozlamalar (email/parol) va Chiqish bor -- logo ikki marta chiqmasin. */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* Sarlavha */}
         <div>
@@ -514,7 +470,7 @@ function AdminContent() {
 export default function AdminPage() {
   // useSearchParams (?tab=...) uchun Suspense kerak
   return (
-    <Suspense fallback={<div className="dark min-h-screen bg-slate-950" />}>
+    <Suspense fallback={<div className="admin-shell dark min-h-screen bg-slate-950" />}>
       <AdminContent />
     </Suspense>
   );

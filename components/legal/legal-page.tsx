@@ -32,7 +32,7 @@ export function LegalPage({
   return (
     <div className="bg-white dark:bg-slate-950 pt-32 pb-24">
       <article className="max-w-3xl mx-auto px-4 sm:px-6">
-        <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">{doc.sarlavha}</h1>
+        <h1 className="text-[1.75rem] sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight hyphens-auto">{doc.sarlavha}</h1>
         <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">{doc.yangilangan}</p>
 
         <p className="mt-10 text-lg leading-relaxed text-slate-700 dark:text-slate-300">{doc.kirish}</p>

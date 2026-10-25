@@ -152,7 +152,7 @@ export default async function CatiaPage({ params }: { params: Promise<{ locale: 
       ])} />
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold mb-4 font-display text-blue-600">CATIA V6 & 3DEXPERIENCE</h1>
+          <h1 className="text-[2rem] sm:text-5xl font-bold mb-4 font-display text-blue-600">CATIA V6 & 3DEXPERIENCE</h1>
           <p className="text-slate-500 max-w-2xl mx-auto uppercase tracking-widest text-sm">{t.subtitle}</p>
         </div>
 
