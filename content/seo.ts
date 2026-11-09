@@ -155,23 +155,6 @@ export const SEO = {
         "A free guide for 3D modeling beginners: how SOLIDWORKS and CATIA differ and the first steps to take.",
     },
   },
-  jonliKurs: {
-    uz: {
-      title: "SOLIDWORKS jonli onlayn kursi | TechAxis",
-      description:
-        "SOLIDWORKS jonli onlayn kursi: 16 dars, CSWA va CSWP imtihonlariga tayyorgarlik. Birinchi dars bepul.",
-    },
-    ru: {
-      title: "Живой онлайн-курс SOLIDWORKS на узбекском | TechAxis",
-      description:
-        "Живой онлайн-курс SOLIDWORKS на узбекском: 16 уроков, подготовка к CSWA и CSWP. Первый урок бесплатно.",
-    },
-    en: {
-      title: "Live online SOLIDWORKS course in Uzbek | TechAxis",
-      description:
-        "Live online SOLIDWORKS course in Uzbek: 16 lessons, CSWA and CSWP exam preparation. The first lesson is free.",
-    },
-  },
   privacy: {
     uz: {
       title: "Maxfiylik siyosati | TechAxis",
@@ -246,7 +229,6 @@ export const TARJIMA_QILINGAN: readonly string[] = [
   "/courses",
   "/blog",
   "/free",
-  "/solidworks-jonli-kurs",
   "/privacy",
   "/terms",
   "/login",

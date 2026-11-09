@@ -86,7 +86,10 @@ for (const file of files) {
   for (const a of src.matchAll(/const (\w+) = dict\??\.([a-z_]+);/g))
     for (const m of src.matchAll(new RegExp(`\\b${a[1]}\\??\\.([a-z_0-9]+)`, "g"))) used.set(`${a[2]}.${m[1]}`, used.get(`${a[2]}.${m[1]}`) ?? where);
 }
+// Ixtiyoriy kalitlar: bo'lmasa komponent hech narsa chiqarmaydi (e'lon satri -- hozir e'lon yo'q).
+const IXTIYORIY = /^announcement(_short|_cta)?$/;
 for (const [k, where] of used) {
+  if (IXTIYORIY.test(k)) continue;
   const isGroup = [...dicts.uz.keys()].some((x) => x.startsWith(`${k}.`));
   for (const l of LOCALES) if (!isGroup && !dicts[l].has(k)) err(`${where}`, `kodda dict.${k} bor, locales/${l}.json'da yo'q`);
 }
@@ -115,7 +118,7 @@ const pageReport = [];
 // Tarjima qilinmaydigan atoqli otlar (o'qituvchi ismi)
 const NOMLAR = /Hikmatjon Meliqo'ziyev/g;
 if (BASE) {
-  const paths = new Set(["", "/software", "/software/solidworks", "/software/catia", "/training", "/courses", "/blog", "/free", "/solidworks-jonli-kurs", "/privacy", "/terms", "/login", "/register"]);
+  const paths = new Set(["", "/software", "/software/solidworks", "/software/catia", "/training", "/courses", "/blog", "/free", "/privacy", "/terms", "/login", "/register"]);
   const sm = await fetch(`${BASE}/sitemap.xml`).then((r) => r.text()).catch(() => "");
   for (const m of sm.matchAll(/<loc>https?:\/\/[^/]+\/uz([^<]*)<\/loc>/g)) paths.add(m[1]);
   // Sahifaning ko'rinadigan matni: bo'laklar + alt/aria-label/placeholder/title atributlari (skript va stilsiz)
