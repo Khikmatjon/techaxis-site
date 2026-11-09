@@ -91,17 +91,17 @@ export const Certifications = ({ dict, locale }: { dict: any; locale: string }) 
           {certifications.map((cert, index) => (
             <div
               key={index}
-              className="reveal-up relative bg-slate-50 dark:bg-slate-900 rounded-[32px] p-8 lg:p-12 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden group"
+              className="reveal-up relative bg-slate-50 dark:bg-slate-900 rounded-[32px] p-6 sm:p-8 lg:p-12 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden group"
             >
               {/* Background gradient blur */}
               <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${cert.color} rounded-full blur-[100px] opacity-10 group-hover:opacity-20 transition-opacity`}></div>
 
-              <div className="relative z-10 flex gap-6 items-start">
+              <div className="relative z-10 flex flex-col sm:flex-row gap-6 items-start">
                 <div className={`w-16 h-16 ${cert.bgLight} rounded-2xl flex items-center justify-center shrink-0`}>
                   <ShieldCheck className={`w-8 h-8 ${cert.iconColor}`} />
                 </div>
                 
-                <div className="space-y-4">
+                <div className="space-y-4 min-w-0">
                   <div>
                     <div className="text-sm font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">
                       {cert.level}
