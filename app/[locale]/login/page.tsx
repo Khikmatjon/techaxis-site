@@ -4,7 +4,8 @@ import { useState, use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { loginAction } from "@/lib/actions/auth-actions";
-import { Eye, EyeOff, Mail, Lock, Zap, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
+import { LogoMark } from "@/components/shared/logo-mark";
 import { pick } from "@/lib/locale-text";
 import { trXato } from "@/lib/action-messages";
 
@@ -80,8 +81,9 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
         <div className="text-center mb-8">
           <Link href={`/${locale}`}>
             <div className="inline-flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
-                <Zap className="w-5 h-5 text-white" />
+              {/* Sayt belgisi (menyudagi bilan bir xil) */}
+              <div className="w-10 h-10 bg-[#111a28] rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
+                <LogoMark className="w-7 h-7" />
               </div>
               <span className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
                 Tech<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Axis</span>

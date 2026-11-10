@@ -2,23 +2,27 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 import { asLoc, pick } from '@/lib/locale-text';
 
 const T = {
   uz: {
     title: "Sahifa topilmadi",
+    docTitle: "Sahifa topilmadi | TechAxis",
     text: "Siz qidirayotgan sahifa mavjud emas yoki boshqa manzilga ko'chirilgan.",
     home: "Bosh sahifaga qaytish",
     courses: "Kurslarni ko'rish",
   },
   ru: {
     title: "Страница не найдена",
+    docTitle: "Страница не найдена | TechAxis",
     text: "Запрашиваемая страница не существует или была перемещена.",
     home: "Вернуться на главную",
     courses: "Смотреть курсы",
   },
   en: {
     title: "Page not found",
+    docTitle: "Page not found | TechAxis",
     text: "The page you are looking for does not exist or has been moved.",
     home: "Back to home",
     courses: "Browse courses",
@@ -29,6 +33,8 @@ const T = {
 export default function NotFound() {
   const locale = asLoc(usePathname()?.split('/')[1]);
   const t = pick(T, locale);
+  // Brauzer tabida bosh sahifa sarlavhasi emas, "Sahifa topilmadi" chiqsin
+  useEffect(() => { document.title = t.docTitle; }, [t.docTitle]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 text-center">

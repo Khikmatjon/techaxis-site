@@ -100,9 +100,6 @@ export default async function CoursesCatalog({ params }: { params: Promise<{ loc
 
                   {/* KONTENT */}
                   <div className="p-8 flex flex-col flex-1 space-y-5">
-                    <div className="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
-                      <span className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-blue-500" /> {course.duration}</span>
-                    </div>
 
                     <div>
                       <Link href={`/${locale}/courses/${course.id}`}>
