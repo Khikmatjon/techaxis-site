@@ -4,6 +4,7 @@ import { Users, Award, ArrowUpRight } from 'lucide-react';
 import type { Stats } from '@/lib/stats';
 
 const IMG_ALT: Record<string, string> = { uz: "Muhandislik ta'limi", ru: "Инженерное обучение", en: "Engineering training" };
+const PORTFOLIO_TAYYOR = false;
 
 export const About = ({ dict, stats: siteStats, locale }: { dict: any; stats: Stats; locale: string }) => {
   // Qiymat bazada null bo'lsa (admin panelda hali to'ldirilmagan), mos
@@ -91,13 +92,16 @@ export const About = ({ dict, stats: siteStats, locale }: { dict: any; stats: St
               </div>
             )}
 
+            {/* Portfolio hali tayyor emas (egasi, 2026-11-09) -- tugma yashirin. Haqiqiy loyihalar
+                qo'shilgach (21-25-kunlar) PORTFOLIO_TAYYOR = true qiling. */}
+            {PORTFOLIO_TAYYOR && (
             <div className="pt-4">
-              {/* Portfolio sahifasi hali yo'q (21-25-kunlar) -- hozircha bosh sahifadagi loyihalar bo'limiga */}
               <a href="#projects" className="group inline-flex items-center gap-3 bg-[#006FD6] hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl active:scale-95">
                 <span>{dict?.projects?.view_all || "View Portfolio"}</span>
                 <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </a>
             </div>
+            )}
           </div>
         </div>
       </div>

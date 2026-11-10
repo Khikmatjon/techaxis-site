@@ -21,14 +21,18 @@ export const BLOG_TARJIMA: Record<string, Tarjima> = {
     ru: {
       title: "Сколько RAM и SSD нужно для SOLIDWORKS?",
       excerpt: "Официальное требование — 16 ГБ, рекомендуется — 32 ГБ.",
-      content: `В официальных требованиях SOLIDWORKS и CATIA указано: RAM — 16 ГБ (рекомендуется 32 ГБ). SSD — 512 ГБ; если вы работаете с большими файлами, рекомендуется накопитель на 1 ТБ.
+      content: `В официальных системных требованиях SOLIDWORKS оперативная память (RAM) — 16 ГБ, рекомендуется 32 ГБ. По диску официальное требование такое: для оптимальной работы рекомендуется SSD.
+
+Наш совет (не официальное требование): берите SSD объёмом не меньше 512 ГБ; если работаете с большими сборками и тяжёлыми файлами, удобнее 1 ТБ.
 
 Источник: [SOLIDWORKS System Requirements](https://www.solidworks.com/support/system-requirements)`,
     },
     en: {
       title: "How much RAM and SSD does SOLIDWORKS need?",
       excerpt: "The official requirement is 16 GB; 32 GB is recommended.",
-      content: `The official SOLIDWORKS and CATIA requirements list RAM: 16 GB (32 GB recommended). SSD: 512 GB; if you work with large files, 1 TB of storage is recommended.
+      content: `The official SOLIDWORKS system requirements list RAM: 16 GB, with 32 GB recommended. For drives, the official requirement is: SSD drives are recommended for optimal performance.
+
+Our advice (not an official requirement): get an SSD of at least 512 GB; if you work with large assemblies and heavy files, 1 TB is more comfortable.
 
 Source: [SOLIDWORKS System Requirements](https://www.solidworks.com/support/system-requirements)`,
     },
