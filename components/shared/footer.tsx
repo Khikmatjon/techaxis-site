@@ -3,7 +3,7 @@
 import React from 'react';
 import { LogoMark } from '@/components/shared/logo-mark';
 import Link from 'next/link';
-import { Youtube, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { Youtube, Instagram, Linkedin, Send, Mail, Phone, MapPin } from 'lucide-react';
 import { SITE_PHONE, SITE_EMAIL, SITE_ADDRESS, SITE_SOCIAL } from '@/config/site';
 import { MAXFIYLIK_SIYOSATI } from '@/content/maxfiylik-siyosati';
 import { FOYDALANISH_SHARTLARI } from '@/content/foydalanish-shartlari';
@@ -37,12 +37,17 @@ export const Footer = ({ dict, locale }: { dict: any; locale: string }) => {
             <p className="text-slate-400 text-sm leading-relaxed">
               {dict?.hero?.subtitle}
             </p>
-            <div className="flex space-x-4">
+            {/* Ijtimoiy tarmoqlar: kompaniyaning yangi sahifalari ochilganda config/site.ts -> SITE_SOCIAL da almashtiriladi */}
+            <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400">{f?.social_title || "Ijtimoiy tarmoqlar"}</h3>
+            <div className="flex flex-wrap gap-4">
               <a href={SITE_SOCIAL.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="p-3 bg-white/5 rounded-xl hover:bg-red-600 transition-all text-white">
                 <Youtube size={20} />
               </a>
               <a href={SITE_SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="p-3 bg-white/5 rounded-xl hover:bg-pink-600 transition-all text-white">
                 <Instagram size={20} />
+              </a>
+              <a href={SITE_SOCIAL.telegramBot} target="_blank" rel="noopener noreferrer" aria-label="Telegram" className="p-3 bg-white/5 rounded-xl hover:bg-sky-500 transition-all text-white">
+                <Send size={20} />
               </a>
               <a href={SITE_SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-3 bg-white/5 rounded-xl hover:bg-blue-600 transition-all text-white">
                 <Linkedin size={20} />

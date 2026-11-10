@@ -33,7 +33,7 @@ export const LEGAL_ENTITY: string | null = null;
 // kompaniya sahifalari ochilgach shu yerdagi havolalarni almashtiring.
 export const SITE_SOCIAL = {
   telegramBot: "https://t.me/techaxisinfobot",
-  youtube: "https://youtube.com/@techaxis_academy?si=Xrhh9iFOkFJQu7EI",
+  youtube: "https://www.youtube.com/@TechAxis_Academy",
   instagram: "https://instagram.com/hikmatjon.m",
   linkedin: "https://linkedin.com/in/melikuziev-khikmatjon",
 } as const;
