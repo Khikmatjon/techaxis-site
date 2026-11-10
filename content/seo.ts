@@ -155,6 +155,23 @@ export const SEO = {
         "A free guide for 3D modeling beginners: how SOLIDWORKS and CATIA differ and the first steps to take.",
     },
   },
+  services: {
+    uz: {
+      title: "Xizmatlar: o'quv kurslari va mijoz loyihalari | TechAxis",
+      description:
+        "SOLIDWORKS va CATIA bo'yicha o'quv kurslari hamda mijozlar uchun texnik chizmalar, 3D modellar va ishlab chiqarishga tayyorlash.",
+    },
+    ru: {
+      title: "Услуги: учебные курсы и проекты для клиентов | TechAxis",
+      description:
+        "Курсы SOLIDWORKS и CATIA, а также технические чертежи, 3D-модели и подготовка к производству для клиентов.",
+    },
+    en: {
+      title: "Services: training courses and client projects | TechAxis",
+      description:
+        "SOLIDWORKS and CATIA training courses, plus technical drawings, 3D models and preparation for manufacturing for clients.",
+    },
+  },
   privacy: {
     uz: {
       title: "Maxfiylik siyosati | TechAxis",
@@ -229,6 +246,7 @@ export const TARJIMA_QILINGAN: readonly string[] = [
   "/courses",
   "/blog",
   "/free",
+  "/services",
   "/privacy",
   "/terms",
   "/login",

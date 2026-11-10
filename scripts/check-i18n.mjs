@@ -118,7 +118,7 @@ const pageReport = [];
 // Tarjima qilinmaydigan atoqli otlar (o'qituvchi ismi)
 const NOMLAR = /Hikmatjon Meliqo'ziyev/g;
 if (BASE) {
-  const paths = new Set(["", "/software", "/software/solidworks", "/software/catia", "/training", "/courses", "/blog", "/free", "/privacy", "/terms", "/login", "/register"]);
+  const paths = new Set(["", "/software", "/software/solidworks", "/software/catia", "/training", "/courses", "/blog", "/free", "/services", "/privacy", "/terms", "/login", "/register"]);
   const sm = await fetch(`${BASE}/sitemap.xml`).then((r) => r.text()).catch(() => "");
   for (const m of sm.matchAll(/<loc>https?:\/\/[^/]+\/uz([^<]*)<\/loc>/g)) paths.add(m[1]);
   // Sahifaning ko'rinadigan matni: bo'laklar + alt/aria-label/placeholder/title atributlari (skript va stilsiz)

@@ -8,13 +8,16 @@
 import { escapeHtml } from "@/lib/escape-html";
 import { sendTelegramHtml, telegramConfigured } from "@/lib/telegram";
 
-const LIMITS = { name: 100, email: 150, phone: 40, service: 100, message: 2000, lang: 2 } as const;
+const LIMITS = { name: 100, email: 150, phone: 40, service: 100, message: 2000, lang: 2, kind: 10, telegram: 60, website: 200 } as const;
 
 function field(formData: FormData, key: keyof typeof LIMITS): string {
   return String(formData.get(key) ?? "").trim().slice(0, LIMITS[key]);
 }
 
 export async function sendToTelegram(formData: FormData) {
+  // Bot tuzog'i: odam ko'rmaydigan maydon to'ldirilgan bo'lsa -- jim qabul qilinadi, yuborilmaydi.
+  if (field(formData, "website")) return { success: true };
+
   if (!telegramConfigured()) {
     return { success: false, error: "Server sozlamalarida xatolik" };
   }
@@ -24,6 +27,9 @@ export async function sendToTelegram(formData: FormData) {
   const phone = field(formData, "phone");
   const service = field(formData, "service");
   const message = field(formData, "message");
+  const telegram = field(formData, "telegram");
+  // "mijoz" -- Xizmatlar sahifasidagi buyurtma formasi: xabar boshida "MIJOZ" deb ajralib turadi.
+  const isClient = field(formData, "kind") === "mijoz";
   // So'rov qaysi tildagi sahifadan kelgani (javobni shu tilda yozish uchun).
   const lang = ["uz", "ru", "en"].includes(field(formData, "lang")) ? field(formData, "lang") : "";
 
@@ -33,10 +39,11 @@ export async function sendToTelegram(formData: FormData) {
 
   const e = escapeHtml;
   const text = `
-🆕 <b>Yangi so'rov (TechAxis.uz)</b>
+${isClient ? "🧑‍💼 <b>MIJOZ — yangi buyurtma (TechAxis.uz)</b>" : "🆕 <b>Yangi so'rov (TechAxis.uz)</b>"}
 
 👤 <b>Ism:</b> ${e(name)}
-📞 <b>Tel:</b> ${e(phone)}
+📞 <b>Tel:</b> ${e(phone)}${telegram ? `
+💬 <b>Telegram:</b> ${e(telegram)}` : ""}
 📧 <b>Email:</b> ${e(email)}
 🛠 <b>Xizmat:</b> ${e(service)}
 📝 <b>Xabar:</b> ${e(message)}${lang ? `

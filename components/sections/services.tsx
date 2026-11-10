@@ -1,53 +1,66 @@
 "use client";
 
 import React from 'react';
-import { Settings, Cpu, GraduationCap, Cloud, Ruler, BarChart3, ArrowUpRight } from 'lucide-react';
+import { Settings, Cpu, GraduationCap, Cloud, Ruler, BarChart3, ArrowUpRight, Clock } from 'lucide-react';
 import Link from 'next/link';
 
+// Xizmatlar (26-kun): avval ikki asosiy yo'nalish (o'quv kurslari; mijoz loyihalari --
+// "tayyorlanmoqda", buyurtma /services sahifasida), keyin "Tez orada" belgili 4 xizmat (havolasiz).
+type Service = { title: string; desc: string; icon: React.ReactNode; color: string; href?: string; cta?: string; badge?: string; soon?: boolean };
+
 export const Services = ({ dict, locale }: { dict: any; locale: string }) => {
-  const services = [
+  const s = dict?.services ?? {};
+  const soon = s.soon || "Tez orada";
+  const services: Service[] = [
     {
-      title: dict?.services?.software_sales || "Dasturiy ta'minot savdosi",
-      desc: dict?.services?.software_sales_desc || "SOLIDWORKS, CATIA va 3DEXPERIENCE litsenziyalari bo'yicha maslahat va yordam.",
-      icon: <Settings className="w-8 h-8 text-blue-600" />,
-      color: "bg-blue-50",
-      href: `/${locale}/software`
-    },
-    {
-      title: dict?.services?.design || "Mexanik dizayn",
-      desc: dict?.services?.design_desc || "Yuqori aniqlikdagi 3D modellashtirish va texnik chizmalar.",
-      icon: <Ruler className="w-8 h-8 text-emerald-600" />,
-      color: "bg-emerald-50",
-      href: "#contact"
-    },
-    {
-      title: dict?.services?.training || "Korporativ ta'lim",
-      desc: dict?.services?.training_desc || "Xalqaro standartlar bo'yicha xodimlarni o'qitish va CSWA/CSWP imtihonlariga tayyorlash.",
+      title: s.training || "O'quv kurslari",
+      desc: s.training_desc || "SOLIDWORKS, CATIA, Simulation va PLM bo'yicha onlayn kurslar; CSWA/CSWP imtihonlariga tayyorgarlik.",
       icon: <GraduationCap className="w-8 h-8 text-red-600" />,
       color: "bg-red-50",
-      href: `/${locale}/training`
+      href: `/${locale}/courses`,
+      cta: dict?.common?.learn_more || "Batafsil ma'lumot",
     },
     {
-      title: dict?.services?.plm || "PLM tizimlari",
-      desc: dict?.services?.plm_desc || "Mahsulot hayotiy siklini boshqarish tizimlarini joriy qilish.",
+      title: s.design || "Mijoz loyihalari",
+      desc: s.design_desc || "Texnik chizmalar, 3D modellar va ishlab chiqarishga tayyorlash.",
+      icon: <Ruler className="w-8 h-8 text-emerald-600" />,
+      color: "bg-emerald-50",
+      href: `/${locale}/services#buyurtma`,
+      cta: s.order_cta || "Buyurtma berish",
+      badge: s.preparing || "Tayyorlanmoqda",
+    },
+    {
+      title: s.software_sales || "Dastur litsenziyasi bo'yicha maslahat",
+      desc: s.software_sales_desc || "SOLIDWORKS, CATIA va 3DEXPERIENCE litsenziyalari bo'yicha maslahat va yordam.",
+      icon: <Settings className="w-8 h-8 text-blue-600" />,
+      color: "bg-blue-50",
+      badge: soon,
+      soon: true,
+    },
+    {
+      title: s.plm || "PLM tizimlari",
+      desc: s.plm_desc || "Mahsulot hayotiy siklini boshqarish tizimlarini joriy qilish.",
       icon: <Cloud className="w-8 h-8 text-indigo-600" />,
       color: "bg-indigo-50",
-      href: `/${locale}/software`
+      badge: soon,
+      soon: true,
     },
     {
-      title: dict?.services?.analysis || "Simulyatsiya va tahlil",
-      desc: dict?.services?.analysis_desc || "Mustahkamlik va termal tahlillarni raqamli tekshirish.",
+      title: s.analysis || "Simulyatsiya va tahlil",
+      desc: s.analysis_desc || "Mustahkamlik va termal tahlillarni raqamli tekshirish.",
       icon: <BarChart3 className="w-8 h-8 text-amber-600" />,
       color: "bg-amber-50",
-      href: "#contact"
+      badge: soon,
+      soon: true,
     },
     {
-      title: dict?.services?.consulting || "Texnik konsalting",
-      desc: dict?.services?.consulting_desc || "Ishlab chiqarishni raqamlashtirish bo'yicha maslahatlar.",
+      title: s.consulting || "Texnik konsalting",
+      desc: s.consulting_desc || "Ishlab chiqarishni raqamlashtirish bo'yicha maslahatlar.",
       icon: <Cpu className="w-8 h-8 text-cyan-600" />,
       color: "bg-cyan-50",
-      href: "#contact"
-    }
+      badge: soon,
+      soon: true,
+    },
   ];
 
   return (
@@ -71,9 +84,23 @@ export const Services = ({ dict, locale }: { dict: any; locale: string }) => {
 
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
+          {services.map((service, index) => service.soon ? (
+            // "Tez orada": havolasiz, xira karta
+            <div key={index} className="relative p-8 md:p-10 rounded-[32px] bg-white/60 dark:bg-slate-900/50 border border-dashed border-slate-300 dark:border-slate-700 flex flex-col">
+              <div className="flex items-start justify-between gap-3 mb-8">
+                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${service.color} dark:bg-opacity-10 opacity-70`}>
+                  {service.icon}
+                </div>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-[11px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-400">
+                  <Clock className="w-3.5 h-3.5" /> {service.badge}
+                </span>
+              </div>
+              <h4 className="text-xl md:text-2xl font-bold mb-4 text-slate-700 dark:text-slate-300 leading-tight">{service.title}</h4>
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-[15px]">{service.desc}</p>
+            </div>
+          ) : (
             <Link 
-              href={service.href}
+              href={service.href!}
               key={index} 
               className="group relative p-8 md:p-10 rounded-[32px] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col"
             >
@@ -81,8 +108,15 @@ export const Services = ({ dict, locale }: { dict: any; locale: string }) => {
               <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
               
               <div className="relative z-10 flex-1">
-                <div className={`mb-8 w-16 h-16 rounded-2xl flex items-center justify-center ${service.color} dark:bg-opacity-10 group-hover:scale-110 transition-transform duration-500`}>
-                  {service.icon}
+                <div className="flex items-start justify-between gap-3 mb-8">
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${service.color} dark:bg-opacity-10 group-hover:scale-110 transition-transform duration-500`}>
+                    {service.icon}
+                  </div>
+                  {service.badge && (
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-[11px] font-black uppercase tracking-widest text-amber-700 dark:text-amber-400">
+                      <Clock className="w-3.5 h-3.5" /> {service.badge}
+                    </span>
+                  )}
                 </div>
                 
                 <h4 className="text-xl md:text-2xl font-bold mb-4 text-slate-900 dark:text-white leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
@@ -96,11 +130,7 @@ export const Services = ({ dict, locale }: { dict: any; locale: string }) => {
 
               {/* Bottom Action Bar */}
               <div className="relative z-10 mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                <span>
-                  {service.href === "#contact"
-                    ? dict?.services?.request_cta || "So'rov yuborish"
-                    : dict?.common?.learn_more || "Batafsil ma'lumot"}
-                </span>
+                <span>{service.cta}</span>
                 <div className="w-8 h-8 rounded-full bg-slate-50 dark:bg-slate-800 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/30 flex items-center justify-center transition-colors">
                   <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
