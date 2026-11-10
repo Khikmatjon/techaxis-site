@@ -1,5 +1,7 @@
 // =============================================================================
-// SOLIDWORKS JONLI ONLAYN KURSI (/uz/solidworks-jonli-kurs) — sahifa matni
+// SOLIDWORKS JONLI ONLAYN KURSI — sahifa matni
+// HOZIR SAYTDA ISHLATILMAYDI: sahifa 2026-11-09 da olib tashlandi (1-guruh boshlandi, qabul yopiq).
+// Keyingi guruh ochilganda shu matn va content/jonli-kurs-tarjima.ts qayta ishlatiladi.
 // =============================================================================
 //
 // Bu kurs saytdagi video kurslardan (admin panel -> Kurslar) ALOHIDA: darslar jonli

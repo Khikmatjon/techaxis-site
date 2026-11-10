@@ -5,11 +5,13 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 // Yozuv matni: locales/*.json -> "announcement" (e'lon), "announcement_short" (telefon uchun
-// qisqasi) va "announcement_cta" (tugma yozuvi). Butun qator bitta havola: bosilganda jonli
-// kurs sahifasiga olib boradi. Admin panelda ko'rinmaydi (globals.css -> "admin-shell").
+// qisqasi) va "announcement_cta" (tugma yozuvi). Matn bo'lmasa qator umuman chiqmaydi (hozir
+// shunday: jonli kurs e'loni 2026-11-09 da olib tashlandi). Qayta ishlatsangiz, pastdagi havola
+// manzilini ham yangi e'longa moslang. Admin panelda ko'rinmaydi (globals.css -> "admin-shell").
 type AnnouncementDict = { announcement?: string; announcement_short?: string; announcement_cta?: string };
 
-export const AnnouncementBar = ({ dict, locale }: { dict: AnnouncementDict; locale: string }) => {
+// Lug'atda e'lon kalitlari bo'lmasligi mumkin (hozir yo'q) -- shuning uchun boshqa kalitlarga ham ruxsat.
+export const AnnouncementBar = ({ dict, locale }: { dict: AnnouncementDict & Record<string, unknown>; locale: string }) => {
   if (!dict?.announcement) return null;
 
   return (

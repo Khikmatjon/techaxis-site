@@ -8,7 +8,7 @@ import {
   updateLiveApplicationAction,
 } from "@/lib/actions/live-course-actions";
 
-// Jonli kursga arizalar (/uz/solidworks-jonli-kurs formasi). /admin sahifasida
+// Jonli kursga arizalar (sahifa 2026-11-09 da olib tashlangan -- bu yerda oldingi arizalar tarixi). /admin sahifasida
 // "Jonli kurs" tab sifatida ishlatiladi: holatni belgilash, izoh, CSV yuklab olish.
 
 type Application = Awaited<ReturnType<typeof getLiveApplicationsAction>>[number];
@@ -156,7 +156,7 @@ export default function LiveApplicationsManager() {
       </div>
 
       {shown.length === 0 ? (
-        <p className="text-slate-600 dark:text-slate-400">{apps.length === 0 ? "Hali ariza yo'q. Arizalar /uz/solidworks-jonli-kurs sahifasidagi formadan keladi." : "Bu holatda ariza yo'q."}</p>
+        <p className="text-slate-600 dark:text-slate-400">{apps.length === 0 ? "Ariza yo'q. Jonli kurs ariza sahifasi hozir yopiq." : "Bu holatda ariza yo'q."}</p>
       ) : (
         <div className="space-y-3">
           {shown.map((a) => <Row key={`${a.id}-${a.updatedAt}`} app={a} onChanged={load} />)}

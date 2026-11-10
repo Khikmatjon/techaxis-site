@@ -61,7 +61,7 @@ export default async function SoftwarePage({ params }: { params: Promise<{ local
       name: "SOLIDWORKS",
       description: t.sw,
       features: t.swF,
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070",
+      image: "https://images.unsplash.com/photo-1769147339214-076740872485?auto=format&fit=crop&q=80&w=2070",
       color: "from-red-500 to-red-700",
       bgLight: "bg-red-50 dark:bg-red-900/10"
     },
