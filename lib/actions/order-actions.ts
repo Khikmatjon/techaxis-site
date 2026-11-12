@@ -85,13 +85,18 @@ export async function submitOrderAction(formData: FormData) {
         return false;
       }
     })(),
-    prisma.clientOrder
-      .create({ data: { name, phone, telegram: telegram || null, need, message: message || null, lang, fileName } })
-      .then(() => true)
-      .catch((err) => {
+    (async () => {
+      try {
+        await prisma.clientOrder.create({
+          data: { name, phone, telegram: telegram || null, need, message: message || null, lang, fileName },
+        });
+        return true;
+      } catch (err) {
+        // Baza ishlamasa ham (yoki jadval hali yaratilmagan bo'lsa) buyurtma Telegram orqali yetadi.
         console.error("Buyurtma: bazaga yozilmadi", err);
         return false;
-      }),
+      }
+    })(),
   ]);
 
   return sent || saved
