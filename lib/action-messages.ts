@@ -43,6 +43,13 @@ const XATOLAR: Record<string, { ru: string; en: string }> = {
     en: "The receipt must be an image (JPG, PNG, WEBP) or a PDF",
   },
   "Chek hajmi 5 MB dan oshmasin": { ru: "Размер чека не должен превышать 5 МБ", en: "The receipt must not exceed 5 MB" },
+  // Mijoz buyurtmasi (/services)
+  "Buyurtma yuborilmadi": { ru: "Заказ не отправлен", en: "The order was not sent" },
+  "Fayl hajmi 4 MB dan oshmasin": { ru: "Размер файла не должен превышать 4 МБ", en: "The file must not exceed 4 MB" },
+  "Fayl turi mos emas (PDF, rasm, DWG, DXF, STEP yoki CAD fayl yuboring)": {
+    ru: "Неподходящий тип файла (отправьте PDF, изображение, DWG, DXF, STEP или CAD-файл)",
+    en: "Unsupported file type (send a PDF, image, DWG, DXF, STEP or CAD file)",
+  },
 };
 
 // Ichida raqam bor xabarlar
