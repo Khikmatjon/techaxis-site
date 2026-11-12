@@ -77,3 +77,24 @@ ${data.receiptUrl ? `📎 <b>Chek:</b> <a href="${e(data.receiptUrl)}">Rasmni ko
     console.error("Telegram notification failed:", error);
   }
 }
+
+// Faylni Telegram'ga hujjat sifatida yuboradi (mijoz buyurtmasiga biriktirilgan chizma yoki
+// rasm). Fayl saytda saqlanmaydi -- faqat shu chatga ketadi.
+export async function sendTelegramDocument(file: Blob, fileName: string, caption: string): Promise<boolean> {
+  if (!telegramConfigured()) return false;
+  try {
+    const body = new FormData();
+    body.append("chat_id", TELEGRAM_CHAT_ID!);
+    body.append("caption", caption.slice(0, 1000));
+    body.append("document", file, fileName);
+    const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument`, { method: "POST", body });
+    if (!res.ok) {
+      console.error("Telegram sendDocument Error:", await res.text());
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error("Telegram sendDocument failed:", error);
+    return false;
+  }
+}

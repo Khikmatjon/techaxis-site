@@ -129,3 +129,23 @@ model LiveApplication {
 
   @@index([createdAt])
 }
+
+// Mijoz loyihasi buyurtmalari (/services sahifasidagi forma). Admin panel -> "Buyurtmalar".
+// Biriktirilgan fayl saytda saqlanmaydi (maxfiylik): u Telegram'ga hujjat sifatida yuboriladi,
+// bu yerda faqat nomi qoladi.
+model ClientOrder {
+  id        String   @id @default(uuid())
+  name      String
+  phone     String
+  telegram  String?
+  need      String
+  message   String?
+  lang      String   @default("uz")
+  fileName  String?
+  status    String   @default("yangi")
+  note      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([createdAt])
+}

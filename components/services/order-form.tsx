@@ -2,13 +2,17 @@
 
 import { useState } from "react";
 import { Send, CheckCircle2 } from "lucide-react";
-import { sendToTelegram } from "@/lib/actions/send-telegram";
+import { submitOrderAction } from "@/lib/actions/order-actions";
 import { SITE_SOCIAL } from "@/config/site";
 import { asLoc, pick } from "@/lib/locale-text";
 import { trXato } from "@/lib/action-messages";
 
 // Mijoz loyihasi buyurtmasi: egasining Telegram'iga (sayt boti orqali) "MIJOZ" sarlavhasi bilan
-// keladi. Xabar admin uchun o'zbekcha: tanlangan ish turi o'zbekcha nomi bilan yuboriladi.
+// keladi va admin paneldagi "Buyurtmalar" ro'yxatiga yoziladi. Xabar admin uchun o'zbekcha:
+// tanlangan ish turi o'zbekcha nomi bilan yuboriladi (server ham shu ro'yxat bilan tekshiradi).
+// Biriktirilgan fayl saytda saqlanmaydi -- Telegram'ga hujjat sifatida ketadi.
+const MAX_FILE_BYTES = 4 * 1024 * 1024;
+const FILE_ACCEPT = ".pdf,.png,.jpg,.jpeg,.webp,.dwg,.dxf,.step,.stp,.igs,.iges,.sldprt,.sldasm,.slddrw,.catpart,.catproduct,.catdrawing,.zip";
 const TURLAR = [
   { uz: "Texnik chizma", ru: "Технический чертёж", en: "Technical drawing" },
   { uz: "3D model", ru: "3D-модель", en: "3D model" },
@@ -21,18 +25,24 @@ const T = {
     done: "Buyurtmangiz qabul qilindi", doneText: "Tez orada siz bilan bog'lanib, muddat va narxni aytamiz.",
     name: "Ismingiz", namePh: "Ism va familiya", phone: "Telefon raqamingiz", tg: "Telegram", optional: "(ixtiyoriy)",
     need: "Nima kerak", about: "Loyiha haqida qisqacha", aboutPh: "Masalan: detal o'lchamlari, material, miqdor, muddat...",
+    file: "Chizma yoki rasm", fileHint: "PDF, rasm, DWG, DXF, STEP yoki CAD fayl — 4 MB gacha. Bir nechta fayl bo'lsa, ZIP qilib yuboring.",
+    fileBig: "Fayl hajmi 4 MB dan oshmasin",
     submit: "Buyurtma yuborish", retry: "Qaytadan urining yoki", viaTg: "Telegram orqali", after: " yozing.",
   },
   ru: {
     done: "Заказ принят", doneText: "Мы скоро свяжемся с вами и назовём сроки и стоимость.",
     name: "Ваше имя", namePh: "Имя и фамилия", phone: "Номер телефона", tg: "Telegram", optional: "(необязательно)",
     need: "Что нужно", about: "Кратко о проекте", aboutPh: "Например: размеры детали, материал, количество, сроки...",
+    file: "Чертёж или фото", fileHint: "PDF, изображение, DWG, DXF, STEP или CAD-файл — до 4 МБ. Несколько файлов отправьте одним ZIP-архивом.",
+    fileBig: "Размер файла не должен превышать 4 МБ",
     submit: "Отправить заказ", retry: "Попробуйте ещё раз или", viaTg: "напишите нам в Telegram", after: ".",
   },
   en: {
     done: "Your order has been received", doneText: "We will contact you soon with the timeline and price.",
     name: "Your name", namePh: "First and last name", phone: "Phone number", tg: "Telegram", optional: "(optional)",
     need: "What you need", about: "About the project", aboutPh: "For example: part dimensions, material, quantity, deadline...",
+    file: "Drawing or photo", fileHint: "PDF, image, DWG, DXF, STEP or CAD file — up to 4 MB. For several files, send one ZIP archive.",
+    fileBig: "The file must not exceed 4 MB",
     submit: "Send the order", retry: "Please try again or", viaTg: "message us on Telegram", after: ".",
   },
 };
@@ -48,20 +58,25 @@ export function OrderForm({ locale }: { locale: string }) {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setStatus("loading");
     const data = new FormData(e.currentTarget);
-    data.set("kind", "mijoz");
     data.set("lang", loc);
-    data.set("service", `Mijoz loyihasi: ${String(data.get("need") ?? "")}`);
+    // Katta fayl serverga yetmasdan to'xtatiladi (aks holda so'rov butunlay rad etiladi).
+    const file = data.get("file");
+    if (file instanceof File && file.size > MAX_FILE_BYTES) {
+      setError(t.fileBig);
+      setStatus("error");
+      return;
+    }
+    setStatus("loading");
     try {
-      const res = await sendToTelegram(data);
+      const res = await submitOrderAction(data);
       if (res.success) setStatus("success");
       else {
         setError(trXato(res.error, locale));
         setStatus("error");
       }
     } catch {
-      setError(trXato("Xabar yuborilmadi", locale));
+      setError(trXato("Buyurtma yuborilmadi", locale));
       setStatus("error");
     }
   }
@@ -103,6 +118,19 @@ export function OrderForm({ locale }: { locale: string }) {
       <div>
         <label htmlFor="order-message" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">{t.about}</label>
         <textarea id="order-message" name="message" rows={4} maxLength={2000} className={input} placeholder={t.aboutPh} />
+      </div>
+      <div>
+        <label htmlFor="order-file" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+          {t.file} <span className="font-normal text-slate-500">{t.optional}</span>
+        </label>
+        <input
+          id="order-file"
+          name="file"
+          type="file"
+          accept={FILE_ACCEPT}
+          className="block w-full text-sm text-slate-700 dark:text-slate-300 file:mr-4 file:rounded-xl file:border-0 file:bg-slate-200 dark:file:bg-slate-700 file:px-4 file:py-2.5 file:text-sm file:font-semibold file:text-slate-900 dark:file:text-white hover:file:bg-slate-300 dark:hover:file:bg-slate-600 file:cursor-pointer"
+        />
+        <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">{t.fileHint}</p>
       </div>
 
       {/* Bot tuzog'i: odam ko'rmaydi va to'ldirmaydi */}
