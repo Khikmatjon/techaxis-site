@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { GraduationCap, Ruler, Settings, Cloud, BarChart3, Cpu, ArrowRight, CheckCircle2, Clock } from "lucide-react";
+import { GraduationCap, Ruler, Settings, Cloud, BarChart3, Cpu, ArrowRight, CheckCircle2, Clock, UserCheck, HelpCircle } from "lucide-react";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbLd, crumb } from "@/lib/structured-data";
 import { pageMetadata } from "@/lib/seo";
@@ -45,6 +45,21 @@ const T = {
       { t: "Simulyatsiya va tahlil", d: "Mustahkamlik va termal tahlil." },
       { t: "Texnik konsalting", d: "Ishlab chiqarishni raqamlashtirish bo'yicha maslahatlar." },
     ],
+    whoTitle: "Mijoz loyihalari kimlar uchun",
+    who: [
+      { t: "Korxona va ustaxonalar", d: "Detal yoki yig'ma uchun texnik chizma yoki 3D model kerak bo'lganda." },
+      { t: "Startaplar va ixtirochilar", d: "G'oya yoki eskizni 3D modelga va ishlab chiqarish chizmasiga aylantirish." },
+      { t: "Qog'oz chizmasi borlar", d: "Eski yoki qo'lda chizilgan chizmadan 3D model va yangi elektron chizma tayyorlash." },
+    ],
+    faqTitle: "Ko'p so'raladigan savollar",
+    faq: [
+      { q: "Buyurtma berish uchun nima kerak?", a: "Chizma, eskiz, rasm yoki namuna hamda asosiy talablar: o'lchamlar, material, miqdor va muddat. Hammasi tayyor bo'lmasa ham yozing — yetishmagan joylarini birga aniqlaymiz." },
+      { q: "Narx va muddat qanday belgilanadi?", a: "Loyiha hajmi va murakkabligiga qarab. Buyurtmangizni ko'rib chiqib, ish boshlanishidan oldin aniq narx va muddatni aytamiz." },
+      { q: "To'lov qanday amalga oshiriladi?", a: "To'lov tartibini ish boshlanishidan oldin siz bilan kelishib olamiz." },
+      { q: "Tayyor ish qaysi formatda beriladi?", a: "SOLIDWORKS yoki CATIA fayllari, STEP formatidagi 3D model va PDF chizma. Kerakli formatni buyurtma berishda kelishamiz." },
+      { q: "Topshirilgan ishga o'zgartirish kiritsa bo'ladimi?", a: "Topshirishdan oldin natijani sizga ko'rsatamiz va kelishilgan vazifa doirasidagi tuzatishlarni kiritamiz. Vazifaga yangi talab qo'shilsa, uni alohida kelishamiz." },
+      { q: "Chizma va fayllarim maxfiy qoladimi?", a: "Ha. Siz yuborgan fayllar faqat buyurtmangizni bajarish uchun ishlatiladi. Ruxsatingizsiz ular boshqalarga berilmaydi va saytda ko'rsatilmaydi." },
+    ],
     orderTitle: "Buyurtma berish",
     orderText: "Qisqacha yozib qoldiring — siz bilan bog'lanamiz.",
   },
@@ -77,6 +92,21 @@ const T = {
       { t: "Симуляция и анализ", d: "Анализ прочности и тепловой анализ." },
       { t: "Технический консалтинг", d: "Консультации по цифровизации производства." },
     ],
+    whoTitle: "Для кого проекты",
+    who: [
+      { t: "Предприятия и мастерские", d: "Когда для детали или сборки нужен технический чертёж или 3D-модель." },
+      { t: "Стартапы и изобретатели", d: "Превращаем идею или эскиз в 3D-модель и производственный чертёж." },
+      { t: "Те, у кого чертежи на бумаге", d: "Делаем 3D-модель и новый электронный чертёж по старому или нарисованному от руки чертежу." },
+    ],
+    faqTitle: "Частые вопросы",
+    faq: [
+      { q: "Что нужно, чтобы оформить заказ?", a: "Чертёж, эскиз, фото или образец и основные требования: размеры, материал, количество и сроки. Пишите, даже если готово не всё — недостающее уточним вместе." },
+      { q: "Как определяются стоимость и сроки?", a: "В зависимости от объёма и сложности проекта. Мы изучим ваш заказ и назовём точную стоимость и сроки до начала работы." },
+      { q: "Как проходит оплата?", a: "Порядок оплаты согласуем с вами до начала работы." },
+      { q: "В каком формате сдаётся работа?", a: "Файлы SOLIDWORKS или CATIA, 3D-модель в формате STEP и чертёж в PDF. Нужный формат согласуем при оформлении заказа." },
+      { q: "Можно ли внести изменения в готовую работу?", a: "Перед сдачей мы показываем вам результат и вносим правки в рамках согласованной задачи. Если появляются новые требования, согласуем их отдельно." },
+      { q: "Останутся ли мои чертежи и файлы конфиденциальными?", a: "Да. Присланные вами файлы используются только для выполнения вашего заказа. Без вашего разрешения они не передаются другим и не показываются на сайте." },
+    ],
     orderTitle: "Оформить заказ",
     orderText: "Коротко опишите задачу — мы свяжемся с вами.",
   },
@@ -108,6 +138,21 @@ const T = {
       { t: "PLM systems", d: "Implementing product lifecycle management systems." },
       { t: "Simulation and analysis", d: "Strength and thermal analysis." },
       { t: "Technical consulting", d: "Advice on digitalizing production." },
+    ],
+    whoTitle: "Who client projects are for",
+    who: [
+      { t: "Companies and workshops", d: "When a part or assembly needs a technical drawing or a 3D model." },
+      { t: "Startups and inventors", d: "Turning an idea or sketch into a 3D model and a manufacturing drawing." },
+      { t: "Those with paper drawings", d: "A 3D model and a new digital drawing from an old or hand-drawn one." },
+    ],
+    faqTitle: "Frequently asked questions",
+    faq: [
+      { q: "What do I need to place an order?", a: "A drawing, sketch, photo or sample and the main requirements: dimensions, material, quantity and deadline. Write to us even if not everything is ready — we will clarify the rest together." },
+      { q: "How are the price and timeline set?", a: "They depend on the size and complexity of the project. We review your order and give you the exact price and timeline before work starts." },
+      { q: "How does payment work?", a: "We agree on the payment terms with you before work starts." },
+      { q: "What format is the finished work delivered in?", a: "SOLIDWORKS or CATIA files, a 3D model in STEP format and a PDF drawing. We agree on the format you need when you place the order." },
+      { q: "Can changes be made to the finished work?", a: "Before delivery we show you the result and make corrections within the agreed task. If new requirements appear, we agree on them separately." },
+      { q: "Will my drawings and files stay confidential?", a: "Yes. The files you send are used only to complete your order. Without your permission they are not shared with others or shown on the site." },
     ],
     orderTitle: "Place an order",
     orderText: "Briefly describe the task and we will contact you.",
@@ -175,6 +220,20 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
           </div>
         </section>
 
+        {/* Mijoz loyihalari kimlar uchun */}
+        <section className="space-y-8">
+          <h2 className="text-3xl font-black text-slate-900 dark:text-white">{t.whoTitle}</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {t.who.map((w) => (
+              <div key={w.t} className="rounded-3xl border border-slate-200 dark:border-slate-800 p-6 space-y-2">
+                <UserCheck className="w-6 h-6 text-cyan-600 dark:text-cyan-500" />
+                <div className="font-bold text-slate-900 dark:text-white">{w.t}</div>
+                <p className="text-sm text-slate-600 dark:text-slate-400">{w.d}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Mijoz loyihasi jarayoni */}
         <section className="space-y-8">
           <h2 className="text-3xl font-black text-slate-900 dark:text-white">{t.howTitle}</h2>
@@ -190,6 +249,32 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
           <div className="rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-6">
             <div className="font-bold text-slate-900 dark:text-white mb-1">{t.priceTitle}</div>
             <p className="text-slate-600 dark:text-slate-400">{t.priceText}</p>
+          </div>
+        </section>
+
+        {/* Savol-javoblar */}
+        <section className="space-y-8 max-w-3xl mx-auto w-full">
+          <h2 className="text-3xl font-black text-slate-900 dark:text-white text-center">{t.faqTitle}</h2>
+          <div className="space-y-3">
+            {t.faq.map((item) => (
+              <div key={item.q} className="rounded-3xl border border-slate-200 dark:border-slate-800 p-6">
+                <div className="flex items-start gap-3 font-bold text-slate-900 dark:text-white">
+                  <HelpCircle className="w-5 h-5 text-blue-700 dark:text-blue-500 shrink-0 mt-0.5" /> {item.q}
+                </div>
+                <p className="text-slate-600 dark:text-slate-400 mt-2 pl-8">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Buyurtma formasi */}
+        <section id="buyurtma" className="scroll-mt-28 max-w-2xl mx-auto w-full">
+          <div className="rounded-[40px] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl p-8 sm:p-10 space-y-6">
+            <div className="text-center space-y-2">
+              <h2 className="text-3xl font-black text-slate-900 dark:text-white">{t.orderTitle}</h2>
+              <p className="text-slate-600 dark:text-slate-400">{t.orderText}</p>
+            </div>
+            <OrderForm locale={locale} />
           </div>
         </section>
 
@@ -210,17 +295,6 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                 </div>
               );
             })}
-          </div>
-        </section>
-
-        {/* Buyurtma formasi */}
-        <section id="buyurtma" className="scroll-mt-28 max-w-2xl mx-auto w-full">
-          <div className="rounded-[40px] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl p-8 sm:p-10 space-y-6">
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl font-black text-slate-900 dark:text-white">{t.orderTitle}</h2>
-              <p className="text-slate-600 dark:text-slate-400">{t.orderText}</p>
-            </div>
-            <OrderForm locale={locale} />
           </div>
         </section>
 
