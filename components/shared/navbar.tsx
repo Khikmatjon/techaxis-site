@@ -139,7 +139,7 @@ const Navbar = ({ dict, locale: localeProp }: { dict: any; locale?: string }) =>
     },
     {
       title: dict?.navbar?.services || "Xizmatlar",
-      href: `/${locale}/#services`,
+      href: `/${locale}/services`,
       items: []
     },
     {

@@ -62,6 +62,7 @@ export const CRUMB = {
   courses: { uz: "Kurslar", ru: "Курсы", en: "Courses" },
   training: { uz: "O'quv markazi", ru: "Учебный центр", en: "Training" },
   blog: { uz: "Blog", ru: "Блог", en: "Blog" },
+  services: { uz: "Xizmatlar", ru: "Услуги", en: "Services" },
   free: { uz: "Bepul qo'llanma", ru: "Бесплатное руководство", en: "Free guide" },
   privacy: { uz: "Maxfiylik siyosati", ru: "Политика конфиденциальности", en: "Privacy Policy" },
   terms: { uz: "Foydalanish shartlari", ru: "Условия использования", en: "Terms of Use" },
