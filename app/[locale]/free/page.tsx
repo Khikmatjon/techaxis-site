@@ -6,6 +6,8 @@ import { useParams } from "next/navigation";
 import { Send, FileDown, CheckCircle, Zap } from "lucide-react";
 import { sendToTelegram } from "@/lib/actions/send-telegram";
 import { pick } from "@/lib/locale-text";
+import { trXato } from "@/lib/action-messages";
+import { SITE_SOCIAL } from "@/config/site";
 
 const T = {
   uz: {
@@ -16,6 +18,7 @@ const T = {
     formTitle: "Qo'llanmani olish", formIntro: "Email yoki telefon raqamingizni kiriting, materialni sizga yuboramiz.",
     sentTitle: "So'rov yuborildi!", sentText: "Mutaxassislarimiz tez orada materialni siz qoldirgan email yoki telefon raqamiga yuboradi. Bunga qadar maqolalarimizni o'qib turing.",
     toBlog: "Blogga o'tish", name: "Ismingiz", namePh: "Alisher...", contact: "Telefon yoki email", submit: "Qo'llanmani yuboring",
+    retry: "Qaytadan urining yoki", viaTg: "Telegram orqali", after: " yozing.",
   },
   ru: {
     badge: "Бесплатно",
@@ -25,6 +28,7 @@ const T = {
     formTitle: "Получить руководство", formIntro: "Укажите email или номер телефона, и мы отправим вам материал.",
     sentTitle: "Запрос отправлен!", sentText: "Наши специалисты скоро отправят материал на указанный вами email или номер телефона. А пока почитайте наши статьи.",
     toBlog: "Перейти в блог", name: "Ваше имя", namePh: "Алишер...", contact: "Телефон или email", submit: "Получить руководство",
+    retry: "Попробуйте ещё раз или", viaTg: "напишите нам в Telegram", after: ".",
   },
   en: {
     badge: "Free download",
@@ -34,6 +38,7 @@ const T = {
     formTitle: "Get the guide", formIntro: "Enter your email or phone number and we will send you the material.",
     sentTitle: "Request sent!", sentText: "Our specialists will soon send the material to the email or phone number you provided. In the meantime, read our articles.",
     toBlog: "Go to the blog", name: "Your name", namePh: "Alex...", contact: "Phone or email", submit: "Send me the guide",
+    retry: "Please try again or", viaTg: "message us on Telegram", after: ".",
   },
 };
 
@@ -44,6 +49,7 @@ export default function FreeResourcesPage() {
   const [form, setForm] = useState({ name: "", contact: "" });
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -59,10 +65,16 @@ export default function FreeResourcesPage() {
     formData.append("message", "🎁 BEPUL MATERIAL SO'ROVI (PDF yoki 3D model qidirmoqda)");
     formData.append("lang", locale);
     
-    await sendToTelegram(formData);
-    
+    // Xabar yuborilmagan bo'lsa "yuborildi" deb aytmaymiz: foydalanuvchi qayta urinadi yoki yozadi.
+    setError("");
+    try {
+      const res = await sendToTelegram(formData);
+      if (res.success) setSent(true);
+      else setError(trXato(res.error ?? "Xabar yuborilmadi", locale));
+    } catch {
+      setError(trXato("Xabar yuborilmadi", locale));
+    }
     setLoading(false);
-    setSent(true);
   }
 
   return (
@@ -162,6 +174,13 @@ export default function FreeResourcesPage() {
                         <>{t.submit} <Send className="w-5 h-5" /></>
                       )}
                     </button>
+
+                    {error && (
+                      <p className="text-sm text-red-600 dark:text-red-400">
+                        {error.replace(/[.!\s]+$/, "")}. {t.retry}{" "}
+                        <a href={SITE_SOCIAL.telegramBot} target="_blank" rel="noopener noreferrer" className="underline font-semibold">{t.viaTg}</a>{t.after}
+                      </p>
+                    )}
                   </form>
                 )}
              </div>

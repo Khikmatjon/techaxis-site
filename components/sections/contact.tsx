@@ -4,9 +4,12 @@ import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, MessageSquareText, CheckCircle2 } from 'lucide-react';
 import { sendToTelegram } from '@/lib/actions/send-telegram';
 import { SITE_PHONE, SITE_EMAIL, SITE_ADDRESS, SITE_SOCIAL } from '@/config/site';
+import { trXato } from '@/lib/action-messages';
 
 export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  // Faqat "juda ko'p urinish" xabari ko'rsatiladi (kutish vaqti bilan); boshqa xatolarda umumiy matn.
+  const [waitMsg, setWaitMsg] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -14,13 +17,22 @@ export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
 
     const formData = new FormData(e.currentTarget);
     formData.set("lang", locale);
-    const result = await sendToTelegram(formData);
-
-    if (result.success) {
-      setStatus("success");
-      (e.target as HTMLFormElement).reset();
-      setTimeout(() => setStatus("idle"), 5000);
-    } else {
+    const form = e.currentTarget;
+    setWaitMsg("");
+    try {
+      const result = await sendToTelegram(formData);
+      if (result.success) {
+        setStatus("success");
+        form.reset();
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        const err = String(result.error ?? "");
+        setWaitMsg(err.startsWith("Juda ko'p urinish") ? trXato(err, locale) : "");
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), err ? 8000 : 5000);
+      }
+    } catch {
+      // Server action xato tashlasa tugma "yuborilmoqda" holatida qotib qolmasin.
       setStatus("error");
       setTimeout(() => setStatus("idle"), 5000);
     }
@@ -109,6 +121,8 @@ export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
 
             <div className="relative z-10 bg-white dark:bg-slate-900 p-8 md:p-12 rounded-[40px] shadow-2xl border border-slate-100 dark:border-slate-800">
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Bot tuzog'i: odam ko'rmaydi va to'ldirmaydi (server to'ldirilgan so'rovni yubormaydi) */}
+                <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }} />
                 <div className="space-y-2">
                   <h4 className="text-2xl font-black text-slate-900 dark:text-white">
                     {dict?.contact?.form_title}
@@ -190,7 +204,7 @@ export const Contact = ({ dict, locale }: { dict: any; locale: string }) => {
 
                 {status === "error" && (
                   <p className="text-center text-red-500 text-sm font-bold animate-pulse">
-                    {dict?.contact?.error_msg}
+                    {waitMsg || dict?.contact?.error_msg}
                   </p>
                 )}
               </form>

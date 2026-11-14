@@ -7,14 +7,22 @@
 
 import { escapeHtml } from "@/lib/escape-html";
 import { sendTelegramHtml, telegramConfigured } from "@/lib/telegram";
+import { formThrottle, tooMany } from "@/lib/rate-limit";
 
-const LIMITS = { name: 100, email: 150, phone: 40, service: 100, message: 2000, lang: 2 } as const;
+const LIMITS = { name: 100, email: 150, phone: 40, service: 100, message: 2000, lang: 2, website: 200 } as const;
 
 function field(formData: FormData, key: keyof typeof LIMITS): string {
   return String(formData.get(key) ?? "").trim().slice(0, LIMITS[key]);
 }
 
 export async function sendToTelegram(formData: FormData) {
+  // Bot tuzog'i: odam ko'rmaydigan maydon to'ldirilgan bo'lsa -- jim qabul qilinadi, yuborilmaydi.
+  if (field(formData, "website")) return { success: true };
+
+  // Bitta IP'dan 10 daqiqada 5 tadan ortiq so'rov -- to'xtatiladi (Telegram'ni to'ldirib yuborishdan himoya).
+  const wait = await formThrottle("contact");
+  if (wait > 0) return { success: false, error: tooMany(wait) };
+
   if (!telegramConfigured()) {
     return { success: false, error: "Server sozlamalarida xatolik" };
   }

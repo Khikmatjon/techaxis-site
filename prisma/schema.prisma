@@ -149,3 +149,14 @@ model ClientOrder {
 
   @@index([createdAt])
 }
+
+// Urinishlarni cheklash (kirish, ro'yxatdan o'tish, formalar): kalit = hash (email/IP matn
+// ko'rinishida saqlanmaydi). Vercel'da har so'rov alohida nusxada ishlaydi, shuning uchun
+// hisob xotirada emas, bazada yuritiladi -- lib/rate-limit.ts.
+model RateLimit {
+  key         String   @id
+  count       Int
+  windowStart DateTime
+
+  @@index([windowStart])
+}

@@ -5,7 +5,11 @@ import { cookies } from "next/headers";
 import { encrypt, get_session } from "@/lib/session";
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
-import { checkRateLimit, resetRateLimit } from "@/lib/rate-limit";
+import { LIMITS, blockedFor, clearLimit, clientIp, hashKey, hit, tooMany } from "@/lib/rate-limit";
+
+// Foydalanuvchi topilmaganda ham parol tekshiruvi bajariladi (bir xil vaqt): javob tezligidan
+// "bu email ro'yxatdan o'tganmi" degan xulosa chiqarib bo'lmasin. Hech kimning paroli emas.
+const DUMMY_HASH = "$2b$10$/xp9RKMXVHLa3ULFdVGeoOx3Er3wTb36zFdsMpdwBWxWMHBvm7OP.";
 
 const MIN_PASSWORD = 8;
 // Oddiy tekshiruv: bitta @, oldi-orqasida bo'sh joysiz matn va nuqtali domen.
@@ -22,32 +26,37 @@ export async function loginAction(formData: FormData) {
 
     const email = emailRaw.trim();
 
-    console.log("LOGIN_ATTEMPT:", { email });
-
-    // Rate limiting: 5 urinishdan keyin 15 daqiqa blok
-    const rateCheck = checkRateLimit(`login:${email}`);
-    if (!rateCheck.allowed) {
-      const minutes = Math.ceil((rateCheck.remainingMs || 0) / 60000);
-      return { error: `Juda ko'p urinish. ${minutes} daqiqadan so'ng qayta urinib ko'ring.` };
-    }
+    // Cheklov: bitta email uchun 5 ta, bitta IP uchun 30 ta xato urinishdan keyin 15 daqiqa blok.
+    // Hisob bazada yuritiladi (lib/rate-limit.ts); email/IP hash ko'rinishida saqlanadi.
+    const emailKey = hashKey("login-email", email.toLowerCase());
+    const ipKey = hashKey("login-ip", await clientIp());
+    const wait = Math.max(await blockedFor(emailKey, LIMITS.loginEmail), await blockedFor(ipKey, LIMITS.loginIp));
+    if (wait > 0) return { error: tooMany(wait) };
+    const failed = async () => {
+      await hit(emailKey, LIMITS.loginEmail);
+      await hit(ipKey, LIMITS.loginIp);
+    };
 
     const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
 
     if (!user) {
-      console.warn("LOGIN_FAILED: User not found", email);
+      await bcrypt.compare(password, DUMMY_HASH);
+      await failed();
+      console.warn("LOGIN_FAILED: user not found");
       return { error: "Email yoki parol noto'g'ri" };
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, user.hash);
     if (!isPasswordCorrect) {
-      console.warn("LOGIN_FAILED: Password mismatch", email);
+      await failed();
+      console.warn("LOGIN_FAILED: password mismatch", { id: user.id });
       return { error: "Email yoki parol noto'g'ri" };
     }
 
     console.log("LOGIN_SUCCESS:", { id: user.id, role: user.role });
-    
-    // Muvaffaqiyatli kirishda rate limit tozalash
-    resetRateLimit(`login:${email}`);
+
+    // Muvaffaqiyatli kirishda shu emailning xato hisobi tozalanadi
+    await clearLimit(emailKey);
 
     const expires = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 soat
     const session = await encrypt({
@@ -92,7 +101,11 @@ export async function registerAction(formData: FormData) {
     if (name.trim().length < 2 || name.length > 80) return { error: "Ismni to'g'ri kiriting" };
     if (password.length < MIN_PASSWORD) return { error: `Parol kamida ${MIN_PASSWORD} ta belgidan iborat bo'lsin` };
 
-    console.log("REGISTER_ATTEMPT:", { email });
+    // Ommaviy ro'yxatdan o'tish (bot) urinishlarini cheklash: bitta IP'dan soatiga 20 ta.
+    const regKey = hashKey("register-ip", await clientIp());
+    const regWait = await blockedFor(regKey, LIMITS.register);
+    if (regWait > 0) return { error: tooMany(regWait) };
+    await hit(regKey, LIMITS.register);
 
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
@@ -172,11 +185,17 @@ export async function updateUserCredentialsAction(formData: FormData) {
     if (newPassword.length < MIN_PASSWORD) return { error: `Yangi parol kamida ${MIN_PASSWORD} ta belgidan iborat bo'lsin` };
 
     // Joriy parol shart: ochiq qolgan kompyuterda yoki o'g'irlangan sessiya bilan
-    // boshqa odam email va parolni almashtirib, akkauntni egallab olmasin.
+    // boshqa odam email va parolni almashtirib, akkauntni egallab olmasin. Joriy parolni
+    // cheksiz taxmin qilib bo'lmasligi uchun xato urinishlar ham cheklanadi (5 ta / 15 daqiqa).
+    const credKey = hashKey("credentials", String(session.user.id));
+    const credWait = await blockedFor(credKey, LIMITS.credentials);
+    if (credWait > 0) return { error: tooMany(credWait) };
     const me = await prisma.user.findUnique({ where: { id: session.user.id }, select: { hash: true } });
     if (!me || !(await bcrypt.compare(currentPassword, me.hash))) {
+      await hit(credKey, LIMITS.credentials);
       return { error: "Joriy parol noto'g'ri" };
     }
+    await clearLimit(credKey);
 
     // Check if new email is taken by another user
     const existing = await prisma.user.findUnique({ where: { email: newEmail } });
