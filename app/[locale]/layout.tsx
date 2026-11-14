@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { Sora } from 'next/font/google';
+import localFont from 'next/font/local';
 import "../globals.css";
 import { getDictionary } from "@/lib/dictionary";
 import Navbar from "@/components/shared/navbar"; // Default import, qavssiz!
@@ -12,14 +12,18 @@ import { Locale, locales, isLocale } from '@/lib/i18n';
 import { defaultMetadata } from '@/lib/seo';
 import { SEARCH_VERIFICATION } from '@/config/site';
 
-// Shrift build paytida yuklab olinib saytning o'zidan beriladi: Google'ga alohida
-// so'rov yo'q va sahifa chizilishi shriftni kutib to'xtab qolmaydi.
-const sora = Sora({
-  // Faqat "latin": o'zbek (lotin), ingliz matni va oʻ/gʻ belgisi shu faylda. "latin-ext"
-  // (ā, ş ...) saytda ishlatilmaydi, lekin u ham oldindan yuklanib, telefonda bosh sahifa
-  // sarlavhasining chizilishini kechiktirardi.
-  subsets: ['latin'],
-  weight: ['400', '600', '700'],
+// Sora shrifti repoda saqlanadi (app/fonts/sora-latin.woff2, SIL OFL 1.1): build paytida Google'ga
+// so'rov yo'q, shuning uchun Google Fonts vaqtincha javob bermasa ham build yiqilmaydi.
+// Fayl -- Google Fonts'ning "latin" qismi (o'zgaruvchan shrift): o'zbek (lotin), ingliz matni va oʻ/gʻ
+// belgilari shu faylda. "latin-ext" (ā, ş ...) saytda ishlatilmaydi. Kirill (ru) -- tizim shrifti.
+// Uch og'irlik alohida e'lon qilinadi (oldingi google sozlamasi bilan bir xil): 900 so'ralsa ham 700 chiqadi.
+// (next/font yo'lni to'g'ridan-to'g'ri matn sifatida talab qiladi, shuning uchun har qatorda yozilgan.)
+const sora = localFont({
+  src: [
+    { path: '../fonts/sora-latin.woff2', weight: '400', style: 'normal' },
+    { path: '../fonts/sora-latin.woff2', weight: '600', style: 'normal' },
+    { path: '../fonts/sora-latin.woff2', weight: '700', style: 'normal' },
+  ],
   display: 'swap',
   variable: '--font-sora',
 });
