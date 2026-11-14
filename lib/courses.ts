@@ -121,7 +121,7 @@ export const COURSES: Course[] = [
       pricing: [
         { name: "Starter", price: "Asosiy", desc: "0 dan boshlovchilar uchun", features: ["Asosiy (Poydevor) qism videolari", "Dastur instalyatsiyasiga yordam", "2 ta kichik loyiha chizish", "Sertifikat (Asosiy bosqich)"], cta: "Sotib Olish", best: false },
         { name: "Pro", price: "$99", desc: "Muhandislik cho'qqisi (Amaliyot)", features: ["To'liq videodarslar", "Murakkab Assambleya tahlili", "Render va Visualizatsiya bonus", "Premium sertifikat", "Ish izlash bo'yicha ko'rsatma"], cta: "Eng ma'quli", best: true },
-        { name: "Mentor", price: "VIP", desc: "Jonli yordam", features: ["Barcha Pro imkoniyatlar", "Kurs davomida 1:1 Jonli dars (zoom)", "Uy vazifalar tahlili va nazorat", "Kafolatlangan Portfolio (5+ detal)", "Karyera konsultatsiyasi"], cta: "Band Qilish", best: false }
+        { name: "Mentor", price: "VIP", desc: "Jonli yordam", features: ["Barcha Pro imkoniyatlar", "Kurs davomida 1:1 Jonli dars (zoom)", "Uy vazifalar tahlili va nazorat", "5+ detalli portfolio", "Karyera konsultatsiyasi"], cta: "Band Qilish", best: false }
       ],
       faq: [
         { q: "SOLIDWORKS'ni o'rganish qiyinmi?", a: "Kurs noldan boshlanadi: avval interfeys va eskiz, keyin 3D, yig'ma va chizma. Oldindan CAD tajribasi shart emas." },
