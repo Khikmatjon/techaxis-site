@@ -14,6 +14,7 @@ import StatsManager from "@/components/admin/stats-manager";
 import LiveApplicationsManager from "@/components/admin/live-applications-manager";
 import OrdersManager from "@/components/admin/orders-manager";
 import { Avatar } from "@/components/shared/avatar";
+import { formatRegDate } from "@/lib/reg-date";
 
 type Tab = "students" | "orders" | "live" | "content" | "blog" | "stats";
 
@@ -106,6 +107,7 @@ function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId
   const [success, setSuccess] = useState<string | null>(null);
   const [openReceipt, setOpenReceipt] = useState<string | null>(null);
   const [emailOpen, setEmailOpen] = useState(false);
+  const reg = formatRegDate(user.createdAt);
 
   async function handleAssign(courseId: string) {
     setAssigning(courseId);
@@ -140,6 +142,11 @@ function UserRow({ user, onAssign, onReject }: { user: UserDB; onAssign: (userId
             )}
           </div>
           <p className="text-slate-500 text-xs truncate">{user.email}</p>
+          {reg && (
+            <p className="text-slate-500 text-xs mt-0.5" title="Ro'yxatdan o'tgan sana va vaqt (Toshkent vaqti)">
+              Ro'yxatdan o'tgan: <span className="font-semibold text-slate-700 dark:text-slate-300">{reg.date}</span>, {reg.weekday} · {reg.time}
+            </p>
+          )}
         </div>
 
         <div className="flex items-center gap-3 shrink-0">
