@@ -186,7 +186,7 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
       pricing: [
         { name: "Starter", price: "Базовый", desc: "Для начинающих с нуля", features: ["Видео базовой части", "Помощь с установкой программы", "2 небольших проекта", "Сертификат (базовый этап)"], cta: "Купить", best: false },
         { name: "Pro", price: "$99", desc: "Инженерная практика", features: ["Полный видеокурс", "Разбор сложных сборок", "Бонус: рендер и визуализация", "Премиум-сертификат", "Советы по поиску работы"], cta: "Лучший выбор", best: true },
-        { name: "Mentor", price: "VIP", desc: "Живая поддержка", features: ["Все возможности Pro", "Живые занятия 1:1 во время курса (Zoom)", "Разбор и проверка домашних заданий", "Гарантированное портфолио (5+ деталей)", "Карьерная консультация"], cta: "Забронировать", best: false },
+        { name: "Mentor", price: "VIP", desc: "Живая поддержка", features: ["Все возможности Pro", "Живые занятия 1:1 во время курса (Zoom)", "Разбор и проверка домашних заданий", "Портфолио из 5+ деталей", "Карьерная консультация"], cta: "Забронировать", best: false },
       ],
       faq: [
         { q: "Сложно ли изучить SOLIDWORKS?", a: "Курс начинается с нуля: сначала интерфейс и эскиз, затем 3D, сборки и чертежи. Опыт работы в CAD не нужен." },
@@ -229,7 +229,7 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
       pricing: [
         { name: "Starter", price: "Basic", desc: "For complete beginners", features: ["Videos of the basic part", "Help installing the software", "2 small projects", "Certificate (basic stage)"], cta: "Buy", best: false },
         { name: "Pro", price: "$99", desc: "Engineering practice", features: ["Full video course", "Complex assembly walkthroughs", "Bonus: rendering and visualization", "Premium certificate", "Job search guidance"], cta: "Best choice", best: true },
-        { name: "Mentor", price: "VIP", desc: "Live support", features: ["Everything in Pro", "1:1 live lessons during the course (Zoom)", "Homework review and feedback", "Guaranteed portfolio (5+ parts)", "Career consultation"], cta: "Book", best: false },
+        { name: "Mentor", price: "VIP", desc: "Live support", features: ["Everything in Pro", "1:1 live lessons during the course (Zoom)", "Homework review and feedback", "Portfolio of 5+ parts", "Career consultation"], cta: "Book", best: false },
       ],
       faq: [
         { q: "Is SOLIDWORKS hard to learn?", a: "The course starts from zero: first the interface and sketching, then 3D, assemblies and drawings. No prior CAD experience is needed." },
