@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "npx prisma generate && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "audit": "node scripts/audit.mjs"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.6.0",
