@@ -3,16 +3,23 @@ import type { NextRequest } from 'next/server'
 import { locales, defaultLocale } from './lib/i18n'
 import { decrypt } from './lib/session'
 
-// Saytning haqiqiy tashqi manbalari: YouTube (darslik ko'rish va eskiz rasmi), Unsplash rasmlari,
+// Content-Security-Policy: brauzerga sayt qaysi manbalardan skript, rasm, ramka yuklashi mumkinligini aytadi.
+// Saytning haqiqiy tashqi manbalari: YouTube (darslik videosi va eskiz rasmi), Unsplash rasmlari,
 // Supabase (to'lov cheklari rasmi). Boshqasi kerak bo'lsa shu yerga qo'shiladi.
-const CSP_REPORT_ONLY = [
+// - img-src https: -- admin panelda kurs/blog rasmi uchun istalgan https manzil qo'yilishi mumkin
+//   (rasm orqali xavf yo'q; skript, ramka va ulanishlar esa qat'iy cheklangan).
+// - 'unsafe-inline' (skript/uslub) -- Next.js o'zining inline skriptlarini shunday ishlatadi; nonce
+//   sahifalarni statik keshdan chiqarib yuborardi.
+// - frame-src: lesson.videoUrl da YouTube'dan boshqa https embed (masalan Vimeo) ham qo'yilishi mumkin.
+// Faqat production'da yoqiladi (next dev eval ishlatadi).
+const CSP = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://images.unsplash.com https://i.ytimg.com https://*.supabase.co",
+  "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
   "connect-src 'self'",
-  "frame-src https://www.youtube-nocookie.com https://www.youtube.com",
+  "frame-src https://www.youtube-nocookie.com https://youtube-nocookie.com https://www.youtube.com https://player.vimeo.com",
   "media-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
@@ -88,11 +95,9 @@ export async function proxy(req: NextRequest) {
   // Sayt kamera, mikrofon, joylashuv, to'lov API va USB'dan foydalanmaydi: brauzerda yopiq.
   // (autoplay/fullscreen yopilmaydi: YouTube darsliklari ularni ishlatadi.)
   response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=()");
-  // CSP faqat HISOBOT rejimida (Report-Only): hech narsani to'smaydi, brauzer konsolida
-  // qoidaga to'g'ri kelmaydigan yuklashlarni ko'rsatadi. Buzilish yo'qligi tekshirilgach
-  // Content-Security-Policy'ga o'tkaziladi. 'unsafe-inline' -- Next.js o'zining inline
-  // skriptlarini shunday ishlatadi (nonce keyingi bosqich).
-  response.headers.set("Content-Security-Policy-Report-Only", CSP_REPORT_ONLY);
+  if (process.env.NODE_ENV === "production") {
+    response.headers.set("Content-Security-Policy", CSP);
+  }
   return response;
 }
 
