@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { get_session } from "@/lib/session";
 import { escapeHtml } from "@/lib/escape-html";
 import { sendTelegramDocument, sendTelegramHtml } from "@/lib/telegram";
+import { formThrottle, tooMany } from "@/lib/rate-limit";
 
 // Mijoz loyihasi buyurtmalari: /services sahifasidagi forma va admin paneldagi "Buyurtmalar"
 // tabi. Loyiha qoidasi: Route Handler emas, Server Actions.
@@ -33,6 +34,10 @@ const str = (formData: FormData, key: string, max: number) =>
 export async function submitOrderAction(formData: FormData) {
   // Bot tuzog'i: odam ko'rmaydigan maydon to'ldirilgan bo'lsa -- jim qabul qilinadi, saqlanmaydi.
   if (str(formData, "website", 200)) return { success: true as const };
+
+  // Bitta IP'dan 10 daqiqada 5 tadan ortiq buyurtma -- to'xtatiladi.
+  const wait = await formThrottle("order");
+  if (wait > 0) return { success: false as const, error: tooMany(wait) };
 
   const name = str(formData, "name", 100);
   const phone = str(formData, "phone", 40);

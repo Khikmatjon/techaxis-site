@@ -134,7 +134,7 @@ export function OrderForm({ locale }: { locale: string }) {
       </div>
 
       {/* Bot tuzog'i: odam ko'rmaydi va to'ldirmaydi */}
-      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }} />
 
       <button
         type="submit"
@@ -150,7 +150,7 @@ export function OrderForm({ locale }: { locale: string }) {
 
       {status === "error" && (
         <p className="text-sm text-red-600 dark:text-red-400">
-          {error}. {t.retry}{" "}
+          {error.replace(/[.!\s]+$/, "")}. {t.retry}{" "}
           <a href={SITE_SOCIAL.telegramBot} target="_blank" rel="noopener noreferrer" className="underline font-semibold">{t.viaTg}</a>{t.after}
         </p>
       )}
