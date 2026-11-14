@@ -27,6 +27,8 @@ export interface UserDB {
   enrolledCourses: string[];
   pendingPayments: string[];
   payments?: PaymentRequest[];
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
 }
 
 // ⚠️ Bu fayl artiq asosan dashboard type import uchun ishlatiladi.
