@@ -119,9 +119,9 @@ export const COURSES: Course[] = [
         "Ishlab chiqarish uchun o'lchamli texnik chizma va BOM tayyorlaysiz"
       ],
       pricing: [
-        { name: "Starter", price: "Asosiy", desc: "0 dan boshlovchilar uchun", features: ["Asosiy (Poydevor) qism videolari", "Dastur instalyatsiyasiga yordam", "2 ta kichik loyiha chizish", "Sertifikat (Asosiy bosqich)"], cta: "Sotib Olish", best: false },
-        { name: "Pro", price: "$99", desc: "Muhandislik cho'qqisi (Amaliyot)", features: ["To'liq videodarslar", "Murakkab Assambleya tahlili", "Render va Visualizatsiya bonus", "Premium sertifikat", "Ish izlash bo'yicha ko'rsatma"], cta: "Eng ma'quli", best: true },
-        { name: "Mentor", price: "VIP", desc: "Jonli yordam", features: ["Barcha Pro imkoniyatlar", "Kurs davomida 1:1 Jonli dars (zoom)", "Uy vazifalar tahlili va nazorat", "5+ detalli portfolio", "Karyera konsultatsiyasi"], cta: "Band Qilish", best: false }
+        { name: "Starter", price: "Asosiy", desc: "0 dan boshlovchilar uchun", features: ["Asosiy (Poydevor) qism videolari", "Dastur instalyatsiyasiga yordam", "2 ta kichik loyiha chizish"], cta: "Sotib Olish", best: false },
+        { name: "Pro", price: "$99", desc: "Muhandislik cho'qqisi (Amaliyot)", features: ["To'liq videodarslar", "Murakkab Assambleya tahlili", "Render va Visualizatsiya bonus"], cta: "Eng ma'quli", best: true },
+        { name: "Mentor", price: "VIP", desc: "Jonli yordam", features: ["Barcha Pro imkoniyatlar", "Kurs davomida 1:1 Jonli dars (zoom)", "Uy vazifalar tahlili va nazorat", "5+ detalli portfolio"], cta: "Band Qilish", best: false }
       ],
       faq: [
         { q: "SOLIDWORKS'ni o'rganish qiyinmi?", a: "Kurs noldan boshlanadi: avval interfeys va eskiz, keyin 3D, yig'ma va chizma. Oldindan CAD tajribasi shart emas." },
@@ -228,7 +228,7 @@ export const COURSES: Course[] = [
       ],
       pricing: [
         { name: "Starter", price: "$49", desc: "Boshlang'ich imkoniyat", features: ["CATIA vizual kurslari (Part Design)", "Standart muhandislik amaliyoti", "Guruhda muhokama"], cta: "O'qish", best: false },
-        { name: "Pro", price: "$149", desc: "Avtomobilsozlik Sirlari", features: ["Surfacing (GSD) va DMU maxsus qism", "Premium Telegram Yordamchi bot", "Portfolio (Eksklyuziv loyihalar)", "Certificate of Excellence"], cta: "Sotib Olish", best: true },
+        { name: "Pro", price: "$149", desc: "Avtomobilsozlik Sirlari", features: ["Surfacing (GSD) va DMU maxsus qism", "Premium Telegram Yordamchi bot", "Portfolio (Eksklyuziv loyihalar)"], cta: "Sotib Olish", best: true },
         { name: "Mentor", price: "Business", desc: "B2B / Shaxsiy mentoring", features: ["Zavod va ishlab chiqaruvchi xodimlari", "Muhandislik to'g'irlashlari konsultatsiyasi", "Sanoat sirlari asosidagi Master Class"], cta: "Bog'lanish", best: false }
       ],
       faq: [
@@ -411,7 +411,7 @@ export const COURSES: Course[] = [
         "Kompaniya uchun PLM joriy etish rejasini tuza olasiz"
       ],
       pricing: [
-        { name: "Concept", price: "$49", desc: "Tushuncha", features: ["Barcha asosiy videolar", "Platforma demo ishlash logikasi", "Asosiy sertifikat"], cta: "Sotib Olish", best: false },
+        { name: "Concept", price: "$49", desc: "Tushuncha", features: ["Barcha asosiy videolar", "Platforma demo ishlash logikasi"], cta: "Sotib Olish", best: false },
         { name: "Integrator", price: "$89", desc: "Menejer", features: ["To'liq ENOVIA amaliyotlari", "3DEXPERIENCE doirasida real Keyslar", "Premium qo'llab quvvatlash"], cta: "Tanlash", best: true },
         { name: "Enterprise", price: "$$$", desc: "Jamoa", features: ["Kompaniyangiz uchun PLM integratsiyasi buyurtmasi", "Xodimlaringizni onlayn o'qitish"], cta: "Ariza", best: false }
       ],

@@ -184,9 +184,9 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
         "Подготовите технический чертёж с размерами и BOM для производства",
       ],
       pricing: [
-        { name: "Starter", price: "Базовый", desc: "Для начинающих с нуля", features: ["Видео базовой части", "Помощь с установкой программы", "2 небольших проекта", "Сертификат (базовый этап)"], cta: "Купить", best: false },
-        { name: "Pro", price: "$99", desc: "Инженерная практика", features: ["Полный видеокурс", "Разбор сложных сборок", "Бонус: рендер и визуализация", "Премиум-сертификат", "Советы по поиску работы"], cta: "Лучший выбор", best: true },
-        { name: "Mentor", price: "VIP", desc: "Живая поддержка", features: ["Все возможности Pro", "Живые занятия 1:1 во время курса (Zoom)", "Разбор и проверка домашних заданий", "Портфолио из 5+ деталей", "Карьерная консультация"], cta: "Забронировать", best: false },
+        { name: "Starter", price: "Базовый", desc: "Для начинающих с нуля", features: ["Видео базовой части", "Помощь с установкой программы", "2 небольших проекта"], cta: "Купить", best: false },
+        { name: "Pro", price: "$99", desc: "Инженерная практика", features: ["Полный видеокурс", "Разбор сложных сборок", "Бонус: рендер и визуализация"], cta: "Лучший выбор", best: true },
+        { name: "Mentor", price: "VIP", desc: "Живая поддержка", features: ["Все возможности Pro", "Живые занятия 1:1 во время курса (Zoom)", "Разбор и проверка домашних заданий", "Портфолио из 5+ деталей"], cta: "Забронировать", best: false },
       ],
       faq: [
         { q: "Сложно ли изучить SOLIDWORKS?", a: "Курс начинается с нуля: сначала интерфейс и эскиз, затем 3D, сборки и чертежи. Опыт работы в CAD не нужен." },
@@ -227,9 +227,9 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
         "Prepare a dimensioned technical drawing and BOM for manufacturing",
       ],
       pricing: [
-        { name: "Starter", price: "Basic", desc: "For complete beginners", features: ["Videos of the basic part", "Help installing the software", "2 small projects", "Certificate (basic stage)"], cta: "Buy", best: false },
-        { name: "Pro", price: "$99", desc: "Engineering practice", features: ["Full video course", "Complex assembly walkthroughs", "Bonus: rendering and visualization", "Premium certificate", "Job search guidance"], cta: "Best choice", best: true },
-        { name: "Mentor", price: "VIP", desc: "Live support", features: ["Everything in Pro", "1:1 live lessons during the course (Zoom)", "Homework review and feedback", "Portfolio of 5+ parts", "Career consultation"], cta: "Book", best: false },
+        { name: "Starter", price: "Basic", desc: "For complete beginners", features: ["Videos of the basic part", "Help installing the software", "2 small projects"], cta: "Buy", best: false },
+        { name: "Pro", price: "$99", desc: "Engineering practice", features: ["Full video course", "Complex assembly walkthroughs", "Bonus: rendering and visualization"], cta: "Best choice", best: true },
+        { name: "Mentor", price: "VIP", desc: "Live support", features: ["Everything in Pro", "1:1 live lessons during the course (Zoom)", "Homework review and feedback", "Portfolio of 5+ parts"], cta: "Book", best: false },
       ],
       faq: [
         { q: "Is SOLIDWORKS hard to learn?", a: "The course starts from zero: first the interface and sketching, then 3D, assemblies and drawings. No prior CAD experience is needed." },
@@ -273,7 +273,7 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
       ],
       pricing: [
         { name: "Starter", price: "$49", desc: "Начальный уровень", features: ["Видеокурс CATIA (Part Design)", "Стандартная инженерная практика", "Обсуждение в группе"], cta: "Учиться", best: false },
-        { name: "Pro", price: "$149", desc: "Секреты автомобилестроения", features: ["Специальный раздел Surfacing (GSD) и DMU", "Премиум Telegram-бот помощник", "Портфолио (эксклюзивные проекты)", "Certificate of Excellence"], cta: "Купить", best: true },
+        { name: "Pro", price: "$149", desc: "Секреты автомобилестроения", features: ["Специальный раздел Surfacing (GSD) и DMU", "Премиум Telegram-бот помощник", "Портфолио (эксклюзивные проекты)"], cta: "Купить", best: true },
         { name: "Mentor", price: "Business", desc: "B2B / персональный ментор", features: ["Для сотрудников заводов и производителей", "Консультации по инженерным доработкам", "Мастер-класс на основе отраслевого опыта"], cta: "Связаться", best: false },
       ],
       faq: [
@@ -315,7 +315,7 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
       ],
       pricing: [
         { name: "Starter", price: "$49", desc: "Entry level", features: ["CATIA video course (Part Design)", "Standard engineering practice", "Group discussion"], cta: "Start learning", best: false },
-        { name: "Pro", price: "$149", desc: "Automotive know-how", features: ["Special Surfacing (GSD) and DMU section", "Premium Telegram assistant bot", "Portfolio (exclusive projects)", "Certificate of Excellence"], cta: "Buy", best: true },
+        { name: "Pro", price: "$149", desc: "Automotive know-how", features: ["Special Surfacing (GSD) and DMU section", "Premium Telegram assistant bot", "Portfolio (exclusive projects)"], cta: "Buy", best: true },
         { name: "Mentor", price: "Business", desc: "B2B / personal mentoring", features: ["For factory and manufacturer staff", "Consulting on engineering fixes", "Master class based on industry experience"], cta: "Contact us", best: false },
       ],
       faq: [
@@ -445,7 +445,7 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
         "Сможете составить план внедрения PLM для компании",
       ],
       pricing: [
-        { name: "Concept", price: "$49", desc: "Понимание", features: ["Все основные видео", "Логика работы платформы на демо", "Базовый сертификат"], cta: "Купить", best: false },
+        { name: "Concept", price: "$49", desc: "Понимание", features: ["Все основные видео", "Логика работы платформы на демо"], cta: "Купить", best: false },
         { name: "Integrator", price: "$89", desc: "Менеджер", features: ["Полная практика ENOVIA", "Реальные кейсы в 3DEXPERIENCE", "Премиум-поддержка"], cta: "Выбрать", best: true },
         { name: "Enterprise", price: "$$$", desc: "Команда", features: ["Заказ интеграции PLM для вашей компании", "Онлайн-обучение ваших сотрудников"], cta: "Заявка", best: false },
       ],
@@ -487,7 +487,7 @@ export const KURS_MARKETING: Record<string, { ru: MarketingData; en: MarketingDa
         "Draw up a PLM implementation plan for a company",
       ],
       pricing: [
-        { name: "Concept", price: "$49", desc: "Understanding", features: ["All core videos", "Platform logic on a demo", "Basic certificate"], cta: "Buy", best: false },
+        { name: "Concept", price: "$49", desc: "Understanding", features: ["All core videos", "Platform logic on a demo"], cta: "Buy", best: false },
         { name: "Integrator", price: "$89", desc: "Manager", features: ["Full ENOVIA practice", "Real cases in 3DEXPERIENCE", "Premium support"], cta: "Choose", best: true },
         { name: "Enterprise", price: "$$$", desc: "Team", features: ["PLM integration for your company", "Online training for your staff"], cta: "Apply", best: false },
       ],

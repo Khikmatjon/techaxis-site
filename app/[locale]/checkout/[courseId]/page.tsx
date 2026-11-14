@@ -23,38 +23,38 @@ import { localizeCourse } from "@/lib/course-i18n";
 const PLAN_TEXT = {
   uz: {
     catia: [
-      { desc: "Asoslar", features: ["Video darslar", "Topshiriqlar", "Sertifikat"] },
-      { desc: "Surface & Assembly", features: ["To'liq kurs", "Portfolio", "Professional sertifikat"] },
-      { desc: "1:1 Mentorlik", features: ["Live darslar", "Ishga tavsiya", "Karyera bo'yicha yordam"] },
+      { desc: "Asoslar", features: ["Video darslar", "Topshiriqlar"] },
+      { desc: "Surface & Assembly", features: ["To'liq kurs", "Portfolio"] },
+      { desc: "1:1 Mentorlik", features: ["Live darslar"] },
     ],
     other: [
-      { desc: "Boshlovchilar", features: ["Video darslar", "Telegram guruh", "Sertifikat"] },
-      { desc: "To'liq muvaffaqiyat", features: ["Real loyiha dizayni", "Premium sertifikat"] },
-      { desc: "Shaxsiy o'sish", features: ["1:1 Mentorlik", "Karyera rejasi"] },
+      { desc: "Boshlovchilar", features: ["Video darslar", "Telegram guruh"] },
+      { desc: "To'liq muvaffaqiyat", features: ["Real loyiha dizayni"] },
+      { desc: "Shaxsiy o'sish", features: ["1:1 Mentorlik"] },
     ],
   },
   ru: {
     catia: [
-      { desc: "Основы", features: ["Видеоуроки", "Задания", "Сертификат"] },
-      { desc: "Surface & Assembly", features: ["Полный курс", "Портфолио", "Профессиональный сертификат"] },
-      { desc: "1:1 менторство", features: ["Живые уроки", "Рекомендация для трудоустройства", "Помощь с карьерой"] },
+      { desc: "Основы", features: ["Видеоуроки", "Задания"] },
+      { desc: "Surface & Assembly", features: ["Полный курс", "Портфолио"] },
+      { desc: "1:1 менторство", features: ["Живые уроки"] },
     ],
     other: [
-      { desc: "Для начинающих", features: ["Видеоуроки", "Группа в Telegram", "Сертификат"] },
-      { desc: "Полный результат", features: ["Дизайн реального проекта", "Премиум-сертификат"] },
-      { desc: "Личный рост", features: ["1:1 менторство", "Карьерный план"] },
+      { desc: "Для начинающих", features: ["Видеоуроки", "Группа в Telegram"] },
+      { desc: "Полный результат", features: ["Дизайн реального проекта"] },
+      { desc: "Личный рост", features: ["1:1 менторство"] },
     ],
   },
   en: {
     catia: [
-      { desc: "Basics", features: ["Video lessons", "Assignments", "Certificate"] },
-      { desc: "Surface & Assembly", features: ["Full course", "Portfolio", "Professional certificate"] },
-      { desc: "1:1 mentoring", features: ["Live lessons", "Job recommendation", "Career help"] },
+      { desc: "Basics", features: ["Video lessons", "Assignments"] },
+      { desc: "Surface & Assembly", features: ["Full course", "Portfolio"] },
+      { desc: "1:1 mentoring", features: ["Live lessons"] },
     ],
     other: [
-      { desc: "For beginners", features: ["Video lessons", "Telegram group", "Certificate"] },
-      { desc: "Full result", features: ["Real project design", "Premium certificate"] },
-      { desc: "Personal growth", features: ["1:1 mentoring", "Career plan"] },
+      { desc: "For beginners", features: ["Video lessons", "Telegram group"] },
+      { desc: "Full result", features: ["Real project design"] },
+      { desc: "Personal growth", features: ["1:1 mentoring"] },
     ],
   },
 };

@@ -19,21 +19,21 @@ import { localizeCourse } from "@/lib/course-i18n";
 const T = {
   uz: {
     open: "✅ Ochiq", locked: "🔒 Qulflangan", lessons: "dars", progress: "Jarayon",
-    congrats: "Tabriklaymiz! Siz sertifikat olishga haqlisiz.", program: "Kurs dasturi", modules: "modul",
+    congrats: "Tabriklaymiz! Kursni yakunladingiz.", program: "Kurs dasturi", modules: "modul",
     free: "Bepul", image: "Rasm", teacher: "O'qituvchi", author: "TechAxis muallifi", tags: "Yo'nalishlar",
     or: "yoki", buy: "Sotib olish →", enrolled: "Siz bu kursga yozilgansiz!", access: "Barcha darslarga kirish imkoniyatingiz bor.",
     inUzbek: "", backToDashboard: "Kabinetga qaytish",
   },
   ru: {
     open: "✅ Открыт", locked: "🔒 Закрыт", lessons: "уроков", progress: "Прогресс",
-    congrats: "Поздравляем! Вы можете получить сертификат.", program: "Программа курса", modules: "модулей",
+    congrats: "Поздравляем! Вы завершили курс.", program: "Программа курса", modules: "модулей",
     free: "Бесплатно", image: "Изображение", teacher: "Преподаватель", author: "Автор TechAxis", tags: "Направления",
     or: "или", buy: "Купить →", enrolled: "Вы записаны на этот курс!", access: "У вас есть доступ ко всем урокам.",
     inUzbek: "Уроки на узбекском языке.", backToDashboard: "Назад в кабинет",
   },
   en: {
     open: "✅ Open", locked: "🔒 Locked", lessons: "lessons", progress: "Progress",
-    congrats: "Congratulations! You are eligible for a certificate.", program: "Course program", modules: "modules",
+    congrats: "Congratulations! You have completed the course.", program: "Course program", modules: "modules",
     free: "Free", image: "Image", teacher: "Instructor", author: "TechAxis author", tags: "Topics",
     or: "or", buy: "Buy →", enrolled: "You are enrolled in this course!", access: "You have access to all lessons.",
     inUzbek: "Lessons are taught in Uzbek.", backToDashboard: "Back to dashboard",
